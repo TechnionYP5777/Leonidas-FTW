@@ -10,70 +10,70 @@ import com.intellij.psi.*;
  * @since 2016-11-24 */
 
 public interface iz {
-  static boolean abstract¢(final PsiMember ¢) {
-    return (¢.getModifierList().hasModifierProperty(PsiModifier.ABSTRACT));
-  }
+    static boolean abstract¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.ABSTRACT));
+    }
 
-  static boolean synchronized¢(final PsiMember ¢) {
-    return (¢.getModifierList().hasModifierProperty(PsiModifier.SYNCHRONIZED));
-  }
+    static boolean synchronized¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.SYNCHRONIZED));
+    }
 
-  static boolean native¢(final PsiMember ¢) {
-    return (¢.getModifierList().hasModifierProperty(PsiModifier.NATIVE));
-  }
+    static boolean native¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.NATIVE));
+    }
 
-  static boolean default¢(final PsiMember ¢) {
-    return (¢.getModifierList().hasModifierProperty(PsiModifier.DEFAULT));
-  }
+    static boolean default¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.DEFAULT));
+    }
 
-  /**
-   *
-   * @param ¢
-   * @return whether the Element is a class, enum, interface or annotation type
-   */
-  static boolean abstractTypeDeclaration(final PsiElement ¢) {
-    return ¢ != null && (¢ instanceof PsiClass);
-  }
+    /**
+     *
+     * @param ¢
+     * @return whether the Element is a class, enum, interface or annotation type
+     */
+    static boolean abstractTypeDeclaration(final PsiElement ¢) {
+        return ¢ != null && (¢ instanceof PsiClass);
+    }
 
-  static boolean annotation(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiAnnotation;
-  }
+    static boolean annotation(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiAnnotation;
+    }
 
-  static boolean anonymousClassDeclaration(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiAnonymousClass;
-  }
+    static boolean anonymousClassDeclaration(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiAnonymousClass;
+    }
 
-  static boolean arrayInitializer(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiArrayInitializerExpression;
-  }
+    static boolean arrayInitializer(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiArrayInitializerExpression;
+    }
 
-  /** @param  ¢
-   * pattern the statement or block to check if it is an assignment
-   * @return <code><b>true</b></code> if the parameter an assignment or false if
-   *         the parameter not or if the block Contains more than one
-   *         statement */
-  static boolean assignment(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiAssignmentExpression;
-  }
+    /** @param  ¢
+     * pattern the statement or block to check if it is an assignment
+     * @return <code><b>true</b></code> if the parameter an assignment or false if
+     *         the parameter not or if the block Contains more than one
+     *         statement */
+    static boolean assignment(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiAssignmentExpression;
+    }
 
-  static boolean astNode(final Object ¢) {
-    return ¢ != null && ¢ instanceof PsiElement;
-  }
+    static boolean astNode(final Object ¢) {
+        return ¢ != null && ¢ instanceof PsiElement;
+    }
 
-  /** Determine whether a node is a Block
-   * @param ¢
-   * pattern JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
-   *         statement */
-  static boolean block(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiBlockStatement;
-  }
+    /** Determine whether a node is a Block
+     * @param ¢
+     * pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a block
+     *         statement */
+    static boolean block(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiBlockStatement;
+    }
 
-  /** Determine whether the curly brackets of an {@link IfStatement} are
-   * vacuous.
-   * @param s JD
-   * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
-   *         essential */
+    /** Determine whether the curly brackets of an {@link IfStatement} are
+     * vacuous.
+     * @param s JD
+     * @return <code><b>true</b></code> <i>iff</i> the curly brackets are
+     *         essential */
 //    static boolean blockEssential(final PsiIfStatement s) { //TODO: CHECK
 //        if (s == null)
 //            return false;
@@ -85,17 +85,17 @@ public interface iz {
 //                && (elze(parent) != null || wizard.recursiveElze(s) != null || blockRequiredInReplacement(parent, s));
 //    }
 
-  /** @param ¢
-   * subject JD
-   * @return <code><b>true</b></code> <em>iff</em>the parameter is an essential
-   *         block or false otherwise */
+    /** @param ¢
+     * subject JD
+     * @return <code><b>true</b></code> <em>iff</em>the parameter is an essential
+     *         block or false otherwise */
 //    static boolean blockEssential(final PsiStatement ¢) {
 //        return blockEssential(az.ifStatement(¢));
 //    }
 
-  /** @param ¢
-   * subject JD
-   * @return */
+    /** @param ¢
+     * subject JD
+     * @return */
 //    static boolean blockRequired(final PsiIfStatement ¢) {
 //        return blockRequiredInReplacement(¢, ¢);
 //    }
@@ -112,70 +112,70 @@ public interface iz {
 //                && (elze(parent) != null || elze(newIf) != null || blockRequiredInReplacement(parent, newIf));
 //    }
 
-  static boolean bodyDeclaration(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiMember;
-  }
-
-  /** Determine whether a node is a boolean literal
-   * @param ¢
-   * pattern JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
-   *         literal */
-  static boolean booleanLiteral(final PsiElement ¢) {
-    if(¢ instanceof PsiLiteral){
-      if(((PsiLiteral) ¢).getValue() instanceof Boolean){
-        return true;
-      }
+    static boolean bodyDeclaration(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiMember;
     }
-    return false;
 
-  }
+    /** Determine whether a node is a boolean literal
+     * @param ¢
+     * pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
+     *         literal */
+    static boolean booleanLiteral(final PsiElement ¢) {
+        if(¢ instanceof PsiLiteral){
+            if(((PsiLiteral) ¢).getValue() instanceof Boolean){
+                return true;
+            }
+        }
+        return false;
 
-  /** @param ¢ node to check
-   * @return <code><b>true</b></code> <em>iff</em>the given node is a boolean or
-   *         null literal or false otherwise */
-  static boolean booleanOrNullLiteral(final PsiElement ¢) {
-    if(booleanLiteral(¢)){
-      return true;
     }
-    if(¢ instanceof PsiPrimitiveType){
-      if(((PsiPrimitiveType) ¢).getPresentableText().equals(PsiType.NULL.getPresentableText())){
-        return true;
-      }
+
+    /** @param ¢ node to check
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a boolean or
+     *         null literal or false otherwise */
+    static boolean booleanOrNullLiteral(final PsiElement ¢) {
+        if(booleanLiteral(¢)){
+            return true;
+        }
+        if(¢ instanceof PsiPrimitiveType){
+            if(((PsiPrimitiveType) ¢).getPresentableText().equals(PsiType.NULL.getPresentableText())){
+                return true;
+            }
+        }
+        return false;
+
     }
-    return false;
 
-  }
+    /** @param ¢ JD
+     * @return */
+    static boolean booleanType(final PsiType ¢) {
+        return ¢ != null && ¢ instanceof PsiPrimitiveType && ((PsiPrimitiveType) ¢).getPresentableText().equals(PsiType.BOOLEAN.getPresentableText());
+    }
 
-  /** @param ¢ JD
-   * @return */
-  static boolean booleanType(final PsiType ¢) {
-    return ¢ != null && ¢ instanceof PsiPrimitiveType && ((PsiPrimitiveType) ¢).getPresentableText().equals(PsiType.BOOLEAN.getPresentableText());
-  }
+    static boolean breakStatement(final PsiStatement ¢) {
+        return ¢ != null && ¢ instanceof PsiBreakStatement;
+    }
 
-  static boolean breakStatement(final PsiStatement ¢) {
-    return ¢ != null && ¢ instanceof PsiBreakStatement;
-  }
+    /** @param ¢ JD
+     * @return */
+    static boolean castExpression(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiTypeCastExpression;
+    }
 
-  /** @param ¢ JD
-   * @return */
-  static boolean castExpression(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiTypeCastExpression;
-  }
-
-  /** @param ¢
-   * @return */
-  static boolean classInstanceCreation(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiNewExpression;
-  }
+    /** @param ¢
+     * @return */
+    static boolean classInstanceCreation(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiNewExpression;
+    }
 
 //    static boolean comparison(final PsiExpression ¢) {
 //        return iz.infixExpression(¢) && iz.comparison(az.infixExpression(¢));
 //    }
 
-  /** @param ¢ JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
-   *         expression. */
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a comparison
+     *         expression. */
 //    static boolean comparison(final PsiBinaryExpression ¢) {
 //        return ¢ != null && in(¢.getOperationSign(), JavaTokenType.EQ, JavaTokenType.GT,
 //                JavaTokenType.GT, JavaTokenType.LT, JavaTokenType.LE, JavaTokenType.NE);
@@ -186,24 +186,24 @@ public interface iz {
 //                JavaTokenType.GT, JavaTokenType.LT, JavaTokenType.LE, JavaTokenType.NE);
 //    }
 
-  /** Check whether an expression is a "conditional and" (&&)
-   * @param ¢ JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
-   *         whose operator is AND
-   */
-  static boolean conditionalAnd(final PsiBinaryExpression ¢) {
-    return ¢.getOperationSign() == JavaTokenType.AND;
-  }
+    /** Check whether an expression is a "conditional and" (&&)
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
+     *         whose operator is AND
+     */
+    static boolean conditionalAnd(final PsiBinaryExpression ¢) {
+        return ¢.getOperationSign() == JavaTokenType.AND;
+    }
 
-  /** @param xs JD
-   * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
-   *         conditional or parenthesized conditional expression */
-  static boolean conditionalExpression(final PsiExpression... xs) {
-    for (final PsiExpression ¢ : xs)
-      if (¢ instanceof PsiConditionalExpression)
-        return true;
-    return false;
-  }
+    /** @param xs JD
+     * @return <code><b>true</b></code> <i>iff</i> one of the parameters is a
+     *         conditional or parenthesized conditional expression */
+    static boolean conditionalExpression(final PsiExpression... xs) {
+        for (final PsiExpression ¢ : xs)
+            if (¢ instanceof PsiConditionalExpression)
+                return true;
+        return false;
+    }
 //
 //    /** Check whether an expression is a "conditional or" (||)
 //     * @param ¢  JD
@@ -213,98 +213,98 @@ public interface iz {
 //        return conditionalOr(az.infixExpression(¢));
 //    }
 
-  /** Check whether an expression is a "conditional or" (||)
-   * @param ¢ JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
-   *         whose operator is OR */
-  static boolean conditionalOr(final PsiBinaryExpression ¢) {
-    return ¢.getOperationSign() == JavaTokenType.OR;
-  }
+    /** Check whether an expression is a "conditional or" (||)
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
+     *         whose operator is OR */
+    static boolean conditionalOr(final PsiBinaryExpression ¢) {
+        return ¢.getOperationSign() == JavaTokenType.OR;
+    }
 
-  /** Determine whether a node is a "specific", i.e., <code><b>null</b></code>
-   * or <code><b>this</b></code> or literal.
-   * @param ¢  JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is a
-   *         "specific" */
+    /** Determine whether a node is a "specific", i.e., <code><b>null</b></code>
+     * or <code><b>this</b></code> or literal.
+     * @param ¢  JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a
+     *         "specific" */
 //    static boolean constant(final Expression ¢) {
 //        return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
 //                || nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
 //    }
 
-  /** Determine whether an PsiElement contains as a children a
-   * continue
-   * @param ¢ JD
-   * @return <code> true </code> iff ¢ contains any continue statement
-   */
+    /** Determine whether an PsiElement contains as a children a
+     * continue
+     * @param ¢ JD
+     * @return <code> true </code> iff ¢ contains any continue statement
+     */
 //    @SuppressWarnings("boxing") static boolean containsContinueStatement(final ASTNode ¢) {
 //        return ¢ != null && new Recurser<>(¢, 0).postVisit((x) -> {
 //            return x.getRoot().getNodeType() != ASTNode.CONTINUE_STATEMENT ? x.getCurrent() : x.getCurrent() + 1;
 //        }) > 0;
 //    }
 
-  static boolean containsOperator(final PsiElement ¢) {
-    return ¢ instanceof PsiPrefixExpression || ¢ instanceof PsiPostfixExpression || ¢ instanceof PsiBinaryExpression
-            || ¢ instanceof PsiAssignmentExpression;
-  }
+    static boolean containsOperator(final PsiElement ¢) {
+        return ¢ instanceof PsiPrefixExpression || ¢ instanceof PsiPostfixExpression || ¢ instanceof PsiBinaryExpression
+                || ¢ instanceof PsiAssignmentExpression;
+    }
 
-  /** Check whether the operator of an expression is susceptible for applying
-   * one of the two de Morgan laws.
-   * @param ¢  InfixExpression
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
-   *         which the de Morgan laws apply. */
-  static boolean deMorgan(final PsiBinaryExpression ¢) {
-    return ¢ != null && iz.deMorgan(¢.getOperationSign());
-  }
+    /** Check whether the operator of an expression is susceptible for applying
+     * one of the two de Morgan laws.
+     * @param ¢  InfixExpression
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
+     *         which the de Morgan laws apply. */
+    static boolean deMorgan(final PsiBinaryExpression ¢) {
+        return ¢ != null && iz.deMorgan(¢.getOperationSign());
+    }
 
-  /** Check whether an operator is susceptible for applying one of the two de
-   * Morgan laws.
-   * @param ¢ o JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
-   *         which the de Morgan laws apply. */
-  static boolean deMorgan(final PsiJavaToken ¢) {
-    return ¢ == JavaTokenType.AND || ¢ == JavaTokenType.OR;
-  }
+    /** Check whether an operator is susceptible for applying one of the two de
+     * Morgan laws.
+     * @param ¢ o JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an operator on
+     *         which the de Morgan laws apply. */
+    static boolean deMorgan(final PsiJavaToken ¢) {
+        return ¢ == JavaTokenType.AND || ¢ == JavaTokenType.OR;
+    }
 
 //    static boolean doubleType(final Expression ¢) {
 //        return type.of(¢) == DOUBLE;
 //    }
 
-  /** Determine whether a node is an EmpyStatement
-   * @param  ¢ pattern JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an
-   *         empty statment*/
-  static boolean emptyStatement(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiEmptyStatement;
-  }
+    /** Determine whether a node is an EmpyStatement
+     * @param  ¢ pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an
+     *         empty statment*/
+    static boolean emptyStatement(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiEmptyStatement;
+    }
 
 //    static boolean emptyStringLiteral(final PsiElement ¢) {
 //        return emptyStringLiteral(az.stringLiteral(¢));
 //    }
 
-  static boolean emptyStringLiteral(final PsiLiteral ¢) {
-    String s = (String)¢.getValue();
-    return ¢ != null && s.length()==0;
-  }
+    static boolean emptyStringLiteral(final PsiLiteral ¢) {
+        String s = (String)¢.getValue();
+        return ¢ != null && s.length()==0;
+    }
 
-  static boolean enhancedFor(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiForeachStatement;
-  }
+    static boolean enhancedFor(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiForeachStatement;
+    }
 
-  static boolean enumConstantDeclaration(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiEnumConstant;
-  }
+    static boolean enumConstantDeclaration(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiEnumConstant;
+    }
 
-  static boolean enumDeclaration(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiClass && ((PsiClass) ¢).isEnum();
-  }
+    static boolean enumDeclaration(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiClass && ((PsiClass) ¢).isEnum();
+    }
 
-  /** Determine whether a node is an "expression statement"
-   * @param ¢ pattern JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an
-   *        expression statement statement */
-  static boolean expression(final PsiElement ¢) {
-    return (¢ != null) && (¢ instanceof PsiExpression);
-  }
+    /** Determine whether a node is an "expression statement"
+     * @param ¢ pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an
+     *        expression statement statement */
+    static boolean expression(final PsiElement ¢) {
+        return (¢ != null) && (¢ instanceof PsiExpression);
+    }
 
 //    static boolean expressionOfEnhancedFor(final PsiElement child, final PsiElement parent) {
 //        if (child == null || parent == null || !iz.enhancedFor(parent))
@@ -315,42 +315,42 @@ public interface iz {
 //        return step.expression(parent1) == child;
 //    }
 
-  /** Determine whether a node is an "expression statement"
-   * @param ¢ pattern JD
-   * @return <code><b>true</b></code> <i>iff</i> the parameter is an
-   *         expression statement */
-  static boolean expressionStatement(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiExpressionStatement;
-  }
+    /** Determine whether a node is an "expression statement"
+     * @param ¢ pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an
+     *         expression statement */
+    static boolean expressionStatement(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiExpressionStatement;
+    }
 
-  /** @param ¢ JD
-   * @return */
+    /** @param ¢ JD
+     * @return */
 //    static boolean fieldAccess(final PsiExpression ¢) {
 //        return iz.nodeTypeEquals(¢, FIELD_ACCESS);
 //    }
 
-  static boolean fieldDeclaration(final PsiMember ¢) {
-    return ¢ != null && ¢ instanceof PsiField;
-  }
+    static boolean fieldDeclaration(final PsiMember ¢) {
+        return ¢ != null && ¢ instanceof PsiField;
+    }
 
-  /** Determine whether a declaration is final or not
-   * @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em>declaration is final */
-  static boolean final¢(final PsiMember ¢) {
-    return (¢.getModifierList().hasModifierProperty(PsiModifier.FINAL));
-  }
+    /** Determine whether a declaration is final or not
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>declaration is final */
+    static boolean final¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.FINAL));
+    }
 
-  /** Determine whether a variable declaration is final or not
-   * @param ¢ JD
-   * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
-   *         final */
-  static boolean final¢(final PsiVariable ¢) {
-    return ¢ != null && ¢.getModifierList().hasModifierProperty(PsiModifier.FINAL);
-  }
+    /** Determine whether a variable declaration is final or not
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
+     *         final */
+    static boolean final¢(final PsiVariable ¢) {
+        return ¢ != null && ¢.getModifierList().hasModifierProperty(PsiModifier.FINAL);
+    }
 
-  /** @param o The operator to check
-   * @return True - if the operator have opposite one in terms of operands
-   *         swap. */ //TODO: ASTERISK IS TIMES?
+    /** @param o The operator to check
+     * @return True - if the operator have opposite one in terms of operands
+     *         swap. */ //TODO: ASTERISK IS TIMES?
 //    static boolean flipable(final PsiJavaToken ¢) {
 //        return in(¢, JavaTokenType.AND, JavaTokenType.EQ, JavaTokenType.GT,
 //                JavaTokenType.GE, JavaTokenType.LE, JavaTokenType.LT,
@@ -358,14 +358,14 @@ public interface iz {
 //                JavaTokenType.ASTERISK, JavaTokenType.XOR, null);
 //    }
 
-  /** @param ¢
-   *          pattern the statement or block to check if it is an for statement
-   * @return <code><b>true</b></code> if the parameter an for statement or false
-   *         if the parameter not or if the block Contains more than one
-   *         statement */
-  static boolean forStatement(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiForStatement;
-  }
+    /** @param ¢
+     *          pattern the statement or block to check if it is an for statement
+     * @return <code><b>true</b></code> if the parameter an for statement or false
+     *         if the parameter not or if the block Contains more than one
+     *         statement */
+    static boolean forStatement(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiForStatement;
+    }
 
 //    static boolean identifier(final String identifier, final Name typeName) {
 //        return typeName.isQualifiedName() ? identifier(identifier, ((QualifiedName) typeName).getName())
@@ -376,9 +376,9 @@ public interface iz {
 //        return identifier.equals(n.getIdentifier());
 //    }
 
-  static boolean ifStatement(final PsiStatement ¢) {
-    return ¢ != null && ¢ instanceof PsiIfStatement;
-  }
+    static boolean ifStatement(final PsiStatement ¢) {
+        return ¢ != null && ¢ instanceof PsiIfStatement;
+    }
 
 //    /** @param pattern JD
 //     * @return <code><b>true</b></code> <i>iff</i> the node is an Expression
@@ -411,20 +411,20 @@ public interface iz {
 //        return -1;
 //    }
 //
-  /** @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em>the given node is an infix
-   *         expression or false otherwise */
-  static boolean infix(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiBinaryExpression;
-  }
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is an infix
+     *         expression or false otherwise */
+    static boolean infix(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiBinaryExpression;
+    }
 
-  //    static boolean infixDivide(final PsiExpression ¢) {
+    //    static boolean infixDivide(final PsiExpression ¢) {
 //        return operator(az.infixExpression(¢)) == DIVIDE;
 //    }
 //
-  static boolean infixExpression(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiBinaryExpression;
-  }
+    static boolean infixExpression(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiBinaryExpression;
+    }
 //
 //    static boolean infixMinus(final ASTNode ¢) {
 //        return operator(az.infixExpression(¢)) == wizard.MINUS2;
@@ -450,50 +450,50 @@ public interface iz {
 //        return operator(az.infixExpression(¢)) == GREATER;
 //    }
 //
-  /** @param ¢ JD
-   * @return */
-  static boolean instanceofExpression(final PsiExpression ¢) {
-    return ¢ != null && ¢ instanceof PsiInstanceOfExpression;
-  }
+    /** @param ¢ JD
+     * @return */
+    static boolean instanceofExpression(final PsiExpression ¢) {
+        return ¢ != null && ¢ instanceof PsiInstanceOfExpression;
+    }
 
-  /** @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em>the given node is an interface
-   *         or false otherwise */
-  static boolean interface¢(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiClass && ((PsiClass) ¢).isInterface();
-  }
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is an interface
+     *         or false otherwise */
+    static boolean interface¢(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiClass && ((PsiClass) ¢).isInterface();
+    }
 //
 //    static boolean intType(final Expression ¢) {
 //        return ¢ != null && type.of(¢) == INT;
 //    }
 //
-  /** @param ¢ JD
-   * @return <code><b>true</b></code> <em>iff</em>the given node is a method
-   *         decleration or false otherwise */
-  static boolean isMethodDeclaration(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiMethod;
-  }
+    /** @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a method
+     *         decleration or false otherwise */
+    static boolean isMethodDeclaration(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiMethod;
+    }
 
-  /** @param ¢ node to check
-   * @return <code><b>true</b></code> <em>iff</em>the given node is a method
-   *         invocation or false otherwise */
-  static boolean isMethodInvocation(final PsiElement ¢) {
-    return ¢ != null && ¢ instanceof PsiMethodCallExpression;
-  }
+    /** @param ¢ node to check
+     * @return <code><b>true</b></code> <em>iff</em>the given node is a method
+     *         invocation or false otherwise */
+    static boolean isMethodInvocation(final PsiElement ¢) {
+        return ¢ != null && ¢ instanceof PsiMethodCallExpression;
+    }
 
-  /** @param ¢ the assignment whose operator we want to check
-   * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is
-   *         plus assign */
-  static boolean isMinusAssignment(final PsiAssignmentExpression ¢) {
-    return ¢ != null && ¢.getOperationSign() == JavaTokenType.MINUSEQ;
-  }
+    /** @param ¢ the assignment whose operator we want to check
+     * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is
+     *         plus assign */
+    static boolean isMinusAssignment(final PsiAssignmentExpression ¢) {
+        return ¢ != null && ¢.getOperationSign() == JavaTokenType.MINUSEQ;
+    }
 
-  static boolean isOneOf(final int i, final int... is) {
-    for (final int j : is)
-      if (i == j)
-        return true;
-    return false;
-  }
+    static boolean isOneOf(final int i, final int... is) {
+        for (final int j : is)
+            if (i == j)
+                return true;
+        return false;
+    }
 //
 //    /** @param a the assignment whose operator we want to check
 //     * @return <code><b>true</b></code> <em>iff</em> the assignment'¢ operator is

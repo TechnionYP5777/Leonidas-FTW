@@ -30,6 +30,12 @@
 
   <actions>
     <!-- Add your actions here -->
+
+    <action id="myPlugin" class="ThisIsSparta" text="this is sparta"
+            description="finds all methods in the file that have exactly two parameters, and changes their names to 'this_is','sparta'">
+      <add-to-group group-id="CodeFormatGroup" anchor="last"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 9"/>
+    </action>
   </actions>
 
 </idea-plugin>

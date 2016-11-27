@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IntelliJ-Spartanizer.iml" filepath="$PROJECT_DIR$/IntelliJ-Spartanizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IntelliJSpartanizer.iml" filepath="$PROJECT_DIR$/IntelliJSpartanizer.iml" />
     </modules>
   </component>
 </project>
