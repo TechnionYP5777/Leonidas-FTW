@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Nullable;
@@ -72,7 +73,7 @@ public class ThisIsSparta extends AnAction {
      * @param psiClass the psiClass containing the psiMethod
      * @return the same method, with updated parameter names
      */
-    private void replaceWithThisIsSpartaMethod(PsiMethod psiMethod, PsiClass psiClass){
+    private static void replaceWithThisIsSpartaMethod(PsiMethod psiMethod, PsiClass psiClass){
 
         PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiClass.getProject());
 
@@ -93,7 +94,9 @@ public class ThisIsSparta extends AnAction {
 
     }
 
-
+    public static void replaceWithThisIsSpartaMethod(PsiMethod psiMethod) {
+        replaceWithThisIsSpartaMethod(psiMethod, psiMethod.getContainingClass());
+    }
 
 
 }

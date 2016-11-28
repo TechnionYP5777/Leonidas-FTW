@@ -1,17 +1,15 @@
 <idea-plugin version="2">
-  <id>com.your.company.unique.plugin.id</id>
-  <name>Plugin display name here</name>
-  <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <id>il.ac.technion.yearlyproject2016.team8</id>
+  <name>Spartanizer INTELLIJ</name>
+  <version>0.1</version>
+  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">Team 8</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      Spartanizer for INTELLIJ.
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+
     ]]>
   </change-notes>
 
@@ -25,7 +23,7 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
+    <annotator language="JAVA" implementationClass="plugin.SimpleAnnotator"/>
   </extensions>
 
   <actions>
