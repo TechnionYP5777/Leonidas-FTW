@@ -11,7 +11,11 @@ public interface Tipper<T extends PsiElement> {
 
     boolean canTip(T element);
 
-    String description();
+    default String description() {
+        return getClass().getSimpleName();
+    }
+
+    String description(final T t);
 
     Tip tip(final T node);
 
