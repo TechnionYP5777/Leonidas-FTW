@@ -4,38 +4,64 @@ import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Nullable;
-import java.util.ArrayList;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by maorroey on 11/18/2016.
  */
 public class ThisIsSparta extends AnAction {
 
+    /**
+     * @param psiMethod a method with exactly two parameters
+     * @param psiClass  the psiClass containing the psiMethod
+     * @return the same method, with updated parameter names
+     */
+    private static void replaceWithThisIsSpartaMethod(PsiMethod psiMethod, PsiClass psiClass) {
+
+        PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiClass.getProject());
+
+        PsiParameter firstParam = psiMethod.getParameterList().getParameters()[0];
+        PsiType firstParamType = firstParam.getType();
+        PsiParameter secondParam = psiMethod.getParameterList().getParameters()[1];
+        PsiType secondParamType = secondParam.getType();
+
+        new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()) {
+            @Override
+            protected void run() throws Throwable {
+                firstParam.replace(elementFactory.createParameter("this_is", firstParamType));
+                secondParam.replace(elementFactory.createParameter("sparta", secondParamType));
+            }
+
+        }.execute();
+
+    }
+
+    public static void replaceWithThisIsSpartaMethod(PsiMethod psiMethod) {
+        replaceWithThisIsSpartaMethod(psiMethod, psiMethod.getContainingClass());
+    }
+
     @Override
     public void actionPerformed(AnActionEvent e) {
         PsiClass psiClass = getPsiClassFromContext(e);
-        if (psiClass == null ){
+        if (psiClass == null) {
             return;
         }
-        ArrayList<PsiMethod> psiMethods = extractMethodsWith2Params(psiClass);
-
-
-        for (PsiMethod method : psiMethods) {
-            replaceWithThisIsSpartaMethod(method,psiClass);
-        }
+        extractMethodsWith2Params(psiClass).
+                forEach(ThisIsSparta::replaceWithThisIsSpartaMethod);
     }
 
     @Override
     public void update(AnActionEvent e) {
-       //no need to update anything so far
+        //no need to update anything so far
     }
 
     /**
-     *
      * @param e the action event
      * @return the psiClass extracted from the event's context
      */
@@ -48,54 +74,17 @@ public class ThisIsSparta extends AnAction {
         }
         int offset = editor.getCaretModel().getOffset();
         PsiElement elementAt = psiFile.findElementAt(offset);
-        PsiClass psiClass = PsiTreeUtil.getParentOfType(elementAt, PsiClass.class);
-        return psiClass;
+        return PsiTreeUtil.getParentOfType(elementAt, PsiClass.class);
     }
 
     /**
-     *
      * @param psiClass the psiClass to search on
      * @return a list of PSI methods that contain exactly 2 parameters
      */
-    private ArrayList<PsiMethod> extractMethodsWith2Params(PsiClass psiClass){
-        ArrayList<PsiMethod> result = new ArrayList<PsiMethod>(0);
-        for(PsiMethod psiMethod : psiClass.getMethods()) {
-            if(psiMethod.getParameterList().getParametersCount() == 2){
-                result.add(psiMethod);
-            }
-        }
-        return result;
-    }
-
-    /**
-     *
-     * @param psiMethod a method with exactly two parameters
-     * @param psiClass the psiClass containing the psiMethod
-     * @return the same method, with updated parameter names
-     */
-    private static void replaceWithThisIsSpartaMethod(PsiMethod psiMethod, PsiClass psiClass){
-
-        PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiClass.getProject());
-
-        PsiParameter firstParam = psiMethod.getParameterList().getParameters()[0];
-        PsiType firstParamType = firstParam.getType();
-        PsiParameter secondParam = psiMethod.getParameterList().getParameters()[1];
-        PsiType secondParamType = secondParam.getType();
-
-        new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()) {
-
-            @Override
-            protected void run() throws Throwable {
-                firstParam.replace( elementFactory.createParameter("this_is",firstParamType) );
-                secondParam.replace( elementFactory.createParameter("sparta",secondParamType) );
-            }
-
-        }.execute();
-
-    }
-
-    public static void replaceWithThisIsSpartaMethod(PsiMethod psiMethod) {
-        replaceWithThisIsSpartaMethod(psiMethod, psiMethod.getContainingClass());
+    private List<PsiMethod> extractMethodsWith2Params(PsiClass psiClass) {
+        return Arrays.stream(psiClass.getMethods()). //
+                filter(m -> m.getParameterList().getParametersCount() == 2)
+                .collect(Collectors.toList());
     }
 
 
