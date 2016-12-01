@@ -1,7 +1,15 @@
 package plugin.tipping;
 
+
+import com.intellij.psi.PsiElementFactory;
+
 /**
- * Created by szarecki on 01/12/16.
+ * @author Oren Afek
+ * @author Michal Cohen
+ * @since 2016.12.1
  */
-public class Tip {
+
+@FunctionalInterface
+public interface Tip {
+    void go(PsiElementFactory elementFactory);
 }
