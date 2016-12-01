@@ -22,7 +22,7 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
     }
 
     @Override
-    public String description() {
+    public String description(PsiLambdaExpression lambdaExpression) {
         return null;
     }
 
@@ -36,4 +36,5 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
             }
         };
     }
+
 }
