@@ -16,7 +16,7 @@ public class InfixFactorNegatives implements Tipper<PsiBinaryExpression> {
     }
 
     @Override
-    public String description() {
+    public String description(PsiBinaryExpression _) {
         return null;
     }
 

@@ -27,6 +27,17 @@ public enum iz {
         return typeCheck(PsiMethodCallExpression.class, element);
     }
 
+    public static boolean declarationStatement(PsiElement element) {
+        return typeCheck(PsiDeclarationStatement.class, element);
+    }
+
+    public static boolean enumConstant(PsiElement element) {
+        return typeCheck(PsiEnumConstant.class, element);
+    }
+
+    public static boolean fieldDecleration(PsiElement element) {
+        return typeCheck(PsiField.class, element);
+    }
     public static boolean abstract$(PsiMethod element) {
         return element.getModifierList().hasExplicitModifier(ABSTRACT);
     }
