@@ -1,5 +1,6 @@
 package auxilary_layer;
 
+import com.intellij.psi.PsiBlockStatement;
 import com.intellij.psi.PsiCodeBlock;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiStatement;
@@ -23,4 +24,9 @@ public enum az {
     public static PsiStatement statementBody(PsiElement element) {
         return element != null && iz.statement(element) ? (PsiStatement) element : null;
     }
+
+    public static PsiBlockStatement block(PsiElement element) {
+        return element != null && iz.block(element) ? (PsiBlockStatement) element : null;
+    }
+
 }

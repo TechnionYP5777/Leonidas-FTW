@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiMethod;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
+import auxilary_layer.PsiRewrite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
         }
         // TODO michal: check if there was a variable named cent
         return new Tip() {
-            public void go(PsiElementFactory factory) {
-                m.getParameterList().getParameters()[0].getNameIdentifier().replace(factory.createIdentifier("¢"));
+            public void go(PsiRewrite r) {
+                r.replace( m.getParameterList().getParameters()[0].getNameIdentifier(), r.factory.createIdentifier("¢") );
             }
         };
 

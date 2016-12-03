@@ -1,6 +1,7 @@
 package plugin.tipping;
 
 
+import auxilary_layer.PsiRewrite;
 import com.intellij.psi.PsiElementFactory;
 
 /**
@@ -11,5 +12,5 @@ import com.intellij.psi.PsiElementFactory;
 
 @FunctionalInterface
 public interface Tip {
-    void go(PsiElementFactory elementFactory);
+    void go(PsiRewrite r);
 }
