@@ -16,11 +16,6 @@ public class EnhancedForRedundantContinue implements Tipper<PsiForeachStatement>
     }
 
     @Override
-    public String description() {
-        return null;
-    }
-
-    @Override
     public String description(PsiForeachStatement p) {
         return null;
     }
