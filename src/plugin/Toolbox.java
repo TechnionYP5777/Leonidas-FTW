@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Toolbox {
 
-    private Map<Class<? extends PsiElement>, Tipper> tipperMap;
+    final private Map<Class<? extends PsiElement>, Tipper> tipperMap;
 
     private Toolbox() {
         this.tipperMap = new HashMap<>();

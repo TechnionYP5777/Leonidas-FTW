@@ -1,8 +1,6 @@
 package plugin.leonidas;
-import com.thoughtworks.xstream.mapper.Mapper;
 import plugin.tipping.Tip;
 import com.intellij.psi.*;
-import auxilary_layer.*;
 
 /**
  * Created by maorroey on 12/2/2016.

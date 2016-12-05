@@ -119,7 +119,7 @@ public class Matcher {
         final Pair<Integer, Integer> idxs = getBlockMatching(az.block(pattern), b);
         final PsiElement[] $ = new PsiElement[idxs.second - idxs.first];
         for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
-            $[¢ - idxs.first] = (PsiElement) Arrays.asList(b.getCodeBlock().getStatements()).get(idxs.first);
+            $[¢ - idxs.first] = Arrays.asList(b.getCodeBlock().getStatements()).get(idxs.first);
         return $;
     }
 

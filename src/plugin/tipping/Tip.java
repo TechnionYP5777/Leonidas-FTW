@@ -2,7 +2,6 @@ package plugin.tipping;
 
 
 import auxilary_layer.PsiRewrite;
-import com.intellij.psi.PsiElementFactory;
 
 /**
  * @author Oren Afek

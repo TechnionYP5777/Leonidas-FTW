@@ -1,13 +1,13 @@
 package plugin.tippers;
 
-import com.intellij.psi.PsiElementFactory;
+import auxilary_layer.haz;
+import auxilary_layer.iz;
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiMethod;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
-import auxilary_layer.PsiRewrite;
 
-import java.util.ArrayList;
-import java.util.List;
+import static auxilary_layer.Utils.in;
 
 /**
  * @author Michal Cohen
@@ -16,20 +16,9 @@ import java.util.List;
 
 public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiMethod> {
 
-    // TODO michal: convert to iz
     @Override
     public boolean canTip(PsiMethod m) {
-        return !m.isConstructor() && m.getModifierList().hasExplicitModifier("abstrat") && m.getParameterList().getParametersCount() == 1 && isSpecialChar(m.getParameterList().getParameters()[0].getName());
-    }
-
-    // TODO michal: convert to in
-    private boolean isSpecialChar(String s) {
-        List<String> l = new ArrayList<String>();
-        l.add("$");
-        l.add("¢");
-        l.add("_");
-        l.add("__");
-        return l.contains(s);
+        return !m.isConstructor() && iz.abstract$(m) && m.getParameterList().getParametersCount() == 1 && in(m.getParameterList().getParameters()[0].getName(), "$", "¢", "_", "__") && !haz.centVariableDefenition(m);
     }
 
     @Override
@@ -42,12 +31,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
         if (m == null || !canTip(m)) {
             return null;
         }
-        // TODO michal: check if there was a variable named cent
-        return new Tip() {
-            public void go(PsiRewrite r) {
-                r.replace( m.getParameterList().getParameters()[0].getNameIdentifier(), r.factory.createIdentifier("¢") );
-            }
-        };
+        return factory -> m.getParameterList().getParameters()[0].getNameIdentifier().replace(JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier("¢"));
 
     }
 }
