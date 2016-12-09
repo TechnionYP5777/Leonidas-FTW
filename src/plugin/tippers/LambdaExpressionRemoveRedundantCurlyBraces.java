@@ -8,6 +8,7 @@ import com.intellij.psi.PsiReturnStatement;
 import com.intellij.psi.PsiStatement;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
+import auxilary_layer.PsiRewrite;
 
 /**
  * @author Oren Afek
@@ -35,11 +36,15 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
     public Tip tip(final PsiLambdaExpression element) {
         assert step.statements(step.blockBody(element)).size() == 1;
         final PsiStatement s = step.statements(step.blockBody(element)).get(0);
-        return elementFactory -> {
-            if (iz.returnStatement(s)) {
-                element.getBody().replace(step.expression((PsiReturnStatement) s));
+
+        return new Tip(description(element), element, this.getClass()) {
+            @Override public void go(final PsiRewrite r){
+                if (iz.returnStatement(s)) {
+                    r.replace(element.getBody(), step.expression((PsiReturnStatement) s));
+                }
             }
         };
+
     }
 
     @Override
