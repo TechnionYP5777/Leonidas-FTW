@@ -1,8 +1,7 @@
 package plugin;
 
 import com.intellij.psi.PsiElement;
-import plugin.tippers.EnhancedForRedundantContinue;
-import plugin.tippers.InfixFactorNegatives;
+import com.intellij.psi.PsiElementFactory;
 import plugin.tippers.LambdaExpressionRemoveRedundantCurlyBraces;
 import plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
 import plugin.tipping.Tipper;
@@ -15,12 +14,20 @@ import java.util.Map;
  * @author Michal Cohen
  * @since 2016.12.1
  */
-public class Toolbox {
+public enum Toolbox {
+    INSTANCE;
 
     final private Map<Class<? extends PsiElement>, Tipper> tipperMap;
 
-    private Toolbox() {
+    Toolbox() {
         this.tipperMap = new HashMap<>();
+    }
+
+    public static Toolbox getInstance() {
+        return INSTANCE //
+                //.add(new EnhancedForRedundantContinue()) //
+                .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
+                .add(new MethodDeclarationRenameSingleParameterToCent());
     }
 
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
@@ -28,16 +35,17 @@ public class Toolbox {
         return this;
     }
 
-    public Toolbox getToolbox() {
-        return this //
-                .add(new EnhancedForRedundantContinue()) //
-                .add(new InfixFactorNegatives()) //
-                .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
-                .add(new MethodDeclarationRenameSingleParameterToCent());
+    public Toolbox getEmptyToolbox() {
+        this.tipperMap.clear();
+        return this;
     }
 
-    public Toolbox getEmptyToolbox() {
-        return new Toolbox();
+    public Toolbox executeAllTippers(PsiElementFactory elementFactory, PsiElement element) {
+        tipperMap.values().stream() //
+                .filter(tipper -> tipper.canTip(element)) //
+                .forEach(tipper -> tipper.tip(element));
+
+        return this;
     }
 
 

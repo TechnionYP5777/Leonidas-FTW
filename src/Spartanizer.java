@@ -7,6 +7,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Nullable;
+import plugin.Toolbox;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,9 +16,18 @@ import java.util.stream.Collectors;
 /**
  * Created by maorroey on 11/18/2016.
  */
-public class ThisIsSparta extends AnAction {
+public class Spartanizer extends AnAction {
 
-
+    private static void spartanizeCode(PsiClass psiClass, PsiElement element) {
+        Toolbox toolbox = Toolbox.getInstance();
+        PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiClass.getProject());
+        new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()) {
+            @Override
+            protected void run() throws Throwable {
+                toolbox.executeAllTippers(elementFactory, element);
+            }
+        }.execute();
+    }
 
     /**
      * @param psiMethod a method with exactly two parameters
@@ -50,12 +60,14 @@ public class ThisIsSparta extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
+        PsiElement element = getPsiElementFromContext(e);
         PsiClass psiClass = getPsiClassFromContext(e);
-        if (psiClass == null) {
+        if (element == null || psiClass == null) {
             return;
         }
-        extractMethodsWith2Params(psiClass).
-                forEach(ThisIsSparta::replaceWithThisIsSpartaMethod);
+
+        spartanizeCode(psiClass, element);
+
     }
 
     @Override
@@ -65,18 +77,28 @@ public class ThisIsSparta extends AnAction {
 
     /**
      * @param e the action event
-     * @return the psiClass extracted from the event's context
-     */
+     * @return the psiElement extracted from the event's context
+     **/
+
     @Nullable
-    private PsiClass getPsiClassFromContext(AnActionEvent e) {
+    private PsiElement getPsiElementFromContext(AnActionEvent e) {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         if (psiFile == null || editor == null) {
             return null;
         }
         int offset = editor.getCaretModel().getOffset();
-        PsiElement elementAt = psiFile.findElementAt(offset);
-        return PsiTreeUtil.getParentOfType(elementAt, PsiClass.class);
+        return psiFile.findElementAt(offset);
+    }
+
+    /**
+     * @param e the action event
+     * @return the psiClass extracted from the event's context
+     **/
+
+    @Nullable
+    private PsiClass getPsiClassFromContext(AnActionEvent e) {
+        return PsiTreeUtil.getParentOfType(getPsiElementFromContext(e), PsiClass.class);
     }
 
     /**

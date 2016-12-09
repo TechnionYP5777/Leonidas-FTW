@@ -7,42 +7,55 @@ import org.jetbrains.annotations.Nullable;
  * @since 12/1/2016.
  */
 public class Wrapper<T> {
-    protected @Nullable T inner;
+    @Nullable
+    protected T inner;
 
-    public Wrapper(){
+    public Wrapper() {
         this(null);
     }
 
-    public Wrapper(final @Nullable T inner){
+    public Wrapper(final @Nullable T inner) {
         this.inner = inner;
     }
 
-    @Override public final boolean equals(@Nullable final Object o) {
-        return super.equals(o) || o != null && getClass() == o.getClass() && equals((Wrapper<?>) o);
+    @Override
+    public final boolean equals(@Nullable final Object o) {
+        return super.equals(o) || o != null &&
+                getClass() == o.getClass() &&
+                equals((Wrapper<?>) o);
     }
 
-    /** @param w JD
-     * @return <code><b>true</b></code> <i>iff</i> method <code>equals</code>
-     *         returns <code><b>true</b></code> for the wrapped objects. */
+    /**
+     * @param w JD
+     * @return <code><b>true</b></code>
+     * <i>iff</i> method <code>equals</code>
+     * returns <code><b>true</b></code> for the wrapped objects.
+     */
     public boolean equals(final Wrapper<?> w) {
         return inner == null ? w.inner == null : inner.equals(w.inner);
     }
 
-    /** @return value wrapped in this object. */
+    /**
+     * @return value wrapped in this object.
+     */
     public T get() {
         return inner;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return inner == null ? 0 : inner.hashCode();
     }
 
-    /** set current value */
+    /**
+     * set current value
+     */
     public void set(final T inner) {
         this.inner = inner;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return inner == null ? "null" : inner + "";
     }
 
