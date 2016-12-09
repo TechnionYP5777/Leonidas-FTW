@@ -12,7 +12,6 @@ import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.source.PsiMethodImpl;
 import com.intellij.ui.JBColor;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.Nls;
@@ -22,9 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public class SpartanizerAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
-        if (element.getClass() == PsiMethodImpl.class) {
-            System.out.println("");
-        }
+
         if (!Spartanizer.canTip(element)) {
             return;
         }
@@ -64,49 +61,6 @@ public class SpartanizerAnnotator implements Annotator {
         TextAttributesKey.createTextAttributesKey("");
         TextAttributes textAttributes = new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0);
         annotation.setEnforcedTextAttributes(textAttributes);
-
-
-        /*holder.createErrorAnnotation(element, "Not spartanic enough!").registerFix(new IntentionAction() {
-            @Nls
-            @NotNull
-            @Override
-            public String getText() {
-                return "Spartanize";
-            }
-
-            @Nls
-            @NotNull
-            @Override
-            public String getFamilyName() {
-                return "Spartinizer";
-            }
-
-            @Override
-            public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile psiFile) {
-                return true;
-            }
-
-            @Override
-            public void invoke(@NotNull Project project, Editor editor, PsiFile psiFile) throws IncorrectOperationException {
-                PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(project);
-                PsiType firstParamType = firstParam.getType();
-                PsiType secondParamType = secondParam.getType();
-
-                new WriteCommandAction.Simple(project, psiFile) {
-                    @Override
-                    protected void run() throws Throwable {
-                        firstParam.replace(elementFactory.createParameter("this_is", firstParamType));
-                        secondParam.replace(elementFactory.createParameter("sparta", secondParamType));
-                    }
-                }.execute();
-            }
-
-            @Override
-            public boolean startInWriteAction() {
-                return false;
-            }
-        });*/
-
 
     }
 }
