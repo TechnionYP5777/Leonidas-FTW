@@ -5,8 +5,10 @@ import com.intellij.psi.PsiElement;
 import plugin.tipping.Tip;
 
 /**
- * Created by maorroey on 12/2/2016.
+ * @Author Roey Maor
+ * @since 2/12/2016.
  */
+
 public class TipperFactory {
     public static UserDefinedTipper<PsiBlockStatement> statementsPattern(final String _pattern, final String _replacement, final String description) {
         return newSubBlockTipper(_pattern, _replacement, description);

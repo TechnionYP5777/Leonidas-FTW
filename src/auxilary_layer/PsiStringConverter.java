@@ -5,8 +5,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 
 /**
- * Created by amirsagiv on 12/8/16.
+ * @Author Amir Sagiv
+ * @since 8/12/2016.
  */
+
 public class PsiStringConverter {
 
     public static PsiElement convertStringToPsi(PsiRewrite rewrite, String str){

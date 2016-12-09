@@ -4,8 +4,10 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.*;
 
 /**
- * Created by maorroey on 12/3/2016.
+ * @Author Roey Maor
+ * @since 3/12/2016.
  */
+
 public class PsiRewrite {
     public PsiElementFactory elementFactory;
     public PsiFileFactory fileFactory;

@@ -1,8 +1,10 @@
 package plugin.leonidas;
 
 /**
- * Created by maorroey on 12/3/2016.
+ * @Author Roey Maor
+ * @since 3/12/2016.
  */
+
 
 import com.intellij.psi.PsiElement;
 import plugin.tipping.Tipper;
