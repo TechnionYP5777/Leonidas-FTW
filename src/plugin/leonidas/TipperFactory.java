@@ -1,6 +1,8 @@
 package plugin.leonidas;
+
+import com.intellij.psi.PsiBlockStatement;
+import com.intellij.psi.PsiElement;
 import plugin.tipping.Tip;
-import com.intellij.psi.*;
 
 /**
  * Created by maorroey on 12/2/2016.
@@ -23,6 +25,16 @@ public class TipperFactory {
                 };
                 */
                 return null;
+            }
+
+            @Override
+            public Class<PsiBlockStatement> getPsiClass() {
+                return PsiBlockStatement.class;
+            }
+
+            @Override
+            public boolean canTip(PsiElement e) {
+                return e instanceof PsiBlockStatement && prerequisite((PsiBlockStatement) e);
             }
 
             @Override protected boolean prerequisite(final PsiBlockStatement ¢) {
@@ -55,6 +67,11 @@ public class TipperFactory {
     public static <N extends PsiElement> UserDefinedTipper<N> patternTipper(final String _pattern, final String _replacement, final String description) {
         final Matcher m = new Matcher(_pattern, _replacement);
         return new UserDefinedTipper<N>() {
+            @Override
+            public boolean canTip(PsiElement e) {
+                return false;
+            }
+
             @Override public String description(@SuppressWarnings("unused") final N __) {
                 return description;
             }
@@ -67,6 +84,11 @@ public class TipperFactory {
                     }
                 };
                 */
+                return null;
+            }
+
+            @Override
+            public Class<N> getPsiClass() {
                 return null;
             }
 

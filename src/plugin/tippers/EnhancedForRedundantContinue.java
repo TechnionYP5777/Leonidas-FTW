@@ -1,5 +1,6 @@
 package plugin.tippers;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiForeachStatement;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
@@ -10,8 +11,9 @@ import plugin.tipping.Tipper;
  * @since 2016.12.1
  */
 public class EnhancedForRedundantContinue implements Tipper<PsiForeachStatement> {
+
     @Override
-    public boolean canTip(PsiForeachStatement element) {
+    public boolean canTip(PsiElement element) {
         return false;
     }
 
@@ -23,5 +25,10 @@ public class EnhancedForRedundantContinue implements Tipper<PsiForeachStatement>
     @Override
     public Tip tip(PsiForeachStatement node) {
         return null;
+    }
+
+    @Override
+    public Class<PsiForeachStatement> getPsiClass() {
+        return PsiForeachStatement.class;
     }
 }

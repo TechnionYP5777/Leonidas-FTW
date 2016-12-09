@@ -9,7 +9,7 @@ import com.intellij.psi.PsiElement;
  */
 public interface Tipper<T extends PsiElement> {
 
-    boolean canTip(T element);
+    boolean canTip(PsiElement e);
 
     default String description() {
         return getClass().getSimpleName();
@@ -19,8 +19,6 @@ public interface Tipper<T extends PsiElement> {
 
     Tip tip(final T node);
 
-    default Class<? extends PsiElement> getPsiClass() {
-        return PsiElement.class;
-    }
+    Class<T> getPsiClass();
 
 }

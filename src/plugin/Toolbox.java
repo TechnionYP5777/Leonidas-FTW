@@ -1,7 +1,9 @@
 package plugin;
 
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementFactory;
+import com.intellij.psi.PsiFile;
 import plugin.tippers.LambdaExpressionRemoveRedundantCurlyBraces;
 import plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
 import plugin.tipping.Tipper;
@@ -40,12 +42,29 @@ public enum Toolbox {
         return this;
     }
 
-    public Toolbox executeAllTippers(PsiElementFactory elementFactory, PsiElement element) {
+    public Toolbox executeAllTippers(PsiElement element, Project project, PsiFile psiFile) {
         tipperMap.values().stream() //
                 .filter(tipper -> tipper.canTip(element)) //
-                .forEach(tipper -> tipper.tip(element));
+                .forEach(tipper -> {
+                    new WriteCommandAction.Simple(project, psiFile) {
+                        @Override
+                        protected void run() throws Throwable {
+                            tipper.tip(element).go(null);
+                        }
+                    }.execute();
+                });
 
         return this;
+    }
+
+    /**
+     * Can element by spartanized
+     *
+     * @param element JD
+     * @return true iff there exists a tip that tip.canTip(element) is true
+     */
+    public boolean canTip(PsiElement element) {
+        return tipperMap.values().stream().anyMatch(tip -> tip.canTip(element));
     }
 
 

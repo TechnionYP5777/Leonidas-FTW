@@ -1,11 +1,11 @@
 <idea-plugin version="2">
   <id>il.ac.technion.yearlyproject2016.team8</id>
-  <name>Spartanizer INTELLIJ</name>
+  <name>plugin.SpartanizerAction INTELLIJ</name>
   <version>0.1</version>
   <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">Team 8</vendor>
 
   <description><![CDATA[
-      Spartanizer for INTELLIJ.
+      plugin.SpartanizerAction for INTELLIJ.
     ]]></description>
 
   <change-notes><![CDATA[
@@ -23,14 +23,14 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <annotator language="JAVA" implementationClass="plugin.SimpleAnnotator"/>
+    <annotator language="JAVA" implementationClass="plugin.SpartanizerAnnotator"/>
   </extensions>
 
   <actions>
     <!-- Add your actions here -->
 
-      <action id="myPlugin" class="Spartanizer" text="Spartanizer"
-              description="finds all methods in the file that have exactly two parameters, and changes their names to 'this_is','sparta'">
+    <action id="myPlugin" class="plugin.SpartanizerAction" text="Spartanizer"
+            description="finds all methods in the file that have exactly two parameters, and changes their names to 'this_is','sparta'">
       <add-to-group group-id="CodeFormatGroup" anchor="last"/>
       <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 9"/>
     </action>

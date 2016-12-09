@@ -2,6 +2,7 @@ package plugin.tippers;
 
 import auxilary_layer.iz;
 import auxilary_layer.step;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLambdaExpression;
 import com.intellij.psi.PsiReturnStatement;
 import com.intellij.psi.PsiStatement;
@@ -16,7 +17,11 @@ import plugin.tipping.Tipper;
 public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLambdaExpression> {
 
     @Override
-    public boolean canTip(PsiLambdaExpression element) {
+    public boolean canTip(PsiElement e) {
+        return e instanceof PsiLambdaExpression && canTip((PsiLambdaExpression) e);
+    }
+
+    private boolean canTip(PsiLambdaExpression element) {
         return iz.block(element.getBody()) && step.statements(step.blockBody(element)).size() == 1 //
                 && iz.returnStatement(step.statements(step.blockBody(element)).get(0));
     }
@@ -35,6 +40,11 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
                 element.getBody().replace(step.expression((PsiReturnStatement) s));
             }
         };
+    }
+
+    @Override
+    public Class<PsiLambdaExpression> getPsiClass() {
+        return PsiLambdaExpression.class;
     }
 
 }

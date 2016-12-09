@@ -23,7 +23,7 @@ public enum haz {
                     PsiEnumConstant d = az.enumConstant(e);
                     super.visitElement(d);
                     b.inner = Boolean.TRUE;
-                } else if(iz.fieldDecleration(e)){
+                } else if (iz.fieldDeclaration(e)) {
                     PsiField d = az.fieldDeclaration(e);
                     super.visitElement(d);
                     b.inner = Boolean.TRUE;
@@ -48,7 +48,7 @@ public enum haz {
                     PsiEnumConstant d = az.enumConstant(e);
                     super.visitElement(d);
                     b.inner = d.getName().equals("¢");
-                } else if(iz.fieldDecleration(e)){
+                } else if (iz.fieldDeclaration(e)) {
                     PsiField d = az.fieldDeclaration(e);
                     super.visitElement(d);
                     b.inner = d.getName().equals("¢");

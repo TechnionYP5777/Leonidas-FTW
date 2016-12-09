@@ -35,7 +35,7 @@ public enum az {
     }
 
     public static PsiField fieldDeclaration(PsiElement element) {
-           return element != null && iz.fieldDecleration(element) ? (PsiField) element : null;
+        return element != null && iz.fieldDeclaration(element) ? (PsiField) element : null;
     }
 
 
