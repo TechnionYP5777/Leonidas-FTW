@@ -22,8 +22,8 @@ public enum az {
         return element != null && iz.statement(element) ? (PsiStatement) element : null;
     }
 
-    public static PsiBlockStatement block(PsiElement element) {
-        return element != null && iz.block(element) ? (PsiBlockStatement) element : null;
+    public static PsiCodeBlock block(PsiElement element) {
+        return element != null && iz.block(element) ? (PsiCodeBlock) element : null;
     }
 
     public static PsiDeclarationStatement declarationStatement(PsiElement element) {
@@ -36,6 +36,14 @@ public enum az {
 
     public static PsiField fieldDeclaration(PsiElement element) {
         return element != null && iz.fieldDeclaration(element) ? (PsiField) element : null;
+    }
+
+    public static PsiExpressionStatement expressionStatement(PsiElement element) {
+        return element != null && iz.expressionStatement(element) ? (PsiExpressionStatement) element : null;
+    }
+
+    public static PsiMethodCallExpression methodInvocation(PsiElement element) {
+        return element != null && iz.methodInvocation(element) ? (PsiMethodCallExpression) element : null;
     }
 
 

@@ -24,6 +24,6 @@ public class PsiRewrite {
     }
 
     public PsiFileFactory getFileFactory(){
-        return fileFactory;
+                return fileFactory;
     }
 }

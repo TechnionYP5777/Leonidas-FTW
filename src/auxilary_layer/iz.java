@@ -1,6 +1,7 @@
 package auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiTypeElementImpl;
 
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
@@ -74,4 +75,10 @@ public enum iz {
     public static boolean returnStatement(PsiElement element) {
         return typeCheck(PsiReturnStatement.class, element);
     }
+
+    public static boolean type(PsiElement element) { return typeCheck(PsiTypeElement.class, element); }
+
+    public static boolean methodInvocation(PsiElement element) { return typeCheck(PsiMethodCallExpression.class, element); }
+
+    public static boolean expressionStatement(PsiElement element) { return typeCheck(PsiExpressionStatement.class, element); }
 }

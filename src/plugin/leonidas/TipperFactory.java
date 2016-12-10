@@ -82,11 +82,11 @@ public class TipperFactory {
             @Override public Tip tip(final N n) {
                 /*
                 return new Tip(description(n), n, this.getClass()) {
-                    @Override public void go(final PsiRewrite r){ //, final TextEditGroup g) {
-                        //r.replace(n, m.replacement(n), g);
+                    @Override public void go(final PsiRewrite r){
+                        r.replace(n, m.replacement(n));
                     }
-                };
-                */
+                };*/
+
                 return null;
             }
 
