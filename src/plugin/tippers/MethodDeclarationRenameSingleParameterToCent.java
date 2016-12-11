@@ -1,13 +1,10 @@
 package plugin.tippers;
 
-import auxilary_layer.PsiRewrite;
-import auxilary_layer.haz;
-import auxilary_layer.iz;
-import auxilary_layer.step;
+import auxilary_layer.*;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiReturnStatement;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
 
@@ -46,8 +43,12 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
 
         return new Tip(description(m), m, this.getClass()) {
             @Override public void go(final PsiRewrite r){
+                // Done like this because who knows if it is mutable?
+                PsiIdentifier cent = JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier("¢");
+                PsiIdentifier i = JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier(m.getParameterList().getParameters()[0].getNameIdentifier().getText());
                 r.replace(m.getParameterList().getParameters()[0].getNameIdentifier(),
-                        JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier("¢"));
+                        cent);
+                Utils.getAllReferences(m.getBody(), i).stream().forEach(s -> r.replace(s, cent));
             }
         };
 

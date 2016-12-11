@@ -6,9 +6,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 
 /**
- * Created by szarecki on 09/12/16.
+ * @author Oren Afek
+ * @since 2016.12.9
  */
-public enum Spartanizer {
+
+enum Spartanizer {
     ;
 
     static boolean canTip(PsiElement element) {
@@ -18,11 +20,5 @@ public enum Spartanizer {
     static void spartanizeCode(PsiClass psiClass, PsiElement element, Project project, PsiFile psiFile) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.executeAllTippers(element, project, psiFile);
-        /*new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()) {
-            @Override
-            protected void run() throws Throwable {
-                toolbox.executeAllTippers(element, project, psiFile);
-            }
-        }.execute();*/
     }
 }

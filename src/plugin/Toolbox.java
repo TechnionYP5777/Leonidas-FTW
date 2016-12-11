@@ -45,17 +45,7 @@ public enum Toolbox {
     public Toolbox executeAllTippers(PsiElement element, Project project, PsiFile psiFile) {
         tipperMap.values().stream() //
                 .filter(tipper -> tipper.canTip(element)) //
-                .forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project))
-
-                /*{
-                    new WriteCommandAction.Simple(project, psiFile) {
-                        @Override
-                        protected void run() throws Throwable {
-                            tipper.tip(element).go(new PsiRewrite(project, psiFile));
-                        }
-                    }.execute();
-                }*/);
-
+                .forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project)));
         return this;
     }
 

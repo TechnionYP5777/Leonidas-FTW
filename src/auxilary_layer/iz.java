@@ -1,7 +1,13 @@
 package auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiEnumConstantImpl;
+import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
+import com.intellij.psi.impl.source.tree.java.PsiCodeBlockImpl;
+import com.intellij.psi.impl.source.tree.java.PsiExpressionStatementImpl;
+import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
+import com.intellij.psi.impl.source.tree.java.PsiReturnStatementImpl;
 
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
@@ -24,7 +30,7 @@ public enum iz {
     }
 
     public static boolean block(PsiElement element) {
-        return typeCheck(PsiCodeBlock.class, element);
+        return typeCheck(PsiCodeBlockImpl.class, element);
     }
 
     public static boolean methodCallExpression(PsiElement element) {
@@ -36,11 +42,11 @@ public enum iz {
     }
 
     public static boolean enumConstant(PsiElement element) {
-        return typeCheck(PsiEnumConstant.class, element);
+        return typeCheck(PsiEnumConstantImpl.class, element);
     }
 
     public static boolean fieldDeclaration(PsiElement element) {
-        return typeCheck(PsiField.class, element);
+        return typeCheck(PsiFieldImpl.class, element);
     }
 
     public static boolean abstract$(PsiMethod element) {
@@ -73,12 +79,22 @@ public enum iz {
     }
 
     public static boolean returnStatement(PsiElement element) {
-        return typeCheck(PsiReturnStatement.class, element);
+        return typeCheck(PsiReturnStatementImpl.class, element);
     }
 
-    public static boolean type(PsiElement element) { return typeCheck(PsiTypeElement.class, element); }
+    public static boolean type(PsiElement element) {
+        return typeCheck(PsiTypeElementImpl.class, element);
+    }
 
-    public static boolean methodInvocation(PsiElement element) { return typeCheck(PsiMethodCallExpression.class, element); }
+    public static boolean methodInvocation(PsiElement element) {
+        return typeCheck(PsiMethodCallExpressionImpl.class, element);
+    }
 
-    public static boolean expressionStatement(PsiElement element) { return typeCheck(PsiExpressionStatement.class, element); }
+    public static boolean expressionStatement(PsiElement element) {
+        return typeCheck(PsiExpressionStatementImpl.class, element);
+    }
+
+    public static boolean identifier(PsiElement element) {
+        return typeCheck(PsiIdentifier.class, element);
+    }
 }

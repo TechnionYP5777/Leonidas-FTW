@@ -4,7 +4,9 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Oren Afek
@@ -62,6 +64,31 @@ public enum Utils {
         return from != null && (from == to ||
                 conforms(from.getSuperclass(), to) || (from.getInterfaces() != null &&
                 Arrays.stream(from.getInterfaces()).anyMatch(i -> conforms(i, to))));
+    }
+
+    public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier i) {
+        List<PsiIdentifier> identifiers = new ArrayList<>();
+
+        visitRecursive(root, new JavaElementVisitor() {
+            @Override
+            public void visitIdentifier(PsiIdentifier identifier) {
+                super.visitIdentifier(identifier);
+                if (identifier.getText().equals(i.getText())) {
+                    identifiers.add(identifier);
+                }
+            }
+        });
+        return identifiers;
+    }
+
+    public static void visitRecursive(PsiElement element, JavaElementVisitor visitor) {
+        if (element == null) {
+            return;
+        }
+        element.accept(visitor);
+        for (PsiElement child : element.getChildren()) {
+            visitRecursive(child, visitor);
+        }
     }
 
 

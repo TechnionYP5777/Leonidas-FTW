@@ -46,6 +46,8 @@ public enum az {
         return element != null && iz.methodInvocation(element) ? (PsiMethodCallExpression) element : null;
     }
 
-
+    public static PsiIdentifier identifier(PsiElement element) {
+        return element != null && iz.identifier(element) ? (PsiIdentifier) element : null;
+    }
 
 }

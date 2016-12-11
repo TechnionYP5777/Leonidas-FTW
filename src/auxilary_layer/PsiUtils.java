@@ -1,11 +1,15 @@
 package auxilary_layer;
 
 import com.intellij.openapi.editor.Document;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 
 /**
- * Created by maorroey on 12/9/2016.
+ * @author Roy Maor
+ * @since 2016.12.09
  */
+
 public class PsiUtils {
     public static Document getDocumentFromPsiElement(PsiElement ele){
         PsiFile associatedFile = ele.getContainingFile();

@@ -30,6 +30,10 @@ public enum step {
         return method != null ? firstParameter(method.getParameterList()) : null;
     }
 
+    public static PsiStatement firstStatement(PsiCodeBlock block) {
+        return block != null && statements(block) != null && statements(block).size() >= 1 ?
+                statements(block).get(0) : null;
+    }
     public static String name(PsiNamedElement element) {
         return element != null ? element.getName() : null;
     }
@@ -44,6 +48,10 @@ public enum step {
 
     public static PsiExpression expression(PsiReturnStatement s) {
         return s != null ? s.getReturnValue() : null;
+    }
+
+    public static PsiExpression expression(PsiExpressionStatement s) {
+        return s != null ? s.getExpression() : null;
     }
 
     public static PsiType returnType(PsiMethod m) {
