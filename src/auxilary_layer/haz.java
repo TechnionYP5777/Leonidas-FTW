@@ -6,7 +6,8 @@ import java.util.Arrays;
 
 
 /**
- * Created by melanyc on 12/1/2016.
+ * @author Michal Cohen
+ * @since 2016.12.1
  */
 public enum haz {
     ;

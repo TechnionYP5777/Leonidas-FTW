@@ -1,6 +1,5 @@
 package plugin;
 
-import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
@@ -18,11 +17,12 @@ public enum Spartanizer {
 
     static void spartanizeCode(PsiClass psiClass, PsiElement element, Project project, PsiFile psiFile) {
         Toolbox toolbox = Toolbox.getInstance();
-        new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()) {
+        toolbox.executeAllTippers(element, project, psiFile);
+        /*new WriteCommandAction.Simple(psiClass.getProject(), psiClass.getContainingFile()) {
             @Override
             protected void run() throws Throwable {
                 toolbox.executeAllTippers(element, project, psiFile);
             }
-        }.execute();
+        }.execute();*/
     }
 }

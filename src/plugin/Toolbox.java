@@ -1,6 +1,6 @@
 package plugin;
 
-import com.intellij.openapi.command.WriteCommandAction;
+import auxilary_layer.PsiRewrite;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -45,14 +45,16 @@ public enum Toolbox {
     public Toolbox executeAllTippers(PsiElement element, Project project, PsiFile psiFile) {
         tipperMap.values().stream() //
                 .filter(tipper -> tipper.canTip(element)) //
-                .forEach(tipper -> {
+                .forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project))
+
+                /*{
                     new WriteCommandAction.Simple(project, psiFile) {
                         @Override
                         protected void run() throws Throwable {
-                            tipper.tip(element).go(null);
+                            tipper.tip(element).go(new PsiRewrite(project, psiFile));
                         }
                     }.execute();
-                });
+                }*/);
 
         return this;
     }
