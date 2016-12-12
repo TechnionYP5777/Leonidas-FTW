@@ -22,10 +22,7 @@ public class Range {
         this.stop = r.stop;
     }
 
-    public Range merge(Range r){
-        if(this.start>r.start || r.stop<this.stop){
-            return null;
-        }
-        return new Range(this.start,r.stop);
+    public Range merge(Range ¢) {
+        return this.start > ¢.start || ¢.stop < this.stop ? null : new Range(this.start, ¢.stop);
     }
 }

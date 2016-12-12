@@ -11,8 +11,8 @@ import com.intellij.psi.PsiFile;
  */
 
 public class PsiUtils {
-    public static Document getDocumentFromPsiElement(PsiElement ele){
-        PsiFile associatedFile = ele.getContainingFile();
+    public static Document getDocumentFromPsiElement(PsiElement e) {
+        PsiFile associatedFile = e.getContainingFile();
         return PsiDocumentManager.getInstance( associatedFile.getProject()).getDocument(associatedFile);
     }
 }

@@ -129,13 +129,7 @@ public interface iz_old {
      * literal
      */
     static boolean booleanLiteral(final PsiElement ¢) {
-        if (¢ instanceof PsiLiteral) {
-            if (((PsiLiteral) ¢).getValue() instanceof Boolean) {
-                return true;
-            }
-        }
-        return false;
-
+        return ¢ instanceof PsiLiteral && ((PsiLiteral) ¢).getValue() instanceof Boolean;
     }
 
     /**
@@ -144,16 +138,8 @@ public interface iz_old {
      * null literal or false otherwise
      */
     static boolean booleanOrNullLiteral(final PsiElement ¢) {
-        if (booleanLiteral(¢)) {
-            return true;
-        }
-        if (¢ instanceof PsiPrimitiveType) {
-            if (((PsiPrimitiveType) ¢).getPresentableText().equals(PsiType.NULL.getPresentableText())) {
-                return true;
-            }
-        }
-        return false;
-
+        return booleanLiteral(¢) || ¢ instanceof PsiPrimitiveType
+                && ((PsiPrimitiveType) ¢).getPresentableText().equals(PsiType.NULL.getPresentableText());
     }
 
     /**
@@ -314,8 +300,7 @@ public interface iz_old {
 //    }
 
     static boolean emptyStringLiteral(final PsiLiteral ¢) {
-        String s = (String) ¢.getValue();
-        return ¢ != null && s.length() == 0;
+        return ¢ != null && ((String) ¢.getValue()).length() == 0;
     }
 
     static boolean enhancedFor(final PsiElement ¢) {

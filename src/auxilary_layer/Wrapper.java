@@ -19,20 +19,20 @@ public class Wrapper<T> {
     }
 
     @Override
-    public final boolean equals(@Nullable final Object o) {
-        return super.equals(o) || o != null &&
-                getClass() == o.getClass() &&
-                equals((Wrapper<?>) o);
+    public final boolean equals(@Nullable final Object ¢) {
+        return super.equals(¢) || ¢ != null &&
+                getClass() == ¢.getClass() &&
+                equals((Wrapper<?>) ¢);
     }
 
     /**
-     * @param w JD
+     * @param ¢ JD
      * @return <code><b>true</b></code>
      * <i>iff</i> method <code>equals</code>
      * returns <code><b>true</b></code> for the wrapped objects.
      */
-    public boolean equals(final Wrapper<?> w) {
-        return inner == null ? w.inner == null : inner.equals(w.inner);
+    public boolean equals(final Wrapper<?> ¢) {
+        return inner == null ? ¢.inner == null : inner.equals(¢.inner);
     }
 
     /**

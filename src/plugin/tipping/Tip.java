@@ -2,8 +2,8 @@ package plugin.tipping;
 
 
 import auxilary_layer.PsiRewrite;
-import com.intellij.psi.*;
 import auxilary_layer.PsiUtils;
+import com.intellij.psi.PsiElement;
 
 /**
  *
@@ -18,32 +18,14 @@ import auxilary_layer.PsiUtils;
  */
 
 public abstract class Tip extends Range {
-    /** A factory function that converts a sequence of PSIElements into a
-     * {@link Range}
-     * @param n arbitrary
-     * @param ns */
-    static Range range(final PsiElement n, final PsiElement... ns) {
-        return range(singleNodeRange(n), ns);
-    }
-
-    static Range range(final Range r, final PsiElement... ns) {
-        Range $ = r;
-        for (final PsiElement ¢ : ns)
-            $ = $.merge(singleNodeRange(¢));
-        return $;
-    }
-
-    static Range singleNodeRange(final PsiElement ¢) {
-        final int $ = ¢.getTextOffset();
-        return new Range($, $ + ¢.getTextLength());
-    }
-
     /** A textual description of the action to be performed **/
     public final String description;
-    /** The line number of the first character to be rewritten **/
-    public int lineNumber = -1;
     /** The tipper class that supplied that tip */
     @SuppressWarnings("rawtypes") public final Class<? extends Tipper> tipperClass;
+    /**
+     * The line number of the first character to be rewritten
+     **/
+    public int lineNumber = -1;
 
     /** Instantiates this class
      * @param description a textual description of the changes described by this
@@ -60,6 +42,29 @@ public abstract class Tip extends Range {
         super(other);
         this.description = description;
         this.tipperClass = tipperClass;
+    }
+
+    /**
+     * A factory function that converts a sequence of PSIElements into a
+     * {@link Range}
+     *
+     * @param e  arbitrary
+     * @param es
+     */
+    static Range range(final PsiElement e, final PsiElement... es) {
+        return range(singleNodeRange(e), es);
+    }
+
+    static Range range(final Range r, final PsiElement... es) {
+        Range $ = r;
+        for (final PsiElement ¢ : es)
+            $ = $.merge(singleNodeRange(¢));
+        return $;
+    }
+
+    static Range singleNodeRange(final PsiElement ¢) {
+        final int $ = ¢.getTextOffset();
+        return new Range($, $ + ¢.getTextLength());
     }
 
     /** Convert the rewrite into changes on an {@link PsiRewrite}

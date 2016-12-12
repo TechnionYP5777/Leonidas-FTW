@@ -25,11 +25,8 @@ public class SpartanizerAction extends AnAction {
         PsiElement element = getPsiElementFromContext(e);
         PsiClass psiClass = getPsiClassFromContext(e);
 
-        if (element == null || psiClass == null) {
-            return;
-        }
-
-        Spartanizer.spartanizeCode(psiClass, element, getEventProject(e), psiClass.getContainingFile());
+        if (element != null && psiClass != null)
+            Spartanizer.spartanizeCode(psiClass, element, getEventProject(e), psiClass.getContainingFile());
 
     }
 
@@ -43,25 +40,17 @@ public class SpartanizerAction extends AnAction {
     private PsiElement getPsiElementFromContext(AnActionEvent e) {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
-        int start = editor.getSelectionModel().getSelectionStart();
-        int end = editor.getSelectionModel().getSelectionEnd();
-        PsiElement psiElement = psiFile.findElementAt(start);
-
-        if (psiFile == null || editor == null) {
-            return null;
-        }
-        int offset = editor.getCaretModel().getOffset();
-        return psiFile.findElementAt(offset);
+        return psiFile == null || editor == null ? null : psiFile.findElementAt(editor.getCaretModel().getOffset());
     }
 
     /**
-     * @param e the action event
+     * @param ¢ the action event
      * @return the psiClass extracted from the event's context
      **/
 
     @Nullable
-    private PsiClass getPsiClassFromContext(AnActionEvent e) {
-        return PsiTreeUtil.getParentOfType(getPsiElementFromContext(e), PsiClass.class);
+    private PsiClass getPsiClassFromContext(AnActionEvent ¢) {
+        return PsiTreeUtil.getParentOfType(getPsiElementFromContext(¢), PsiClass.class);
     }
 
 

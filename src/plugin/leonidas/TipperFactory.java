@@ -3,7 +3,6 @@ package plugin.leonidas;
 import com.intellij.psi.PsiBlockStatement;
 import com.intellij.psi.PsiElement;
 import plugin.tipping.Tip;
-import auxilary_layer.*;
 
 /**
  * @Author Roey Maor
@@ -18,7 +17,8 @@ public class TipperFactory {
     private static UserDefinedTipper<PsiBlockStatement> newSubBlockTipper(final String pattern, final String replacement, final String description) {
         final Matcher m = new Matcher(pattern, replacement);
         return new UserDefinedTipper<PsiBlockStatement>() {
-            @Override public Tip tip(final PsiBlockStatement n) {
+            @Override
+            public Tip tip(final PsiBlockStatement __) {
                 /*
                 return new Tip(description(n), n, this.getClass(), m.getMatchedNodes(az.block(n))) {
                     @Override public void go(final PsiRewrite r){ //final TextEditGroup g) {
@@ -36,8 +36,8 @@ public class TipperFactory {
             }
 
             @Override
-            public boolean canTip(PsiElement e) {
-                return e instanceof PsiBlockStatement && prerequisite((PsiBlockStatement) e);
+            public boolean canTip(PsiElement ¢) {
+                return ¢ instanceof PsiBlockStatement && prerequisite((PsiBlockStatement) ¢);
             }
 
             @Override protected boolean prerequisite(final PsiBlockStatement ¢) {
@@ -48,8 +48,9 @@ public class TipperFactory {
                 return description;
             }
 
-            @Override public PsiElement getMatching(final PsiElement n, final String s) {
-                return m.getMatching(n, s);
+            @Override
+            public PsiElement getMatching(final PsiElement e, final String s) {
+                return m.getMatching(e, s);
             }
         };
     }
@@ -71,7 +72,7 @@ public class TipperFactory {
         final Matcher m = new Matcher(_pattern, _replacement);
         return new UserDefinedTipper<N>() {
             @Override
-            public boolean canTip(PsiElement e) {
+            public boolean canTip(PsiElement __) {
                 return false;
             }
 
@@ -79,7 +80,8 @@ public class TipperFactory {
                 return description;
             }
 
-            @Override public Tip tip(final N n) {
+            @Override
+            public Tip tip(final N __) {
                 /*
                 return new Tip(description(n), n, this.getClass()) {
                     @Override public void go(final PsiRewrite r){
@@ -99,8 +101,9 @@ public class TipperFactory {
                 return m.matches(¢);
             }
 
-            @Override public PsiElement getMatching(final PsiElement n, final String s) {
-                return m.getMatching(n, s);
+            @Override
+            public PsiElement getMatching(final PsiElement e, final String s) {
+                return m.getMatching(e, s);
             }
         };
     }

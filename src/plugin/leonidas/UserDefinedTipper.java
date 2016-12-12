@@ -19,8 +19,8 @@ public abstract class UserDefinedTipper<N extends PsiElement> implements Tipper<
      *         conditions needed for a tip to be possible. */
     protected abstract boolean prerequisite(final N ¢);
 
-    /** @param n the PsiElement to be inspected.
+    /** @param e the PsiElement to be inspected.
      * @param s the pattern matching to be found in the PsiElement (for example $X1).
      * @return the PsiElement representing s. */
-    public abstract PsiElement getMatching(PsiElement n, String s);
+    public abstract PsiElement getMatching(PsiElement e, String s);
 }

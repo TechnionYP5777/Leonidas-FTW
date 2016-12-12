@@ -16,8 +16,8 @@ import static auxilary_layer.step.*;
 public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLambdaExpression> {
 
     @Override
-    public boolean canTip(PsiElement e) {
-        return e instanceof PsiLambdaExpression && canTip((PsiLambdaExpression) e);
+    public boolean canTip(PsiElement ¢) {
+        return ¢ instanceof PsiLambdaExpression && canTip((PsiLambdaExpression) ¢);
     }
 
     private boolean canTip(PsiLambdaExpression element) {
@@ -34,7 +34,7 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
     }
 
     @Override
-    public String description(PsiLambdaExpression lambdaExpression) {
+    public String description(PsiLambdaExpression __) {
         return null;
     }
 

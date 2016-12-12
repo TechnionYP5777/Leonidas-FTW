@@ -7,7 +7,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 
 /**
- * @Author Roey Maor
+ * @author Roey Maor
  * @since 3/12/2016.
  */
 
@@ -16,18 +16,18 @@ public class PsiRewrite {
     private PsiFile psiFile;
     private Project project;
 
-    public PsiRewrite psiFile(PsiFile psiFile) {
-        this.psiFile = psiFile;
+    public PsiRewrite psiFile(PsiFile ¢) {
+        this.psiFile = ¢;
         return this;
     }
 
-    public PsiRewrite project(Project project) {
-        this.project = project;
+    public PsiRewrite project(Project ¢) {
+        this.project = ¢;
         return this;
     }
 
-    public PsiRewrite fileFactory(PsiFileFactory fileFactory) {
-        this.fileFactory = fileFactory;
+    public PsiRewrite fileFactory(PsiFileFactory ¢) {
+        this.fileFactory = ¢;
         return this;
     }
 
