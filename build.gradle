@@ -1,0 +1,56 @@
+group 'il.technion.yearlyproject2016.team8'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 8
+
+repositories {
+    maven {
+        url 'https://repo.eclipse.org/content/groups/releases/'
+    }
+    maven {
+        url 'https://repo.eclipse.org/content/repositories/eclipse-staging/'
+    }
+	mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+dependencies {
+    compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.10.0.v20140604-1726'
+    compile 'org.eclipse.core:org.eclipse.core.resources:3.8.101.v20130717-0806'
+    compile 'org.eclipse.core:org.eclipse.core.runtime:3.9.0.v20130326-1255'
+    compile 'org.eclipse.equinox:org.eclipse.equinox.common:3.6.200.v20130402-1505'
+    compile 'org.eclipse:osgi:3.9.1-v20140110-1610'
+    compile 'org.eclipse.text:org.eclipse.text:3.5.101'
+    compile group: 'org.eclipse.core', name: 'org.eclipse.core.contenttype', version: '3.4.200.v20130326-1255'
+    compile group: 'org.eclipse.core', name: 'org.eclipse.core.jobs', version: '3.5.100'
+    compile group: 'org.eclipse.equinox', name: 'preferences', version: '3.5.200-v20140224-1527'
+}
+
+dependencies {
+    compile files('libs/il.org.spartan.plugin_2.6.3.jar', 'libs/spartan-1.2.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+    maven {
+      url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
+    }
+
+  }
+  dependencies {
+    classpath "gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.1.10"
+  }
+
+}
+
+apply plugin: 'org.jetbrains.intellij'
