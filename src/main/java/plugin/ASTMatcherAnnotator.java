@@ -1,41 +1,34 @@
+package plugin;
+
 import bridge.PsiAstMatching;
-import bridge.TipperExecute;
-import com.intellij.codeInsight.ExternalAnnotationsManager;
-import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.lang.annotation.Annotation;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.markup.EffectType;
-import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.IncorrectOperationException;
-import il.org.spartan.spartanizer.tipping.Tipper;
-import org.apache.commons.lang.math.RandomUtils;
-import org.eclipse.jdt.core.dom.ASTNode;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.ExternalAnnotator;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.markup.EffectType;
+import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiRecursiveElementVisitor;
-import org.jetbrains.annotations.Nls;
+import il.org.spartan.spartanizer.tipping.Tipper;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import plugin.intentions.TIpIntention;
 
 import java.awt.*;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by roei on 12/9/16.
  */
 
-public class d extends ExternalAnnotator<Map, Map> {
+public class ASTMatcherAnnotator extends ExternalAnnotator<Map, Map> {
     @Nullable
     @Override
     public Map collectInformation(@NotNull PsiFile file) {
-        return(new PsiAstMatching(file)).getMapping();
+        return (new PsiAstMatching(file)).getMapping();
     }
 
     @Nullable
@@ -61,10 +54,10 @@ public class d extends ExternalAnnotator<Map, Map> {
                     return;
                 }
 
-                Treasure treasure = (Treasure)ApplicationManager.getApplication().getComponent("spartanizer.Treasure");
-                for(Tipper t : treasure.getAllTipers()) {
-                    if(t.myActualOperandsClass() != astNode.getClass() && t.myActualOperandsClass() != null) continue;
-                    if(!t.canTip(astNode) || t.cantTip(astNode)) continue;
+                Treasure treasure = (Treasure) ApplicationManager.getApplication().getComponent("spartanizer.plugin.Treasure");
+                for (Tipper t : treasure.getAllTipers()) {
+                    if (t.myActualOperandsClass() != astNode.getClass() && t.myActualOperandsClass() != null) continue;
+                    if (!t.canTip(astNode) || t.cantTip(astNode)) continue;
                     Annotation annotation = holder.createInfoAnnotation(element, astNode.getClass().getSimpleName());
                     annotation.setEnforcedTextAttributes(
                             new TextAttributes(null, null, Color.RED, EffectType.BOXED, 0));

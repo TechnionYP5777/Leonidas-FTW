@@ -1,3 +1,5 @@
+package plugin;
+
 import com.intellij.openapi.components.ApplicationComponent;
 import il.org.spartan.spartanizer.research.TipperFactory;
 import il.org.spartan.spartanizer.tipping.Tipper;
@@ -7,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by roei on 12/7/16.
+ * @author RoeiRaz
  */
 public class Treasure implements ApplicationComponent {
-    ArrayList<Tipper> tippers = new ArrayList<>();
+    private ArrayList<Tipper> tippers = new ArrayList<>();
 
     @Override
     public void initComponent() {
@@ -36,10 +38,10 @@ public class Treasure implements ApplicationComponent {
     @NotNull
     @Override
     public String getComponentName() {
-        return "spartanizer.Treasure";
+        return "spartanizer.plugin.Treasure";
     }
 
-    public List<Tipper> getAllTipers() {
+    List<Tipper> getAllTipers() {
         return this.tippers;
     }
 }

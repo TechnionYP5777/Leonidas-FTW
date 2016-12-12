@@ -2,7 +2,6 @@ group 'il.technion.yearlyproject2016.team8'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 
 sourceCompatibility = 8
 
@@ -33,7 +32,6 @@ dependencies {
 }
 
 dependencies {
-    compile files('libs/il.org.spartan.plugin_2.6.3.jar', 'libs/spartan-1.2.jar')
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 

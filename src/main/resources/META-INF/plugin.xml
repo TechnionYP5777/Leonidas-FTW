@@ -23,13 +23,13 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <externalAnnotator language="JAVA" implementationClass="d"/>
+        <externalAnnotator language="JAVA" implementationClass="plugin.ASTMatcherAnnotator"/>
     </extensions>
 
     <application-components>
         <component>
             <implementation-class>
-                Treasure
+                plugin.Treasure
             </implementation-class>
         </component>
     </application-components>
