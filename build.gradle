@@ -1,10 +1,9 @@
-group 'il.technion.yearlyproject2016.team8'
-version '1.0-SNAPSHOT'
+// Use plugins
+plugins {
+    id 'org.jetbrains.intellij' version '0.1.10'
+}
 
-apply plugin: 'java'
-
-sourceCompatibility = 8
-
+// Use repositories
 repositories {
     maven {
         url 'https://repo.eclipse.org/content/groups/releases/'
@@ -12,13 +11,19 @@ repositories {
     maven {
         url 'https://repo.eclipse.org/content/repositories/eclipse-staging/'
     }
-	mavenCentral()
+    mavenCentral()
 }
 
+// Apply plugins
+apply plugin: 'java'
+apply plugin: 'org.jetbrains.intellij'
+
+// Junit dependencies
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
+// JDT&more dependencies
 dependencies {
     compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.10.0.v20140604-1726'
     compile 'org.eclipse.core:org.eclipse.core.resources:3.8.101.v20130717-0806'
@@ -31,24 +36,12 @@ dependencies {
     compile group: 'org.eclipse.equinox', name: 'preferences', version: '3.5.200-v20140224-1527'
 }
 
+// Local libraries dependencies
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
-buildscript {
-  repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
-    maven {
-      url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
-    }
-
-  }
-  dependencies {
-    classpath "gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.1.10"
-  }
-
+// Tune intellij plugin
+intellij {
+    version 'IC-2016.3.1'
 }
-
-apply plugin: 'org.jetbrains.intellij'
