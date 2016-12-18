@@ -14,6 +14,8 @@ import java.util.Map;
 
 /**
  * @author RoeiRaz
+ *
+ * takes a PsiFile, makes a Psi and an AST (from jdt) out of it and creates mapping of each PsiElement to the corresponding ASTNode
  */
 public class PsiAstMatching {
     private final int defaultTolerance = 1;
@@ -37,12 +39,24 @@ public class PsiAstMatching {
     }
 
     //TODO @RoeiRaz Make sure that it makes sense and works.
+    /**
+     * @param psiElement
+     * @param astNode
+     * @return true if psiElement matches astNode and false otherwise
+     */
     private boolean matching(@NotNull final PsiElement psiElement, @NotNull final ASTNode astNode) {
 
         if (psiElement.getTextRange().getStartOffset() != astNode.getStartPosition()) return false;
         return psiElement.getTextRange().getEndOffset() == astNode.getStartPosition() + astNode.getLength();
     }
 
+    /**
+     * creates the mapping between the psi and the AST
+     *
+     * @param psiElement - root of psi subtree
+     * @param astNode - root of AST subtree
+     * @param tolerance - not used in the meantime
+     */
     private void connect(final PsiElement psiElement, final ASTNode astNode, int tolerance) {
         if (psiElement == null || astNode == null) return;
         if (matching(psiElement, astNode)) {
@@ -58,6 +72,9 @@ public class PsiAstMatching {
         }
     }
 
+    /**
+     * @return - the created mapping
+     */
     public Map<PsiElement, ASTNode> getMapping() {
         return this.nodeMap;
     }

@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by roei on 12/9/16.
+ *
+ * responsible for tips being shown in the intentions menu (when alt+enter is clicked)
  */
 public class TIpIntention implements IntentionAction {
     Tipper tipper;

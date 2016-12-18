@@ -9,9 +9,16 @@ import java.util.List;
 
 /**
  * @author RoeiRaz
+ *
+ * holds utilities methods for jdt AST
  */
 public class AstUtils {
     // TODO @RoeiRaz test it, or check for alternatives in il.org.spartan
+
+    /**
+     * @param astNode
+     * @return a list of astNode's direct children
+     */
     public static List<ASTNode> children(@NotNull ASTNode astNode) {
 
         List<ASTNode> children = new ArrayList<>();
