@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class Wrapper<T> {
     @Nullable
-    protected T inner;
+    T inner;
 
     public Wrapper() {
         this(null);
@@ -31,7 +31,7 @@ public class Wrapper<T> {
      * <i>iff</i> method <code>equals</code>
      * returns <code><b>true</b></code> for the wrapped objects.
      */
-    public boolean equals(final Wrapper<?> ¢) {
+    private boolean equals(final Wrapper<?> ¢) {
         return inner == null ? ¢.inner == null : inner.equals(¢.inner);
     }
 

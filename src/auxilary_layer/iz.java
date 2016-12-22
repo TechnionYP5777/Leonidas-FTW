@@ -4,10 +4,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiEnumConstantImpl;
 import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
-import com.intellij.psi.impl.source.tree.java.PsiCodeBlockImpl;
-import com.intellij.psi.impl.source.tree.java.PsiExpressionStatementImpl;
-import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
-import com.intellij.psi.impl.source.tree.java.PsiReturnStatementImpl;
+import com.intellij.psi.impl.source.tree.java.*;
 
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
@@ -96,5 +93,13 @@ public enum iz {
 
     public static boolean identifier(PsiElement element) {
         return typeCheck(PsiIdentifier.class, element);
+    }
+
+    public static boolean conditionalExpression(PsiElement element) {
+        return typeCheck(PsiConditionalExpressionImpl.class, element);
+    }
+
+    public static boolean nullExpression(PsiExpression e) {
+        return e.getText().equals("null");
     }
 }

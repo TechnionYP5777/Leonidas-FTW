@@ -59,6 +59,18 @@ public enum haz {
         return b.inner;
     }
 
+    public static boolean functionNamed(final PsiElement p, String name) {
+        final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
+        p.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethod(PsiMethod method) {
+                super.visitMethod(method);
+                b.inner = method.getName().equals(name) ? Boolean.TRUE : b.inner;
+            }
+        });
+        return b.inner;
+    }
+
 
 
 }

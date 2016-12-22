@@ -50,4 +50,8 @@ public enum az {
         return element != null && iz.identifier(element) ? (PsiIdentifier) element : null;
     }
 
+    public static PsiConditionalExpression conditionalExpression(PsiElement element) {
+        return element != null && iz.conditionalExpression(element) ? (PsiConditionalExpression) element : null;
+    }
+
 }
