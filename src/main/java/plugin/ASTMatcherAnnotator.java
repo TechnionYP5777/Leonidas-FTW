@@ -22,8 +22,6 @@ import java.util.Map;
 
 /**
  * Created by roei on 12/9/16.
- *
- * annotates parts of the source that a tip can be applied on (the red rectangles).
  */
 
 public class ASTMatcherAnnotator extends ExternalAnnotator<Map, Map> {

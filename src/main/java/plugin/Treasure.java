@@ -10,8 +10,6 @@ import java.util.List;
 
 /**
  * @author RoeiRaz
- *
- * holds all the active tippers
  */
 public class Treasure implements ApplicationComponent {
     private ArrayList<Tipper> tippers = new ArrayList<>();

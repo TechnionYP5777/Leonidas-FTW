@@ -6,9 +6,10 @@ import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.PsiTestCase;
 import utils.Wrapper;
 
+//TODO @RoeiRaz We are required to use JUnit3 here. check if there is a way to use JUnit4.
+
 /**
  * @author RoeiRaz
- * @author michalcohen
  */
 public class PsiAstMatchingTest extends PsiTestCase {
     @Override
@@ -30,5 +31,6 @@ public class PsiAstMatchingTest extends PsiTestCase {
             }
         });
         assert (count.inner == 1);
+        //System.out.println(file.getText());
     }
 }
