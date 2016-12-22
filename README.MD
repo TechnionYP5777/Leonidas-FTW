@@ -1,5 +1,16 @@
 #IntelliJ Spartanizer
 
+This is the Intellij version of the Spartanizer project of Eclipse.
+See https://github.com/SpartanRefactoring/Spartanizer
+
+# Contributors
+Oren Afek oren.afek[at]cs.technion.ac.il
+Anna Belozovsky annabel7[at]campus.technion.ac.il
+Michal Cohen melanyc[at]campus.technion.ac.il
+Amir Sagiv sagiva[at]campus.technion.ac.il
+Roey Maor sroeym[at]campus.technion.ac.il
+Roei Raz sroeiraz[at]campus.technion.ac.il
+
 ##Installation
 - Go to: https://github.com/TechnionYP5777/IntelliJ-Spartanizer/releases
 
