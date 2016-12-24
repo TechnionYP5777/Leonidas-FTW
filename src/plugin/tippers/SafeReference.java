@@ -51,7 +51,7 @@ public class SafeReference implements Tipper<PsiConditionalExpression> {
     private boolean firstScenario(PsiElement e){
         // (x == null) ? null : x.y
         return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.EQEQ) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("==")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
                 iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
                 iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
@@ -62,7 +62,7 @@ public class SafeReference implements Tipper<PsiConditionalExpression> {
     private boolean secondScenario(PsiElement e){
         // (null == x) ? null : x.y
         return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.EQEQ) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("==")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
                 iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
                 iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
@@ -73,7 +73,7 @@ public class SafeReference implements Tipper<PsiConditionalExpression> {
     private boolean thirdScenario(PsiElement e){
         // (x != null) ? x.y : null
         return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.NE) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("!=")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
                 iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
                 iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
@@ -84,7 +84,7 @@ public class SafeReference implements Tipper<PsiConditionalExpression> {
     private boolean fourthScenario(PsiElement e){
         // (null != x.y) ? x.y : null
         return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.NE) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("!=")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
                 iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
                 iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
