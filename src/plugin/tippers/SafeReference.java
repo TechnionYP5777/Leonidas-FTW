@@ -3,6 +3,7 @@ package plugin.tippers;
 import auxilary_layer.PsiRewrite;
 import auxilary_layer.az;
 import auxilary_layer.iz;
+import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.psi.*;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
@@ -36,7 +37,7 @@ public class SafeReference implements Tipper<PsiConditionalExpression> {
                     replacementString = az.referenceExpression(az.conditionalExpression(node).getThenExpression()).getQualifier().getText()
                             + "?." + az.referenceExpression(az.conditionalExpression(node).getThenExpression()).getReferenceNameElement().getText();
                 }
-                PsiExpression replacement = JavaPsiFacade.getElementFactory(node.getProject()).createExpressionFromText(replacementString,node);
+                PsiStatement replacement = JavaPsiFacade.getElementFactory(node.getProject()).createStatementFromText("\""+ replacementString+ "\"",node);
                 r.replace(node, replacement);
 
             }

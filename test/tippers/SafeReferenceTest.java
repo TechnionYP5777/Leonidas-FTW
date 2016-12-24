@@ -48,6 +48,7 @@ public class SafeReferenceTest extends PsiTestCase {
         SafeReference sf = new SafeReference();
         assertFalse(sf.canTip(exp));
     }
+
     public void testCanTipIllegal2() {
         PsiFile f = createDummyFile("test.java", "");
         PsiElement e = f.getNode().getPsi();
