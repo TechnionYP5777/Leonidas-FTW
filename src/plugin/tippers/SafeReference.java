@@ -1,11 +1,9 @@
 package plugin.tippers;
 
+import auxilary_layer.PsiRewrite;
 import auxilary_layer.az;
 import auxilary_layer.iz;
-import com.intellij.psi.JavaTokenType;
-import com.intellij.psi.PsiConditionalExpression;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
+import com.intellij.psi.*;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
 
@@ -15,57 +13,84 @@ import plugin.tipping.Tipper;
 public class SafeReference implements Tipper<PsiConditionalExpression> {
     @Override
     public boolean canTip(PsiElement e) {
-        // (x == null) ? null : x.y
-        boolean firstSenario =  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.EQEQ) &&
-                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
-                (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getReferenceNameElement().getText() ==
-                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText());
-        // (null == x) ? null : x.y
-        boolean secondSenario =  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.EQEQ) &&
-                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
-                (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getReferenceNameElement().getText() ==
-                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText());
-        // (x != null) ? x.y : null
-        boolean thirdSenario =  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.NE) &&
-                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
-                (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getReferenceNameElement().getText() ==
-                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText());
-        // (null != x.y) ? x.y : null
-        boolean fourthSenario =  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
-                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.NE) &&
-                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
-                (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getReferenceNameElement().getText() ==
-                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText());
-
-        return firstSenario || secondSenario || thirdSenario || fourthSenario;
-
-
+        return firstScenario(e) || secondScenario(e) || thirdScenario(e) || fourthScenario(e);
 
     }
 
     @Override
     public String description(PsiConditionalExpression psiConditionalExpression) {
-        return null;
+        return "Replace null conditional ternary with ?.";
     }
 
     @Override
     public Tip tip(PsiConditionalExpression node) {
-        return null;
+
+        return node == null || !canTip(node) ? null : new Tip(description(node), node, this.getClass()) {
+            @Override
+            public void go(final PsiRewrite r) {
+                String replacementString;
+                if(firstScenario(node) || secondScenario(node)){
+                    replacementString = az.referenceExpression(az.conditionalExpression(node).getElseExpression()).getQualifier().getText()
+                                        + "?." + az.referenceExpression(az.conditionalExpression(node).getElseExpression()).getReferenceNameElement().getText();
+                }else{ // third or fourth Scenarios
+                    replacementString = az.referenceExpression(az.conditionalExpression(node).getThenExpression()).getQualifier().getText()
+                            + "?." + az.referenceExpression(az.conditionalExpression(node).getThenExpression()).getReferenceNameElement().getText();
+                }
+                PsiExpression replacement = JavaPsiFacade.getElementFactory(node.getProject()).createExpressionFromText(replacementString,node);
+                r.replace(node, replacement);
+
+            }
+        };
     }
 
     @Override
     public Class<PsiConditionalExpression> getPsiClass() {
-        return null;
+        return PsiConditionalExpression.class;
     }
+
+    private boolean firstScenario(PsiElement e){
+        // (x == null) ? null : x.y
+        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.EQEQ) &&
+                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
+                iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
+                iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
+                (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText()));
+    }
+
+    private boolean secondScenario(PsiElement e){
+        // (null == x) ? null : x.y
+        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.EQEQ) &&
+                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
+                iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
+                iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
+                (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText()));
+    }
+
+    private boolean thirdScenario(PsiElement e){
+        // (x != null) ? x.y : null
+        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.NE) &&
+                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
+                iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
+                iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
+                (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText()));
+    }
+
+    private boolean fourthScenario(PsiElement e){
+        // (null != x.y) ? x.y : null
+        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+                (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign() == JavaTokenType.NE) &&
+                iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
+                iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
+                iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
+                (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText()));
+    }
+
+
 }
