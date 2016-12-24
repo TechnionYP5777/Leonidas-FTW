@@ -54,4 +54,11 @@ public enum az {
         return element != null && iz.conditionalExpression(element) ? (PsiConditionalExpression) element : null;
     }
 
+    public static PsiBinaryExpression binaryExpression(PsiElement element) {
+        return element != null && iz.binaryExpression(element) ? (PsiBinaryExpression) element : null;
+    }
+
+    public static PsiReferenceExpression referenceExpression(PsiExpression element) {
+        return element != null && iz.referenceExpression(element) ? (PsiReferenceExpression) element : null;
+    }
 }

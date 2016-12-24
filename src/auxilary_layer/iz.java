@@ -3,6 +3,7 @@ package auxilary_layer;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiEnumConstantImpl;
 import com.intellij.psi.impl.source.PsiFieldImpl;
+import com.intellij.psi.impl.source.PsiReceiverParameterImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
 
@@ -101,5 +102,13 @@ public enum iz {
 
     public static boolean nullExpression(PsiExpression e) {
         return e.getText().equals("null");
+    }
+
+    public static boolean binaryExpression(PsiElement element) {
+        return typeCheck(PsiBinaryExpressionImpl.class,element);
+    }
+
+    public static boolean referenceExpression(PsiExpression element) {
+        return typeCheck(PsiReferenceExpressionImpl.class,element);
     }
 }
