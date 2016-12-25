@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import plugin.tippers.LambdaExpressionRemoveRedundantCurlyBraces;
 import plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
-import plugin.tippers.SafeReference;
+import plugin.tippers.Unless;
 import plugin.tipping.Tipper;
 
 import java.util.HashMap;
@@ -29,6 +29,7 @@ public enum Toolbox {
     public static Toolbox getInstance() {
         return INSTANCE //
                 //.add(new EnhancedForRedundantContinue()) //
+                .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new MethodDeclarationRenameSingleParameterToCent());//
                 //.add(new SafeReference());

@@ -61,4 +61,8 @@ public enum az {
     public static PsiReferenceExpression referenceExpression(PsiExpression element) {
         return element != null && iz.referenceExpression(element) ? (PsiReferenceExpression) element : null;
     }
+
+    public static PsiClass classDeclaration(PsiElement element) {
+        return element != null && iz.classDeclaration(element) ? (PsiClass) element : null;
+    }
 }

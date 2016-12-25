@@ -1,11 +1,9 @@
 package plugin.tippers;
 
-import auxilary_layer.PsiRewrite;
-import auxilary_layer.az;
-import auxilary_layer.haz;
-import auxilary_layer.iz;
+import auxilary_layer.*;
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
 
@@ -17,7 +15,7 @@ public class Unless implements Tipper<PsiConditionalExpression> {
 
     @Override
     public boolean canTip(PsiElement e) {
-        return (iz.conditionalExpression(e) && (iz.nullExpression(az.conditionalExpression(e).getThenExpression()) || iz.nullExpression(az.conditionalExpression(e).getElseExpression())) && !haz.functionNamed(e.getContext(), "Unless"));
+        return (iz.conditionalExpression(e) && (iz.nullExpression(az.conditionalExpression(e).getThenExpression()) || iz.nullExpression(az.conditionalExpression(e).getElseExpression())) && !haz.functionNamed(e.getContainingFile().getNode().getPsi(), "Unless"));
     }
 
     @Override
@@ -36,15 +34,28 @@ public class Unless implements Tipper<PsiConditionalExpression> {
         return new Tip(description(e), e, this.getClass()) {
             @Override
             public void go(PsiRewrite _) {
-                PsiClass c = JavaPsiFacade.getElementFactory(e.getProject()).createClass(" public class Unless{private boolean x; public Unless(boolean y){ x = y; } T eval<T>(T z){ return x ? null : z; } ");
-                PsiMethod m = JavaPsiFacade.getElementFactory(e.getProject()).createMethod("Unless unless(boolean x){ return new Unless(x); ", PsiType.getTypeByName("Unless", e.getProject(), GlobalSearchScope.allScope(e.getProject())));
-                PsiExpression e_tag = JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("unless(" + e.getCondition().getText() + ").eval(" + e.getElseExpression().getText() + ");", e);
-                if (iz.nullExpression(az.conditionalExpression(e).getThenExpression())) {
-                    e.getContainingFile().add(c);
-                    e.getContainingFile().add(m);
-                    e.replace(e_tag);
-                }
+                String elseType = e.getElseExpression().getType().getCanonicalText();
+                //PsiFileFactory.getInstance(e.getProject()).createFileFromText("Unless.java", FileTypeRegistry.getInstance().getFileTypeByFileName("Unless.java"), "public class Unless { boolean x; Unless(boolean y) { this.x = y; } " + elseType + " eval(" + elseType + " z) { return x ? null : z; } }");
 
+                PsiMethod p = (PsiMethod) PsiFileFactory.getInstance(e.getProject()).createFileFromText("Unless.java", FileTypeRegistry.getInstance().getFileTypeByFileName("Unless.java"), "public class Banana { static " + elseType + " unless(boolean x, " + elseType + " y) { return x ? null : y; } }").getFirstChild().getNextSibling().getFirstChild().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling();
+                PsiExpression e_tag = JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("unless(" + e.getCondition().getText() + ", " + e.getElseExpression().getText() + ")", e);
+
+                if (iz.nullExpression(az.conditionalExpression(e).getThenExpression())) {
+                    //e.getContainingFile().add(c);
+
+                    new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
+                        @Override
+                        protected void run() throws Throwable {
+                            Utils.getCountainingClass(e).addBefore(p, Utils.getCountainingClass(e).getRBrace());
+                            e.replace(e_tag);
+
+                        }
+
+                    }.execute();
+
+                    //e.replace(e_tag);
+
+                }
             }
         };
     }

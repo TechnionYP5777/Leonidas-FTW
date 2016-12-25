@@ -69,7 +69,7 @@ public enum Utils {
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier i) {
         List<PsiIdentifier> identifiers = new ArrayList<>();
 
-        visitRecursive(root, new JavaElementVisitor() {
+        root.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitIdentifier(PsiIdentifier identifier) {
                 super.visitIdentifier(identifier);
@@ -81,14 +81,8 @@ public enum Utils {
         return identifiers;
     }
 
-    public static void visitRecursive(PsiElement element, JavaElementVisitor visitor) {
-        if (element == null) {
-            return;
-        }
-        element.accept(visitor);
-        for (PsiElement child : element.getChildren()) {
-            visitRecursive(child, visitor);
-        }
+    public static PsiClass getCountainingClass(PsiElement e) {
+        return iz.classDeclaration(e.getParent()) ? az.classDeclaration(e.getParent()) : getCountainingClass(e.getParent());
     }
 
 

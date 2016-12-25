@@ -1,9 +1,9 @@
 package auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.PsiEnumConstantImpl;
 import com.intellij.psi.impl.source.PsiFieldImpl;
-import com.intellij.psi.impl.source.PsiReceiverParameterImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
 
@@ -111,4 +111,9 @@ public enum iz {
     public static boolean referenceExpression(PsiExpression element) {
         return typeCheck(PsiReferenceExpressionImpl.class,element);
     }
+
+    public static boolean classDeclaration(PsiElement element) {
+        return typeCheck(PsiClassImpl.class, element);
+    }
+
 }
