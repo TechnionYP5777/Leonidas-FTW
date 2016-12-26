@@ -4,6 +4,7 @@ import auxilary_layer.PsiRewrite;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import plugin.tippers.AnyMatch;
 import plugin.tippers.LambdaExpressionRemoveRedundantCurlyBraces;
 import plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
 import plugin.tippers.Unless;
@@ -31,7 +32,8 @@ public enum Toolbox {
                 //.add(new EnhancedForRedundantContinue()) //
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
-                .add(new MethodDeclarationRenameSingleParameterToCent());//
+                .add(new MethodDeclarationRenameSingleParameterToCent())//
+                .add(new AnyMatch());
                 //.add(new SafeReference());
     }
 
