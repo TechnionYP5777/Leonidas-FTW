@@ -5,6 +5,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import plugin.tippers.LambdaExpressionRemoveRedundantCurlyBraces;
+import plugin.tippers.LispLastElement;
 import plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
 import plugin.tippers.Unless;
 import plugin.tipping.Tipper;
@@ -31,6 +32,7 @@ public enum Toolbox {
                 //.add(new EnhancedForRedundantContinue()) //
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
+                .add(new LispLastElement())
                 .add(new MethodDeclarationRenameSingleParameterToCent());//
                 //.add(new SafeReference());
     }
