@@ -19,7 +19,7 @@ public class AnyMatch extends NanoPatternTipper<PsiForStatement>{
 
     @Override
     public String description(PsiForStatement ¢) {
-        return "Replaces AnyMatch-for statement with the appropriate .stream().AnyMatch Java Collection function call";
+        return "Replaces anyMatch-for statement with the appropriate .stream().AnyMatch Java Collection function call";
     }
 
     @Override
