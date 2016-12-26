@@ -33,7 +33,7 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
         if (!canTip(e)) return null;
         return new Tip(description(e), e, this.getClass()) {
             @Override
-            public void go(PsiRewrite _) {
+            public void go(PsiRewrite r) {
                 String elseType = e.getElseExpression().getType().getCanonicalText();
                 //PsiFileFactory.getInstance(e.getProject()).createFileFromText("Unless.java", FileTypeRegistry.getInstance().getFileTypeByFileName("Unless.java"), "public class Unless { boolean x; Unless(boolean y) { this.x = y; } " + elseType + " eval(" + elseType + " z) { return x ? null : z; } }");
 
