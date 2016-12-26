@@ -1,12 +1,14 @@
 package plugin.tippers;
 
-import auxilary_layer.*;
-import com.intellij.lang.PsiStructureViewFactory;
-import com.intellij.psi.*;
+import auxilary_layer.PsiRewrite;
+import auxilary_layer.Wrapper;
+import auxilary_layer.iz;
+import com.intellij.psi.JavaRecursiveElementVisitor;
+import com.intellij.psi.PsiConditionalExpression;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.PsiTestCase;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * @author michal cohen
@@ -24,7 +26,7 @@ public class UnlessTest extends PsiTestCase{
         PsiFile f = createDummyFile("banana.java", "class A{ int foo(int x) { return x > 0 ? null : x; } }");
         PsiElement e = f.getNode().getPsi();
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
-        Utils.visitRecursive(e, new JavaElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitConditionalExpression(PsiConditionalExpression expression) {
                 super.visitConditionalExpression(expression);
@@ -40,7 +42,7 @@ public class UnlessTest extends PsiTestCase{
         PsiFile f = createDummyFile("banana.java", "class A{ int foo(int x) { return x > 0 ? x : null; } }");
         PsiElement e = f.getNode().getPsi();
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
-        Utils.visitRecursive(e, new JavaElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitConditionalExpression(PsiConditionalExpression expression) {
                 super.visitConditionalExpression(expression);
@@ -58,7 +60,7 @@ public class UnlessTest extends PsiTestCase{
         PsiFile f = createDummyFile("banana.java", "class A{ int foo(int x, int _null) { return x > 0 ? _null : x; } }");
         PsiElement e = f.getNode().getPsi();
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
-        Utils.visitRecursive(e, new JavaElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitConditionalExpression(PsiConditionalExpression expression) {
                 super.visitConditionalExpression(expression);
@@ -75,7 +77,7 @@ public class UnlessTest extends PsiTestCase{
         PsiFile f = createDummyFile("banana.java", "class A{ int foo(int x) { return x > 0 ? null : x; } int Unless (double myBanana) { return mybanana + 5; } s}");
         PsiElement e = f.getNode().getPsi();
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
-        Utils.visitRecursive(e, new JavaElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitConditionalExpression(PsiConditionalExpression expression) {
                 super.visitConditionalExpression(expression);
@@ -90,7 +92,7 @@ public class UnlessTest extends PsiTestCase{
         PsiFile f = createDummyFile("banana.java", "class A{ int foo(int x) { return x > 0 ? null : x; } }");
         PsiElement e = f.getNode().getPsi();
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
-        Utils.visitRecursive(e, new JavaElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitConditionalExpression(PsiConditionalExpression expression) {
                 super.visitConditionalExpression(expression);
