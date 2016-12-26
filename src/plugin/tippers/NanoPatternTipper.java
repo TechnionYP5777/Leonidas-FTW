@@ -24,7 +24,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         return firstTipperThatCanTip(ns, n).tip(n);
     }
 
-    @Override public final Tip tip(final N ¢) {
+    @Override public Tip tip(final N ¢) {
         return new Tip(description(¢), ¢, this.getClass()) {
             @Override public void go(final PsiRewrite r) {
                 pattern(¢).go(r);

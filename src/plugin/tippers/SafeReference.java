@@ -11,7 +11,7 @@ import plugin.tipping.Tipper;
 /**
  * Created by amirsagiv on 12/23/16.
  */
-public class SafeReference implements Tipper<PsiConditionalExpression> {
+public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
     @Override
     public boolean canTip(PsiElement e) {
         return firstScenario(e) || secondScenario(e) || thirdScenario(e) || fourthScenario(e);
@@ -91,6 +91,11 @@ public class SafeReference implements Tipper<PsiConditionalExpression> {
                 iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
                 (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText()));
+    }
+
+    @Override
+    protected Tip pattern(final PsiConditionalExpression ¢){
+        return tip(¢);
     }
 
 

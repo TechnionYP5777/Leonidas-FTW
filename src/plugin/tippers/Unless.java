@@ -11,7 +11,7 @@ import plugin.tipping.Tipper;
  * @author michal cohen
  * @since 12/22/2016.
  */
-public class Unless implements Tipper<PsiConditionalExpression> {
+public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public boolean canTip(PsiElement e) {
@@ -64,4 +64,10 @@ public class Unless implements Tipper<PsiConditionalExpression> {
     public Class<PsiConditionalExpression> getPsiClass() {
         return PsiConditionalExpression.class;
     }
+
+    @Override
+    protected Tip pattern(final PsiConditionalExpression ¢){
+        return tip(¢);
+    }
+
 }
