@@ -39,11 +39,9 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
         PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(((PsiMethodCallExpression)((PsiBinaryExpression)arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
         // checks that the left operand of the binary expression is $x.size
         if(!outterReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")){
-            System.out.println("third");
             return false;
         }
         // checks minus 1
-        System.out.println("return");
         return ((PsiBinaryExpression)arguments[0]).getROperand().getText().equals("1")
                 && ((PsiBinaryExpression)arguments[0]).getOperationSign().getText().equals("-");
     }
@@ -56,9 +54,6 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
 
     @Override
     public boolean canTip(PsiElement e) {
-        if(isCallExpression(e)){
-            System.out.println(e.getText());
-        }
         return isCallExpression(e) && canTip((PsiMethodCallExpression) e);
     }
 
