@@ -34,32 +34,28 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
         // holds the arguments
         PsiExpression[] arguments = e.getArgumentList().getExpressions();
         // checks there is only one argument and it is a binary expression
-        if (arguments.length != 1 || !isBinaryExpression(arguments[0])) {
+        if (arguments.length != 1 || !iz.binaryExpression(arguments[0])) {
             return false;
         }
 
         //holds $x
-        PsiReferenceExpression[] innerReference = PsiTreeUtil.getChildrenOfType(((PsiMethodCallExpression) ((PsiBinaryExpression) arguments[0]).getLOperand()).getMethodExpression(), PsiReferenceExpression.class);
+        PsiReferenceExpression[] innerReference = PsiTreeUtil.getChildrenOfType(az.methodInvocation(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiReferenceExpression.class);
         //holds "size"
-        PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(((PsiMethodCallExpression) ((PsiBinaryExpression) arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
+        PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(az.methodInvocation(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
         // checks that the left operand of the binary expression is $x.size
         if (!outterReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")) {
             return false;
         }
         // checks minus 1
-        return ((PsiBinaryExpression) arguments[0]).getROperand().getText().equals("1")
-                && ((PsiBinaryExpression) arguments[0]).getOperationSign().getText().equals("-");
+        return az.binaryExpression(arguments[0]).getROperand().getText().equals("1")
+                && az.binaryExpression(arguments[0]).getOperationSign().getText().equals("-");
     }
 
     LinkedList<Integer> l = new LinkedList<>();
 
-    private Integer check() {
-        return l.get(l.size() - 1);
-    }
-
     @Override
     public boolean canTip(PsiElement e) {
-        return isCallExpression(e) && canTip((PsiMethodCallExpression) e);
+        return iz.methodCallExpression(e) && canTip(az.methodInvocation(e));
     }
 
     @Override
@@ -72,7 +68,7 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
         return node == null || !canTip((PsiElement) node) ? null : new Tip(description(node), node, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
-                PsiReferenceExpression container =PsiTreeUtil.getChildrenOfType(node.getMethodExpression(), PsiReferenceExpression.class)[0];
+                PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(node.getMethodExpression(), PsiReferenceExpression.class)[0];
 
                 String replacement = "last(" + container.getText() + ")";
                 PsiExpression newNode = JavaPsiFacade.getElementFactory(node.getProject()).createExpressionFromText(replacement, node);
@@ -97,11 +93,4 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
         return PsiMethodCallExpression.class;
     }
 
-    private boolean isCallExpression(PsiElement e) {
-        return e instanceof PsiMethodCallExpression;
-    }
-
-    private boolean isBinaryExpression(PsiElement e) {
-        return e instanceof PsiBinaryExpression;
-    }
 }
