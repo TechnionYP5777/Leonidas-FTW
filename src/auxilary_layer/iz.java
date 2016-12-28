@@ -1,6 +1,7 @@
 package auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.PsiEnumConstantImpl;
 import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
@@ -20,7 +21,7 @@ public enum iz {
     private static final String ABSTRACT = "abstract";
 
     private static boolean typeCheck(Class<? extends PsiElement> type, PsiElement element) {
-        return element != null && element.getClass() == type;
+        return element != null && type.isInstance(element);
     }
 
     public static boolean null$(PsiElement element) {
@@ -39,6 +40,10 @@ public enum iz {
 
     public static boolean block(PsiElement element) {
         return typeCheck(PsiCodeBlockImpl.class, element);
+    }
+
+    public static boolean blockStatement(PsiElement element) {
+        return typeCheck(PsiBlockStatement.class, element);
     }
 
     public static boolean methodCallExpression(PsiElement element) {
@@ -133,4 +138,14 @@ public enum iz {
     public static boolean literal(PsiElement element) {
         return typeCheck(PsiLiteralExpressionImpl.class, element);
     }
+
+    public static boolean classDeclaration(PsiElement element) {
+        return typeCheck(PsiClassImpl.class, element);
+    }
+
+    public static boolean forStatement(PsiElement element) {return typeCheck(PsiForStatement.class, element); }
+
+    public static boolean forEachStatement(PsiElement element) {return typeCheck(PsiForeachStatement.class, element); }
+
+    public static boolean ifStatement(PsiElement element) {return typeCheck(PsiIfStatement.class, element); }
 }

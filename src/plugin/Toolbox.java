@@ -4,8 +4,11 @@ import auxilary_layer.PsiRewrite;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import plugin.tippers.AnyMatch;
 import plugin.tippers.LambdaExpressionRemoveRedundantCurlyBraces;
+import plugin.tippers.LispLastElement;
 import plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
+import plugin.tippers.Unless;
 import plugin.tipping.Tipper;
 
 import java.util.HashMap;
@@ -28,7 +31,11 @@ public enum Toolbox {
     public static Toolbox getInstance() {
         return INSTANCE //
                 //.add(new EnhancedForRedundantContinue()) //
+                .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
+                .add(new LispLastElement())
+                .add(new MethodDeclarationRenameSingleParameterToCent())//
+                .add(new AnyMatch());
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 ;
         //.add(new DefaultsTo());
