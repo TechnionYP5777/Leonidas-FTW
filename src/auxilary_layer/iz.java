@@ -3,9 +3,9 @@ package auxilary_layer;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiEnumConstantImpl;
 import com.intellij.psi.impl.source.PsiFieldImpl;
-import com.intellij.psi.impl.source.PsiReceiverParameterImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
+import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
@@ -21,6 +21,16 @@ public enum iz {
 
     private static boolean typeCheck(Class<? extends PsiElement> type, PsiElement element) {
         return element != null && element.getClass() == type;
+    }
+
+    public static boolean null$(PsiElement element) {
+        boolean x = iz.literal(element);
+        boolean y = x && az.literal(element).textMatches("null");
+        return iz.literal(element) && az.literal(element).textMatches("null");
+    }
+
+    public static boolean notNull(PsiElement element) {
+        return !null$(element);
     }
 
     public static boolean statement(PsiElement element) {
@@ -105,10 +115,22 @@ public enum iz {
     }
 
     public static boolean binaryExpression(PsiElement element) {
-        return typeCheck(PsiBinaryExpressionImpl.class,element);
+        return typeCheck(PsiBinaryExpressionImpl.class, element);
     }
 
     public static boolean referenceExpression(PsiExpression element) {
-        return typeCheck(PsiReferenceExpressionImpl.class,element);
+        return typeCheck(PsiReferenceExpressionImpl.class, element);
+    }
+
+    public static boolean equalsOperator(IElementType operator) {
+        return operator != null && operator.equals(JavaTokenType.EQEQ);
+    }
+
+    public static boolean notEqualsOperator(IElementType operator) {
+        return operator != null && operator.equals(JavaTokenType.NE);
+    }
+
+    public static boolean literal(PsiElement element) {
+        return typeCheck(PsiLiteralExpressionImpl.class, element);
     }
 }

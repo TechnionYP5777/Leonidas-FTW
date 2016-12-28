@@ -71,6 +71,12 @@ public enum haz {
         return b.inner;
     }
 
+    public static boolean equalsOperator(PsiBinaryExpression expression) {
+        return expression != null && iz.equalsOperator(step.operator(expression));
+    }
 
+    public static boolean notEqualsOperator(PsiBinaryExpression expression) {
+        return expression != null && step.operator(expression).equals(JavaTokenType.NE);
+    }
 
 }

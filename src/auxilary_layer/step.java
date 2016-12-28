@@ -1,6 +1,7 @@
 package auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.tree.IElementType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +35,7 @@ public enum step {
         return block != null && statements(block) != null && statements(block).size() >= 1 ?
                 statements(block).get(0) : null;
     }
+
     public static String name(PsiNamedElement element) {
         return element != null ? element.getName() : null;
     }
@@ -62,5 +64,30 @@ public enum step {
         return Arrays.asList(clazz.getFields());
     }
 
+
+    public static PsiExpression conditionExpression(PsiConditionalExpression expr) {
+        return expr != null ? expr.getCondition() : null;
+    }
+
+    public static IElementType operator(PsiBinaryExpression expr) {
+        return expr != null ? expr.getOperationTokenType() : null;
+    }
+
+    public static PsiExpression leftOperand(PsiBinaryExpression expr) {
+
+        return expr != null ? expr.getLOperand() : null;
+    }
+
+    public static PsiExpression rightOperand(PsiBinaryExpression expr) {
+        return expr != null ? expr.getROperand() : null;
+    }
+
+    public static PsiExpression thenExpression(PsiConditionalExpression expr) {
+        return expr != null ? expr.getThenExpression() : null;
+    }
+
+    public static PsiExpression elseExpression(PsiConditionalExpression expr) {
+        return expr != null ? expr.getElseExpression() : null;
+    }
 
 }
