@@ -81,9 +81,16 @@ public enum Utils {
         return identifiers;
     }
 
-    public static PsiClass getCountainingClass(PsiElement e) {
-        return iz.classDeclaration(e.getParent()) ? az.classDeclaration(e.getParent()) : getCountainingClass(e.getParent());
+    public static PsiClass getContainingClass(PsiElement e) {
+        return iz.classDeclaration(e.getParent()) ? az.classDeclaration(e.getParent()) : getContainingClass(e.getParent());
     }
 
+    public static PsiImportList getImportList(PsiFile f){
+        return az.importList(f.getChildren()[2]);
+    }
+
+    public static PsiClass getClassFromFile(PsiFile f){
+        return az.classDeclaration(f.getChildren()[4]);
+    }
 
 }

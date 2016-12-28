@@ -1,9 +1,6 @@
 package auxilary_layer;
 
-import com.intellij.psi.JavaElementVisitor;
-import com.intellij.psi.PsiConditionalExpression;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.*;
 import com.intellij.testFramework.PsiTestCase;
 
 
@@ -90,7 +87,7 @@ public class izTest extends PsiTestCase {
         PsiFile f = createDummyFile("banana.java", "class A{ int foo(int x) { return x > 0 ? null : x; } }");
         PsiElement e = f.getNode().getPsi();
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
-        Utils.visitRecursive(e, new JavaElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitConditionalExpression(PsiConditionalExpression expression) {
                 super.visitConditionalExpression(expression);

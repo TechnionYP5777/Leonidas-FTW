@@ -80,7 +80,7 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
                 new WriteCommandAction.Simple(node.getProject(), node.getContainingFile()) {
                     @Override
                     protected void run() throws Throwable {
-                        Utils.getCountainingClass(node).addBefore(last, Utils.getCountainingClass(node).getRBrace());
+                        Utils.getContainingClass(node).addBefore(last, Utils.getContainingClass(node).getRBrace());
                         node.replace(newNode);
                     }
                 }.execute();

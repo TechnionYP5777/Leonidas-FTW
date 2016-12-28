@@ -85,4 +85,8 @@ public enum az {
     public static PsiReturnStatement returnStatement(PsiElement element){
         return element != null && iz.returnStatement(element) ? (PsiReturnStatement) element : null;
     }
+
+    public static PsiImportList importList(PsiElement element){
+        return element != null && iz.importList(element) ? (PsiImportList) element : null;
+    }
 }

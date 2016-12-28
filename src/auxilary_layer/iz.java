@@ -148,4 +148,6 @@ public enum iz {
     public static boolean forEachStatement(PsiElement element) {return typeCheck(PsiForeachStatement.class, element); }
 
     public static boolean ifStatement(PsiElement element) {return typeCheck(PsiIfStatement.class, element); }
+
+    public static boolean importList(PsiElement element) {return typeCheck(PsiImportList.class, element); }
 }
