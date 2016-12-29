@@ -86,7 +86,7 @@ public enum Utils {
     }
 
     public static PsiImportList getImportList(PsiFile f){
-        return az.importList(f.getChildren()[2]);
+        return az.importList(f.getChildren()[0]);
     }
 
     public static PsiClass getClassFromFile(PsiFile f){

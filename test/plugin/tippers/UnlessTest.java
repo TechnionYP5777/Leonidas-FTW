@@ -86,7 +86,7 @@ public class UnlessTest extends PsiTestCase{
         });
         assert (!(new Unless()).canTip(w.get()));
     }
-
+/*
     @Test
     public void testtip() throws Exception {
         PsiFile f = createDummyFile("banana.java", "class A{ int foo(int x) { return x > 0 ? null : x; } }");
@@ -107,7 +107,7 @@ public class UnlessTest extends PsiTestCase{
         printPsi(e);
     }
 
-    private void printPsi(PsiElement e){
+  */  private void printPsi(PsiElement e){
         Wrapper<Integer> tabs = new Wrapper<>(0);
         e.accept(new JavaRecursiveElementVisitor() {
             @Override

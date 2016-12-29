@@ -3,10 +3,12 @@ package plugin.tippers;
 import auxilary_layer.*;
 import com.google.common.io.Files;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.IncorrectOperationException;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
 
@@ -17,6 +19,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public boolean canTip(PsiElement e) {
-        return (iz.conditionalExpression(e) && (iz.nullExpression(az.conditionalExpression(e).getThenExpression()) || iz.nullExpression(az.conditionalExpression(e).getElseExpression())) && !haz.functionNamed(e.getContainingFile().getNode().getPsi(), "Unless"));
+        return (iz.conditionalExpression(e) && (iz.nullExpression(az.conditionalExpression(e).getThenExpression())));
     }
 
     @Override
@@ -55,23 +58,28 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
                     new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
                         @Override
                         protected void run() throws Throwable {
-                            PsiFile pf = e.getContainingFile().getContainingDirectory().createSubdirectory("spartanizer").createFile("SpartanizerUtils.java");
-                            VirtualFile vf = pf.getVirtualFile();
-
-                            URL is = this.getClass().getResource("spartanizer/SpartanizerUtils.java");
-                            File file = new File(is.getPath());
-                            try {
-                                Files.copy(file, new File(vf.getPath()));
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
+                            PsiFile pf;
+                            PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
+                            try{
+                                srcDir.checkCreateSubdirectory("spartanizer");
+                                PsiDirectory pd = e.getContainingFile().getContainingDirectory().createSubdirectory("spartanizer");
+                                URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
+                                File file = new File(is.getPath());
+                                FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
+                                List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
+                                pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
+                                pd.add(pf);
+                            } catch (IncorrectOperationException e){
+                                PsiDirectory pd = srcDir.getSubdirectories()[0];
+                                pf = pd.getFiles()[0];
                             }
-//                            pf = pf.getContainingDirectory().getFiles()[0];
-
-//                            System.out.println(e.getContainingFile().getContainingDirectory().getSubdirectories()[0].getFiles()[0].getText());
-//                            System.out.println(e.getContainingFile().getText());
-
-//                            Utils.getImportList(e.getContainingFile()).add(JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(pf, PsiClass.class), "*"));
-
+                            PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(pf, PsiClass.class), "*");
+                            System.out.println(piss.getText());
+                            PsiImportList pil = Utils.getImportList(e.getContainingFile());
+                            // TODO this check isn't working
+                            if (!Arrays.asList(pil.getImportStatements()).contains(piss)){
+                                pil.add(piss);
+                            }
                             e.replace(e_tag);
                         }
 
