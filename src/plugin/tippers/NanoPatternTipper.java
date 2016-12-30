@@ -75,7 +75,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         };
     }
 
-    protected abstract N createReplacement(final N e);
+    protected abstract PsiElement createReplacement(final N e);
 
     private PsiFile insertSpartanizerUtils(PsiElement e) throws IOException {
         PsiFile pf;
