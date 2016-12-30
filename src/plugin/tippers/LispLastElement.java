@@ -27,14 +27,14 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
         // holds "get"
         PsiIdentifier[] outterIdentifier = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiIdentifier.class);
         //checks the call is to $x.get
-        if (outterReference.length != 1 || outterIdentifier.length != 1 || !outterIdentifier[0].getText().equals("get")) {
+        if (outterReference == null || outterIdentifier == null || outterReference.length != 1 || outterIdentifier.length != 1 || !outterIdentifier[0].getText().equals("get")) {
             return false;
         }
 
         // holds the arguments
         PsiExpression[] arguments = e.getArgumentList().getExpressions();
         // checks there is only one argument and it is a binary expression
-        if (arguments.length != 1 || !iz.binaryExpression(arguments[0])) {
+        if (arguments == null || arguments.length != 1 || !iz.binaryExpression(arguments[0])) {
             return false;
         }
 
@@ -43,7 +43,7 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
         //holds "size"
         PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(az.methodInvocation(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
         // checks that the left operand of the binary expression is $x.size
-        if (!outterReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")) {
+        if (innerIdentifier == null || innerReference == null || !outterReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")) {
             return false;
         }
         // checks minus 1
