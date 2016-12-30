@@ -1,16 +1,8 @@
 package plugin.tippers;
-import auxilary_layer.Wrapper;
-import auxilary_layer.az;
-import auxilary_layer.iz;
-import com.intellij.psi.*;
-import plugin.tipping.Tipper;
-import plugin.tipping.Tip;
-import plugin.tipping.TipperCategory;
-import auxilary_layer.PsiRewrite;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiForeachStatement;
+import plugin.tipping.Tip;
 
 /**
  * Created by maorroey on 12/26/2016.
@@ -62,6 +54,11 @@ public class AnyMatch extends NanoPatternTipper<PsiForeachStatement>{
     @Override
     public String description(PsiForeachStatement ¢) {
         return "Replaces anyMatch-for statement with the appropriate .stream().AnyMatch Java Collection function call";
+    }
+
+    @Override
+    protected PsiForeachStatement createReplacement(PsiForeachStatement e) {
+        return null;
     }
 
     @Override

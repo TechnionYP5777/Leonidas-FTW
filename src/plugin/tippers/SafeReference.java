@@ -3,10 +3,11 @@ package plugin.tippers;
 import auxilary_layer.PsiRewrite;
 import auxilary_layer.az;
 import auxilary_layer.iz;
-import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.psi.*;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiConditionalExpression;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiStatement;
 import plugin.tipping.Tip;
-import plugin.tipping.Tipper;
 
 /**
  * Created by amirsagiv on 12/23/16.
@@ -42,6 +43,11 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
 
             }
         };
+    }
+
+    @Override
+    protected PsiConditionalExpression createReplacement(PsiConditionalExpression e) {
+        return null;
     }
 
     @Override
