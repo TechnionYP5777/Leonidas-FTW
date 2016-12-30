@@ -1,27 +1,14 @@
 package plugin.tippers;
 
-import auxilary_layer.*;
-import com.google.common.io.Files;
+import auxilary_layer.PsiRewrite;
+import auxilary_layer.az;
+import auxilary_layer.iz;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.FileTypeRegistry;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.IncorrectOperationException;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiConditionalExpression;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiExpression;
 import plugin.tipping.Tip;
-import plugin.tipping.Tipper;
-
-import javax.rmi.CORBA.Util;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author michal cohen
@@ -58,37 +45,9 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
                     new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
                         @Override
                         protected void run() throws Throwable {
-                            PsiFile pf;
-                            PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
-                            // creates the directory and adds the file if needed
-                            try {
-                                srcDir.checkCreateSubdirectory("spartanizer");
-                                PsiDirectory pd = e.getContainingFile().getContainingDirectory().createSubdirectory("spartanizer");
-                                URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
-                                File file = new File(is.getPath());
-                                FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
-                                List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
-                                pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
-                                pd.add(pf);
-                            } catch (IncorrectOperationException e) {
-                                PsiDirectory pd = srcDir.getSubdirectories()[0];
-                                pf = pd.getFiles()[0];
-                            }
-                            // adds the import statement if needed
-                            PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(pf, PsiClass.class), "*");
-                            System.out.println("start");
-                            System.out.println(piss.getText());
-                            System.out.println("end");
-                            PsiImportList pil = Utils.getImportList(e.getContainingFile());
-
-                            // TODO this check isn't working
-//                            if (!Arrays.asList(pil.getImportStatements()).contains(piss)){
-                            if (!Arrays.stream(pil.getImportStaticStatements()).anyMatch(e -> e.getText().contains("spartanizer"))) {
-                                pil.add(piss);
-                            }
+                            createEnvironment(e);
                             e.replace(e_tag);
                         }
-
                     }.execute();
                 }
 
@@ -96,6 +55,7 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
             }
         };
     }
+
 
     @Override
     public Class<PsiConditionalExpression> getPsiClass() {

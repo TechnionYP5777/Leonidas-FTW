@@ -1,12 +1,24 @@
 package plugin.tippers;
 
-import com.intellij.psi.PsiElement;
-import plugin.tipping.Tipper;
-import plugin.tipping.Tip;
-import plugin.tipping.TipperCategory;
 import auxilary_layer.PsiRewrite;
+import auxilary_layer.Utils;
+import com.google.common.io.Files;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeRegistry;
+import com.intellij.psi.*;
+import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.IncorrectOperationException;
+import plugin.tipping.Tip;
+import plugin.tipping.Tipper;
+import plugin.tipping.TipperCategory;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by maorroey on 12/26/2016.
@@ -37,5 +49,40 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
     }
 
     protected abstract Tip pattern(final N ¢);
+
+
+    private PsiFile insertSpartanizerUtils(PsiElement e) throws IOException {
+        PsiFile pf;
+        PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
+        // creates the directory and adds the file if needed
+        try {
+            srcDir.checkCreateSubdirectory("spartanizer");
+            PsiDirectory pd = e.getContainingFile().getContainingDirectory().createSubdirectory("spartanizer");
+            URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
+            File file = new File(is.getPath());
+            FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
+            List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
+            pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
+            pd.add(pf);
+        } catch (IncorrectOperationException x) {
+            PsiDirectory pd = srcDir.getSubdirectories()[0];
+            pf = pd.getFiles()[0];
+        }
+        return pf;
+    }
+
+    private void insertImportStatement(PsiElement e, PsiFile pf) {
+        PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(pf, PsiClass.class), "*");
+        PsiImportList pil = Utils.getImportList(e.getContainingFile());
+        if (!Arrays.stream(pil.getImportStaticStatements()).anyMatch(x -> x.getText().contains("spartanizer"))) {
+            pil.add(piss);
+        }
+
+    }
+
+    protected void createEnvironment(PsiElement e) throws IOException {
+        PsiFile pf = insertSpartanizerUtils(e);
+        insertImportStatement(e, pf);
+    }
 
 }

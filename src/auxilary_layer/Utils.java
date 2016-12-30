@@ -3,6 +3,7 @@ package auxilary_layer;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import com.intellij.psi.util.PsiTreeUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,7 +87,7 @@ public enum Utils {
     }
 
     public static PsiImportList getImportList(PsiFile f){
-        return az.importList(f.getChildren()[0]);
+        return az.importList(PsiTreeUtil.getChildOfType(f, PsiImportList.class));
     }
 
     public static PsiClass getClassFromFile(PsiFile f){
