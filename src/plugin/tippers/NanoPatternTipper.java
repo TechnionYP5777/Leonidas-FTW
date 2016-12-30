@@ -2,8 +2,6 @@ package plugin.tippers;
 
 import auxilary_layer.PsiRewrite;
 import auxilary_layer.Utils;
-import auxilary_layer.az;
-import auxilary_layer.iz;
 import com.google.common.io.Files;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.fileTypes.FileType;
@@ -53,30 +51,42 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         return this.getClass().getSimpleName();
     }
 
+    /**
+     * @param e the PsiElement on which the tip will be applied
+     * @return an element tip to apply on e.
+     */
     public Tip tip(final N e) {
         if (!canTip(e)) return null;
         return new Tip(description(e), e, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
-
                 PsiElement e_tag = createReplacement(e);
-
-                if (iz.nullExpression(az.conditionalExpression(e).getThenExpression())) {
-
-                    new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
-                        @Override
-                        protected void run() throws Throwable {
-                            createEnvironment(e);
-                            e.replace(e_tag);
-                        }
-                    }.execute();
-                }
+                new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
+                    @Override
+                    protected void run() throws Throwable {
+                        createEnvironment(e);
+                        e.replace(e_tag);
+                    }
+                }.execute();
             }
         };
     }
 
+    /**
+     * This method should be override in order to create the psi element that will
+     * replace e.
+     *
+     * @param e - the element to be replaced
+     * @return the PsiElement that will replace e.
+     */
     protected abstract PsiElement createReplacement(final N e);
 
+    /**
+     *
+     * @param e the PsiElement that the tip is applied to
+     * @return the PsiFile in which e is contained
+     * @throws IOException if for some reason writing to the users disk throws exception.
+     */
     private PsiFile insertSpartanizerUtils(PsiElement e) throws IOException {
         PsiFile pf;
         PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
@@ -97,6 +107,11 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         return pf;
     }
 
+    /**
+     * Inserts "import static spartanizer/SpartanizerUtils/*;" to the users code.
+     * @param e - the PsiElement on which the tip is applied.
+     * @param pf - the psi file in which e is contained.
+     */
     private void insertImportStatement(PsiElement e, PsiFile pf) {
         PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(pf, PsiClass.class), "*");
         PsiImportList pil = Utils.getImportList(e.getContainingFile());
@@ -106,6 +121,11 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 
     }
 
+    /**
+     * Inserts import statement and copies file in order to make the nano patterns compile
+     * @param e - the PsiElement on which the tip is applied.
+     * @throws IOException - if for some reason writing new file to the users disk throws exception.
+     */
     private void createEnvironment(final N e) throws IOException {
         PsiFile pf = insertSpartanizerUtils(e);
         insertImportStatement(e, pf);

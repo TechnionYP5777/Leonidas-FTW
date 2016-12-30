@@ -13,6 +13,10 @@ import plugin.tipping.Tip;
  */
 public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
+    /**
+     * @param e
+     * @return true iff e is in the form: <boolean expression> ? null : <expression>
+     */
     @Override
     public boolean canTip(PsiElement e) {
         return (iz.conditionalExpression(e) && (iz.nullExpression(az.conditionalExpression(e).getThenExpression())));
@@ -28,6 +32,10 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
         return "Change conditional expression: " + psiConditionalExpression.getText() + " to fluent Unless";
     }
 
+    /**
+     * @param e - the element to be replaced
+     * @return a method invocation to unless function.
+     */
     @Override
     protected PsiElement createReplacement(PsiConditionalExpression e) {
         return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("unless(" + e.getCondition().getText() + ", " + e.getElseExpression().getText() + ")", e);
