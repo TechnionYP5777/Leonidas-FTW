@@ -89,4 +89,8 @@ public enum az {
     public static PsiImportList importList(PsiElement element){
         return element != null && iz.importList(element) ? (PsiImportList) element : null;
     }
+
+    public static PsiMethodCallExpression MethodCallExresson(PsiExpression element) {
+        return element != null && iz.MethodCallExpression(element) ? (PsiMethodCallExpression) element : null;
+    }
 }
