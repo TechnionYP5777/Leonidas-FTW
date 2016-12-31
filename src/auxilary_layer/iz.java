@@ -71,7 +71,7 @@ public enum iz {
     }
 
     public static boolean singleParameteredMethod(PsiMethod element) {
-        return step.firstParameter(element) != null;
+        return element.getParameterList().getParameters().length == 1;
     }
 
     public static boolean void$(PsiMethod element) {
