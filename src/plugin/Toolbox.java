@@ -1,6 +1,7 @@
 package plugin;
 
 import auxilary_layer.PsiRewrite;
+import auxilary_layer.type;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -8,6 +9,8 @@ import plugin.tippers.*;
 import plugin.tipping.Tipper;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +21,7 @@ import java.util.Map;
 public enum Toolbox {
     INSTANCE;
 
-    final private Map<Class<? extends PsiElement>, Tipper> tipperMap;
+    final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap;
 
     Toolbox() {
         this.tipperMap = new HashMap<>();
@@ -32,12 +35,13 @@ public enum Toolbox {
                 .add(new LispLastElement())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new AnyMatch())
-        //.add(new DefaultsTo());
+                //.add(new DefaultsTo());
                 .add(new SafeReference());
     }
 
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
-        this.tipperMap.put(tipper.getPsiClass(), tipper);
+        tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
+        tipperMap.get(tipper.getPsiClass()).add(tipper);
         return this;
     }
 
@@ -47,7 +51,8 @@ public enum Toolbox {
     }
 
     public Toolbox executeAllTippers(PsiElement element, Project project, PsiFile psiFile) {
-        tipperMap.values().stream() //
+
+        tipperMap.get(type.of(element)).stream() //
                 .filter(tipper -> tipper.canTip(element)) //
                 .forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project)));
         return this;
@@ -60,7 +65,7 @@ public enum Toolbox {
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
     public boolean canTip(PsiElement element) {
-        return tipperMap.values().stream().anyMatch(tip -> tip.canTip(element));
+        return tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element));
     }
 
 

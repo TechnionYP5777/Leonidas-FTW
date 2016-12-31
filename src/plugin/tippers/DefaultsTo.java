@@ -85,6 +85,6 @@ public class DefaultsTo implements Tipper<PsiConditionalExpression> {
 
     @Override
     public Class<PsiConditionalExpression> getPsiClass() {
-        return null;
+        return PsiConditionalExpression.class;
     }
 }

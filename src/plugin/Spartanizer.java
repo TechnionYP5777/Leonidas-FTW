@@ -18,6 +18,9 @@ enum Spartanizer {
     }
 
     static void spartanizeCode(PsiClass psiClass, PsiElement element, Project project, PsiFile psiFile) {
+        if (psiFile.getName().equals("SpartanizerUtils.java")) {
+            return;
+        }
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.executeAllTippers(element, project, psiFile);
     }
