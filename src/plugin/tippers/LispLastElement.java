@@ -58,7 +58,7 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
 
     @Override
     public String description(PsiMethodCallExpression psiMethodCallExpression) {
-        return "replace " + psiMethodCallExpression.getText() + " with lisp last";
+        return "replace " + psiMethodCallExpression.getText() + " with list last";
     }
 
     @Override
