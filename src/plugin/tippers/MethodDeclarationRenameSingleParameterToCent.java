@@ -8,6 +8,10 @@ import com.intellij.psi.PsiMethod;
 import plugin.tipping.Tip;
 import plugin.tipping.Tipper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static auxilary_layer.Utils.in;
 
 /**
@@ -16,6 +20,7 @@ import static auxilary_layer.Utils.in;
  */
 
 public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiMethod> {
+
 
     private boolean canTip(PsiMethod ¢) {
         return !¢.isConstructor() && !iz.abstract$(¢) && iz.singleParameteredMethod(¢) &&
@@ -43,7 +48,10 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
                 PsiIdentifier cent = JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier("¢");
                 PsiIdentifier i = JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier(m.getParameterList().getParameters()[0].getNameIdentifier().getText());
                 r.replace(m.getParameterList().getParameters()[0].getNameIdentifier(), cent);
-                Utils.getAllReferences(m.getBody(), i).stream().forEach(s -> r.replace(s, cent));
+                List<PsiIdentifier> references = Utils.getAllReferences(m.getBody(), i);
+                Stream<PsiIdentifier> fields = references.stream().filter(q -> iz.javaToken(q.getPrevSibling().getPrevSibling()));
+                references.removeAll(fields.collect(Collectors.toList()));
+                references.stream().forEach(s -> r.replace(s, cent));
             }
         };
     }

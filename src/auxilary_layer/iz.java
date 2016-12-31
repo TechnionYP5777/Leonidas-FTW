@@ -150,4 +150,8 @@ public enum iz {
     public static boolean ifStatement(PsiElement element) {return typeCheck(PsiIfStatement.class, element); }
 
     public static boolean importList(PsiElement element) {return typeCheck(PsiImportList.class, element); }
+
+    public static boolean javaToken(PsiElement element) {
+        return typeCheck(PsiJavaToken.class, element);
+    }
 }

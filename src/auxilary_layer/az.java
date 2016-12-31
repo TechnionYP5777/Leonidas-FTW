@@ -89,4 +89,8 @@ public enum az {
     public static PsiImportList importList(PsiElement element){
         return element != null && iz.importList(element) ? (PsiImportList) element : null;
     }
+
+    public static PsiJavaToken javaToken(PsiElement element) {
+        return element != null && iz.javaToken(element) ? (PsiJavaToken) element : null;
+    }
 }
