@@ -19,7 +19,7 @@ import java.util.LinkedList;
  * @since 23/12/2016.
  */
 
-public class LispLastElement implements Tipper<PsiMethodCallExpression> {
+public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> {
 
     private boolean canTip(PsiMethodCallExpression e) {
         // holds $x
@@ -51,8 +51,6 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
                 && az.binaryExpression(arguments[0]).getOperationSign().getText().equals("-");
     }
 
-    LinkedList<Integer> l = new LinkedList<>();
-
     @Override
     public boolean canTip(PsiElement e) {
         return iz.methodCallExpression(e) && canTip(az.methodInvocation(e));
@@ -64,33 +62,18 @@ public class LispLastElement implements Tipper<PsiMethodCallExpression> {
     }
 
     @Override
-    public Tip tip(PsiMethodCallExpression node) {
-        return node == null || !canTip((PsiElement) node) ? null : new Tip(description(node), node, this.getClass()) {
-            @Override
-            public void go(PsiRewrite r) {
-                PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(node.getMethodExpression(), PsiReferenceExpression.class)[0];
+    protected PsiElement createReplacement(PsiMethodCallExpression e) {
+        PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiReferenceExpression.class)[0];
+        return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("last(" + container.getText() + ")", e);
+    }
 
-                String replacement = "last(" + container.getText() + ")";
-                PsiExpression newNode = JavaPsiFacade.getElementFactory(node.getProject()).createExpressionFromText(replacement, node);
-
-                String listType = container.getType().getCanonicalText();
-                String listElementType = PsiUtil.extractIterableTypeParameter(container.getType(), false).getCanonicalText();
-
-                PsiMethod last = (PsiMethod) PsiFileFactory.getInstance(node.getProject()).createFileFromText("LispLastElement.java", FileTypeRegistry.getInstance().getFileTypeByFileName("LispLastElement.java"), "public class Banana { static " + listElementType + " last(" + listType + " y) { return y.get(y.size() - 1); } }").getFirstChild().getNextSibling().getFirstChild().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling().getNextSibling();
-                new WriteCommandAction.Simple(node.getProject(), node.getContainingFile()) {
-                    @Override
-                    protected void run() throws Throwable {
-                        Utils.getContainingClass(node).addBefore(last, Utils.getContainingClass(node).getRBrace());
-                        node.replace(newNode);
-                    }
-                }.execute();
-            }
-        };
+    @Override
+    protected Tip pattern(PsiMethodCallExpression ¢) {
+        return tip(¢);
     }
 
     @Override
     public Class<PsiMethodCallExpression> getPsiClass() {
         return PsiMethodCallExpression.class;
     }
-
 }
