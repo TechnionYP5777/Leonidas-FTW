@@ -32,9 +32,8 @@ public enum Toolbox {
                 .add(new LispLastElement())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new AnyMatch())
-                ;
         //.add(new DefaultsTo());
-                //.add(new SafeReference());
+                .add(new SafeReference());
     }
 
     private Toolbox add(Tipper<? extends PsiElement> tipper) {

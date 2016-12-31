@@ -93,4 +93,8 @@ public enum az {
     public static PsiJavaToken javaToken(PsiElement element) {
         return element != null && iz.javaToken(element) ? (PsiJavaToken) element : null;
     }
+
+    public static PsiMethodCallExpression MethodCallExresson(PsiExpression element) {
+        return element != null && iz.MethodCallExpression(element) ? (PsiMethodCallExpression) element : null;
+    }
 }

@@ -12,6 +12,12 @@ import plugin.tipping.Tip;
 /**
  * Created by amirsagiv on 12/23/16.
  */
+
+/**
+ * This is a safeReference Nano pattern.
+ * Please notice!!!
+ * This tip works only for field accesses and for Method calls with no params.
+ */
 public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
     @Override
     public boolean canTip(PsiElement e) {
@@ -24,30 +30,29 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
         return "Replace null conditional ternary with ?.";
     }
 
-    @Override
-    public Tip tip(PsiConditionalExpression node) {
-
-        return node == null || !canTip(node) ? null : new Tip(description(node), node, this.getClass()) {
-            @Override
-            public void go(final PsiRewrite r) {
-                String replacementString;
-                if(firstScenario(node) || secondScenario(node)){
-                    replacementString = az.referenceExpression(az.conditionalExpression(node).getElseExpression()).getQualifier().getText()
-                                        + "?." + az.referenceExpression(az.conditionalExpression(node).getElseExpression()).getReferenceNameElement().getText();
-                }else{ // third or fourth Scenarios
-                    replacementString = az.referenceExpression(az.conditionalExpression(node).getThenExpression()).getQualifier().getText()
-                            + "?." + az.referenceExpression(az.conditionalExpression(node).getThenExpression()).getReferenceNameElement().getText();
-                }
-                PsiStatement replacement = JavaPsiFacade.getElementFactory(node.getProject()).createStatementFromText("\""+ replacementString+ "\"",node);
-                r.replace(node, replacement);
-
-            }
-        };
-    }
 
     @Override
     protected PsiElement createReplacement(PsiConditionalExpression e) {
-        return null;
+
+        String replacementString;
+        if(firstScenario(e) || secondScenario(e)){
+            if(iz.referenceExpression(az.conditionalExpression(e).getElseExpression())) {
+                replacementString = "nullConditional(" + az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getQualifier().getText()
+                        + " , ¢ -> ¢." + az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getReferenceNameElement().getText()+")";
+            }else{
+                replacementString = "nullConditional(" + az.MethodCallExresson(az.conditionalExpression(e).getElseExpression()).getMethodExpression().getQualifier().getText()
+                        + " , ¢ -> ¢." + az.MethodCallExresson(az.conditionalExpression(e).getElseExpression()).getMethodExpression().getReferenceNameElement().getText()+"())";
+            }
+        }else{ // third or fourth Scenarios
+            if(iz.referenceExpression(az.conditionalExpression(e).getThenExpression())) {
+                replacementString = "nullConditional(" + az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText()
+                        + " , ¢ -> ¢." + az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getReferenceNameElement().getText()+")";
+            }else{
+                replacementString = "nullConditional(" + az.MethodCallExresson(az.conditionalExpression(e).getThenExpression()).getMethodExpression().getQualifier().getText()
+                        + " , ¢ -> ¢." + az.MethodCallExresson(az.conditionalExpression(e).getThenExpression()).getMethodExpression().getReferenceNameElement().getText()+"())";
+            }
+        }
+        return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText(replacementString, e);
     }
 
     @Override
@@ -57,46 +62,78 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
 
     private boolean firstScenario(PsiElement e){
         // (x == null) ? null : x.y
-        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+        boolean cond1 =  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
                 (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("==")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
+                iz.nullExpression(az.conditionalExpression(e).getThenExpression());
+
+        boolean cond2 = cond1 && iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
                 (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText()));
+
+        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getElseExpression()) &&
+                (az.MethodCallExresson(az.conditionalExpression(e).getElseExpression()).getMethodExpression().getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText())) &&
+                az.MethodCallExresson(az.conditionalExpression(e).getElseExpression()).getArgumentList().getExpressions().length == 0;
+
+        return (cond2 || cond3);
     }
 
     private boolean secondScenario(PsiElement e){
         // (null == x) ? null : x.y
-        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+        boolean cond1 = iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
                 (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("==")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getThenExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
+                iz.nullExpression(az.conditionalExpression(e).getThenExpression());
+
+        boolean cond2 = cond1 && iz.referenceExpression(az.conditionalExpression(e).getElseExpression()) &&
                 (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText()));
+
+        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getElseExpression()) &&
+                (az.MethodCallExresson(az.conditionalExpression(e).getElseExpression()).getMethodExpression().getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText())) &&
+                az.MethodCallExresson(az.conditionalExpression(e).getElseExpression()).getArgumentList().getExpressions().length == 0;;
+
+        return (cond2 || cond3);
     }
 
     private boolean thirdScenario(PsiElement e){
         // (x != null) ? x.y : null
-        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+        boolean cond1 = iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
                 (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("!=")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
+                iz.nullExpression(az.conditionalExpression(e).getElseExpression());
+
+        boolean cond2 = cond1 && iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
                 (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText()));
+
+        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getThenExpression()) &&
+                (az.MethodCallExresson(az.conditionalExpression(e).getThenExpression()).getMethodExpression().getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText())) &&
+                az.MethodCallExresson(az.conditionalExpression(e).getThenExpression()).getArgumentList().getExpressions().length == 0;
+
+        return (cond2 || cond3);
     }
 
     private boolean fourthScenario(PsiElement e){
         // (null != x.y) ? x.y : null
-        return  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
+        boolean cond1 =  iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
                 (az.binaryExpression(az.conditionalExpression(e).getCondition()).getOperationSign().getText().equals("!=")) &&
                 iz.nullExpression(az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand()) &&
-                iz.nullExpression(az.conditionalExpression(e).getElseExpression()) &&
-                iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
+                iz.nullExpression(az.conditionalExpression(e).getElseExpression());
+
+        boolean cond2 = cond1 && iz.referenceExpression(az.conditionalExpression(e).getThenExpression()) &&
                 (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText()));
+
+        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getThenExpression()) &&
+                (az.MethodCallExresson(az.conditionalExpression(e).getThenExpression()).getMethodExpression().getQualifier().getText().equals(
+                        az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText())) &&
+                az.MethodCallExresson(az.conditionalExpression(e).getThenExpression()).getArgumentList().getExpressions().length == 0;
+
+        return (cond2 || cond3);
     }
 
     @Override

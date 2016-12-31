@@ -154,4 +154,8 @@ public enum iz {
     public static boolean javaToken(PsiElement element) {
         return typeCheck(PsiJavaToken.class, element);
     }
+
+    public static boolean MethodCallExpression(PsiExpression element) {
+        return typeCheck(PsiMethodCallExpressionImpl.class, element);
+    }
 }
