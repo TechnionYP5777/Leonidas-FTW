@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "org.jetbrains.intellij" version "0.1.10"
+}
+
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+compileJava.options.encoding = 'UTF-8'
+
+intellij {
+    version 'IC-2016.3'
+    plugins 'coverage' //Bundled plugin dependencies
+    pluginName 'IntelliJ-Spartanizer'
+}

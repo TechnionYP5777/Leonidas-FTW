@@ -16,6 +16,3 @@ gradle-app.setting
 
 # Ignore production
 /out/
-
-# Ignore iml
-*.iml
