@@ -42,7 +42,7 @@ public class SpartanizerAnnotator implements Annotator {
             @NotNull
             @Override
             public String getFamilyName() {
-                return "il.org.spartan.ispartanizer.plugin.SpartanizerAction";
+                return "SpartanizerAction";
             }
 
             @Override

@@ -1,10 +1,10 @@
 package il.org.spartan.ispartanizer.plugin.tippers;
 
-import il.org.spartan.ispartanizer.auxilary_layer.az;
-import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiConditionalExpression;
 import com.intellij.psi.PsiElement;
+import il.org.spartan.ispartanizer.auxilary_layer.az;
+import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 
 /**
