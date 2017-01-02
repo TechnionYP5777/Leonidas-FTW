@@ -30,13 +30,13 @@ public enum Toolbox {
     public static Toolbox getInstance() {
         return INSTANCE //
                 //.add(new EnhancedForRedundantContinue()) //
+                .add(new SafeReference())
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
-                .add(new AnyMatch())
-                //.add(new DefaultsTo());
-                .add(new SafeReference());
+                .add(new AnyMatch());
+        //.add(new DefaultsTo());;
     }
 
     private Toolbox add(Tipper<? extends PsiElement> tipper) {

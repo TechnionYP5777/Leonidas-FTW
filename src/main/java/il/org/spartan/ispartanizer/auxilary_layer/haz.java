@@ -2,8 +2,6 @@ package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.*;
 
-import java.util.Arrays;
-
 
 /**
  * @author Michal Cohen
@@ -36,30 +34,18 @@ public enum haz {
         return b.inner;
     }
 
-
     public static boolean centVariableDefenition(final PsiElement p) {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
-        p.accept(new PsiRecursiveElementVisitor() {
+        p.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
-                if (iz.declarationStatement(e)) {
-                    PsiDeclarationStatement d = az.declarationStatement(e);
-                    super.visitElement(d);
-                    b.inner = Arrays.stream(d.getDeclaredElements()).anyMatch(z -> z.textContains('¢'));
-                } else if (iz.enumConstant(e)) {
-                    PsiEnumConstant d = az.enumConstant(e);
-                    super.visitElement(d);
-                    b.inner = d.getName().equals("¢");
-                } else if (iz.fieldDeclaration(e)) {
-                    PsiField d = az.fieldDeclaration(e);
-                    super.visitElement(d);
-                    b.inner = d.getName().equals("¢");
+            public void visitIdentifier(PsiIdentifier e) {
+                if (e.getText().equals("¢")) {
+                    b.set(true);
                 }
             }
         });
         return b.inner;
     }
-
     public static boolean functionNamed(final PsiElement p, String name) {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
         p.accept(new JavaRecursiveElementVisitor() {
