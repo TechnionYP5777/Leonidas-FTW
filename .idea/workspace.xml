@@ -1,16 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47a69d45-9c47-4eb2-bbd1-097393bf7b34" name="Default" comment="Added New Tippers Stubs. Issue #7">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/auxilary_layer/Utils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/auxilary_layer/az.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/auxilary_layer/iz_old.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/auxilary_layer/step.java" />
+    <list default="true" id="47a69d45-9c47-4eb2-bbd1-097393bf7b34" name="Default" comment="comments #57">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/auxilary_layer/iz.java" afterPath="$PROJECT_DIR$/src/auxilary_layer/iz.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/plugin/SimpleAnnotator.java" afterPath="$PROJECT_DIR$/src/plugin/SimpleAnnotator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java" afterPath="$PROJECT_DIR$/src/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/plugin/tipping/Tip.java" afterPath="$PROJECT_DIR$/src/plugin/tipping/Tip.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.MD" afterPath="$PROJECT_DIR$/README.MD" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contributors.txt" afterPath="$PROJECT_DIR$/contributors.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/IntelliJSpartanizer/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/out/production/IntelliJSpartanizer/META-INF/plugin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/myPlugin/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/out/production/myPlugin/META-INF/plugin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/META-INF/plugin.xml" afterPath="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/spartanizer/SpartanizerUtils.java" afterPath="$PROJECT_DIR$/resources/spartanizer/SpartanizerUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiRewrite.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiRewrite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiStringConverter.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiStringConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiUtils.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiVisitor.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/PsiVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/Utils.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/Utils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/Wrapper.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/Wrapper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/az.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/az.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/haz.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/haz.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/iz.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/iz.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/iz_old.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/iz_old.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/step.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/step.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/type.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/auxilary_layer/type.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/PreferencesResources.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/PreferencesResources.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/Spartanizer.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/Spartanizer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/SpartanizerAction.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/SpartanizerAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/SpartanizerAnnotator.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/SpartanizerAnnotator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/Toolbox.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/Toolbox.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/leonidas/Matcher.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/leonidas/Matcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/leonidas/TipperFactory.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/leonidas/TipperFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/leonidas/UserDefinedTipper.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/leonidas/UserDefinedTipper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/AnyMatch.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/AnyMatch.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/DefaultsTo.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/DefaultsTo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/LispLastElement.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/LispLastElement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/MethodDeclarationRenameSingleParameterToCent.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/MethodDeclarationRenameSingleParameterToCent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/NanoPatternTipper.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/NanoPatternTipper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/SafeReference.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/SafeReference.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/Unless.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tippers/Unless.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Modular.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Modular.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Nominal.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Nominal.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Range.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Range.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Structural.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Structural.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Tip.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Tip.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Tipper.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/Tipper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/TipperCategory.java" afterPath="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/TipperCategory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/auxilary_layer/UtilsTest.java" afterPath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/auxilary_layer/UtilsTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/auxilary_layer/izTest.java" afterPath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/auxilary_layer/izTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/plugin/tippers/SafeReferenceTest.java" afterPath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/plugin/tippers/SafeReferenceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/plugin/tippers/UnlessTest.java" afterPath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/plugin/tippers/UnlessTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/tippers/DefaultToTest.java" afterPath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/tippers/DefaultToTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/tippers/TipperTest.java" afterPath="$PROJECT_DIR$/test/il/org/spartan/ispartanizer/tippers/TipperTest.java" />
     </list>
     <ignored path="myPlugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,121 +80,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LambdaExpressionRemoveRedundantCurlyBraces.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java">
+      <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="681">
-              <caret line="37" column="38" lean-forward="true" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
+            <state relative-caret-position="133">
+              <caret line="32" column="40" lean-forward="true" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpartanizerUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/spartanizer/SpartanizerUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="26" column="1" lean-forward="false" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+              <folding>
+                <element signature="e#194#195#0" expanded="true" />
+                <element signature="e#228#229#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpartanizeEnableAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/SpartanizeEnableAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#838#839#0" expanded="true" />
-                <element signature="e#865#866#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PsiStatement.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiStatement.class">
+      <file leaf-file-name="Toolbox.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/Toolbox.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            <state relative-caret-position="-759">
+              <caret line="20" column="12" lean-forward="false" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PsiReturnStatement.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiReturnStatement.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ThisIsSparta.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ThisIsSparta.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="650">
-              <caret line="69" column="12" lean-forward="false" selection-start-line="69" selection-start-column="12" selection-end-line="69" selection-end-column="12" />
-              <folding>
-                <element signature="docComment;class#ThisIsSparta#0" expanded="false" />
-                <element signature="docComment;method#replaceWithThisIsSpartaMethod#0;class#ThisIsSparta#0" expanded="false" />
-                <element signature="method#replaceWithThisIsSpartaMethod#1;class#ThisIsSparta#0" expanded="false" />
-                <element signature="method#actionPerformed#0;class#ThisIsSparta#0" expanded="false" />
-                <element signature="method#update#0;class#ThisIsSparta#0" expanded="false" />
-                <element signature="docComment;method#extractMethodsWith2Params#0;class#ThisIsSparta#0" expanded="false" />
-                <element signature="method#extractMethodsWith2Params#0;class#ThisIsSparta#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tip.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/plugin/tipping/Tip.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="13" column="44" lean-forward="false" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PsiFileSystemItem.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiFileSystemItem.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="15" column="46" lean-forward="false" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PsiCheckedRenameElement.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiCheckedRenameElement.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="10" column="54" lean-forward="false" selection-start-line="10" selection-start-column="54" selection-end-line="10" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PsiNamedElement.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiNamedElement.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="13" column="17" lean-forward="false" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="step.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/auxilary_layer/step.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="34" column="53" lean-forward="false" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#963#964#0" expanded="true" />
-                <element signature="e#1023#1024#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="iz.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/auxilary_layer/iz.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="31" column="26" lean-forward="false" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
-              <folding>
-                <element signature="e#910#911#0" expanded="true" />
-                <element signature="e#976#977#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -165,8 +132,8 @@
       <list>
         <option value="Action" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -177,11 +144,20 @@
       <find>psiClass</find>
       <find>Context</find>
       <find>context</find>
+      <find>class</find>
+      <find>PsiM</find>
+      <find>PsiCondition</find>
+      <find>Iden</find>
+      <find>PsiForeachStatement</find>
+      <find>PsiLambdaExpression</find>
+      <find>PsiExpression</find>
+      <find>PsiMethodCallExpression</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Michal Cohen &lt;cohenmelany1@gmail.com&gt;" />
         <option value="Oren Afek &lt;oren.afek@gmail.com&gt;" />
       </list>
     </option>
@@ -198,24 +174,35 @@
       <list>
         <option value="$PROJECT_DIR$/src/exampleAction.java" />
         <option value="$PROJECT_DIR$/src/plugin/ThisIsSparta.java" />
-        <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
         <option value="$PROJECT_DIR$/src/plugin/SimpleAnnotator.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/src/plugin/tipping/Tipper.java" />
         <option value="$PROJECT_DIR$/src/plugin/tippers/ForRedundantContinue.java" />
         <option value="$PROJECT_DIR$/src/plugin/tippers/EnhancedForRedundantContinue.java" />
         <option value="$PROJECT_DIR$/src/plugin/tippers/DeclarationInitializerIfUpdateAssignment.java" />
-        <option value="$PROJECT_DIR$/src/plugin/tippers/MethodDeclarationRenameSingleParameterToCent.java" />
         <option value="$PROJECT_DIR$/src/plugin/tippers/InfixFactorNegatives.java" />
-        <option value="$PROJECT_DIR$/src/plugin/Toolbox.java" />
         <option value="$PROJECT_DIR$/src/auxilary_layer/iz_old.java" />
-        <option value="$PROJECT_DIR$/src/auxilary_layer/az.java" />
-        <option value="$PROJECT_DIR$/src/auxilary_layer/iz.java" />
-        <option value="$PROJECT_DIR$/src/auxilary_layer/Utils.java" />
         <option value="$PROJECT_DIR$/src/ThisIsSparta.java" />
         <option value="$PROJECT_DIR$/src/plugin/tipping/Tip.java" />
         <option value="$PROJECT_DIR$/src/auxilary_layer/step.java" />
         <option value="$PROJECT_DIR$/src/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java" />
+        <option value="$PROJECT_DIR$/out/production/IntelliJSpartanizer/plugin/tippers/spartanizer/SpartanizerUtils.java" />
+        <option value="$PROJECT_DIR$/src/auxilary_layer/Utils.java" />
+        <option value="$PROJECT_DIR$/src/plugin/tippers/AnyMatch.java" />
+        <option value="$PROJECT_DIR$/src/plugin/tippers/SafeReference.java" />
+        <option value="$PROJECT_DIR$/src/plugin/tippers/NanoPatternTipper.java" />
+        <option value="$PROJECT_DIR$/test/plugin/tippers/UnlessTest.java" />
+        <option value="$PROJECT_DIR$/src/auxilary_layer/az.java" />
+        <option value="$PROJECT_DIR$/src/plugin/tippers/MethodDeclarationRenameSingleParameterToCent.java" />
+        <option value="$PROJECT_DIR$/src/auxilary_layer/iz.java" />
+        <option value="$PROJECT_DIR$/src/plugin/Spartanizer.java" />
+        <option value="$PROJECT_DIR$/src/plugin/tippers/Unless.java" />
+        <option value="$PROJECT_DIR$/src/plugin/tippers/DefaultsTo.java" />
+        <option value="$PROJECT_DIR$/src/auxilary_layer/type.java" />
+        <option value="$PROJECT_DIR$/src/plugin/Toolbox.java" />
+        <option value="$PROJECT_DIR$/resources/spartanizer/SpartanizerUtils.java" />
+        <option value="$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/SpartanizeEnableAction.java" />
+        <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
       </list>
     </option>
   </component>
@@ -226,10 +213,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="1855" />
-    <option name="height" value="1056" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -305,8 +292,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -339,7 +324,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -354,6 +339,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ispartanizer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -372,6 +361,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ispartanizer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -397,11 +390,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="plugin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tippers" />
+              <option name="myItemId" value="ispartanizer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -415,21 +404,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="auxilary_layer" />
+              <option name="myItemId" value="spartanizer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IntelliJ-Spartanizer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IntelliJ-Spartanizer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="META-INF" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Spartanizer" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Spartanizer" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
@@ -441,11 +450,14 @@
     <option name="HIGHLIGHT" value="false" />
     <option name="FILTER_WHITESPACE" value="true" />
     <option name="SHOW_PROPERTIES" value="true" />
-    <option name="SPLIT_DIVIDER_POSITION" value="569" />
+    <option name="SPLIT_DIVIDER_POSITION" value="189" />
     <option name="AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="AUTOSCROLL_FROM_SOURCE" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\melanyc\IntelliJ-Spartanizer\resources" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="plugin.tipping" />
     </key>
@@ -460,6 +472,32 @@
       <option name="MAIN_CLASS_NAME" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="UnlessTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="plugin.tippers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="IntelliJSpartanizer" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="plugin.tippers" />
+      <option name="MAIN_CLASS_NAME" value="plugin.tippers.UnlessTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -557,136 +595,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Cold Fusion runner description" factoryName="Cold Fusion" custom_browser="" web_path="">
-      <method />
-    </configuration>
-    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="myFilePath" />
-      <option name="GLUE" />
-      <option name="myNameFilter" />
-      <option name="myGeneratedName" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
-      <option name="BCName" value="" />
-      <option name="IOSSimulatorSdkPath" value="" />
-      <option name="adlOptions" value="" />
-      <option name="airProgramParameters" value="" />
-      <option name="appDescriptorForEmulator" value="Android" />
-      <option name="debugTransport" value="USB" />
-      <option name="debuggerSdkRaw" value="BC SDK" />
-      <option name="emulator" value="NexusOne" />
-      <option name="emulatorAdlOptions" value="" />
-      <option name="fastPackaging" value="true" />
-      <option name="fullScreenHeight" value="0" />
-      <option name="fullScreenWidth" value="0" />
-      <option name="launchUrl" value="false" />
-      <option name="launcherParameters">
-        <LauncherParameters>
-          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-          <option name="launcherType" value="OSDefault" />
-          <option name="newPlayerInstance" value="false" />
-          <option name="playerPath" value="/usr/bin/flashplayerdebugger" />
-        </LauncherParameters>
-      </option>
-      <option name="mobileRunTarget" value="Emulator" />
-      <option name="moduleName" value="" />
-      <option name="overriddenMainClass" value="" />
-      <option name="overriddenOutputFileName" value="" />
-      <option name="overrideMainClass" value="false" />
-      <option name="runTrusted" value="true" />
-      <option name="screenDpi" value="0" />
-      <option name="screenHeight" value="0" />
-      <option name="screenWidth" value="0" />
-      <option name="url" value="http://" />
-      <option name="usbDebugPort" value="7936" />
-      <method />
-    </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
-      <option name="BCName" value="" />
-      <option name="launcherParameters">
-        <LauncherParameters>
-          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-          <option name="launcherType" value="OSDefault" />
-          <option name="newPlayerInstance" value="false" />
-          <option name="playerPath" value="/usr/bin/flashplayerdebugger" />
-        </LauncherParameters>
-      </option>
-      <option name="moduleName" value="" />
-      <option name="trusted" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -701,15 +609,6 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
-      <setting name="vmparams" value="" />
-      <setting name="cmdLine" value="run-app" />
-      <setting name="passParentEnv" value="true" />
-      <setting name="launchBrowser" value="true" />
-      <setting name="launchBrowserUrl" value="" />
-      <setting name="depsClasspath" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -754,15 +653,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
-      <config-file value="" />
-      <node-interpreter value="project" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -788,51 +678,12 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
-      <method />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -863,56 +714,6 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-      <command value="run-script" />
-      <scripts />
-      <node-interpreter value="project" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <working-directory />
-      <pass-parent-env>true</pass-parent-env>
-      <envs />
-      <ui />
-      <extra-mocha-options />
-      <test-kind>DIRECTORY</test-kind>
-      <test-directory />
-      <recursive>false</recursive>
-      <method />
-    </configuration>
-    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
-      <method />
-    </configuration>
-    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
-      <method />
-    </configuration>
-    <configuration default="true" type="uTestRunConfiguration" factoryName="utest">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="false" name="team8 build" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="IntelliJSpartanizer" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -ea" />
@@ -920,13 +721,15 @@
       <log_file path="$USER_HOME$/.IdeaIC2016.2/system/plugins-sandbox/system/log/idea.log" checked="false" skipped="true" show_all="false" alias="IDEA LOG" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Plugin.team8 build" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.All in myPlugin" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.UnlessTest" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.All in myPlugin" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.UnlessTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.All in myPlugin" />
       </list>
     </recent_temporary>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -986,12 +789,91 @@
       <option name="project" value="LOCAL" />
       <updated>1480605878129</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="wooooooooowwwww Injected code to create Unless function!!!  plus some tests! #52">
+      <created>1482703831810</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1482703831811</updated>
+    </task>
+    <task id="LOCAL-00004" summary="cleaning #52">
+      <created>1482753348911</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1482753348911</updated>
+    </task>
+    <task id="LOCAL-00005" summary="refactoring #57">
+      <created>1483099966238</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1483099966238</updated>
+    </task>
+    <task id="LOCAL-00006" summary="standartization #57">
+      <created>1483101545620</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1483101545620</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixes #57">
+      <created>1483102003037</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1483102003037</updated>
+    </task>
+    <task id="LOCAL-00008" summary="comments #57">
+      <created>1483111736906</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1483111736906</updated>
+    </task>
+    <task id="LOCAL-00009" summary="made fluent #52">
+      <created>1483182697805</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1483182697805</updated>
+    </task>
+    <task id="LOCAL-00010" summary="bug fixed #62">
+      <created>1483198544850</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1483198544850</updated>
+    </task>
+    <task id="LOCAL-00011" summary="bug in iz singleParameter fixed ~again~">
+      <created>1483199203416</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1483199203416</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fixed #63">
+      <created>1483214933525</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1483214933525</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
     <history-entry file="All_in_myPlugin - 2016.11.18 at 16h 33m 41s.xml">
       <configuration name="All in myPlugin" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UnlessTest - 2016.12.26 at 13h 50m 10s.xml">
+      <configuration name="UnlessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UnlessTest - 2016.12.26 at 14h 15m 56s.xml">
+      <configuration name="UnlessTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UnlessTest - 2016.12.26 at 14h 16m 19s.xml">
+      <configuration name="UnlessTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
@@ -1007,67 +889,43 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30377167" sideWeight="0.5115903" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22803235" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30377167" sideWeight="0.4884097" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2458221" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925585" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.106770836" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25356752" sideWeight="0.4884097" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3539267" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2140625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42036837" sideWeight="0.5522388" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38010472" sideWeight="0.5522388" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="145" y="180" width="1121" height="544" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" x="145" y="180" width="1121" height="544" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925585" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33260393" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29978117" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997833" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -1087,475 +945,222 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="cleanup." />
     <MESSAGE value="Added New Tippers Stubs. Issue #7" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added New Tippers Stubs. Issue #7" />
+    <MESSAGE value="wooooooooowwwww Injected code to create Unless function!!!  plus some tests! #52" />
+    <MESSAGE value="cleaning #52" />
+    <MESSAGE value="refactoring #57" />
+    <MESSAGE value="standartization #57" />
+    <MESSAGE value="fixes #57" />
+    <MESSAGE value="comments #57" />
+    <MESSAGE value="made fluent #52" />
+    <MESSAGE value="bug fixed #62" />
+    <MESSAGE value="bug in iz singleParameter fixed ~again~" />
+    <MESSAGE value="fixed #63" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed #63" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/plugin/tippers/Unless.java</url>
+          <line>21</line>
+          <properties />
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="iz.conditionalExpression(e)" language="JAVA" custom="auxilary_layer.iz" />
+          <url>file://$PROJECT_DIR$/src/plugin/SpartanizerAnnotator.java</url>
+          <line>28</line>
+          <properties />
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="iz.conditionalExpression(element)" language="JAVA" custom="auxilary_layer.iz" />
+          <url>file://$PROJECT_DIR$/src/plugin/Toolbox.java</url>
+          <line>67</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="22" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+        <watch expression="tipperMap.get(element.getClass())" language="JAVA" />
+        <watch expression="element.getClass()" language="JAVA" />
+        <watch expression="type.of(element)" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="71" lean-forward="false" selection-start-line="36" selection-start-column="71" selection-end-line="36" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiElementFactory.class" />
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiElement.class" />
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiLiteralExpression.class" />
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiFile.class" />
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiFileSystemItem.class" />
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiCheckedRenameElement.class" />
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiNamedElement.class" />
     <entry file="file://$PROJECT_DIR$/src/ThisIsSparta.java" />
-    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiStatement.class" />
+    <entry file="jar://$USER_HOME$/idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiReturnStatement.class" />
+    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/step.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tipping/Tip.java" />
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/LightPsiFileImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="71" lean-forward="false" selection-start-line="36" selection-start-column="71" selection-end-line="36" selection-end-column="71" />
-          <folding />
+        <state relative-caret-position="200">
+          <caret line="307" column="77" lean-forward="false" selection-start-line="307" selection-start-column="71" selection-end-line="307" selection-end-column="77" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ThisIsSparta.java" />
-    <entry file="file://$PROJECT_DIR$/../intellij-community/platform/editor-ui-api/src/com/intellij/openapi/actionSystem/AnAction.java" />
-    <entry file="file://$PROJECT_DIR$/src/exampleAction.java" />
-    <entry file="file://$PROJECT_DIR$/../intellij-community/java/java-psi-api/src/com/intellij/psi/PsiMember.java" />
-    <entry file="file://$PROJECT_DIR$/../intellij-community/java/java-psi-api/src/com/intellij/psi/PsiMethod.java" />
-    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
+    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/PsiRewrite.java" />
+    <entry file="file://$PROJECT_DIR$/test/auxilary_layer/izTest.java" />
+    <entry file="file://$PROJECT_DIR$/out/production/IntelliJSpartanizer/plugin/tippers/SpartinaizerUtils.java" />
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/application/RunResult.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="142">
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2470">
-          <caret line="130" column="24" lean-forward="false" selection-start-line="130" selection-start-column="24" selection-end-line="130" selection-end-column="24" />
-          <folding>
-            <marker date="1480613504803" expanded="true" signature="88172:88189" ph="..." />
-            <marker date="1480613504803" expanded="true" signature="88172:88220" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/SimpleAnnotator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IntelliJSpartanizer.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="9" lean-forward="false" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="10" lean-forward="false" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="34" column="70" lean-forward="false" selection-start-line="34" selection-start-column="70" selection-end-line="34" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/openapi/actionSystem/AnActionEvent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-681">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/DeclarationInitializerIfUpdateAssignment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="72" lean-forward="false" selection-start-line="5" selection-start-column="72" selection-end-line="5" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/EnhancedForRedundantContinue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#330#331#0" expanded="true" />
-            <element signature="e#358#359#0" expanded="true" />
-            <element signature="e#407#408#0" expanded="true" />
-            <element signature="e#434#435#0" expanded="true" />
-            <element signature="e#496#497#0" expanded="true" />
-            <element signature="e#523#524#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/InfixFactorNegatives.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="23" lean-forward="false" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#325#326#0" expanded="true" />
-            <element signature="e#353#354#0" expanded="true" />
-            <element signature="e#402#403#0" expanded="true" />
-            <element signature="e#429#430#0" expanded="true" />
-            <element signature="e#491#492#0" expanded="true" />
-            <element signature="e#518#519#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/MethodDeclarationRenameSingleParameterToCent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#320#321#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
-            <element signature="e#397#398#0" expanded="true" />
-            <element signature="e#424#425#0" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-            <element signature="e#503#504#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/idea.jar!/com/intellij/psi/impl/source/PsiFieldImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="381" column="50" lean-forward="false" selection-start-line="381" selection-start-column="50" selection-end-line="381" selection-end-column="50" />
-          <folding>
-            <element signature="e#15027#15028#0" expanded="true" />
-            <element signature="e#15101#15102#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/idea.jar!/com/intellij/psi/impl/PsiClassImplUtil.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="1290" column="101" lean-forward="false" selection-start-line="1290" selection-start-column="101" selection-end-line="1290" selection-end-column="101" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiManager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="41" column="28" lean-forward="false" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/idea.jar!/com/intellij/psi/impl/PsiManagerImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="157" column="122" lean-forward="false" selection-start-line="157" selection-start-column="122" selection-end-line="157" selection-end-column="122" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../jdk1.8.0_111/src.zip!/java/util/stream/StreamSupport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="66" column="32" lean-forward="false" selection-start-line="66" selection-start-column="32" selection-end-line="66" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../jdk1.8.0_111/src.zip!/java/util/Arrays.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="5022" column="32" lean-forward="true" selection-start-line="5022" selection-start-column="32" selection-end-line="5022" selection-end-column="32" />
-          <folding>
-            <element signature="e#223144#223145#0" expanded="false" />
-            <element signature="e#223197#223198#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/az.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#271#272#0" expanded="true" />
-            <element signature="e#340#341#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/iz_old.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3268">
-          <caret line="472" column="38" lean-forward="false" selection-start-line="472" selection-start-column="19" selection-end-line="472" selection-end-column="38" />
-          <folding>
-            <element signature="e#18360#18361#0" expanded="true" />
-            <element signature="e#18418#18419#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Spartanizer/src/main/java/il/org/spartan/spartanizer/dispatch/Structural.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/kotlin-runtime.jar!/org/jetbrains/annotations/NotNull.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="17" column="30" lean-forward="true" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/annotations.jar!/org/jetbrains/annotations/NonNls.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="15" selection-start-column="92" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Spartanizer/src/main/java/il/org/spartan/spartanizer/dispatch/TipperCategory.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/command/impl/CoreCommandProcessor.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="543">
-          <caret line="111" column="47" lean-forward="false" selection-start-line="111" selection-start-column="47" selection-end-line="111" selection-end-column="47" />
+          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/command/WriteCommandAction.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiElement.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="189" column="16" lean-forward="false" selection-start-line="189" selection-start-column="16" selection-end-line="189" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/testFramework/PsiTestCase.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="85" column="56" lean-forward="false" selection-start-line="85" selection-start-column="27" selection-end-line="85" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiFile.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/tree/CompositePsiElement.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/PsiFileImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="843" column="0" lean-forward="false" selection-start-line="843" selection-start-column="0" selection-end-line="843" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiDirectory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="49" column="9" lean-forward="false" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/plugin/tipping/TipperCategory.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tipping/Tipper.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_111/src.zip!/java/util/function/Function.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="48" column="6" lean-forward="false" selection-start-line="48" selection-start-column="6" selection-end-line="48" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/plugin/tippers/UnlessTest.java" />
+    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/az.java" />
+    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/Utils.java" />
+    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/iz.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/SpartanizerAction.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/Spartanizer.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/AnyMatch.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/DefaultsTo.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/LispLastElement.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/MethodDeclarationRenameSingleParameterToCent.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/NanoPatternTipper.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/SafeReference.java" />
+    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/type.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/Unless.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/SpartanizerAnnotator.java" />
+    <entry file="file://$PROJECT_DIR$/src/plugin/Toolbox.java" />
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/JavaElementVisitor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="270" column="41" lean-forward="false" selection-start-line="270" selection-start-column="16" selection-end-line="270" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/SpartanizerAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="41" column="8" lean-forward="false" selection-start-line="40" selection-start-column="8" selection-end-line="41" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/Toolbox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-759">
+          <caret line="20" column="12" lean-forward="false" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/spartanizer/SpartanizerUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="26" column="1" lean-forward="false" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
           <folding>
-            <element signature="docComment;class#TipperCategory#0" expanded="false" />
-            <element signature="docComment;method#tipperGroup#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Abbreviation#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Annonimization#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Centification#0;class#TipperCategory#0" expanded="false" />
-            <element signature="docComment;class#Collapse#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Collapse#0;class#TipperCategory#0" expanded="false" />
-            <element signature="docComment;class#CommnoFactoring#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#CommnoFactoring#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Dollarization#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#EarlyReturn#0;class#TipperCategory#0" expanded="false" />
-            <element signature="docComment;class#Idiomatic#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Idiomatic#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Inlining#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#InVain#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Nanos#0;class#TipperCategory#0" expanded="false" />
-            <element signature="docComment;class#Sorting#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Sorting#0;class#TipperCategory#0" expanded="false" />
-            <element signature="docComment;class#SyntacticBaggage#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#SyntacticBaggage#0;class#TipperCategory#0" expanded="false" />
-            <element signature="docComment;class#Ternarization#0;class#TipperCategory#0" expanded="false" />
-            <element signature="class#Ternarization#0;class#TipperCategory#0" expanded="false" />
+            <element signature="e#194#195#0" expanded="true" />
+            <element signature="e#228#229#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/Toolbox.java">
+    <entry file="file://$PROJECT_DIR$/src/il/org/spartan/ispartanizer/plugin/tipping/SpartanizeEnableAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="20" lean-forward="false" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Spartanizer/src/main/java/il/org/spartan/spartanizer/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="40" column="44" lean-forward="true" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
-          <folding>
-            <element signature="e#1802#1803#0" expanded="false" />
-            <element signature="e#1851#1852#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiElementFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="191" column="18" lean-forward="false" selection-start-line="191" selection-start-column="18" selection-end-line="191" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/tipping/Tipper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiElement.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="185" column="58" lean-forward="true" selection-start-line="185" selection-start-column="58" selection-end-line="185" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiLiteralExpression.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="10" column="59" lean-forward="false" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiFile.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiFileSystemItem.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="15" column="46" lean-forward="false" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiCheckedRenameElement.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="10" column="54" lean-forward="false" selection-start-line="10" selection-start-column="54" selection-end-line="10" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiNamedElement.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="13" column="17" lean-forward="false" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ThisIsSparta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="650">
-          <caret line="69" column="12" lean-forward="false" selection-start-line="69" selection-start-column="12" selection-end-line="69" selection-end-column="12" />
-          <folding>
-            <element signature="docComment;class#ThisIsSparta#0" expanded="false" />
-            <element signature="docComment;method#replaceWithThisIsSpartaMethod#0;class#ThisIsSparta#0" expanded="false" />
-            <element signature="method#replaceWithThisIsSpartaMethod#1;class#ThisIsSparta#0" expanded="false" />
-            <element signature="method#actionPerformed#0;class#ThisIsSparta#0" expanded="false" />
-            <element signature="method#update#0;class#ThisIsSparta#0" expanded="false" />
-            <element signature="docComment;method#extractMethodsWith2Params#0;class#ThisIsSparta#0" expanded="false" />
-            <element signature="method#extractMethodsWith2Params#0;class#ThisIsSparta#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/tipping/Tip.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="44" lean-forward="false" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiStatement.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../idea-IC-163.7743.44/lib/openapi.jar!/com/intellij/psi/PsiReturnStatement.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/iz.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="31" column="26" lean-forward="false" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
-          <folding>
-            <element signature="e#910#911#0" expanded="true" />
-            <element signature="e#976#977#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/auxilary_layer/step.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="34" column="53" lean-forward="false" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="53" />
+        <state relative-caret-position="270">
+          <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#963#964#0" expanded="true" />
-            <element signature="e#1023#1024#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/plugin/tippers/LambdaExpressionRemoveRedundantCurlyBraces.java">
+    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="681">
-          <caret line="37" column="38" lean-forward="true" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#838#839#0" expanded="true" />
-            <element signature="e#865#866#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="133">
+          <caret line="32" column="40" lean-forward="true" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1599,7 +1204,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.8</last-edited>
+          <last-edited>IntelliJ IDEA Community Edition IC-163.7743.44</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1616,7 +1221,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1624,6 +1228,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
+          <last-edited>Gradle: junit:junit:4.11</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

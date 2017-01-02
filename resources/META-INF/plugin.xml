@@ -1,4 +1,4 @@
-<idea-il.org.spartan.ispartanizer.plugin version="2">
+<idea-plugin version="2">
   <id>il.ac.technion.yearlyproject2016.team8</id>
     <name>Spartanizer</name>
   <version>0.1</version>
@@ -34,6 +34,12 @@
       <add-to-group group-id="CodeFormatGroup" anchor="last"/>
       <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 9"/>
     </action>
+    <action id="il.org.spartan.ispartanizer.plugin.tipping.SpartanizeEnableAction"
+            class="il.org.spartan.ispartanizer.plugin.tipping.SpartanizeEnableAction" text="Spartanize"
+            description="toggle spartanization">
+      <add-to-group group-id="ProjectViewAnalysisGroup" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt C" second-keystroke="R"/>
+    </action>
   </actions>
 
-</idea-il.org.spartan.ispartanizer.plugin>
+</idea-plugin>

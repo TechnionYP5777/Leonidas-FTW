@@ -25,4 +25,3 @@ public class SpartanizerUtils {
 
     public static <T,R> R nullConditional(T x, Function<T,R> func){return x != null ? func.apply(x) : null;}
 }
-}
