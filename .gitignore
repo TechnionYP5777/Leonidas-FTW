@@ -1,5 +1,10 @@
+# Ignore .gradle/
 .gradle/
-/build/
+
+# Ignore build/
+build/
+
+# Ignore .idea/
 .idea/
 
 # Ignore Gradle GUI config
@@ -15,4 +20,4 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 # Ignore production
-/out/
+out/

@@ -1,20 +1,34 @@
+// http://stackoverflow.com/questions/17773817/purpose-of-buildscript-in-gradle
 buildscript {
     repositories {
         mavenCentral()
     }
 }
 
+// Attach useful gradle plugins
 plugins {
     id "org.jetbrains.intellij" version "0.1.10"
+    id "idea"
+    id "java"
 }
 
-apply plugin: 'idea'
-apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
+// Order the compiler to use UTF-8 encoding
 compileJava.options.encoding = 'UTF-8'
 
+// Decides the structure of the directory tree
+sourceSets {
+    main {
+        java.srcDirs 'src/main'
+        resources.srcDir 'resources'
+    }
+    test {
+        java.srcDir 'src/test'
+        resources.srcDir 'testResources'
+    }
+}
+
+// Basic configuration of org.jetbrains.intellij plugin
 intellij {
     version 'IC-2016.3'
-    plugins 'coverage' //Bundled plugin dependencies
     pluginName 'IntelliJ-Spartanizer'
 }
