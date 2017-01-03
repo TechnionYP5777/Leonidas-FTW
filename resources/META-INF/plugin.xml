@@ -34,6 +34,10 @@
             <add-to-group group-id="CodeFormatGroup" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 9"/>
         </action>
+        <action class="il.org.spartan.ispartanizer.plugin.SpartanizerEnableAction" id="myPlugin2"
+                text="Disable Spartanization">
+            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>

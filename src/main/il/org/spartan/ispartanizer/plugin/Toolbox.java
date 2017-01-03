@@ -8,10 +8,7 @@ import il.org.spartan.ispartanizer.auxilary_layer.type;
 import il.org.spartan.ispartanizer.plugin.tippers.*;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Oren Afek
@@ -21,24 +18,32 @@ import java.util.Map;
 public enum Toolbox {
     INSTANCE;
 
+    static boolean wasInitialize = false;
     final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap;
+    Set<PsiFile> excludedFiles;
 
     Toolbox() {
         this.tipperMap = new HashMap<>();
+        excludedFiles = new HashSet<>();
     }
 
     public static Toolbox getInstance() {
-        return INSTANCE //
-                //.add(new EnhancedForRedundantContinue()) //
+        if (!wasInitialize) {
+            initializeInstance();
+        }
+        return INSTANCE;
+    }
+
+    private static void initializeInstance() {
+        wasInitialize = true;
+        INSTANCE //
                 .add(new SafeReference())
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new AnyMatch());
-        //.add(new DefaultsTo());;
     }
-
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
         tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
         tipperMap.get(tipper.getPsiClass()).add(tipper);
@@ -52,6 +57,9 @@ public enum Toolbox {
 
     public Toolbox executeAllTippers(PsiElement element, Project project, PsiFile psiFile) {
 
+        if (checkExcluded(element.getContainingFile())) {
+            return this;
+        }
         tipperMap.get(type.of(element)).stream() //
                 .filter(tipper -> tipper.canTip(element)) //
                 .forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project)));
@@ -65,8 +73,22 @@ public enum Toolbox {
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
     public boolean canTip(PsiElement element) {
-        return tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element));
+        return (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element))) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element));
     }
 
+    public boolean checkExcluded(PsiFile f) {
+        return f == null || excludedFiles.contains(f);
+    }
 
+    public void excludeFile(PsiFile f) {
+        excludedFiles.add(f);
+    }
+
+    public void includeFile(PsiFile f) {
+        excludedFiles.remove(f);
+    }
+
+    private boolean canTipType(Class<? extends PsiElement> t) {
+        return tipperMap.keySet().stream().anyMatch(x -> x.equals(t));
+    }
 }

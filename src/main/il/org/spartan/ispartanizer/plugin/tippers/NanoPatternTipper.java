@@ -9,6 +9,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Utils;
+import il.org.spartan.ispartanizer.plugin.Toolbox;
 import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 import il.org.spartan.ispartanizer.plugin.tipping.TipperCategory;
@@ -36,16 +37,6 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
     public static <N extends PsiElement> Tip firstTip(final Collection<Tipper<N>> ns, final N n) {
         return firstTipperThatCanTip(ns, n).tip(n);
     }
-
-    /*@Override
-    public Tip tip(final N ¢) {
-        return new Tip(description(¢), ¢, this.getClass()) {
-            @Override
-            public void go(final PsiRewrite r) {
-                pattern(¢).go(r);
-            }
-        };
-    }*/
 
     String className() {
         return this.getClass().getSimpleName();
@@ -99,6 +90,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
             List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
             pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
             pd.add(pf);
+            Toolbox.getInstance().excludeFile(pf);
         } catch (IncorrectOperationException x) {
             PsiDirectory pd = srcDir.getSubdirectories()[0];
             pf = pd.getFiles()[0];
