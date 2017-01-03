@@ -79,5 +79,24 @@ public class SafeReferenceTest extends TipperTest {
         assertFalse(new SafeReference().canTip(createTestExpressionFromString("null != x ? a.y: null")));
     }
 
+    public void testFirstScenarioWithLegalMethod(){
+        assertTrue(new SafeReference().canTip(createTestExpressionFromString("x == null ? null : x.y()")));
+    }
+
+    public void testSecondScenarioWithLegalMethod(){
+        assertTrue(new SafeReference().canTip(createTestExpressionFromString("null == x ? null : x.y()")));
+    }
+
+    public void testThirdScenarioWithLegalMethod(){
+        assertTrue(new SafeReference().canTip(createTestExpressionFromString("x != null ? x.y() : null")));
+    }
+
+    public void testFourthScenarioWithLegalMethod(){
+        assertTrue(new SafeReference().canTip(createTestExpressionFromString("null != x ? x.y() : null")));
+    }
+
+
+
+
 
 }
