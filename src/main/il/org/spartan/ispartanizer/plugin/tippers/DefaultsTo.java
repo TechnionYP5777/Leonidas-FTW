@@ -16,7 +16,7 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
  * @since 2016.12.24
  */
 
-public class DefaultsTo implements Tipper<PsiConditionalExpression> {
+public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public boolean canTip(PsiElement e) {
@@ -58,7 +58,7 @@ public class DefaultsTo implements Tipper<PsiConditionalExpression> {
                 "Replace null != X ? X : Y with X ?? Y <br>";
     }
 
-    @Override
+    /*@Override
     public Tip tip(PsiConditionalExpression node) {
         final PsiBinaryExpression binaryExpression = az.binaryExpression(step.conditionExpression(node));
         final String leftOperandText = String.valueOf(step.leftOperand(binaryExpression).textToCharArray());
@@ -81,6 +81,30 @@ public class DefaultsTo implements Tipper<PsiConditionalExpression> {
                 r.replace(node, replacement);
             }
         };
+    }*/
+
+    private boolean eqOperator(PsiConditionalExpression e) {
+        PsiBinaryExpression condition = az.binaryExpression(step.conditionExpression(e));
+        IElementType operator = step.operator(condition);
+        return iz.equalsOperator(operator);
+    }
+
+    @Override
+    protected PsiElement createReplacement(PsiConditionalExpression e) {
+        String replacement = "defaults(" +
+                (eqOperator(e) ? e.getElseExpression().getText() : e.getThenExpression().getText()) +
+                ")" +
+                ".to(" +
+                (eqOperator(e) ? e.getThenExpression().getText() : e.getElseExpression().getText()) +
+                ")";
+
+        return JavaPsiFacade.getElementFactory(e.getProject())
+                .createExpressionFromText(replacement, e);
+    }
+
+    @Override
+    protected Tip pattern(PsiConditionalExpression ¢) {
+        return null;
     }
 
     @Override

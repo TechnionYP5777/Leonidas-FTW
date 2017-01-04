@@ -41,6 +41,7 @@ public enum Toolbox {
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
+                .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new AnyMatch());
     }
