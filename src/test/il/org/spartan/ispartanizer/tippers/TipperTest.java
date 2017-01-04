@@ -29,4 +29,13 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createExpressionFromText(s, getTestElement());
     }
 
+    PsiElement createTestClassFromString(String s) {
+        PsiFile f = createDummyFile(dummyTestFileName, s);
+        return f.getNode().getPsi();
+    }
+
+    PsiMethod createTestMethodFromString(String s){
+        return getTestFactory().createMethodFromText(s, getTestElement());
+    }
+
 }
