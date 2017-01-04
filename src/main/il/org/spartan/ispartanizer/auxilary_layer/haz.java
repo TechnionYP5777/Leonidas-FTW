@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.util.PsiTreeUtil;
 
 
 /**
@@ -64,6 +65,10 @@ public enum haz {
 
     public static boolean notEqualsOperator(PsiBinaryExpression expression) {
         return expression != null && step.operator(expression).equals(JavaTokenType.NE);
+    }
+
+    public static boolean syntaxErrors(PsiElement element) {
+        return PsiTreeUtil.hasErrorElements(element);
     }
 
 }
