@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author michal cohen
  * @since 12/22/2016.
  */
-public class UnlessTest extends PsiTestCase {
+public class UnlessTest extends TipperTest {
 
     @Override
     protected void setUp() throws Exception {
