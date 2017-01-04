@@ -24,4 +24,20 @@ public class SpartanizerUtils {
     }
 
     public static <T,R> R nullConditional(T x, Function<T,R> func){return x != null ? func.apply(x) : null;}
+
+    public static class Defaults<T> {
+        T then;
+
+        public Defaults(T then){
+            this.then = then;
+        }
+
+        public T to(T else$){
+            return then != null ? then : else$;
+        }
+    }
+
+    public static <T> Defaults<T> defaults(T then){
+        return new Defaults<T>(then);
+    }
 }
