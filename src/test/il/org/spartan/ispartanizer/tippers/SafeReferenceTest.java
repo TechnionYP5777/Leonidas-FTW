@@ -95,6 +95,31 @@ public class SafeReferenceTest extends TipperTest {
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("null != x ? x.y() : null")));
     }
 
+    //Notice!! these next tests only pass because I limited the pattern to work with methods with zero params. delete
+    // if you make it work with any method!
+    public void testCanTipIllegal13() {
+        assertFalse(new SafeReference().canTip(createTestExpressionFromString("x == null ? null : x.y(p1)")));
+    }
+
+    public void testCanTipIllegal14() {
+        assertFalse(new SafeReference().canTip(createTestExpressionFromString("x == null ? null : x.y(p1,p2)")));
+    }
+
+    public void testCanTipIllegal15() {
+        assertFalse(new SafeReference().canTip(createTestExpressionFromString("x != null ? x.y(p1) : null")));
+    }
+
+    public void testCanTipIllegal16() {
+        assertFalse(new SafeReference().canTip(createTestExpressionFromString("x != null ? x.y(p1 ,p2) : null")));
+    }
+
+    public void testCanTipIllegal17() {
+        assertFalse(new SafeReference().canTip(createTestExpressionFromString("x == null ? x.y() : x.y(p1)")));
+    }
+
+    public void testCanTipIllegal18() {
+        assertFalse(new SafeReference().canTip(createTestExpressionFromString("x != null ? x.y(p1 ,p2) : x.y")));
+    }
 
 
 
