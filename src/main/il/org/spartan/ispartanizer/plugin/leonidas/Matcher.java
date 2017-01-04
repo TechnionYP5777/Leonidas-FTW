@@ -5,6 +5,7 @@ import com.intellij.psi.PsiCodeBlock;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiStatement;
 import com.intellij.psi.util.PsiUtilCore;
+import il.org.spartan.ispartanizer.auxilary_layer.PsiStringConverter;
 import il.org.spartan.ispartanizer.auxilary_layer.az;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.auxilary_layer.step;
@@ -18,18 +19,22 @@ import java.util.function.Supplier;
 /**
  * @Author Roey Maor
  * @since 3/12/2016.
+ *
+ * implemented using element trees only without the use of strings for NOW
  */
 
 
 public class Matcher {
 
-    final Supplier<PsiElement> patternSupplier;
-    final String replacement;
-    PsiElement __pattern;
+
+
+     final String replacement;
+     final Supplier<PsiElement> patternSupplier;
+     PsiElement __pattern;
+
 
     public Matcher(final String p, final String r) {
-        //patternSupplier = () -> extractStatementIfOne(wizard.ast(reformat(p)));
-        patternSupplier = null; //TODO: @RoeyMaor this is wrong
+        patternSupplier = () -> extractStatementIfOne(PsiStringConverter.convertStringToPsi(null,reformat(p)));
         replacement = reformat(r);
     }
 
@@ -179,8 +184,8 @@ public class Matcher {
     }
 
     /**
-     * Tries to match a pattern <b>p</b> to a given ASTNode <b>n</b>, using<br>
-     * the matching rules. For more info about these rules, see {@link Matcher}.
+     * Tries to match a pattern <b>p</b> to a given PsiElement <b>n</b>, using<br>
+     * the matching rules.
      *
      * @param ¢ PsiElement
      * @return True iff <b>n</b> matches the pattern <b>p</b>.
@@ -190,34 +195,43 @@ public class Matcher {
     }
 
     @SuppressWarnings("unchecked")
-    private boolean matchesAux(final PsiElement __, final PsiElement e, final Map<String, String> ids) {
-        return false;
+    private boolean matchesAux(final PsiElement p, final PsiElement n, final Map<String, String> ids) {
+        /*
+            A better tree matching algorithm is requires here!!!!!!!!!!!!!
+         */
 
         /*
+            leaf cases:
+         */
+
         if (p == null || n == null)
             return false;
         if (is$X(p))
-            return iz.expression(n) && consistent(ids, p + "", n + "");
-        if (iz.name(p))
-            return sameName(p, n, ids);
+            return iz.expressionStatement(n) && consistent(ids, p + "", n + "");
+        if (iz.identifier(p))
+            return sameIdentifier(p, n, ids);
         if (iz.literal(p))
             return sameLiteral(p, n);
         if (isBlockVariable(p))
             return matchesBlock(n) && consistent(ids, blockVariableName(p), n + "");
+        /*
         if (isMethodInvocationAndHas$AArgument(p))
             return isMethodInvocationAndConsistentWith$AArgument(p, n, ids) && Recurser.children(n).size() == Recurser.children(p).size();
         if (isClassInstanceCreationAndHas$AArgument(p))
             return isClassInstanceCreationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
+            */
         if (differentTypes(p, n))
             return false;
         if (iz.literal(p))
             return (p + "").equals(n + "");
-        if (iz.containsOperator(p) && !sameOperator(p, n))
-            return false;
-        final List<? extends ASTNode> nChildren = Recurser.children(n);
-        final List<? extends ASTNode> pChildren = Recurser.children(p);
+
+
+        return false;
+        /*
+        final List<? extends PsiElement> nChildren = Recurser.children(n);
+        final List<? extends PsiElement> pChildren = Recurser.children(p);
         if (iz.methodInvocation(p)) {
-            pChildren.addAll(az.methodInvocation(p).arguments());
+            pChildren.addAll(az.methodInvocation(p).getArgumentList());
             nChildren.addAll(az.methodInvocation(n).arguments());
         }
         if (nChildren.size() != pChildren.size())
@@ -226,8 +240,9 @@ public class Matcher {
             if (!matchesAux(pChildren.get(¢), nChildren.get(¢), ids))
                 return false;
         return true;
+        */
 
-    */
+
 
     }
 
@@ -280,6 +295,56 @@ public class Matcher {
 
     public Map<String, String> collectEnviroment(final PsiElement e, final Map<String, String> enviroment) {
         return collectEnviroment(pattern(), e, enviroment);
+    }
+
+    /** Validates that matched variables are the same in all matching places. */
+    private static boolean consistent(final Map<String, String> ids, final String id, final String s) {
+        ids.putIfAbsent(id, s);
+        return ids.get(id).equals(s);
+    }
+
+    private static boolean consistent(final Map<String, String> ids, final String id, final PsiElement n) {
+        return consistent(ids, id, n + "");
+    }
+
+    private static boolean sameIdentifier(final PsiElement p, final PsiElement n, final Map<String, String> ids) {
+        return false;
+        /*
+        final String $ = p + "";
+        if ($.startsWith("$")) {
+            if ($.startsWith($M))
+                return iz.methodInvocation(n) && consistent(ids, $, n);
+            if ($.startsWith($SN))
+                return iz.simpleName(n) && consistent(ids, $, n);
+            if ($.startsWith($N))
+                return iz.name(n) && consistent(ids, $, n);
+            if ($.startsWith($L))
+                return iz.literal(n) && consistent(ids, $, n);
+            if ($.startsWith($D))
+                return iz.defaultLiteral(n) && consistent(ids, $, n);
+        }
+        return iz.name(n) && $.equals(identifier(az.name(n)));
+        */
+    }
+
+    private static boolean sameLiteral(final PsiElement p, final PsiElement n) {
+        return iz.literal(n) && (p + "").equals(n + "");
+    }
+
+    /** Checks if node is a block or statement
+     * @param ¢
+     * @return */
+    private static boolean matchesBlock(final PsiElement ¢) {
+        return iz.block(¢) || iz.statement(¢);
+    }
+
+    private static boolean differentTypes(final PsiElement p, final PsiElement n) {
+        return n.getNode().getElementType() != p.getNode().getElementType();
+    }
+
+    private static boolean isMethodInvocationAndConsistentWith$AArgument(final PsiElement p, final PsiElement n, final Map<String, String> ids) {
+        return iz.methodInvocation(n) && sameLiteral(az.methodInvocation(p).getMethodExpression().getLastChild(), az.methodInvocation(n).getMethodExpression().getLastChild())
+                && consistent(ids, az.methodInvocation(p).getArgumentList().getExpressions()[0] + "", az.methodInvocation(n).getArgumentList().getExpressions() + "");
     }
 
 }

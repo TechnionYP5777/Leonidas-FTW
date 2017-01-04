@@ -21,7 +21,7 @@ public enum iz {
     private static final String ABSTRACT = "abstract";
 
     private static boolean typeCheck(Class<? extends PsiElement> type, PsiElement element) {
-        return element != null && type.isInstance(element);
+        return element != null && type.isAssignableFrom(element.getClass());
     }
 
     public static boolean null$(PsiElement element) {
@@ -136,7 +136,7 @@ public enum iz {
     }
 
     public static boolean literal(PsiElement element) {
-        return typeCheck(PsiLiteralExpressionImpl.class, element);
+        return typeCheck(PsiLiteralExpression.class, element);
     }
 
     public static boolean classDeclaration(PsiElement element) {
@@ -166,4 +166,5 @@ public enum iz {
     public static boolean MethodCallExpression(PsiExpression element) {
         return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }
+
 }

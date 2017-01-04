@@ -11,7 +11,9 @@ import com.intellij.psi.PsiElement;
 public class PsiStringConverter {
 
     public static PsiElement convertStringToPsi(PsiRewrite r, String s) {
-        return r.getFileFactory().createFileFromText("tempFile", JavaFileType.INSTANCE, s).getNavigationElement();
+        //TODO: as we discussed the layer of string to PSI needs to be fixed
+        //return r.getFileFactory().createFileFromText("tempFile", JavaFileType.INSTANCE, s).getNavigationElement();
+        return null;
     }
 
     public static String convertPsiToString(PsiElement ¢) {
