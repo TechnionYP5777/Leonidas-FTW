@@ -1,4 +1,4 @@
-package il.org.spartan.ispartanizer.plugin.tippers;
+package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiConditionalExpression;
@@ -7,6 +7,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.PsiTestCase;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
+import il.org.spartan.ispartanizer.plugin.tippers.Unless;
 import org.junit.Test;
 
 /**
