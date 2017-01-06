@@ -8,15 +8,17 @@ import il.org.spartan.ispartanizer.plugin.leonidas.LeonidasTipper;
  * @author Oren Afek
  * @since 06/01/17
  */
-@Leonidas(PsiIfStatement.class)
+
 public class RemoveCurlyBracesFromIfStatement extends LeonidasTipper {
 
+    @Leonidas(PsiIfStatement.class)
     public void from(){
         if (booleanExpression()){
             statement();
         }
     }
 
+    @Leonidas(PsiIfStatement.class)
     public void to(){
         if (booleanExpression())
             statement();

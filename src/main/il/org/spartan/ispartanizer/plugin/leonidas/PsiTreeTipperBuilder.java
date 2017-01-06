@@ -3,6 +3,7 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -11,10 +12,10 @@ import java.util.Map;
  */
 public interface PsiTreeTipperBuilder {
 
-    PsiTreeTipperBuilder buildTipperPsiTree(String fileName, Project project);
+    PsiTreeTipperBuilder buildTipperPsiTree(String fileName, Project project) throws IOException;
 
-    PsiElement getPsiTree();
+    PsiElement getFromPsiTree();
 
-    Map<PsiElement, ElementDescriptor> getTreeDescriptor();
+    PsiElement getToPsiTree();
 
 }
