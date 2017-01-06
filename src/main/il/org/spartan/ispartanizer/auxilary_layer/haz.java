@@ -67,11 +67,13 @@ public enum haz {
         return expression != null && step.operator(expression).equals(JavaTokenType.NE);
     }
 
-    public static boolean syntaxErrors(PsiElement element) {
-        //short circuit evaluation is key here,
-        //as the first check is very lightweight, while the second one requires
-        //complete file compilation
-        return (PsiTreeUtil.hasErrorElements(element) || CompilationCenter.hasCompilationErrors(element));
+    public static boolean compilationErrors(PsiFile file){
+        return CompilationCenter.hasCompilationErrors(file);
     }
+    public static boolean syntaxErrors(PsiElement element) {
+        return (PsiTreeUtil.hasErrorElements(element));
+    }
+
+
 
 }
