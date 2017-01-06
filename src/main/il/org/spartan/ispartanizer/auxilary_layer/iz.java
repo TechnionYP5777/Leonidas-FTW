@@ -167,4 +167,10 @@ public enum iz {
         return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }
 
+    /**
+     * @return true if e1 is of e2's type or inherits from it
+     */
+    public static boolean theSame(PsiElement e1, PsiElement e2) {
+        return typeCheck(e2.getClass(), e1);
+    }
 }

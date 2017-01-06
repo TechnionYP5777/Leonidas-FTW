@@ -9,18 +9,18 @@ import java.util.Map;
  */
 public class ElementDescriptor {
 
-    Map<Key,Value> description;
+    Map<PsiDescriptionParameters,Value> description;
 
     public ElementDescriptor(){
         description = new HashMap<>();
     }
 
-    public ElementDescriptor addElement(Key k, Value v){
+    public ElementDescriptor addElement(PsiDescriptionParameters k, Value v){
         this.description.put(k,v);
         return this;
     }
 
-    public ElementDescriptor removeElement(Key k){
+    public ElementDescriptor removeElement(PsiDescriptionParameters k){
         if(this.description.containsKey(k)){
             this.description.remove(k);
         }
@@ -28,11 +28,11 @@ public class ElementDescriptor {
         return this;
     }
 
-    public Value getElement(Key k){
+    public Value getElement(PsiDescriptionParameters k){
         return this.description.get(k);
     }
 
-    public Map<Key,Value> getAllElements(){
+    public Map<PsiDescriptionParameters,Value> getAllElements(){
         return description;
     }
 
@@ -41,7 +41,7 @@ public class ElementDescriptor {
         return this;
     }
 
-    public boolean containsKey(Key k){
+    public boolean containsKey(PsiDescriptionParameters k){
         return this.description.containsKey(k);
     }
 }
