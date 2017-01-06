@@ -38,24 +38,7 @@ public class Matcher {
         replacement = reformat(r);
     }
 
-    /*
-        <N extends PsiElement> PsiElement replacement(final N n) {
-            final Map<String, String> enviroment = collectEnviroment(n, new HashMap<>());
-            final Wrapper<String> $ = new Wrapper<>();
-            $.set(replacement);
-            for (final String ¢ : enviroment.keySet())
-                if (needsSpecialReplacement(¢))
-                    $.set($.get().replace(¢, enviroment.get(¢) + ""));
-            wizard.ast(replacement).accept(new ASTVisitor() {
-                @Override public boolean preVisit2(final PsiElement ¢) {
-                    if (iz.name(¢) && enviroment.containsKey(¢ + ""))
-                        $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$") + ""));
-                    return true;
-                }
-            });
-            return extractStatementIfOne(wizard.ast($.get()));
-        }
-    */
+
     private static boolean needsSpecialReplacement(final String ¢) {
         return ¢.startsWith("$B") || matches$X(¢);
     }
@@ -78,21 +61,6 @@ public class Matcher {
      * [[SuppressWarningsSpartan]]
      */
     private static Map<String, String> collectEnviroment(final PsiElement p, final PsiElement n, final Map<String, String> enviroment) {
-        /*
-        if (startsWith$notBlock(p))
-            enviroment.put(p + "", n + "");
-        else if (isBlockVariable(p))
-            enviroment.put(blockVariableName(p) + "();", n + "");
-        else {
-            if (isMethodInvocationAndHas$AArgument(p))
-                enviroment.put(argumentsId(p), arguments(n) + "");
-            final List<PsiElement> pChildren = gatherChildren(p, p);
-            final List<PsiElement> nChildren = gatherChildren(n, p);
-            for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-                collectEnviroment(pChildren.get(¢), nChildren.get(¢), enviroment);
-        }
-        return enviroment;
-        */
         return null;
     }
 
@@ -273,25 +241,6 @@ public class Matcher {
             $[¢ - idxs.first] = Arrays.asList(b.getStatements()).get(idxs.first);
         return $;
     }
-/*
-    @SuppressWarnings("unchecked") private static List<PsiElement> gatherChildren(final PsiElement ¢, final PsiElement p) {
-        final List<PsiElement> $ = (List<PsiElement>) Recurser.children(¢);
-        if (iz.methodInvocation(¢)) {
-            if (!isMethodInvocationAndHas$AArgument(p))
-                $.addAll(az.methodInvocation(¢).arguments());
-            if (haz.expression(az.methodInvocation(¢)))
-                $.add(step.expression(az.methodInvocation(¢)));
-        }
-        if (iz.forStatement(¢)) {
-            $.addAll(step.initializers(az.forStatement(¢)));
-            $.add(step.condition(az.forStatement(¢)));
-            $.addAll(step.updaters(az.forStatement(¢)));
-        }
-        if (iz.variableDeclarationExpression(¢))
-            $.addAll(step.fragments(az.variableDeclarationExpression(¢)));
-        return $;
-    }
-    */
 
     public Map<String, String> collectEnviroment(final PsiElement e, final Map<String, String> enviroment) {
         return collectEnviroment(pattern(), e, enviroment);
