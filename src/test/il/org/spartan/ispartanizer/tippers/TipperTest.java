@@ -38,4 +38,8 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createMethodFromText(s, getTestElement());
     }
 
+    PsiCodeBlock createTestCodeBlockFromString(String s){
+        return getTestFactory().createCodeBlockFromText(s, getTestElement());
+    }
+
 }

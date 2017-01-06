@@ -68,7 +68,10 @@ public enum haz {
     }
 
     public static boolean syntaxErrors(PsiElement element) {
-        return PsiTreeUtil.hasErrorElements(element);
+        //short circuit evaluation is key here,
+        //as the first check is very lightweight, while the second one requires
+        //complete file compilation
+        return (PsiTreeUtil.hasErrorElements(element) || CompilationCenter.hasCompilationErrors(element));
     }
 
 }
