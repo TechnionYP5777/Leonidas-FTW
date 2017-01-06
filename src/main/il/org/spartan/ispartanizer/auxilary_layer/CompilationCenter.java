@@ -46,7 +46,7 @@ public class CompilationCenter {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         compiler.run(null, null, baos, dummyCompilationTestFile.getPath());
         String resultingErrorString = baos.toString();
-        return resultingErrorString.length() == 0;
+        return resultingErrorString.length() != 0;
     }
 
 

@@ -42,4 +42,8 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createCodeBlockFromText(s, getTestElement());
     }
 
+    PsiFile createTestFileFromString(String s){
+        return createDummyFile(dummyTestFileName,s);
+    }
+
 }

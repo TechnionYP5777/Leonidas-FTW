@@ -68,7 +68,7 @@ public enum haz {
     }
 
     public static boolean compilationErrors(PsiFile file){
-        return CompilationCenter.hasCompilationErrors(file);
+        return haz.syntaxErrors(file) || CompilationCenter.hasCompilationErrors(file);
     }
     public static boolean syntaxErrors(PsiElement element) {
         return (PsiTreeUtil.hasErrorElements(element));
