@@ -5,6 +5,5 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
  * @since 06/01/17
  */
 public enum PsiDescriptionParameters {
-    NO_OF_STATEMENTS;
-
+    NO_OF_STATEMENTS
 }

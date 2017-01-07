@@ -1,5 +1,6 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
+import com.intellij.psi.PsiCodeBlock;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.ispartanizer.auxilary_layer.az;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
@@ -21,12 +22,12 @@ public class PsiTreeMatcher {
 
     }
 
-    private boolean match(PsiElement treeTemplate, PsiElement treeToMatch) {
+    public boolean match(PsiElement treeTemplate, PsiElement treeToMatch) {
         if (!iz.theSame(treeToMatch, treeTemplate)) {
             return false;
         }
         if (iz.block(treeToMatch)) {
-            if (az.block(treeToMatch).getStatements().length != treeTemplate.getUserData(new Key<Integer>(PsiDescriptionParameters.NO_OF_STATEMENTS.name()))) {
+            if (!checkNoOfStatements(treeTemplate, az.block(treeToMatch))) {
                 return false;
             } else {
                 //TODO: implement cases of comparison of amount
@@ -38,6 +39,19 @@ public class PsiTreeMatcher {
             res = res && match(treeTemplateChild, treeToMatchChild);
         }
         return res;
+    }
+
+    private boolean checkNoOfStatements(PsiElement treeTemplate, PsiCodeBlock blockToMatch) {
+        switch (treeTemplate.getUserData(new Key<Amount>(PsiDescriptionParameters.NO_OF_STATEMENTS.name()))) {
+            case EMPTY:
+                return blockToMatch.getStatements().length == 0;
+            case EXACTLY_ONE:
+                return blockToMatch.getStatements().length == 1;
+            case AT_LEAST_ONE:
+                return blockToMatch.getStatements().length >= 1;
+            default:
+                return false;
+        }
     }
 
 }
