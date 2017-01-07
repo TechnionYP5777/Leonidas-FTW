@@ -8,7 +8,6 @@ import il.org.spartan.ispartanizer.plugin.leonidas.LeonidasTipper;
  * @author Oren Afek
  * @since 06/01/17
  */
-
 public class RemoveCurlyBracesFromIfStatement extends LeonidasTipper {
 
     @Leonidas(PsiIfStatement.class)

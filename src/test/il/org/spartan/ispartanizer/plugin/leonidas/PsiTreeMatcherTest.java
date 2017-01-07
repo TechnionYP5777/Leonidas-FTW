@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.*;
-import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 /**
@@ -32,7 +31,7 @@ public class PsiTreeMatcherTest extends TipperTest {
     }
 
     public void testMatch3() {
-        PsiIfStatement b = createTestIfStatement("true", " int x = 5; ");
+        PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
         b.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitCodeBlock(PsiCodeBlock block) {
@@ -41,24 +40,8 @@ public class PsiTreeMatcherTest extends TipperTest {
             }
         });
 
-        b.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitDeclarationStatement(PsiDeclarationStatement statement) {
-                super.visitDeclarationStatement(statement);
-                statement.deleteChildRange(statement.getFirstChild(), statement.getLastChild());
-            }
-        });
-
-        b.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitExpression(PsiExpression exp) {
-                super.visitExpression(exp);
-                if (!iz.ifStatement(exp.getParent())) {
-                    return;
-                }
-                exp.deleteChildRange(exp.getFirstChild(), exp.getLastChild());
-            }
-        });
+        Pruning.statements(b);
+        Pruning.ifCondition(b);
 
         PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
         assertTrue(PsiTreeMatcher.match(b, y));

@@ -1,12 +1,11 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 /**
+ * This class helps building generic Psi trees in which the quantities
+ *  might represent a range and not a strict number.
+ *  For example it may be a descriptor of the amount of statements in block.
  * @author AnnaBel7
- * @since 06/01/2017.
- */
-
-/**
- * a descriptor of the amount of statements in block
+ * @since 06-01-2017.
  */
 public enum Amount {
     ANY,

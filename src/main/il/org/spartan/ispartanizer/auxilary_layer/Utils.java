@@ -1,5 +1,6 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
@@ -94,4 +95,8 @@ public enum Utils {
         return az.classDeclaration(f.getChildren()[4]);
     }
 
+    public static Document getDocumentFromPsiElement(PsiElement e) {
+        PsiFile associatedFile = e.getContainingFile();
+        return PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
+    }
 }
