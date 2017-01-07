@@ -1,13 +1,5 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.compiler.CompileContext;
-import com.intellij.openapi.compiler.CompileStatusNotification;
-import com.intellij.openapi.compiler.CompilerManager;
-import com.intellij.openapi.module.*;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 
 import javax.tools.JavaCompiler;
@@ -28,25 +20,41 @@ public class CompilationCenter {
      */
     private static File dummyCompilationTestFile;
     private static JavaCompiler compiler;
+    private static boolean initialized = false;
+    private static ByteArrayOutputStream output;
+    private static ByteArrayOutputStream errors;
 
     public static void initialize(){
-        File root = new File("/dummyJavaFile"); // On Windows running on C:\, this is C:\java.
+        if(initialized){
+            return;
+        }
+        File root = new File("/dummyJavaFile");
         dummyCompilationTestFile = new File(root, "compilationTest/Test.java");
         dummyCompilationTestFile.getParentFile().mkdirs();
         compiler = ToolProvider.getSystemJavaCompiler();
+        output = new ByteArrayOutputStream();
+        errors = new ByteArrayOutputStream();
+        initialized = true;
     }
 
     static boolean hasCompilationErrors(PsiFile file){
+        compile(file);
+        return errors.toString().length() != 0;
+    }
+
+    private static void compile(PsiFile file){
+        if(!initialized){
+            initialize();
+        }
         String source = file.getText();
         try {
             Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        compiler.run(null, null, baos, dummyCompilationTestFile.getPath());
-        String resultingErrorString = baos.toString();
-        return resultingErrorString.length() != 0;
+        output.reset();
+        errors.reset();
+        compiler.run(null, output, errors, dummyCompilationTestFile.getPath());
     }
 
 
