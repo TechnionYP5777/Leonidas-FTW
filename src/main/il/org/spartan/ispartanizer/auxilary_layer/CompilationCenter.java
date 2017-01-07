@@ -28,7 +28,7 @@ public class CompilationCenter {
         if(initialized){
             return;
         }
-        File root = new File("/dummyJavaFile");
+        File root = new File("/dummyJavaTestDir");
         dummyCompilationTestFile = new File(root, "compilationTest/Test.java");
         dummyCompilationTestFile.getParentFile().mkdirs();
         compiler = ToolProvider.getSystemJavaCompiler();
@@ -57,5 +57,18 @@ public class CompilationCenter {
         compiler.run(null, output, errors, dummyCompilationTestFile.getPath());
     }
 
+    public static String getLatestCompilationErrors(){
+        if(!initialized){
+            initialize();
+        }
+        return errors.toString();
+    }
+
+    public static String getLatestCompilationOutput(){
+        if(!initialized){
+            initialize();
+        }
+        return output.toString();
+    }
 
 }
