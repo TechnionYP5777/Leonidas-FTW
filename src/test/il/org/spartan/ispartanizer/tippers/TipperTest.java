@@ -21,29 +21,42 @@ public abstract class TipperTest extends PsiTestCase {
         return JavaPsiFacade.getElementFactory(getTestElement().getProject());
     }
 
-    PsiStatement createTestStatementFromString(String s) {
+    protected PsiStatement createTestStatementFromString(String s) {
         return getTestFactory().createStatementFromText(s, getTestElement());
     }
 
-    PsiExpression createTestExpressionFromString(String s) {
+    protected PsiExpression createTestExpressionFromString(String s) {
         return getTestFactory().createExpressionFromText(s, getTestElement());
     }
 
-    PsiElement createTestClassFromString(String s) {
+    protected PsiElement createTestClassFromString(String s) {
         PsiFile f = createDummyFile(dummyTestFileName, s);
         return f.getNode().getPsi();
     }
 
-    PsiMethod createTestMethodFromString(String s){
+    protected PsiMethod createTestMethodFromString(String s) {
         return getTestFactory().createMethodFromText(s, getTestElement());
     }
 
-    PsiCodeBlock createTestCodeBlockFromString(String s){
+    protected PsiCodeBlock createTestCodeBlockFromString(String s) {
         return getTestFactory().createCodeBlockFromText(s, getTestElement());
     }
 
-    PsiFile createTestFileFromString(String s){
+    protected PsiFile createTestFileFromString(String s) {
         return createDummyFile(dummyTestFileName,s);
     }
 
+    protected PsiLiteralExpression createTestNullExpression() {
+        return (PsiLiteralExpression) getTestFactory().createExpressionFromText("null", getTestElement());
+    }
+
+    protected PsiType createTestType(String s) {
+        return getTestFactory().createType(getTestFactory().createClass(s));
+    }
+
+    protected PsiDeclarationStatement createTestDeclarationStatement(String name, String type, String initializer) {
+        PsiType t = createTestType(type);
+        PsiExpression i = createTestExpressionFromString(initializer);
+        return getTestFactory().createVariableDeclarationStatement(name, t, i);
+    }
 }

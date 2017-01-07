@@ -23,7 +23,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
 
 
     private boolean canTip(PsiMethod ¢) {
-        return !¢.isConstructor() && !iz.abstract$(¢) && iz.singleParameteredMethod(¢) &&
+        return !¢.isConstructor() && !iz.abstract$(¢) && iz.singleParameterMethod(¢) &&
                 !iz.main(¢) &&
                 !in(step.name(step.firstParameter(¢)), "$", "¢", "_", "__") &&
                 !haz.centVariableDefenition(¢);

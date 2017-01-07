@@ -25,8 +25,6 @@ public enum iz {
     }
 
     public static boolean null$(PsiElement element) {
-        boolean x = iz.literal(element);
-        boolean y = x && az.literal(element).textMatches("null");
         return iz.literal(element) && az.literal(element).textMatches("null");
     }
 
@@ -70,7 +68,7 @@ public enum iz {
         return element.getModifierList().hasExplicitModifier(STATIC);
     }
 
-    public static boolean singleParameteredMethod(PsiMethod element) {
+    public static boolean singleParameterMethod(PsiMethod element) {
         return element.getParameterList().getParameters().length == 1;
     }
 
@@ -87,7 +85,7 @@ public enum iz {
                 public$(element) &&
                 static$(element) &&
                 "main".equals(element.getName()) &&
-                iz.singleParameteredMethod(element) &&
+                iz.singleParameterMethod(element) &&
                 "args".equals(step.name(step.firstParameter(element)));
     }
 
@@ -170,7 +168,7 @@ public enum iz {
     /**
      * @return true if e1 is of e2's type or inherits from it
      */
-    public static boolean theSame(PsiElement e1, PsiElement e2) {
+    public static boolean theSameType(PsiElement e1, PsiElement e2) {
         return typeCheck(e2.getClass(), e1);
     }
 }
