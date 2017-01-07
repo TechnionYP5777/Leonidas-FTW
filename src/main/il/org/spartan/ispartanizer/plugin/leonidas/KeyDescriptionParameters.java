@@ -7,5 +7,5 @@ import com.intellij.openapi.util.Key;
  */
 public class KeyDescriptionParameters {
 
-    public static Key<Integer> NO_OF_STATEMENTS = new Key<Integer>(PsiDescriptionParameters.NO_OF_STATEMENTS.name());
+    public static Key<Amount> NO_OF_STATEMENTS = new Key<Amount>(PsiDescriptionParameters.NO_OF_STATEMENTS.name());
 }

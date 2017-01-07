@@ -171,4 +171,8 @@ public enum iz {
     public static boolean theSameType(PsiElement e1, PsiElement e2) {
         return typeCheck(e2.getClass(), e1);
     }
+
+    public static boolean whiteSpace(PsiElement e) {
+        return typeCheck(PsiWhiteSpace.class, e);
+    }
 }

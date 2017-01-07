@@ -90,4 +90,11 @@ public enum step {
         return expr != null ? expr.getElseExpression() : null;
     }
 
+    public static PsiElement nextSibling(PsiElement e) {
+        PsiElement b = e.getNextSibling();
+        while (b != null && iz.whiteSpace(e)) {
+            b = b.getNextSibling();
+        }
+        return b;
+    }
 }

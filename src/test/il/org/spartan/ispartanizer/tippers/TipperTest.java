@@ -59,4 +59,8 @@ public abstract class TipperTest extends PsiTestCase {
         PsiExpression i = createTestExpressionFromString(initializer);
         return getTestFactory().createVariableDeclarationStatement(name, t, i);
     }
+
+    protected PsiIfStatement createTestIfStatement(String cond, String then) {
+        return (PsiIfStatement) getTestFactory().createStatementFromText("if (" + cond + ") {" + then + "} ", getTestElement());
+    }
 }
