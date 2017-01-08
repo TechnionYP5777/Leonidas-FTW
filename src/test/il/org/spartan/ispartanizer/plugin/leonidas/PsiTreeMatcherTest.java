@@ -41,7 +41,7 @@ public class PsiTreeMatcherTest extends TipperTest {
         });
 
         Pruning.statements(b);
-        Pruning.ifCondition(b);
+        Pruning.booleanExpression(b);
 
         PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
         assertTrue(PsiTreeMatcher.match(b, y));

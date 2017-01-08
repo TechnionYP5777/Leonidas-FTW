@@ -172,7 +172,12 @@ public enum iz {
         return typeCheck(e2.getClass(), e1);
     }
 
+
     public static boolean whiteSpace(PsiElement e) {
         return typeCheck(PsiWhiteSpace.class, e);
+    }
+
+    public static boolean ofType(PsiElement e, Class<? extends PsiElement> type){
+        return typeCheck(type,e);
     }
 }

@@ -20,17 +20,19 @@ public class Pruning {
      *
      * @param e - the root from which all such conditions are pruned
      */
-    public static void ifCondition(PsiElement e) {
+    public static PsiElement booleanExpression(PsiElement e) {
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitExpression(PsiExpression exp) {
                 super.visitExpression(exp);
-                if (!iz.ifStatement(exp.getParent())) {
+                if (!exp.getText().equals("booleanExpression();")) {
                     return;
                 }
                 exp.deleteChildRange(exp.getFirstChild(), exp.getLastChild());
             }
         });
+
+        return e;
     }
 
     /**
@@ -39,7 +41,7 @@ public class Pruning {
      *
      * @param e - the root from which all such statements are pruned
      */
-    public static void statements(PsiElement e) {
+    public static PsiElement statements(PsiElement e) {
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitStatement(PsiStatement statement) {
@@ -50,6 +52,8 @@ public class Pruning {
                 statement.deleteChildRange(statement.getFirstChild(), statement.getLastChild());
             }
         });
+
+        return e;
     }
 
 }

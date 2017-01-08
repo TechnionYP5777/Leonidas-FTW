@@ -5,15 +5,14 @@ import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
+import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.auxilary_layer.step;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -22,11 +21,10 @@ import java.util.stream.Collectors;
  */
 public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
-    private static final String FILE_NAME = "RemoveCurlyBracesFromIfStatement" + ".java";
     private static final String FILE_PATH = "/spartanizer/LeonidasTippers/";
     private static final String FROM_METHOD_NAME = "from";
     private static final String TO_METHOD_NAME = "to";
-    private static final String LEONIDAS_ANNOTAION_NAME = Leonidas.class.getCanonicalName();
+    private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
     private boolean built;
     private PsiElement fromTree;
@@ -67,7 +65,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     private PsiMethod getMethodFromTree(PsiFile file, String methodName) {
         Wrapper<PsiMethod> result = new Wrapper<>();
-        file.accept(new JavaElementVisitor() {
+        file.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethod(PsiMethod method) {
                 if (step.name(method).equals(methodName)) {
@@ -78,15 +76,24 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
-    private Class<?> getPsiElementTypeFromAnnotation(PsiMethod method) {
+    private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod method) {
+
+        for(PsiAnnotation a : method.getModifierList().getAnnotations()){
+            System.out.println("a.getQualifiedName(): " + a.getQualifiedName());
+            System.out.println("a.findDeclaredAttributeValue(" + LEONIDAS_ANNOTATION_VALUE + "): " +
+                    a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText());
+        }
+
         return Arrays.stream(method.getModifierList().getAnnotations())
-                .filter(a -> LEONIDAS_ANNOTAION_NAME.equals(a.getQualifiedName()))
+                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
                 .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
                 .map(s -> s.replace(".class", ""))
+                .map(s -> "com.intellij.psi." + s)
                 .map(s -> {
                     try {
-                        return Class.forName(s);
+                        return (Class<? extends PsiElement>)Class.forName(s);
                     } catch (ClassNotFoundException ignore) {
+                        System.out.println(ignore.getCause().toString());
                     }
                     return PsiElement.class;
                 }).collect(Collectors.toList()).get(0);
@@ -95,13 +102,13 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     //here assuming the root element to be replaced is a direct child of the method statemnt block
     //TODO: @orenafek, now assuming there is only one "direct son" in rootElemntType type,
     //TODO: should be changed upon adding the name to the annotations.
-    private PsiElement getTreeFromRoot(PsiMethod method, Class<?> rootElementType) {
+    private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
         Wrapper<PsiElement> result = new Wrapper<>();
         method.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitCodeBlock(PsiCodeBlock block) {
                 result.set(Arrays.stream(block.getChildren())
-                        .filter(e -> e.getClass() == rootElementType).
+                        .filter(e -> iz.ofType(e,rootElementType)).
                                 collect(Collectors.toList()).get(0));
             }
         });

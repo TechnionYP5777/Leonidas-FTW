@@ -43,7 +43,7 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiFile createTestFileFromString(String s) {
-        return createDummyFile(dummyTestFileName,s);
+        return createDummyFile(dummyTestFileName, s);
     }
 
     protected PsiLiteralExpression createTestNullExpression() {
@@ -61,6 +61,9 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiIfStatement createTestIfStatement(String cond, String then) {
-        return (PsiIfStatement) getTestFactory().createStatementFromText("if (" + cond + ") {" + then + "} ", getTestElement());
+        return (PsiIfStatement) getTestFactory()
+                .createStatementFromText("if (" + cond + ") {" + then + "} ", getTestElement());
     }
+
+
 }
