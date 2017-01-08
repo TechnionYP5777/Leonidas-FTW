@@ -9,7 +9,7 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
  */
 public abstract class LeonidasTipper {
 
-    enum StubName {
+    public enum StubName {
         BOOLEAN_EXPRESSION("booleanExpression"),
         STATEMENT("statement");
 
@@ -32,10 +32,19 @@ public abstract class LeonidasTipper {
         }
     }
 
-    protected final boolean booleanExpression() {
+    /**
+     * method stub representing a boolean expression for leonidas tippers
+     * @param order the serial no to distinct between several boolean expressions in the same tipper
+     * @return true
+     */
+    protected final boolean booleanExpression(int order) {
         return true;
     }
 
-    protected final void statement() {
+    /**
+     * method stub representing a statement for leonidas tippers
+     * @param order the serial no to distinct between several statements in the same tipper
+     */
+    protected final void statement(int order) {
     }
 }

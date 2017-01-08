@@ -7,6 +7,10 @@ import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.tree.IElementType;
+import il.org.spartan.ispartanizer.plugin.leonidas.LeonidasTipper;
+import il.org.spartan.ispartanizer.plugin.leonidas.LeonidasTipper.StubName;
+
+import java.util.Arrays;
 
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
@@ -70,6 +74,10 @@ public enum iz {
 
     public static boolean singleParameterMethod(PsiMethod element) {
         return element.getParameterList().getParameters().length == 1;
+    }
+
+    public static boolean method(PsiElement element) {
+        return typeCheck(PsiMethod.class, element);
     }
 
     public static boolean void$(PsiMethod element) {
@@ -177,7 +185,15 @@ public enum iz {
         return typeCheck(PsiWhiteSpace.class, e);
     }
 
-    public static boolean ofType(PsiElement e, Class<? extends PsiElement> type){
-        return typeCheck(type,e);
+    public static boolean ofType(PsiElement e, Class<? extends PsiElement> type) {
+        return typeCheck(type, e);
+    }
+
+    public static boolean stubMethodCall(PsiElement element) {
+        return iz.methodCallExpression(element) &&
+                Arrays.stream(StubName.values())
+                        .map(StubName::stubName)
+                        .anyMatch(sn ->
+                                sn.equals(az.methodCallExpression(element).getMethodExpression().getText()));
     }
 }

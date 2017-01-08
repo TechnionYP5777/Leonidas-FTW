@@ -94,7 +94,12 @@ public enum az {
         return element != null && iz.javaToken(element) ? (PsiJavaToken) element : null;
     }
 
-    public static PsiMethodCallExpression MethodCallExresson(PsiExpression element) {
-        return element != null && iz.MethodCallExpression(element) ? (PsiMethodCallExpression) element : null;
+    public static PsiMethodCallExpression methodCallExpression(PsiElement element) {
+        return element != null && iz.methodCallExpression(element) ? (PsiMethodCallExpression) element : null;
     }
+
+    public static <T extends PsiElement> Integer integer(T value){
+        return Integer.valueOf(value.getText());
+    }
+
 }

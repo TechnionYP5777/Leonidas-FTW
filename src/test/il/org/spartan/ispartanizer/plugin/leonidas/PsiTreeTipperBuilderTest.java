@@ -1,7 +1,9 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
+import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiExpression;
+import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
@@ -30,6 +32,21 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
             fail();
         }
 
+    }
 
+    public void testPuttingUserData() {
+        $ = new PsiTreeTipperBuilderImpl();
+        try {
+            $.buildTipperPsiTree(TEST_FILE_NAME, getProject());
+            PsiElement actualFrom = $.getFromPsiTree();
+            actualFrom.accept(new JavaRecursiveElementVisitor() {
+                @Override
+                public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+                    assertEquals(Integer.valueOf(0), expression.getUserData(KeyDescriptionParameters.ORDER));
+                }
+            });
+        } catch (IOException ignore) {
+            fail();
+        }
     }
 }

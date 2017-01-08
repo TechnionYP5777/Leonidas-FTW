@@ -5,15 +5,17 @@ import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
+import il.org.spartan.ispartanizer.auxilary_layer.az;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.auxilary_layer.step;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ORDER;
 
 /**
  * @author Oren Afek
@@ -26,6 +28,8 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private static final String TO_METHOD_NAME = "to";
     private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
+    private static final String LEONIDAS_ANNOTATION_ORDER = "order";
+    private static final String PSI_PACKAGE_PREFIX = "com.intellij.psi.";
     private boolean built;
     private PsiElement fromTree;
     private PsiElement toTree;
@@ -40,6 +44,8 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         PsiMethod from = getMethodFromTree(root, FROM_METHOD_NAME);
         PsiMethod to = getMethodFromTree(root, TO_METHOD_NAME);
         fromTree = getTreeFromRoot(from, getPsiElementTypeFromAnnotation(from));
+        addOrders(from);
+        addOrders(to);
         toTree = getTreeFromRoot(to, getPsiElementTypeFromAnnotation(to));
         built = true;
         return this;
@@ -78,20 +84,14 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod method) {
 
-        for(PsiAnnotation a : method.getModifierList().getAnnotations()){
-            System.out.println("a.getQualifiedName(): " + a.getQualifiedName());
-            System.out.println("a.findDeclaredAttributeValue(" + LEONIDAS_ANNOTATION_VALUE + "): " +
-                    a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText());
-        }
-
         return Arrays.stream(method.getModifierList().getAnnotations())
                 .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
                 .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
                 .map(s -> s.replace(".class", ""))
-                .map(s -> "com.intellij.psi." + s)
+                .map(s -> PSI_PACKAGE_PREFIX + s)
                 .map(s -> {
                     try {
-                        return (Class<? extends PsiElement>)Class.forName(s);
+                        return (Class<? extends PsiElement>) Class.forName(s);
                     } catch (ClassNotFoundException ignore) {
                         System.out.println(ignore.getCause().toString());
                     }
@@ -108,12 +108,31 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
             @Override
             public void visitCodeBlock(PsiCodeBlock block) {
                 result.set(Arrays.stream(block.getChildren())
-                        .filter(e -> iz.ofType(e,rootElementType)).
+                        .filter(e -> iz.ofType(e, rootElementType)).
                                 collect(Collectors.toList()).get(0));
             }
         });
 
         return result.get();
+    }
+
+    private void addOrders(PsiMethod method) {
+        method.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+                if (!iz.stubMethodCall(expression)) {
+                    return;
+                }
+                addOrderToUserData(expression, az.integer(step.firstParamterExpression(expression)));
+            }
+        });
+
+
+    }
+
+    private PsiElement addOrderToUserData(PsiElement element, int order) {
+        element.putUserData(ORDER, order);
+        return element;
     }
 
 }

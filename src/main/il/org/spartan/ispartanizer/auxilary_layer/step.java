@@ -31,6 +31,11 @@ public enum step {
         return method != null ? firstParameter(method.getParameterList()) : null;
     }
 
+    public static PsiExpression firstParamterExpression(PsiMethodCallExpression expression) {
+        return expression != null && expression.getArgumentList().getExpressions().length >= 1
+                ? expression.getArgumentList().getExpressions()[0] : null;
+    }
+
     public static PsiStatement firstStatement(PsiCodeBlock block) {
         return block != null && statements(block) != null && statements(block).size() >= 1 ?
                 statements(block).get(0) : null;
