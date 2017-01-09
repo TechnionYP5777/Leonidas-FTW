@@ -2,14 +2,11 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 import java.io.IOException;
-
-import static il.org.spartan.ispartanizer.plugin.leonidas.LeonidasTipper.StubName.*;
 
 /**
  * @author Oren Afek
@@ -25,7 +22,7 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
 
         $ = new PsiTreeTipperBuilderImpl();
         try {
-            $.buildTipperPsiTree(TEST_FILE_NAME, getProject());
+            $.buildTipperPsiTree(TEST_FILE_NAME);
             PsiElement actualFrom = $.getFromPsiTree();
             assertTrue(iz.ifStatement(actualFrom));
         } catch (IOException ignore) {
@@ -37,7 +34,7 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
     public void testPuttingUserData() {
         $ = new PsiTreeTipperBuilderImpl();
         try {
-            $.buildTipperPsiTree(TEST_FILE_NAME, getProject());
+            $.buildTipperPsiTree(TEST_FILE_NAME);
             PsiElement actualFrom = $.getFromPsiTree();
             actualFrom.accept(new JavaRecursiveElementVisitor() {
                 @Override
@@ -53,7 +50,7 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
     public void testPruning(){
         $ = new PsiTreeTipperBuilderImpl();
         try {
-            $.buildTipperPsiTree(TEST_FILE_NAME, getProject());
+            $.buildTipperPsiTree(TEST_FILE_NAME);
             PsiElement actualFrom = $.getFromPsiTree();
             actualFrom.accept(new JavaRecursiveElementVisitor() {
                 @Override
