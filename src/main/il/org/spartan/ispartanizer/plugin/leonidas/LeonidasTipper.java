@@ -1,5 +1,9 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiMethodCallExpression;
+
 /**
  * This class defines methods that will represent generic structures of code
  * such as: statements, conditions, blocks, variable declaration and more.
@@ -29,6 +33,23 @@ public abstract class LeonidasTipper {
 
         public String stubMethodCallExpressionStatement() {
             return String.format("%s();", stubName);
+        }
+
+        public static StubName valueOf(PsiMethodCallExpression expression){
+            if(expression.getMethodExpression().getText().equals(BOOLEAN_EXPRESSION.stubName)){
+                return BOOLEAN_EXPRESSION;
+            }
+
+            if(expression.getMethodExpression().getText().equals(STATEMENT.stubName)){
+                return STATEMENT;
+            }
+
+            //TODO: ADD HERE MORE IF's UPON ADDING MORE TYPES !!!
+            return null;
+        }
+
+        public boolean matchesStubName(PsiMethodCallExpression e){
+            return e.getMethodExpression().getText().equals(this.stubName);
         }
     }
 

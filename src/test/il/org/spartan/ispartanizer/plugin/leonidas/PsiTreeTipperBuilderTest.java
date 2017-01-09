@@ -49,4 +49,20 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
             fail();
         }
     }
+
+    public void testPruning(){
+        $ = new PsiTreeTipperBuilderImpl();
+        try {
+            $.buildTipperPsiTree(TEST_FILE_NAME, getProject());
+            PsiElement actualFrom = $.getFromPsiTree();
+            actualFrom.accept(new JavaRecursiveElementVisitor() {
+                @Override
+                public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+                    assertEquals(0,expression.getChildren().length);
+                }
+            });
+        } catch (IOException ignore) {
+            fail();
+        }
+    }
 }
