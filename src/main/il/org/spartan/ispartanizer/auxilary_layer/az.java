@@ -102,4 +102,7 @@ public enum az {
         return Integer.valueOf(value.getText());
     }
 
+    public static PsiMethod method(PsiElement element) {
+        return element != null && iz.method(element) ? (PsiMethod) element : null;
+    }
 }
