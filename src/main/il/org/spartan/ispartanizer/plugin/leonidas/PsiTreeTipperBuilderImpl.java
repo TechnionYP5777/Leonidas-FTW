@@ -2,12 +2,8 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.google.common.io.Files;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
-import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
-import il.org.spartan.ispartanizer.auxilary_layer.az;
-import il.org.spartan.ispartanizer.auxilary_layer.iz;
-import il.org.spartan.ispartanizer.auxilary_layer.step;
+import il.org.spartan.ispartanizer.auxilary_layer.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,17 +29,19 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private boolean built;
     private PsiElement fromTree;
     private PsiElement toTree;
+    private Class<? extends PsiElement> fromRootType;
 
     public PsiTreeTipperBuilderImpl() {
         built = false;
     }
 
-    public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName, Project project) throws IOException {
+    public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
-        PsiFile root = getPsiTreeFromFile(fileName, project);
+        PsiFile root = getPsiTreeFromFile(fileName);
         PsiMethod from = getMethodFromTree(root, FROM_METHOD_NAME);
         PsiMethod to = getMethodFromTree(root, TO_METHOD_NAME);
-        fromTree = getTreeFromRoot(from, getPsiElementTypeFromAnnotation(from));
+        fromRootType = getPsiElementTypeFromAnnotation(from);
+        fromTree = getTreeFromRoot(from, fromRootType);
         handleStubMethodCalls(from);
         pruneStubChildren(from);
         toTree = getTreeFromRoot(to, getPsiElementTypeFromAnnotation(to));
@@ -64,9 +62,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return toTree;
     }
 
-    private PsiFile getPsiTreeFromFile(String fileName, Project project) throws IOException {
+    private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
         File file = new File(this.getClass().getResource(FILE_PATH + fileName).getPath());
-        return PsiFileFactory.getInstance(project).createFileFromText(fileName,
+        return PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(fileName,
                 FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
                 String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
     }
@@ -139,4 +137,8 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return element;
     }
 
+    @Override
+    public Class<? extends PsiElement> getRootElementType() {
+        return fromRootType;
+    }
 }

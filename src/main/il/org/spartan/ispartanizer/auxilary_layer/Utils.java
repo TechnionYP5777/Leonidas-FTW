@@ -3,6 +3,7 @@ package il.org.spartan.ispartanizer.auxilary_layer;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 
@@ -98,5 +99,9 @@ public enum Utils {
     public static Document getDocumentFromPsiElement(PsiElement e) {
         PsiFile associatedFile = e.getContainingFile();
         return PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
+    }
+
+    public static Project getProject() {
+        return ProjectManager.getInstance().getOpenProjects()[0];
     }
 }

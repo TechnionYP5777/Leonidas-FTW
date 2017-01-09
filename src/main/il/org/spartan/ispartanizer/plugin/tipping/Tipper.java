@@ -19,6 +19,6 @@ public interface Tipper<T extends PsiElement> {
 
     Tip tip(final T node);
 
-    Class<T> getPsiClass();
+    Class<? extends T> getPsiClass();
 
 }

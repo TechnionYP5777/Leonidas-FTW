@@ -8,6 +8,7 @@ import il.org.spartan.ispartanizer.auxilary_layer.type;
 import il.org.spartan.ispartanizer.plugin.tippers.*;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -44,6 +45,12 @@ public enum Toolbox {
                 .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new AnyMatch());
+        createLeonidasTipperBuilders();
+    }
+
+    private static void createLeonidasTipperBuilders() {
+        List<File> tippers = Arrays.asList(new File(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()).listFiles());
+        tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
         tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
