@@ -8,5 +8,6 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
  */
 public enum PsiDescriptionParameters {
     NO_OF_STATEMENTS,
-    ORDER
+    ORDER,
+    GENERIC_NAME
 }

@@ -9,6 +9,7 @@ import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElement.StubName;
+import il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters;
 
 import java.util.Arrays;
 
@@ -173,6 +174,10 @@ public enum iz {
         return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }
 
+    public static boolean expression(PsiElement element) {
+        return typeCheck(PsiExpression.class, element);
+    }
+
     /**
      * @return true if e1 is of e2's type or inherits from it
      */
@@ -180,6 +185,19 @@ public enum iz {
         return typeCheck(e2.getClass(), e1);
     }
 
+    // e2 is the generic tree
+    public static boolean conforms(PsiElement e1, PsiElement e2) {
+        if (iz.theSameType(e1, e2)) {
+            return true;
+        }
+        if (iz.expression(e1) && iz.methodCallExpression(e2) && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME) != null && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME).equals(StubName.BOOLEAN_EXPRESSION.stubName())) {
+            return true;
+        }
+        if (iz.statement(e1) && iz.expressionStatement(e2) && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME) != null && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME).equals(StubName.STATEMENT.stubName())) {
+            return true;
+        }
+        return false;
+    }
 
     public static boolean whiteSpace(PsiElement e) {
         return typeCheck(PsiWhiteSpace.class, e);
@@ -204,4 +222,6 @@ public enum iz {
     public static boolean javadoc(PsiElement e) {
         return typeCheck(PsiDocComment.class, e);
     }
+
+
 }

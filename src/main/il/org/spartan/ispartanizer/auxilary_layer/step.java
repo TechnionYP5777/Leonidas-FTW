@@ -99,7 +99,7 @@ public enum step {
 
     public static PsiElement nextSibling(PsiElement e) {
         PsiElement b = e.getNextSibling();
-        while (b != null && iz.whiteSpace(e)) {
+        while (b != null && iz.whiteSpace(b)) {
             b = b.getNextSibling();
         }
         return b;

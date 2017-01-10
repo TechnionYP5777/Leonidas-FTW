@@ -38,11 +38,17 @@ public class PsiTreeMatcherTest extends TipperTest {
                 super.visitCodeBlock(block);
                 block.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
             }
+
+            @Override
+            public void visitMethodCallExpression(PsiMethodCallExpression methodCallExpression) {
+                super.visitMethodCallExpression(methodCallExpression);
+                methodCallExpression.putUserData(KeyDescriptionParameters.GENERIC_NAME, methodCallExpression.getMethodExpression().getText());
+            }
         });
 
         Pruning.pruneAll(b);
 
-        PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
+        PsiIfStatement y = createTestIfStatement("true && false", " int y = 5; ");
         assertTrue(PsiTreeMatcher.match(b, y));
     }
 

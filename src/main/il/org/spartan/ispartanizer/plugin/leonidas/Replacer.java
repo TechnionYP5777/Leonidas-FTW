@@ -17,7 +17,7 @@ public class Replacer {
     /**
      * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder
      *
-     * @param treeToReplace - the given tree that matched the "from" three.
+     * @param treeToReplace - the given tree that matched the "from" tree.
      * @param builder       - PsiTreeTipperBuilder that includes the "from" tree that matched treeToReplace
      * @param r             - Rewrite object
      * @return the replaced element

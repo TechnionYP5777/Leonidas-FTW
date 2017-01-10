@@ -240,7 +240,7 @@ public interface iz_old {
 //    }
 
     /**
-     * Determine whether an PsiElement contains as a children a
+     * Determine whether an PsiElement contains as a deleteChildren a
      * continue
      *
      * @param ¢ JD

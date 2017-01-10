@@ -25,13 +25,12 @@ public class PsiTreeMatcher {
      * @return - true iff these two trees match by the Leonidas language.
      */
     public static boolean match(PsiElement treeTemplate, PsiElement treeToMatch) {
-        if (!iz.theSameType(treeToMatch, treeTemplate)) {
+        if (!iz.conforms(treeToMatch, treeTemplate)) {
             return false;
         }
         // many more conditions will be added once more constrains are defined
         if (iz.block(treeToMatch)) {
-            if (treeTemplate.getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS)
-                    .notConforms(az.block(treeToMatch).getStatements().length)) {
+            if (treeTemplate.getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS) != null && treeTemplate.getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS).notConforms(az.block(treeToMatch).getStatements().length)) {
                 return false;
             }
         }

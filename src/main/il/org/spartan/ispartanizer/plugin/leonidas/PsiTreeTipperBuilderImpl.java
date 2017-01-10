@@ -116,7 +116,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
-    private void handleStubMethodCalls(PsiMethod method){
+    private void handleStubMethodCalls(PsiMethod method) {
         method.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
@@ -124,12 +124,13 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
                     return;
                 }
                 addOrderToUserData(expression, az.integer(step.firstParamterExpression(expression)));
+                addOrderToUserData(expression.getParent(), az.integer(step.firstParamterExpression(expression)));
             }
         });
     }
 
-    private void pruneStubChildren(PsiMethod method){
-       Pruning.pruneAll(method);
+    private void pruneStubChildren(PsiMethod method) {
+        Pruning.pruneAll(method);
     }
 
     private PsiElement addOrderToUserData(PsiElement element, int order) {

@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import il.org.spartan.ispartanizer.tippers.TipperTest;
-import junit.framework.TestCase;
 
 /**
  * @author AnnaBel7

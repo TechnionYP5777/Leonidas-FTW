@@ -3,6 +3,9 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.PsiStatement;
+import il.org.spartan.ispartanizer.auxilary_layer.az;
+import il.org.spartan.ispartanizer.auxilary_layer.iz;
 
 import java.util.Arrays;
 
@@ -17,22 +20,13 @@ public class Pruning {
 
     /**
      * Pruning All of the stubs
+     *
      * @param e JD
      * @return e after pruning
      */
-    public static PsiElement pruneAll(PsiElement e){
-        e.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                super.visitMethodCallExpression(expression);
-                if (Arrays.stream(GenericPsiElement.StubName.values())
-                        .noneMatch(stubName -> stubName.matchesStubName(expression))){
-                    return;
-                }
-                expression.deleteChildRange(expression.getFirstChild(), expression.getLastChild());
-            }
-        });
-
+    public static PsiElement pruneAll(PsiElement e) {
+        statements(e);
+        booleanExpression(e);
         return e;
     }
 
@@ -51,7 +45,8 @@ public class Pruning {
                         .BOOLEAN_EXPRESSION.stubName())) {
                     return;
                 }
-                exp.deleteChildRange(exp.getFirstChild(), exp.getLastChild());
+                exp.putUserData(KeyDescriptionParameters.GENERIC_NAME, GenericPsiElement.StubName.BOOLEAN_EXPRESSION.stubName());
+                deleteChildren(exp);
             }
 
         });
@@ -68,13 +63,12 @@ public class Pruning {
     public static PsiElement statements(PsiElement e) {
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                super.visitMethodCallExpression(expression);
-                if (!expression.getMethodExpression().getText()
-                        .equals(GenericPsiElement.StubName.STATEMENT.stubName())) {
-                    return;
+            public void visitStatement(PsiStatement statement) {
+                super.visitStatement(statement);
+                if (iz.expressionStatement(statement) && iz.methodCallExpression(statement.getFirstChild()) && az.methodCallExpression(statement.getFirstChild()).getMethodExpression().getText().equals(GenericPsiElement.StubName.STATEMENT.stubName())) {
+                    statement.putUserData(KeyDescriptionParameters.GENERIC_NAME, GenericPsiElement.StubName.STATEMENT.stubName());
+                    deleteChildren(statement);
                 }
-                expression.deleteChildRange(expression.getFirstChild(), expression.getLastChild());
             }
 
         });
@@ -83,12 +77,13 @@ public class Pruning {
     }
 
     /**
-     * Pruns all the children of a PsiElement
+     * Pruns all the deleteChildren of a PsiElement
+     *
      * @param e JD
      * @return e
      */
-    public static PsiElement children(PsiElement e){
-        e.deleteChildRange(e.getFirstChild(),e.getLastChild());
+    public static PsiElement deleteChildren(PsiElement e) {
+        e.deleteChildRange(e.getFirstChild(), e.getLastChild());
         return e;
     }
 
