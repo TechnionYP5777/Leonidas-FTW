@@ -44,7 +44,8 @@ public enum Toolbox {
                 .add(new LispLastElement())
                 .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
-                .add(new AnyMatch());
+                .add(new AnyMatch())
+                .add(new Delegator());
         createLeonidasTipperBuilders();
     }
 

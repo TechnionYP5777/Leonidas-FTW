@@ -74,7 +74,4 @@ public enum haz {
     public static boolean syntaxErrors(PsiElement element) {
         return (PsiTreeUtil.hasErrorElements(element));
     }
-
-
-
 }

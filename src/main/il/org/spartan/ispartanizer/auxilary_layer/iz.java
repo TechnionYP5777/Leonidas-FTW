@@ -6,6 +6,7 @@ import com.intellij.psi.impl.source.PsiEnumConstantImpl;
 import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
+import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElement.StubName;
 
@@ -194,5 +195,13 @@ public enum iz {
                         .map(StubName::stubName)
                         .anyMatch(sn ->
                                 sn.equals(az.methodCallExpression(element).getMethodExpression().getText()));
+    }
+
+    public static boolean documentedElement(PsiElement e) {
+        return typeCheck(PsiJavaDocumentedElement.class, e);
+    }
+
+    public static boolean javadoc(PsiElement e) {
+        return typeCheck(PsiDocComment.class, e);
     }
 }

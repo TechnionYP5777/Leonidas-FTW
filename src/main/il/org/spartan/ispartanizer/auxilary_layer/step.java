@@ -1,7 +1,9 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,5 +103,15 @@ public enum step {
             b = b.getNextSibling();
         }
         return b;
+    }
+
+    public static
+    @NotNull
+    String docCommentString(@NotNull PsiJavaDocumentedElement e) {
+        PsiDocComment doc = e.getDocComment();
+        if (doc == null) {
+            return "";
+        }
+        return doc.getText().substring(3, doc.getText().length() - 2);
     }
 }

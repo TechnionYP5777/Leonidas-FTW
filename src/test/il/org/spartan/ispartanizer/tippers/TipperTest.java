@@ -2,6 +2,7 @@ package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.*;
 import com.intellij.testFramework.PsiTestCase;
+import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 
 /**
  * @author Oren Afek
@@ -29,9 +30,16 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createExpressionFromText(s, getTestElement());
     }
 
-    protected PsiElement createTestClassFromString(String s) {
+    protected PsiClass createTestClassFromString(String s) {
         PsiFile f = createDummyFile(dummyTestFileName, s);
-        return f.getNode().getPsi();
+        Wrapper<PsiClass> classWrapper = new Wrapper<>(null);
+        f.acceptChildren(new JavaElementVisitor() {
+            @Override
+            public void visitClass(PsiClass aClass) {
+                classWrapper.set(aClass);
+            }
+        });
+        return classWrapper.get();
     }
 
     protected PsiMethod createTestMethodFromString(String s) {
