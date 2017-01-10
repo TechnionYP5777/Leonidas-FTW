@@ -7,8 +7,7 @@ import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.tree.IElementType;
-import il.org.spartan.ispartanizer.plugin.leonidas.LeonidasTipper;
-import il.org.spartan.ispartanizer.plugin.leonidas.LeonidasTipper.StubName;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElement.StubName;
 
 import java.util.Arrays;
 

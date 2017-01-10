@@ -1,7 +1,8 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
-import com.intellij.psi.*;
-import il.org.spartan.ispartanizer.auxilary_layer.iz;
+import com.intellij.psi.JavaRecursiveElementVisitor;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethodCallExpression;
 
 import java.util.Arrays;
 
@@ -24,7 +25,7 @@ public class Pruning {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
-                if(Arrays.stream(LeonidasTipper.StubName.values())
+                if (Arrays.stream(GenericPsiElement.StubName.values())
                         .noneMatch(stubName -> stubName.matchesStubName(expression))){
                     return;
                 }
@@ -46,7 +47,7 @@ public class Pruning {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression exp) {
                 super.visitMethodCallExpression(exp);
-                if (!exp.getMethodExpression().getText().equals(LeonidasTipper.StubName
+                if (!exp.getMethodExpression().getText().equals(GenericPsiElement.StubName
                         .BOOLEAN_EXPRESSION.stubName())) {
                     return;
                 }
@@ -60,7 +61,7 @@ public class Pruning {
 
     /**
      * Prunes all the statements from the form "statement();" where "statement()"
-     * is a method call for the method defined in LeonidasTipper.
+     * is a method call for the method defined in GenericPsiElement.
      *
      * @param e - the root from which all such statements are pruned
      */
@@ -70,7 +71,7 @@ public class Pruning {
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
                 if (!expression.getMethodExpression().getText()
-                        .equals(LeonidasTipper.StubName.STATEMENT.stubName())) {
+                        .equals(GenericPsiElement.StubName.STATEMENT.stubName())) {
                     return;
                 }
                 expression.deleteChildRange(expression.getFirstChild(), expression.getLastChild());

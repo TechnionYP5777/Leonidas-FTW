@@ -69,6 +69,12 @@ public class type {
                 super.visitMethodCallExpression(statement);
                 myClass.set(PsiMethodCallExpression.class);
             }
+
+            @Override
+            public void visitIfStatement(PsiIfStatement statement) {
+                super.visitIfStatement(statement);
+                myClass.set(PsiIfStatement.class);
+            }
         });
         return myClass.get();
     }

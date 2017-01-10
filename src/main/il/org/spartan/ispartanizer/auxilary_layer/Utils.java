@@ -104,4 +104,20 @@ public enum Utils {
     public static Project getProject() {
         return ProjectManager.getInstance().getOpenProjects()[0];
     }
+
+    private static String showPsiTreeAux(PsiElement e, int indent) {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < indent; i++) {
+            s.append("\t");
+        }
+        s.append(e.getClass().getName() + ": " + e.getText() + "\n");
+        for (PsiElement child : e.getChildren()) {
+            s.append(showPsiTreeAux(child, indent + 1));
+        }
+        return s.toString();
+    }
+
+    public static String showPsiTree(PsiElement e) {
+        return showPsiTreeAux(e, 0);
+    }
 }

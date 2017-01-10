@@ -24,8 +24,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         this.f = f;
         try {
             b.buildTipperPsiTree(f.getName());
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignore) {
         }
     }
 

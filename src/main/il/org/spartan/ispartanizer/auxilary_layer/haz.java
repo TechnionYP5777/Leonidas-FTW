@@ -35,12 +35,13 @@ public enum haz {
         return b.inner;
     }
 
-    public static boolean centVariableDefenition(final PsiElement p) {
+    public static boolean centVariableDefinition(final PsiElement p) {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
         p.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitIdentifier(PsiIdentifier e) {
-                if (e.getText().equals("¢")) {
+                super.visitIdentifier(e);
+                if (e.getText().contains("¢")) { //TODO there is a problem with cent representation...
                     b.set(true);
                 }
             }

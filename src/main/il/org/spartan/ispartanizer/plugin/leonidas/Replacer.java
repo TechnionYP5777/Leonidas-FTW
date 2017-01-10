@@ -36,6 +36,7 @@ public class Replacer {
                 }
             }
         });
+        r.replace(treeToReplace, templateReplacingTree);
         return templateReplacingTree;
     }
 }
