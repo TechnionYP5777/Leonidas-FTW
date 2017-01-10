@@ -70,7 +70,7 @@ public abstract class TipperTest extends PsiTestCase {
 
     protected PsiIfStatement createTestIfStatement(String cond, String then) {
         return (PsiIfStatement) getTestFactory()
-                .createStatementFromText("if ( " + cond + " ) {" + then + "} ", getTestElement());
+                .createStatementFromText("if (" + cond + ") {" + then + "} ", getTestElement());
     }
 
 

@@ -184,9 +184,9 @@ public class Matcher {
             return matchesBlock(n) && consistent(ids, blockVariableName(p), n + "");
         /*
         if (isMethodInvocationAndHas$AArgument(p))
-            return isMethodInvocationAndConsistentWith$AArgument(p, n, ids) && Recurser.deleteChildren(n).size() == Recurser.deleteChildren(p).size();
+            return isMethodInvocationAndConsistentWith$AArgument(p, n, ids) && Recurser.children(n).size() == Recurser.cildren(p).size();
         if (isClassInstanceCreationAndHas$AArgument(p))
-            return isClassInstanceCreationAndConsistentWith$AArgument(p, n) && Recurser.deleteChildren(n).size() == Recurser.deleteChildren(p).size();
+            return isClassInstanceCreationAndConsistentWith$AArgument(p, n) && Recurser.children(n).size() == Recurser.children(p).size();
             */
         if (differentTypes(p, n))
             return false;
@@ -196,8 +196,8 @@ public class Matcher {
 
         return false;
         /*
-        final List<? extends PsiElement> nChildren = Recurser.deleteChildren(n);
-        final List<? extends PsiElement> pChildren = Recurser.deleteChildren(p);
+        final List<? extends PsiElement> nChildren = Recurser.children(n);
+        final List<? extends PsiElement> pChildren = Recurser.children(p);
         if (iz.methodInvocation(p)) {
             pChildren.addAll(az.methodInvocation(p).getArgumentList());
             nChildren.addAll(az.methodInvocation(n).arguments());
