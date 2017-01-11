@@ -57,7 +57,7 @@ public class AnyMatch extends NanoPatternTipper<PsiForeachStatement> {
     }
 
     @Override
-    protected PsiElement createReplacement(PsiForeachStatement e) {
+    public PsiElement createReplacement(PsiForeachStatement e) {
         return null;
     }
 

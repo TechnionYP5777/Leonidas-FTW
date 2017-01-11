@@ -23,7 +23,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
     }
 
     @Override
-    final protected PsiElement createReplacement(PsiMethod e) {
+    final public PsiElement createReplacement(PsiMethod e) {
         String docOld = step.docCommentString(e);
         String docNew = docOld + tag();
         final Wrapper<String> methodText = new Wrapper<>("");

@@ -30,7 +30,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
 
 
     @Override
-    protected PsiElement createReplacement(PsiConditionalExpression e) {
+    public PsiElement createReplacement(PsiConditionalExpression e) {
 
         String replacementString;
         if (firstScenario(e) || secondScenario(e)) {

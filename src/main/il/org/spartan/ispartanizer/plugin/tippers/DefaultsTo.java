@@ -90,7 +90,7 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
     }
 
     @Override
-    protected PsiElement createReplacement(PsiConditionalExpression e) {
+    public PsiElement createReplacement(PsiConditionalExpression e) {
         String replacement = "defaults(" +
                 (eqOperator(e) ? e.getElseExpression().getText() : e.getThenExpression().getText()) +
                 ")" +

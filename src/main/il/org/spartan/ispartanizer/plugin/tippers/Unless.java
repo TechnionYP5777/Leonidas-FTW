@@ -37,7 +37,7 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
      * @return a method invocation to unless function.
      */
     @Override
-    protected PsiElement createReplacement(PsiConditionalExpression e) {
+    public PsiElement createReplacement(PsiConditionalExpression e) {
         return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("eval(" + e.getElseExpression().getText() + ").unless( " + e.getCondition().getText() + ")", e);
     }
 

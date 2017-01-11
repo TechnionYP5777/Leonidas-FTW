@@ -70,7 +70,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @param e - the element to be replaced
      * @return the PsiElement that will replace e.
      */
-    protected abstract PsiElement createReplacement(final N e);
+    public abstract PsiElement createReplacement(final N e);
 
     /**
      * @param e the PsiElement that the tip is applied to
