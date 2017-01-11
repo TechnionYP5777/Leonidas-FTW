@@ -2,10 +2,11 @@ package il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes;
 
 
 import com.intellij.openapi.util.Key;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.*;
+import com.intellij.psi.impl.source.resolve.JavaResolveCache;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.impl.source.tree.JavaElementType;
+import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,10 +17,12 @@ public abstract class GenericPsi extends CompositePsiElement {
 
     final int myHC = CompositePsiElement.ourHC++;
     PsiElement inner;
+    PsiFile containingFile;
 
     protected GenericPsi(PsiElement inner) {
         super(JavaElementType.DUMMY_ELEMENT);
         this.inner = inner;
+        this.containingFile = inner.getContainingFile();
 
     }
 
@@ -30,7 +33,7 @@ public abstract class GenericPsi extends CompositePsiElement {
 
     @Override
     public PsiFile getContainingFile() {
-        return inner.getContainingFile();
+        return containingFile;
     }
 
     @Override
@@ -49,4 +52,5 @@ public abstract class GenericPsi extends CompositePsiElement {
     }
 
     public abstract boolean isOfGenericType(PsiElement e);
+
 }

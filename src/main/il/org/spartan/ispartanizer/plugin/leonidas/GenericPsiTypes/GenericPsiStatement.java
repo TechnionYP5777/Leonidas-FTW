@@ -24,4 +24,10 @@ public class GenericPsiStatement extends GenericPsi implements PsiStatement {
     public boolean isOfGenericType(PsiElement e) {
         return iz.statement(e);
     }
+
+    @Override
+    public GenericPsiStatement copy() {
+        // might not work because inner has no parent
+        return new GenericPsiStatement(inner.copy());
+    }
 }

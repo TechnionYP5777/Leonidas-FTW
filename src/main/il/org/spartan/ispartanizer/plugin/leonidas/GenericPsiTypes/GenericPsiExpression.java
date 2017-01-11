@@ -30,4 +30,10 @@ public class GenericPsiExpression extends GenericPsi {
     public boolean isOfGenericType(PsiElement e) {
         return iz.expression(e);
     }
+
+    @Override
+    public GenericPsiExpression copy() {
+        // might not work because inner has no parent
+        return new GenericPsiExpression(t, inner.copy());
+    }
 }
