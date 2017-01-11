@@ -27,14 +27,16 @@ public class Replacer {
         Map<Integer, PsiElement> map = PsiTreeMatcher.extractInfo(templateMatchingTree, treeToReplace);
         PsiElement templateReplacingTree = builder.getToPsiTree();
         // might not work due to replacing while recursively iterating.
-        templateReplacingTree.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                if (element.getUserData(KeyDescriptionParameters.ORDER) != null) {
-                    r.replace(element, map.get(element.getUserData(KeyDescriptionParameters.ORDER)));
+        map.keySet().forEach(d -> {
+            templateReplacingTree.accept(new JavaRecursiveElementVisitor() {
+                @Override
+                public void visitElement(PsiElement element) {
+                    super.visitElement(element);
+                    if (element.getUserData(KeyDescriptionParameters.ORDER) != null) {
+                        r.replace(element, map.get(element.getUserData(KeyDescriptionParameters.ORDER)));
+                    }
                 }
-            }
+            });
         });
         r.replace(treeToReplace, templateReplacingTree);
         return templateReplacingTree;

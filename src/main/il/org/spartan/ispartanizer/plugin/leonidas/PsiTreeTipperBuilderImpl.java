@@ -42,11 +42,11 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         PsiMethod to = getMethodFromTree(root, TO_METHOD_NAME);
         fromRootType = getPsiElementTypeFromAnnotation(from);
         fromTree = getTreeFromRoot(from, fromRootType);
-        handleStubMethodCalls(from);
-        pruneStubChildren(from);
+        handleStubMethodCalls(fromTree);
+        pruneStubChildren(fromTree);
         toTree = getTreeFromRoot(to, getPsiElementTypeFromAnnotation(to));
-        handleStubMethodCalls(to);
-        pruneStubChildren(to);
+        handleStubMethodCalls(toTree);
+        pruneStubChildren(toTree);
         built = true;
         return this;
     }
@@ -59,7 +59,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     @Override
     public PsiElement getToPsiTree() {
         assert (built);
-        return toTree;
+        return toTree.copy();
     }
 
     private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
@@ -116,7 +116,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
-    private void handleStubMethodCalls(PsiMethod method) {
+    private void handleStubMethodCalls(PsiElement method) {
         method.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
@@ -124,12 +124,11 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
                     return;
                 }
                 addOrderToUserData(expression, az.integer(step.firstParamterExpression(expression)));
-                addOrderToUserData(expression.getParent(), az.integer(step.firstParamterExpression(expression)));
             }
         });
     }
 
-    private void pruneStubChildren(PsiMethod method) {
+    private void pruneStubChildren(PsiElement method) {
         Pruning.pruneAll(method);
     }
 

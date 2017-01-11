@@ -14,11 +14,18 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class GenericPsi extends CompositePsiElement {
 
+    final int myHC = CompositePsiElement.ourHC++;
     PsiElement inner;
 
     protected GenericPsi(PsiElement inner) {
         super(JavaElementType.DUMMY_ELEMENT);
         this.inner = inner;
+
+    }
+
+    @Override
+    public final int hashCode() {
+        return myHC;
     }
 
     @Override

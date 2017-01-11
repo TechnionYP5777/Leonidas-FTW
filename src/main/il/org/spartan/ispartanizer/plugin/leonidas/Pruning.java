@@ -81,7 +81,7 @@ public class Pruning {
                 }
                 PsiElement prev = exp;
                 PsiElement next = exp.getParent();
-                while (iz.statement(next)) {
+                while (iz.statement(next) && !iz.enclosingStatement(next)) {
                     prev = next;
                     next = next.getParent();
                 }

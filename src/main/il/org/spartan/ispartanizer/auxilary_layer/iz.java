@@ -229,4 +229,17 @@ public enum iz {
         return typeCheck(GenericPsiStatement.class, e);
     }
 
+    public static boolean whileStatement(PsiElement e) {
+        return typeCheck(PsiWhileStatement.class, e);
+    }
+
+    public static boolean switchStatement(PsiElement e) {
+        return typeCheck(PsiSwitchStatement.class, e);
+    }
+
+    //TODO AnnaBel7 add every other enclosing statement.
+    public static boolean enclosingStatement(PsiElement e) {
+        return iz.ifStatement(e) || iz.forStatement(e) || whileStatement(e) || switchStatement(e);
+    }
+
 }
