@@ -1,9 +1,6 @@
 package il.org.spartan.ispartanizer.tippers;
 
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiExpression;
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.*;
 import com.intellij.testFramework.PsiTestCase;
 import il.org.spartan.ispartanizer.plugin.tippers.DefaultsTo;
 import il.org.spartan.ispartanizer.plugin.tippers.SafeReference;
@@ -14,20 +11,24 @@ import il.org.spartan.ispartanizer.tippers.TipperTest;
  */
 public class SafeReferenceTest extends TipperTest {
 
-    public void testCanTipFirstScenarioLegal() {
+    public void testFirstScenarioLegal() {
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("x == null ? null : x.y")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y)",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("x == null ? null : x.y")).getText());
     }
 
-    public void testCanTipSecondScenarioLegal() {
+    public void testSecondScenarioLegal() {
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("null == x ? null : x.y")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y)",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("null == x ? null : x.y")).getText());
     }
 
-    public void testCanTipThirdScenarioLegal() {
+    public void testThirdScenarioLegal() {
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("x != null ? x.y : null")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y)",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("x != null ? x.y : null")).getText());
     }
 
-    public void testCanTipFourthScenarioLegal() {
+    public void testFourthScenarioLegal() {
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("null != x ? x.y : null")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y)",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("null != x ? x.y : null")).getText());
     }
 
     public void testCanTipIllegal1() {
@@ -81,18 +82,22 @@ public class SafeReferenceTest extends TipperTest {
 
     public void testFirstScenarioWithLegalMethod(){
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("x == null ? null : x.y()")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y())",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("x == null ? null : x.y()")).getText());
     }
 
     public void testSecondScenarioWithLegalMethod(){
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("null == x ? null : x.y()")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y())",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("null == x ? null : x.y()")).getText());
     }
 
     public void testThirdScenarioWithLegalMethod(){
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("x != null ? x.y() : null")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y())",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("x != null ? x.y() : null")).getText());
     }
 
     public void testFourthScenarioWithLegalMethod(){
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("null != x ? x.y() : null")));
+        assertEquals("nullConditional(x , ¢ -> ¢.y())",new SafeReference().createReplacement((PsiConditionalExpression)createTestExpressionFromString("null != x ? x.y() : null")).getText());
     }
 
     //Notice!! these next tests only pass because I limited the pattern to work with methods with zero params. delete
