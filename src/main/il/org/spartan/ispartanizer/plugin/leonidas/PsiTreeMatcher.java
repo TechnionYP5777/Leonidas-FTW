@@ -56,6 +56,7 @@ public class PsiTreeMatcher {
             if (treeTemplateChild.getUserData(KeyDescriptionParameters.ORDER) != null) {
                 mapping.put(treeTemplateChild.getUserData(KeyDescriptionParameters.ORDER), treeToMatchChild);
             }
+            mapping.putAll(extractInfo(treeTemplateChild, treeToMatchChild));
         }
         return mapping;
     }

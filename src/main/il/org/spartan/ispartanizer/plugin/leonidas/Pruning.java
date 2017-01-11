@@ -3,11 +3,13 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethodCallExpression;
-import com.intellij.psi.PsiStatement;
-import il.org.spartan.ispartanizer.auxilary_layer.az;
+import com.intellij.psi.PsiType;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
-import java.util.Arrays;
+import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.GENERIC_NAME;
+import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ORDER;
 
 /**
  * This class helps generate generic trees representing code template written
@@ -45,8 +47,16 @@ public class Pruning {
                         .BOOLEAN_EXPRESSION.stubName())) {
                     return;
                 }
-                exp.putUserData(KeyDescriptionParameters.GENERIC_NAME, GenericPsiElement.StubName.BOOLEAN_EXPRESSION.stubName());
-                deleteChildren(exp);
+                PsiElement prev = exp;
+                PsiElement next = exp.getParent();
+                while (iz.expression(next)) {
+                    prev = next;
+                    next = next.getParent();
+                }
+                GenericPsiExpression x = new GenericPsiExpression(PsiType.BOOLEAN, prev);
+                x.putUserData(GENERIC_NAME, GenericPsiElement.StubName.BOOLEAN_EXPRESSION.stubName());
+                x.putUserData(ORDER, exp.getUserData(ORDER));
+                prev.replace(x);
             }
 
         });
@@ -63,12 +73,22 @@ public class Pruning {
     public static PsiElement statements(PsiElement e) {
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitStatement(PsiStatement statement) {
-                super.visitStatement(statement);
-                if (iz.expressionStatement(statement) && iz.methodCallExpression(statement.getFirstChild()) && az.methodCallExpression(statement.getFirstChild()).getMethodExpression().getText().equals(GenericPsiElement.StubName.STATEMENT.stubName())) {
-                    statement.putUserData(KeyDescriptionParameters.GENERIC_NAME, GenericPsiElement.StubName.STATEMENT.stubName());
-                    deleteChildren(statement);
+            public void visitMethodCallExpression(PsiMethodCallExpression exp) {
+                super.visitMethodCallExpression(exp);
+                if (!exp.getMethodExpression().getText().equals(GenericPsiElement.StubName
+                        .STATEMENT.stubName())) {
+                    return;
                 }
+                PsiElement prev = exp;
+                PsiElement next = exp.getParent();
+                while (iz.statement(next)) {
+                    prev = next;
+                    next = next.getParent();
+                }
+                GenericPsiStatement x = new GenericPsiStatement(prev);
+                x.putUserData(GENERIC_NAME, GenericPsiElement.StubName.STATEMENT.stubName());
+                x.putUserData(ORDER, exp.getUserData(ORDER));
+                prev.replace(x);
             }
 
         });

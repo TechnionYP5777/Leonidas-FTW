@@ -9,7 +9,8 @@ import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElement.StubName;
-import il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
 import java.util.Arrays;
 
@@ -190,13 +191,10 @@ public enum iz {
         if (iz.theSameType(e1, e2)) {
             return true;
         }
-        if (iz.expression(e1) && iz.methodCallExpression(e2) && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME) != null && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME).equals(StubName.BOOLEAN_EXPRESSION.stubName())) {
+        if (iz.expression(e1) && iz.genericExpression(e2)) {
             return true;
         }
-        if (iz.statement(e1) && iz.expressionStatement(e2) && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME) != null && e2.getUserData(KeyDescriptionParameters.GENERIC_NAME).equals(StubName.STATEMENT.stubName())) {
-            return true;
-        }
-        return false;
+        return iz.statement(e1) && iz.genericStatement(e2);
     }
 
     public static boolean whiteSpace(PsiElement e) {
@@ -223,5 +221,12 @@ public enum iz {
         return typeCheck(PsiDocComment.class, e);
     }
 
+    public static boolean genericExpression(PsiElement e) {
+        return typeCheck(GenericPsiExpression.class, e);
+    }
+
+    public static boolean genericStatement(PsiElement e) {
+        return typeCheck(GenericPsiStatement.class, e);
+    }
 
 }
