@@ -23,6 +23,12 @@ public class Replacer {
      * @return the replaced element
      */
     public static PsiElement replace(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
+        PsiElement templateReplacingTree = builder.getToPsiTree();
+        r.replace(treeToReplace, getReplacer(treeToReplace, builder, r));
+        return templateReplacingTree;
+    }
+
+    public static PsiElement getReplacer(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
         PsiElement templateMatchingTree = builder.getFromPsiTree();
         Map<Integer, PsiElement> map = PsiTreeMatcher.extractInfo(templateMatchingTree, treeToReplace);
         PsiElement templateReplacingTree = builder.getToPsiTree();
@@ -38,7 +44,8 @@ public class Replacer {
                 }
             });
         });
-        r.replace(treeToReplace, templateReplacingTree);
         return templateReplacingTree;
     }
+
+
 }

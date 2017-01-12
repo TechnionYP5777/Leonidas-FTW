@@ -13,18 +13,18 @@ public class stepTest extends TipperTest {
     public void testDocCommentA() {
         String src = "class A {}";
         String doc = "";
-        Assert.assertEquals(step.docCommentString(this.createTestClassFromString(src)), doc);
+        Assert.assertEquals(step.docCommentString(createTestClassFromString(src)), doc);
     }
 
     public void testDocCommentB() {
         String src = "/**javadoc*/class A {}";
         String doc = "javadoc";
-        Assert.assertEquals(step.docCommentString(this.createTestClassFromString(src)), doc);
+        Assert.assertEquals(step.docCommentString(getClassInFile(createTestFileFromString(src))), doc);
     }
 
     public void testDocCommentC() {
         String src = "class A {/** javadoc */void foo() {}}";
         String doc = "";
-        Assert.assertEquals(step.docCommentString(this.createTestClassFromString(src)), doc);
+        Assert.assertEquals(step.docCommentString(createTestClassFromString(src)), doc);
     }
 }
