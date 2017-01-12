@@ -8,13 +8,11 @@ import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 
 /**
- * Created by amirsagiv on 12/23/16.
- */
-
-/**
  * This is a safeReference Nano pattern.
- * Please notice!!!
  * This tip works only for field accesses and for Method calls with no params.
+ *
+ * @author amirsagiv
+ * @since 23-12-2016
  */
 public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
     @Override
@@ -27,7 +25,6 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
     public String description(PsiConditionalExpression psiConditionalExpression) {
         return "Replace null conditional ternary with ?.";
     }
-
 
     @Override
     public PsiElement createReplacement(PsiConditionalExpression e) {
@@ -138,6 +135,5 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
     protected Tip pattern(final PsiConditionalExpression ¢) {
         return tip(¢);
     }
-
 
 }

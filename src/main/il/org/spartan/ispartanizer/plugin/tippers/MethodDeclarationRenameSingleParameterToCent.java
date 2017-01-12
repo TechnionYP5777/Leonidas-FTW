@@ -16,11 +16,9 @@ import static il.org.spartan.ispartanizer.auxilary_layer.Utils.in;
 
 /**
  * @author Michal Cohen
- * @since 2016.12.1
+ * @since 01-12-2016
  */
-
 public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiMethod> {
-
 
     private boolean canTip(PsiMethod ¢) {
         return !¢.isConstructor() && !iz.abstract$(¢) && iz.singleParameterMethod(¢) &&
@@ -28,7 +26,6 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
                 !in(step.name(step.firstParameter(¢)), "$", "¢", "_", "__") &&
                 !haz.centVariableDefinition(¢);
     }
-
 
     @Override
     public boolean canTip(PsiElement ¢) {

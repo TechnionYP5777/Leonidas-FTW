@@ -6,9 +6,8 @@ import org.junit.Assert;
  * A very simplistic Range
  *
  * @author Roey Maor
- * @since 9.12.2016
+ * @since 09-12-2016
  */
-
 public class Range {
     private int start;
     private int stop;

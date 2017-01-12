@@ -38,8 +38,8 @@ public class Replacer {
                 @Override
                 public void visitElement(PsiElement element) {
                     super.visitElement(element);
-                    if (element.getUserData(KeyDescriptionParameters.ORDER) != null) {
-                        r.replace(element, map.get(element.getUserData(KeyDescriptionParameters.ORDER)));
+                    if (element.getUserData(KeyDescriptionParameters.ID) != null) {
+                        r.replace(element, map.get(element.getUserData(KeyDescriptionParameters.ID)));
                     }
                 }
             });

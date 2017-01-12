@@ -12,10 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Oren Afek
- * @since 2016.12.1
+ * General utils class
+ * @author 01-12-2016
  */
-
 public enum Utils {
     ;
 

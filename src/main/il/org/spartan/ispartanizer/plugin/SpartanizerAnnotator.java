@@ -19,9 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Oren Afek
- * @since 2016.12.8
+ * @since 08-12-2016
  */
-
 public class SpartanizerAnnotator implements Annotator {
 
     AnnotationHolder myAH;

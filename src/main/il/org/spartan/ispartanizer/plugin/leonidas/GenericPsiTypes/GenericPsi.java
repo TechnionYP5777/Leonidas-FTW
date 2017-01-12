@@ -2,16 +2,17 @@ package il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes;
 
 
 import com.intellij.openapi.util.Key;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.resolve.JavaResolveCache;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.impl.source.tree.JavaElementType;
-import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Created by melanyc on 1/11/2017.
+ * An abstract class representing generic psi element.
+ * @author michalcohen
+ * @since 11-01-17
  */
 public abstract class GenericPsi extends CompositePsiElement {
 
@@ -51,6 +52,12 @@ public abstract class GenericPsi extends CompositePsiElement {
         inner.putUserData(key, value);
     }
 
+    /**
+     * checks if a different element conforms with the represented generic type.
+     *
+     * @param e - the element to be checked
+     * @return true iff e is of the generic type
+     */
     public abstract boolean isOfGenericType(PsiElement e);
 
 }

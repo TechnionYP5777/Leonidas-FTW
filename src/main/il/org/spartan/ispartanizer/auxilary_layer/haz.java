@@ -3,10 +3,10 @@ package il.org.spartan.ispartanizer.auxilary_layer;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 
-
 /**
+ * Utils class that helps checking if a Psi tree has a specific component.
  * @author Michal Cohen
- * @since 2016.12.1
+ * @since 01-12-2016
  */
 public enum haz {
     ;
@@ -48,6 +48,7 @@ public enum haz {
         });
         return b.inner;
     }
+
     public static boolean functionNamed(final PsiElement p, String name) {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
         p.accept(new JavaRecursiveElementVisitor() {
@@ -71,6 +72,7 @@ public enum haz {
     public static boolean compilationErrors(PsiFile file){
         return haz.syntaxErrors(file) || CompilationCenter.hasCompilationErrors(file);
     }
+
     public static boolean syntaxErrors(PsiElement element) {
         return (PsiTreeUtil.hasErrorElements(element));
     }

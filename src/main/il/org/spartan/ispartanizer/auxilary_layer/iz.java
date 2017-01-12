@@ -8,7 +8,7 @@ import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
-import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElement.StubName;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub.StubName;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
@@ -18,10 +18,10 @@ import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
 
 /**
+ * Utils class that helps to check if a Psi element iz of a specific type
  * @author Oren Afek
- * @since 2016.12.1
+ * @since 01-12-2016
  */
-
 public enum iz {
     ;
     private static final String ABSTRACT = "abstract";
@@ -186,7 +186,9 @@ public enum iz {
         return typeCheck(e2.getClass(), e1);
     }
 
-    // e2 is the generic tree
+    /**
+     * e2 is the generic tree
+     */
     public static boolean conforms(PsiElement e1, PsiElement e2) {
         if (iz.theSameType(e1, e2)) {
             return true;
@@ -237,9 +239,185 @@ public enum iz {
         return typeCheck(PsiSwitchStatement.class, e);
     }
 
-    //TODO AnnaBel7 add every other enclosing statement.
+    //TODO @AnnaBel7 add every other enclosing statement.
     public static boolean enclosingStatement(PsiElement e) {
         return iz.ifStatement(e) || iz.forStatement(e) || whileStatement(e) || switchStatement(e);
     }
 
+    public static boolean synchronized¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.SYNCHRONIZED));
+    }
+
+    public static boolean native¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.NATIVE));
+    }
+
+    public static boolean default¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.DEFAULT));
+    }
+
+    /**
+     * @param ¢
+     * @return whether the Element is a class, enum, interface or annotation type
+     */
+    public static boolean abstractTypeDeclaration(final PsiElement ¢) {
+        return typeCheck(PsiClass.class, ¢);
+    }
+
+    public static boolean annotation(final PsiElement ¢) {
+        return typeCheck(PsiAnnotation.class, ¢);
+    }
+
+    public static boolean anonymousClassDeclaration(final PsiElement ¢) {
+        return typeCheck(PsiAnonymousClass.class, ¢);
+    }
+
+    public static boolean arrayInitializer(final PsiElement ¢) {
+        return typeCheck(PsiArrayInitializerExpression.class, ¢);
+    }
+
+    /**
+     * @param ¢ pattern the statement or block to check if it is an assignment
+     * @return <code><b>true</b></code> if the parameter an assignment or false if
+     * the parameter not or if the block Contains more than one
+     * statement
+     */
+    public static boolean assignment(final PsiElement ¢) {
+        return typeCheck(PsiAssignmentExpression.class, ¢);
+    }
+
+    public static boolean bodyDeclaration(final PsiElement ¢) {
+        return typeCheck(PsiMember.class, ¢);
+    }
+
+    /**
+     * Determine whether a node is a boolean literal
+     *
+     * @param ¢ pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is a boolean
+     * literal
+     */
+    public static boolean booleanLiteral(final PsiElement ¢) {
+        return typeCheck(PsiLiteral.class, ¢) && ((PsiLiteral) ¢).getValue() instanceof Boolean;
+    }
+
+    /**
+     * @param ¢ JD
+     * @return
+     */
+    public static boolean booleanType(final PsiType ¢) {
+        return ¢ != null && ¢ instanceof PsiPrimitiveType && ¢.getPresentableText().equals(PsiType.BOOLEAN.getPresentableText());
+    }
+
+    public static boolean breakStatement(final PsiElement ¢) {
+        return typeCheck(PsiBreakStatement.class, ¢);
+    }
+
+    /**
+     * @param ¢ JD
+     * @return
+     */
+    public static boolean castExpression(final PsiElement ¢) {
+        return typeCheck(PsiTypeCastExpression.class, ¢);
+    }
+
+    /**
+     * @param ¢
+     * @return
+     */
+    public static boolean classInstanceCreation(final PsiElement ¢) {
+        return typeCheck(PsiNewExpression.class, ¢);
+    }
+
+    /**
+     * Check whether an expression is a "conditional and" (&&)
+     *
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
+     * whose operator is AND
+     */
+    public static boolean conditionalAnd(final PsiBinaryExpression ¢) {
+        return ¢.getOperationSign() == JavaTokenType.AND;
+    }
+
+    /**
+     * Check whether an expression is a "conditional or" (||)
+     *
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an expression
+     * whose operator is OR
+     */
+    public static boolean conditionalOr(final PsiBinaryExpression ¢) {
+        return ¢.getOperationSign() == JavaTokenType.OR;
+    }
+
+    /**
+     * Determine whether a node is an EmpyStatement
+     *
+     * @param ¢ pattern JD
+     * @return <code><b>true</b></code> <i>iff</i> the parameter is an
+     * empty statment
+     */
+    static boolean emptyStatement(final PsiElement ¢) {
+        return typeCheck(PsiEmptyStatement.class, ¢);
+    }
+
+    static boolean enhancedFor(final PsiElement ¢) {
+        return typeCheck(PsiForeachStatement.class, ¢);
+    }
+
+    static boolean enumConstantDeclaration(final PsiElement ¢) {
+        return typeCheck(PsiEnumConstant.class, ¢);
+    }
+
+    static boolean enumDeclaration(final PsiElement ¢) {
+        return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isEnum());
+    }
+
+    static boolean fieldDeclaration(final PsiMember ¢) {
+        return typeCheck(PsiField.class, ¢);
+    }
+
+    /**
+     * Determine whether a declaration is final or not
+     *
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>declaration is final
+     */
+    static boolean final¢(final PsiMember ¢) {
+        return (¢.getModifierList().hasModifierProperty(PsiModifier.FINAL));
+    }
+
+    /**
+     * Determine whether a variable declaration is final or not
+     *
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
+     * final
+     */
+    static boolean final¢(final PsiVariable ¢) {
+        return ¢ != null && ¢.getModifierList().hasModifierProperty(PsiModifier.FINAL);
+    }
+
+    /**
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is an infix
+     * expression or false otherwise
+     */
+    static boolean infix(final PsiElement ¢) {
+        return typeCheck(PsiBinaryExpression.class, ¢);
+    }
+
+    static boolean instanceofExpression(final PsiExpression ¢) {
+        return typeCheck(PsiInstanceOfExpression.class, ¢);
+    }
+
+    /**
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>the given node is an interface
+     * or false otherwise
+     */
+    static boolean interface¢(final PsiElement ¢) {
+        return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isInterface());
+    }
 }

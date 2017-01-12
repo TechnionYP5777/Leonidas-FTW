@@ -3,6 +3,7 @@ package il.org.spartan.ispartanizer.auxilary_layer;
 import com.intellij.psi.*;
 
 /**
+ * Helps to get the dynamic type of a Psi element.
  * @author michalcohen
  * @since 31-12-16
  */

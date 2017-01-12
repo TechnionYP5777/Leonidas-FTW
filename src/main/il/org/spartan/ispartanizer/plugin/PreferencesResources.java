@@ -5,7 +5,8 @@ import il.org.spartan.ispartanizer.plugin.tipping.TipperCategory;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by maorroey on 12/3/2016.
+ * @author maorroey
+ * @since 03-12-2016
  */
 public class PreferencesResources {
     /**

@@ -13,7 +13,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by melanyc on 1/9/2017.
+ * From this class evey leonidas tipper will be instantiated.
+ * @author michalcohen
+ * @since 09-01-2017
  */
 public class LeonidasTipper implements Tipper<PsiElement> {
 
@@ -39,7 +41,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     @Override
-    public String description(PsiElement _) {
+    public String description(PsiElement e) {
         return f.getName();
     }
 

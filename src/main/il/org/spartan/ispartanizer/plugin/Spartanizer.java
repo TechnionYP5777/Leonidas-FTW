@@ -7,9 +7,8 @@ import com.intellij.psi.PsiFile;
 
 /**
  * @author Oren Afek
- * @since 2016.12.9
+ * @since 09-12-2016
  */
-
 enum Spartanizer {
     ;
 

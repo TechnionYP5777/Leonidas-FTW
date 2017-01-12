@@ -10,7 +10,7 @@ import static il.org.spartan.ispartanizer.auxilary_layer.step.*;
 
 /**
  * @author Oren Afek
- * @since 2016.12.1
+ * @since 01-12-2016
  */
 
 public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLambdaExpression> {

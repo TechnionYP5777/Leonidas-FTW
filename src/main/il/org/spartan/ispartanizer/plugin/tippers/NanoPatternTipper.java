@@ -23,7 +23,10 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by maorroey on 12/26/2016.
+ * Represents a tipper that changes the code of the user to a code that need the creation of
+ *  a special environmant.
+ * @author maorroey, michalcohen
+ * @since 26-12-2016
  */
 public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<N>, TipperCategory.Nanos {
     protected static <N extends PsiElement> boolean anyTips(final Collection<Tipper<N>> ns, final N n) {

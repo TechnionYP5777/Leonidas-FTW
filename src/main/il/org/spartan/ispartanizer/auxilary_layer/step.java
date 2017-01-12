@@ -10,10 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * TODO @orenafek comment this class
  * @author Oren Afek
- * @since 2016.12.1
+ * @since 01-12-2016
  */
-
 public enum step {
     ;
 
@@ -105,9 +105,8 @@ public enum step {
         return b;
     }
 
-    public static
     @NotNull
-    String docCommentString(@NotNull PsiJavaDocumentedElement e) {
+    public static String docCommentString(@NotNull PsiJavaDocumentedElement e) {
         PsiDocComment doc = e.getDocComment();
         if (doc == null) {
             return "";

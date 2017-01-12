@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * @author Oren Afek
  * @author Michal Cohen
- * @since 2016.12.1
+ * @since 01-12-2016
  */
 public enum Toolbox {
     INSTANCE;
@@ -44,7 +44,6 @@ public enum Toolbox {
                 .add(new LispLastElement())
                 .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
-                .add(new AnyMatch())
                 .add(new Delegator());
         createLeonidasTipperBuilders();
     }
@@ -53,6 +52,7 @@ public enum Toolbox {
         List<File> tippers = Arrays.asList(new File(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()).listFiles());
         tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
+
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
         tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
         tipperMap.get(tipper.getPsiClass()).add(tipper);

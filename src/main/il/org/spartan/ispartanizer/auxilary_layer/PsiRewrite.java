@@ -7,10 +7,11 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 
 /**
+ * This class helps performing replacement actions on Psi elements without having to create
+ *  each time WriteCommandAction.
  * @author Roey Maor
- * @since 3/12/2016.
+ * @since 03-12-2016
  */
-
 public class PsiRewrite {
     private PsiFileFactory fileFactory;
     private PsiFile psiFile;
@@ -40,7 +41,6 @@ public class PsiRewrite {
 
         }.execute();
     }
-
 
     public PsiFileFactory getFileFactory() {
         return fileFactory;

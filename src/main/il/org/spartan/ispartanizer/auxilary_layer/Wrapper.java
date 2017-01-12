@@ -3,8 +3,9 @@ package il.org.spartan.ispartanizer.auxilary_layer;
 import org.jetbrains.annotations.Nullable;
 
 /**
+ * Wraps objects so they can be used inside a visitor.
  * @author michal cohen
- * @since 12/1/2016.
+ * @since 01-12-2016
  */
 public class Wrapper<T> {
     @Nullable
@@ -47,9 +48,6 @@ public class Wrapper<T> {
         return inner == null ? 0 : inner.hashCode();
     }
 
-    /**
-     * set current value
-     */
     public void set(final T inner) {
         this.inner = inner;
     }

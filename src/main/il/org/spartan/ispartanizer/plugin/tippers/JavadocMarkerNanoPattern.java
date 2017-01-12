@@ -10,11 +10,13 @@ import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.auxilary_layer.step;
 
 /**
- * @author RoeiRaz
- * @since 1/3/2017
  * <p>
  * Copied and migrated to work in IntellliJ.
  * Original author is Ori Marcovitch.
+ *
+ * @author RoeiRaz
+ * @since 03-01-2017
+ *
  */
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMethod> {
     @Override
@@ -52,7 +54,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
         return "[[" + this.getClass().getSimpleName() + "]]";
     }
 
-    private final boolean hasTag(PsiMethod psiMethod) {
+    private boolean hasTag(PsiMethod psiMethod) {
         return step.docCommentString(psiMethod).contains(tag());
     }
 }

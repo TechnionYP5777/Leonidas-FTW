@@ -2,9 +2,11 @@ package il.org.spartan.ispartanizer.plugin.tippers;
 
 import com.intellij.psi.*;
 import com.intellij.psi.tree.IElementType;
-import il.org.spartan.ispartanizer.auxilary_layer.*;
+import il.org.spartan.ispartanizer.auxilary_layer.az;
+import il.org.spartan.ispartanizer.auxilary_layer.haz;
+import il.org.spartan.ispartanizer.auxilary_layer.iz;
+import il.org.spartan.ispartanizer.auxilary_layer.step;
 import il.org.spartan.ispartanizer.plugin.tipping.Tip;
-import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
 /**
  * Replace X != null ? X : Y with X ?? Y <br>
@@ -13,7 +15,7 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
  * Replace null != X ? X : Y with X ?? Y <br>
  *
  * @author Oren Afek
- * @since 2016.12.24
+ * @since 24-12-2016
  */
 
 public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
@@ -57,31 +59,6 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
                 "Replace null == X ? Y : X with X ?? Y <br>\n" +
                 "Replace null != X ? X : Y with X ?? Y <br>";
     }
-
-    /*@Override
-    public Tip tip(PsiConditionalExpression node) {
-        final PsiBinaryExpression binaryExpression = az.binaryExpression(step.conditionExpression(node));
-        final String leftOperandText = String.valueOf(step.leftOperand(binaryExpression).textToCharArray());
-        final String rightOperandText = String.valueOf(step.rightOperand(binaryExpression).textToCharArray());
-        final String replacementFormat = "%s ?? %s";
-        return new Tip(description(node), node, this.getClass()) {
-            @Override
-            public void go(PsiRewrite r) {
-                String replacementString;
-                // if (cond: (X == null) or cond: (null == X))
-                if (iz.equalsOperator(step.operator(binaryExpression))) {
-                    replacementString = String.format(replacementFormat, rightOperandText, leftOperandText);
-                } else {
-                    replacementString = String.format(replacementFormat, leftOperandText, rightOperandText);
-                }
-
-                PsiElement replacement = JavaPsiFacade.getElementFactory(node.getProject())
-                        .createExpressionFromText(replacementString, node);
-
-                r.replace(node, replacement);
-            }
-        };
-    }*/
 
     private boolean eqOperator(PsiConditionalExpression e) {
         PsiBinaryExpression condition = az.binaryExpression(step.conditionExpression(e));

@@ -6,7 +6,8 @@ import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters;
 
 /**
- * Created by melanyc on 1/11/2017.
+ * @author michalcohen
+ * @since 11-01-2017
  */
 public class GenericPsiExpression extends GenericPsi {
     PsiType t;
@@ -18,9 +19,8 @@ public class GenericPsiExpression extends GenericPsi {
 
     @Override
     public String toString() {
-        return "Generic expression" + inner.getUserData(KeyDescriptionParameters.ORDER);
+        return "Generic expression" + inner.getUserData(KeyDescriptionParameters.ID);
     }
-
 
     public PsiType evaluationType() {
         return t;
@@ -33,7 +33,6 @@ public class GenericPsiExpression extends GenericPsi {
 
     @Override
     public GenericPsiExpression copy() {
-        // might not work because inner has no parent
         return new GenericPsiExpression(t, inner.copy());
     }
 }

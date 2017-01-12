@@ -13,6 +13,10 @@ public enum Amount {
     EXACTLY_ONE,
     AT_LEAST_ONE;
 
+    /**
+     * @param x the true amount taken from the users' tree.
+     * @return true iff this amount conforms the Amount enum.
+     */
     public boolean conforms(int x) {
         switch (this) {
             case ANY:

@@ -11,11 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ORDER;
+import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
 
 /**
  * @author Oren Afek
- * @since 06/01/17
+ * @since 06-01-2017
  */
 public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
@@ -35,6 +35,13 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         built = false;
     }
 
+    /**
+     * TODO @orenafek please comment
+     *
+     * @param fileName - the file name of the Leonidas tipper to build.
+     * @return
+     * @throws IOException
+     */
     public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
         PsiFile root = getPsiTreeFromFile(fileName);
@@ -51,11 +58,21 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return this;
     }
 
+    /**
+     * TODO @orenafek please comment
+     *
+     * @return
+     */
+    @Override
     public PsiElement getFromPsiTree() {
         assert (built);
         return fromTree;
     }
 
+    /**
+     * TODO @orenafek please comment
+     * @return
+     */
     @Override
     public PsiElement getToPsiTree() {
         assert (built);
@@ -91,7 +108,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
                 .map(s -> PSI_PACKAGE_PREFIX + s)
                 .map(s -> {
                     try {
-                        return (Class<? extends PsiElement>) Class.forName(s);
+                        return (Class<? extends PsiElement>) Class.forName(s); //TODO there is a warning here
                     } catch (ClassNotFoundException ignore) {
                         System.out.println(ignore.getCause().toString());
                     }
@@ -99,7 +116,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
                 }).collect(Collectors.toList()).get(0);
     }
 
-    //here assuming the root element to be replaced is a direct child of the method statemnt block
+    //here assuming the root element to be replaced is a direct child of the method statement block
     //TODO: @orenafek, now assuming there is only one "direct son" in rootElemntType type,
     //TODO: should be changed upon adding the name to the annotations.
     private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
@@ -133,7 +150,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     private PsiElement addOrderToUserData(PsiElement element, int order) {
-        element.putUserData(ORDER, order);
+        element.putUserData(ID, order);
         return element;
     }
 

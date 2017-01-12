@@ -39,7 +39,7 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
             actualFrom.accept(new JavaRecursiveElementVisitor() {
                 @Override
                 public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                    assertEquals(Integer.valueOf(0), expression.getUserData(KeyDescriptionParameters.ORDER));
+                    assertEquals(Integer.valueOf(0), expression.getUserData(KeyDescriptionParameters.ID));
                 }
             });
         } catch (IOException ignore) {

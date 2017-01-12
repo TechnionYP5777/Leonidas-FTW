@@ -12,18 +12,20 @@ import java.nio.file.Files;
 
 
 /**
- * Created by maorroey on 1/6/2017.
+ * A static util class that handles compilation inside the code
+ * @author maorroey
+ * @since 06-01-2017
  */
 public class CompilationCenter {
-    /*
-        A static util class that handles compilation inside the code
-     */
     private static File dummyCompilationTestFile;
     private static JavaCompiler compiler;
     private static boolean initialized = false;
     private static ByteArrayOutputStream output;
     private static ByteArrayOutputStream errors;
 
+    /**
+     * TODO @maorroey please comment
+     */
     public static void initialize(){
         if(initialized){
             return;
@@ -37,7 +39,10 @@ public class CompilationCenter {
         initialized = true;
     }
 
-    static boolean hasCompilationErrors(PsiFile file){
+    /**
+     * TODO @maorroey please comment
+     */
+    public static boolean hasCompilationErrors(PsiFile file) {
         compile(file);
         return errors.toString().length() != 0;
     }
@@ -57,6 +62,9 @@ public class CompilationCenter {
         compiler.run(null, output, errors, dummyCompilationTestFile.getPath());
     }
 
+    /**
+     * TODO @maorroey please comment
+     */
     public static String getLatestCompilationErrors(){
         if(!initialized){
             initialize();
@@ -64,6 +72,9 @@ public class CompilationCenter {
         return errors.toString();
     }
 
+    /**
+     * TODO @maorroey please comment
+     */
     public static String getLatestCompilationOutput(){
         if(!initialized){
             initialize();

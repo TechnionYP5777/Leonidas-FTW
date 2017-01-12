@@ -92,7 +92,7 @@ public class PsiTreeMatcherTest extends TipperTest {
             public void visitMethodCallExpression(PsiMethodCallExpression methodCallExpression) {
                 super.visitMethodCallExpression(methodCallExpression);
                 methodCallExpression.putUserData(KeyDescriptionParameters.GENERIC_NAME, methodCallExpression.getMethodExpression().getText());
-                methodCallExpression.putUserData(KeyDescriptionParameters.ORDER, count.get());
+                methodCallExpression.putUserData(KeyDescriptionParameters.ID, count.get());
 
                 count.set(count.get() + 1);
             }
@@ -105,6 +105,5 @@ public class PsiTreeMatcherTest extends TipperTest {
         Map<Integer, PsiElement> m = PsiTreeMatcher.extractInfo(b, y);
         assertTrue(iz.expression(m.get(0)));
         assertTrue(iz.statement(m.get(1)));
-        System.out.println(m);
     }
 }

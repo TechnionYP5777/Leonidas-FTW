@@ -9,14 +9,14 @@ import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExp
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
 import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.GENERIC_NAME;
-import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ORDER;
+import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
 
 /**
  * This class helps generate generic trees representing code template written
  * in the Leonidas Language.
  *
  * @author michalcohen
- * @since 7-1-2017
+ * @since 07-01-2017
  */
 public class Pruning {
 
@@ -43,7 +43,7 @@ public class Pruning {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression exp) {
                 super.visitMethodCallExpression(exp);
-                if (!exp.getMethodExpression().getText().equals(GenericPsiElement.StubName
+                if (!exp.getMethodExpression().getText().equals(GenericPsiElementStub.StubName
                         .BOOLEAN_EXPRESSION.stubName())) {
                     return;
                 }
@@ -54,8 +54,8 @@ public class Pruning {
                     next = next.getParent();
                 }
                 GenericPsiExpression x = new GenericPsiExpression(PsiType.BOOLEAN, prev);
-                x.putUserData(GENERIC_NAME, GenericPsiElement.StubName.BOOLEAN_EXPRESSION.stubName());
-                x.putUserData(ORDER, exp.getUserData(ORDER));
+                x.putUserData(GENERIC_NAME, GenericPsiElementStub.StubName.BOOLEAN_EXPRESSION.stubName());
+                x.putUserData(ID, exp.getUserData(ID));
                 prev.replace(x);
             }
 
@@ -66,7 +66,7 @@ public class Pruning {
 
     /**
      * Prunes all the statements from the form "statement();" where "statement()"
-     * is a method call for the method defined in GenericPsiElement.
+     * is a method call for the method defined in GenericPsiElementStub.
      *
      * @param e - the root from which all such statements are pruned
      */
@@ -75,7 +75,7 @@ public class Pruning {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression exp) {
                 super.visitMethodCallExpression(exp);
-                if (!exp.getMethodExpression().getText().equals(GenericPsiElement.StubName
+                if (!exp.getMethodExpression().getText().equals(GenericPsiElementStub.StubName
                         .STATEMENT.stubName())) {
                     return;
                 }
@@ -86,24 +86,13 @@ public class Pruning {
                     next = next.getParent();
                 }
                 GenericPsiStatement x = new GenericPsiStatement(prev);
-                x.putUserData(GENERIC_NAME, GenericPsiElement.StubName.STATEMENT.stubName());
-                x.putUserData(ORDER, exp.getUserData(ORDER));
+                x.putUserData(GENERIC_NAME, GenericPsiElementStub.StubName.STATEMENT.stubName());
+                x.putUserData(ID, exp.getUserData(ID));
                 prev.replace(x);
             }
 
         });
 
-        return e;
-    }
-
-    /**
-     * Pruns all the deleteChildren of a PsiElement
-     *
-     * @param e JD
-     * @return e
-     */
-    public static PsiElement deleteChildren(PsiElement e) {
-        e.deleteChildRange(e.getFirstChild(), e.getLastChild());
         return e;
     }
 

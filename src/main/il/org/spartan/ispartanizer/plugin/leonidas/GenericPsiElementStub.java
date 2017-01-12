@@ -5,11 +5,10 @@ import com.intellij.psi.PsiMethodCallExpression;
 /**
  * This class defines methods that will represent generic structures of code
  * such as: statements, conditions, blocks, variable declaration and more.
- *
  * @author Oren Afek
- * @since 06/01/17
+ * @since 06-01-2017
  */
-public abstract class GenericPsiElement {
+public abstract class GenericPsiElementStub {
 
     /**
      * method stub representing a boolean expression for leonidas tippers

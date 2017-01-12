@@ -7,7 +7,7 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 
 /**
  * @author RoeiRaz
- * @since 1/3/2017
+ * @since 03-01-2017
  */
 public class Delegator extends JavadocMarkerNanoPattern {
     @Override

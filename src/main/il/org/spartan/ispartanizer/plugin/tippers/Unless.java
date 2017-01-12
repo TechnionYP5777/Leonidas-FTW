@@ -9,7 +9,7 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 
 /**
  * @author michal cohen
- * @since 12/22/2016.
+ * @since 22-12-2016
  */
 public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 

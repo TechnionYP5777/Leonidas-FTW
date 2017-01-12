@@ -6,26 +6,26 @@ import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Utils;
 
 /**
- * @author Roey Maor
- * @since 2016.12.1
- */
-
-/*I took the idea of extending range from the original spartanizer,
+ * I took the idea of extending range from the original spartanizer,
  * in the original project, the range represents the character indexes that
  * mark the area where the tip is relevant.
  * this inherently means that a tip is relevant only to a continues block of code
+ *
+ * @author Roey Maor
+ * @since 01-12-2016
  */
-
 public abstract class Tip extends Range {
     /**
      * A textual description of the action to be performed
      **/
     public final String description;
+
     /**
      * The tipper class that supplied that tip
      */
     @SuppressWarnings("rawtypes")
     public final Class<? extends Tipper> tipperClass;
+
     /**
      * The line number of the first character to be rewritten
      **/

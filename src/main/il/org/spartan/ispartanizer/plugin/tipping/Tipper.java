@@ -5,7 +5,7 @@ import com.intellij.psi.PsiElement;
 /**
  * @author Oren Afek
  * @author Michal Cohen
- * @since 2016.12.1
+ * @since 01-12-2016
  */
 public interface Tipper<T extends PsiElement> {
 

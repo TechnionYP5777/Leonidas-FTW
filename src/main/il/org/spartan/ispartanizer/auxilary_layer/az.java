@@ -3,10 +3,10 @@ package il.org.spartan.ispartanizer.auxilary_layer;
 import com.intellij.psi.*;
 
 /**
+ * Utils class that helps converting Psi element to a specific Psi type
  * @author Oren Afek
- * @since 2016.12.1
+ * @since 01-12-16
  */
-
 public enum az {
     ;
 

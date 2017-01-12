@@ -8,9 +8,8 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 
 /**
  * @author AnnaBel7
- * @since 23/12/2016.
+ * @since 23-12-2016
  */
-
 public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> {
 
     private boolean canTip(PsiMethodCallExpression e) {

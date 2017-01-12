@@ -15,9 +15,8 @@ import org.jetbrains.annotations.Nullable;
  * @author Roey Maor
  * @author Oren Afek
  * @author Michal Cohen
- * @since 2016.11.18
+ * @since 18-11-2016
  */
-
 public class SpartanizerAction extends AnAction {
 
     @Override
@@ -30,12 +29,10 @@ public class SpartanizerAction extends AnAction {
 
     }
 
-
     /**
      * @param e the action event
      * @return the psiElement extracted from the event's context
      **/
-
     @Nullable
     private PsiElement getPsiElementFromContext(AnActionEvent e) {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
@@ -47,7 +44,6 @@ public class SpartanizerAction extends AnAction {
      * @param ¢ the action event
      * @return the psiClass extracted from the event's context
      **/
-
     @Nullable
     private PsiClass getPsiClassFromContext(AnActionEvent ¢) {
         return PsiTreeUtil.getParentOfType(getPsiElementFromContext(¢), PsiClass.class);
