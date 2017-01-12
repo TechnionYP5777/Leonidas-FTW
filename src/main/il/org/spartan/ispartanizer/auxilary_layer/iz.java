@@ -62,6 +62,7 @@ public enum iz {
         return typeCheck(PsiEnumConstantImpl.class, element);
     }
 
+    //TODO: Maybe redundant?
     public static boolean fieldDeclaration(PsiElement element) {
         return typeCheck(PsiFieldImpl.class, element);
     }
@@ -173,6 +174,7 @@ public enum iz {
         return typeCheck(PsiJavaToken.class, element);
     }
 
+    //TODO: duplicated!
     public static boolean MethodCallExpression(PsiExpression element) {
         return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }
@@ -217,6 +219,7 @@ public enum iz {
                                 sn.equals(az.methodCallExpression(element).getMethodExpression().getText()));
     }
 
+    //TODO: ASK WHO DID THIS!
     public static boolean documentedElement(PsiElement e) {
         return typeCheck(PsiJavaDocumentedElement.class, e);
     }

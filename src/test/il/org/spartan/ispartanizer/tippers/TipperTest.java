@@ -76,6 +76,20 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createIdentifier(s);
     }
 
+    protected PsiForStatement createTestForStatementFromString(String s) {
+        return (PsiForStatement)getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
+    protected PsiForeachStatement createTestForeachStatementFromString(String s) {
+        return (PsiForeachStatement)getTestFactory().createStatementFromText(s,getTestFile());
+    }
+    protected PsiImportList createTestImportListFromString(String s) {
+        PsiFile file = createTestFileFromString(s+
+                "public class A{}");
+        PsiElement importList = file.getNavigationElement().getFirstChild();
+        return (PsiImportList)importList;
+    }
+
     protected PsiCodeBlock createTestCodeBlockFromString(String s) {
         return getTestFactory().createCodeBlockFromText(s, getTestFile());
     }
