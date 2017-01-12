@@ -107,6 +107,8 @@ public enum iz {
         return typeCheck(PsiTypeElementImpl.class, element);
     }
 
+
+    //TODO: DUPLICATED
     public static boolean methodInvocation(PsiElement element) {
         return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }

@@ -5,7 +5,7 @@ import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 
 /**
- * @author michal cohen
+ * @author michal cohen & Amir Sagiv
  * @since 12/22/2016.
  */
 public class izTest extends TipperTest {
@@ -46,15 +46,36 @@ public class izTest extends TipperTest {
     }
 
     public void testReferenceExpression() throws Exception {
-
+        PsiExpression rf1 = createTestExpression("x.y");
+        assertTrue(iz.referenceExpression(rf1));
+        PsiExpression rf2 = createTestExpression("x.y.z");
+        assertTrue(iz.referenceExpression(rf2));
+        PsiExpression rf3 = createTestExpression("x");
+        assertTrue(iz.referenceExpression(rf3));
+        PsiExpression exp = createTestExpression("x == false");
+        assertFalse(iz.referenceExpression(exp));
     }
 
     public void testEqualsOperator() throws Exception {
-
+        PsiJavaToken t1 = ((PsiBinaryExpression)createTestExpression("x == y")).getOperationSign();
+        assertTrue(iz.equalsOperator(t1.getTokenType()));
+        PsiJavaToken t2 = ((PsiBinaryExpression)createTestExpression("x != y")).getOperationSign();
+        assertFalse(iz.equalsOperator(t2.getTokenType()));
+        PsiJavaToken t3 = ((PsiBinaryExpression)createTestExpression("x >= y")).getOperationSign();
+        assertFalse(iz.equalsOperator(t3.getTokenType()));
+        PsiJavaToken t4 = ((PsiBinaryExpression)createTestExpression("x + y")).getOperationSign();
+        assertFalse(iz.equalsOperator(t4.getTokenType()));
     }
 
     public void testNotEqualsOperator() throws Exception {
-
+        PsiJavaToken t1 = ((PsiBinaryExpression)createTestExpression("x != y")).getOperationSign();
+        assertTrue(iz.notEqualsOperator(t1.getTokenType()));
+        PsiJavaToken t2 = ((PsiBinaryExpression)createTestExpression("x == y")).getOperationSign();
+        assertFalse(iz.notEqualsOperator(t2.getTokenType()));
+        PsiJavaToken t3 = ((PsiBinaryExpression)createTestExpression("x >= y")).getOperationSign();
+        assertFalse(iz.notEqualsOperator(t3.getTokenType()));
+        PsiJavaToken t4 = ((PsiBinaryExpression)createTestExpression("x + y")).getOperationSign();
+        assertFalse(iz.notEqualsOperator(t4.getTokenType()));
     }
 
     public void testLiteral() throws Exception {
@@ -186,39 +207,94 @@ public class izTest extends TipperTest {
     }
 
     public void testVoid$() throws Exception {
-
+        PsiMethod m1 = createTestMethodFromString("public static void method(int x){}");
+        assertTrue(iz.void$(m1));
+        PsiMethod m2 = createTestMethodFromString("protected void method(){}");
+        assertTrue(iz.void$(m2));
+        PsiMethod m3 = createTestMethodFromString("public static boolean method(){return true;}");
+        assertFalse(iz.void$(m3));
     }
 
     public void testPublic$() throws Exception {
-
+        PsiMethod m1 = createTestMethodFromString("public static void method(int x){}");
+        assertTrue(iz.public$(m1));
+        PsiMethod m2 = createTestMethodFromString("protected void method(){}");
+        assertFalse(iz.public$(m2));
+        PsiMethod m3 = createTestMethodFromString("private static boolean method(){return true;}");
+        assertFalse(iz.public$(m3));
+        PsiMethod m4 = createTestMethodFromString("void method(){}");
+        assertFalse(iz.public$(m4));
     }
 
     public void testMain() throws Exception {
-
+        PsiMethod m1 = createTestMethodFromString("public static void main(String [] args){}");
+        assertTrue(iz.main(m1));
+        PsiMethod m2 = createTestMethodFromString("public static void method(String [] args){}");
+        assertFalse(iz.main(m2));
+        PsiMethod m3 = createTestMethodFromString("private static void main(String [] args){}");
+        assertFalse(iz.main(m3));
+        PsiMethod m4 = createTestMethodFromString("protected static void main(String [] args){}");
+        assertFalse(iz.main(m4));
+        PsiMethod m5 = createTestMethodFromString("public static void main(String [] arg){}");
+        assertFalse(iz.main(m5));
+        PsiMethod m6 = createTestMethodFromString("public void main(String [] args){}");
+        assertFalse(iz.main(m6));
     }
 
     public void testReturnStatement() throws Exception {
+        PsiStatement rt1 = createTestStatementFromString("return x");
+        assertTrue(iz.returnStatement(rt1));
+        PsiStatement rt2 = createTestStatementFromString("return x.y");
+        assertTrue(iz.returnStatement(rt2));
+        PsiStatement rt3 = createTestStatementFromString("return x == null ? y : x");
+        assertTrue(iz.returnStatement(rt3));
+        PsiStatement s = createTestStatementFromString("int x;");
+        assertFalse(iz.returnStatement(s));
 
     }
 
     public void testType() throws Exception {
+        PsiElement te1 = createTestTypeElementFromString("int");
+        assertTrue(iz.type(te1));
+        PsiElement te2 = createTestTypeElementFromString("Integer");
+        assertTrue(iz.type(te2));
+        PsiElement te3 = createTestTypeElementFromString("Object");
+        assertTrue(iz.type(te3));
+        PsiElement te4 = createTestTypeElementFromString("List<T>");
+        assertTrue(iz.type(te4));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.type(e));
 
     }
 
-    public void testMethodInvocation() throws Exception {
-
-    }
 
     public void testExpressionStatement() throws Exception {
-
+        PsiStatement s1 = createTestStatementFromString("2+3");
+        assertTrue(iz.expressionStatement(s1));
+        PsiStatement s2 = createTestStatementFromString("true");
+        assertTrue(iz.expressionStatement(s2));
+        PsiStatement s3 = createTestStatementFromString("int x = 2+3");
+        assertFalse(iz.expressionStatement(s3));
     }
 
     public void testIdentifier() throws Exception {
-
+        PsiIdentifier id1 = createTestIdentifierFromString("x");
+        assertTrue(iz.identifier(id1));
+        PsiIdentifier id2 = createTestIdentifierFromString("_");
+        assertTrue(iz.identifier(id2));
+        PsiIdentifier id3 = createTestIdentifierFromString("$");
+        assertTrue(iz.identifier(id3));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.identifier(e));
     }
 
     public void testConditionalExpression() throws Exception {
-
+        PsiConditionalExpression c1= createTestCondtionalExpression("x == null" , "x = true" , "null");
+        assertTrue(iz.conditionalExpression(c1));
+        PsiConditionalExpression c2= createTestCondtionalExpression("x != null" , "x = true" ,null);
+        assertTrue(iz.conditionalExpression(c2));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.identifier(e));
     }
 
     public void testNullExpression() throws Exception {
