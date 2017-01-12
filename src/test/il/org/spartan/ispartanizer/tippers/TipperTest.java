@@ -60,6 +60,14 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createMethodFromText(s, getTestFile());
     }
 
+    protected PsiEnumConstant createTestEnumFromString(String s) {
+        return getTestFactory().createEnumConstantFromText(s,getTestFile());
+    }
+
+    protected PsiField createTestFieldDeclarationFromString(String s) {
+        return getTestFactory().createFieldFromText(s,getTestFile());
+    }
+
     protected PsiCodeBlock createTestCodeBlockFromString(String s) {
         return getTestFactory().createCodeBlockFromText(s, getTestFile());
     }
