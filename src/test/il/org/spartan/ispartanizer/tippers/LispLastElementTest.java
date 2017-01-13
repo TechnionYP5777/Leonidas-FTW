@@ -9,16 +9,16 @@ import junit.framework.TestCase;
  * @since 12/01/2017.
  */
 public class LispLastElementTest extends TipperTest {
-    public void testCanTip1() {
+    public void testCanTipLegal() {
         assertEquals(true, new LispLastElement().canTip(createTestExpressionFromString("l.get(l.size()-1)")));
     }
 
-    public void testCanTip2() {
-
+    public void testCanTipIllegal1() {
+        assertEquals(false, new LispLastElement().canTip(createTestExpressionFromString("x.get(y.size()-1)")));
     }
 
-    public void testCanTip3() {
-
+    public void testCanTipIllegal2() {
+        assertEquals(false, new LispLastElement().canTip(createTestExpressionFromString("x = l.get(l.size()-1)")));
     }
 
     public void testCreateReplacement1() {
