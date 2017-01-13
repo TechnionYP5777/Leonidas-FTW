@@ -30,9 +30,9 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
         }
 
         //holds $x
-        PsiReferenceExpression[] innerReference = PsiTreeUtil.getChildrenOfType(az.methodInvocation(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiReferenceExpression.class);
+        PsiReferenceExpression[] innerReference = PsiTreeUtil.getChildrenOfType(az.methodCallExpression(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiReferenceExpression.class);
         //holds "size"
-        PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(az.methodInvocation(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
+        PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(az.methodCallExpression(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
         // checks that the left operand of the binary expression is $x.size
         if (innerIdentifier == null || innerReference == null || !outterReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")) {
             return false;
@@ -44,7 +44,7 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
 
     @Override
     public boolean canTip(PsiElement e) {
-        return iz.methodCallExpression(e) && canTip(az.methodInvocation(e));
+        return iz.methodCallExpression(e) && canTip(az.methodCallExpression(e));
     }
 
     @Override

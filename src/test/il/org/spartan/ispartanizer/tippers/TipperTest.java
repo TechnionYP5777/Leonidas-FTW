@@ -47,6 +47,10 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createInterface(s);
     }
 
+    protected PsiBlockStatement createTestBlockStatementFromString(String s) {
+        return (PsiBlockStatement) getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
     /**
      * doesn't work if there are several classes inside each other.
      *

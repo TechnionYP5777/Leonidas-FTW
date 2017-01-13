@@ -35,7 +35,10 @@ public class izTest extends TipperTest {
     }
 
     public void testBlockStatement() throws Exception {
-
+        PsiElement b = createTestBlockStatementFromString("{ int x = 5; }");
+        assertTrue(iz.blockStatement(b));
+        PsiElement s = createTestStatementFromString("int x = 5;");
+        assertFalse(iz.blockStatement(s));
     }
 
     public void testBinaryExpression() throws Exception {
