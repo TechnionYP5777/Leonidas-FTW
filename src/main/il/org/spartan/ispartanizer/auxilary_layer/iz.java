@@ -232,9 +232,16 @@ public enum iz {
         return typeCheck(PsiSwitchStatement.class, e);
     }
 
-    //TODO @AnnaBel7 add every other enclosing statement.
+    public static boolean loopStatement(PsiElement e) {
+        return typeCheck(PsiLoopStatement.class, e);
+    }
+
+    public static boolean tryStatement(PsiElement e) {
+        return typeCheck(PsiTryStatement.class, e);
+    }
+
     public static boolean enclosingStatement(PsiElement e) {
-        return iz.ifStatement(e) || iz.forStatement(e) || whileStatement(e) || switchStatement(e) || forEachStatement(e);
+        return ifStatement(e) || switchStatement(e) || loopStatement(e) || tryStatement(e);
     }
 
     public static boolean synchronized¢(final PsiMember ¢) {

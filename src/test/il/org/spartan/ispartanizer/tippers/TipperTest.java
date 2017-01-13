@@ -74,15 +74,15 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiDeclarationStatement createTestEnumDecFromString(String s) {
-        return (PsiDeclarationStatement) getTestFactory().createStatementFromText(s,getTestFile());
+        return (PsiDeclarationStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
     protected PsiAnnotation createTestAnnotationFromString(String s) {
-        return getTestFactory().createAnnotationFromText(s,getTestFile());
+        return getTestFactory().createAnnotationFromText(s, getTestFile());
     }
 
     protected PsiType createTestTypeFromString(String s) {
-        return getTestFactory().createTypeElementFromText(s,getTestFile()).getType();
+        return getTestFactory().createTypeElementFromText(s, getTestFile()).getType();
     }
 
     protected PsiField createTestFieldDeclarationFromString(String s) {
@@ -102,19 +102,19 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiComment createTestCommentFromString(String s) {
-        return getTestFactory().createCommentFromText(s,getTestFile());
+        return getTestFactory().createCommentFromText(s, getTestFile());
     }
 
     protected PsiWhileStatement createTestWhileStatementFromString(String s) {
-        return (PsiWhileStatement) getTestFactory().createStatementFromText(s,getTestFile());
+        return (PsiWhileStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
     protected PsiDoWhileStatement createTestDoWhileStatementFromString(String s) {
-        return (PsiDoWhileStatement) getTestFactory().createStatementFromText(s,getTestFile());
+        return (PsiDoWhileStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
     protected PsiSwitchStatement createTestSwitchStatementFromString(String s) {
-        return (PsiSwitchStatement) getTestFactory().createStatementFromText(s,getTestFile());
+        return (PsiSwitchStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
     protected PsiForStatement createTestForStatementFromString(String s) {
@@ -191,12 +191,20 @@ public abstract class TipperTest extends PsiTestCase {
                 .createExpressionFromText(expression, getTestFile());
     }
 
+    protected PsiTryStatement createTestTryStatement(String try$, String catch$, String do$) {
+        return (PsiTryStatement) getTestFactory().createStatementFromText("try {" + try$ + "} catch(" + catch$ + "){" + do$ + "}", null);
+    }
+
+    protected PsiTryStatement createTestTryStatement(String try$, String catch$, String do$, String finally$) {
+        return (PsiTryStatement) getTestFactory().createStatementFromText("try {" + try$ + "} catch(" + catch$ + "){" + do$ + "} finally {" + finally$ + "}", null);
+    }
+
     protected boolean equalsByText(PsiElement e1, PsiElement e2) {
         return (e1 == null && e2 == null) || (e1 != null && e2 != null && e1.getText().equals(e2.getText()));
     }
 
     protected void assertEqualsByText(PsiElement e1, PsiElement e2) {
-        if(e1 == null && e2 == null){
+        if (e1 == null && e2 == null) {
             return;
         }
 
