@@ -62,7 +62,6 @@ public enum iz {
         return typeCheck(PsiEnumConstantImpl.class, element);
     }
 
-    //TODO: Maybe redundant?
     public static boolean fieldDeclaration(PsiElement element) {
         return typeCheck(PsiFieldImpl.class, element);
     }
@@ -106,12 +105,6 @@ public enum iz {
 
     public static boolean type(PsiElement element) {
         return typeCheck(PsiTypeElementImpl.class, element);
-    }
-
-
-    //TODO: DUPLICATED
-    public static boolean methodInvocation(PsiElement element) {
-        return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }
 
     public static boolean expressionStatement(PsiElement element) {
@@ -172,11 +165,6 @@ public enum iz {
 
     public static boolean javaToken(PsiElement element) {
         return typeCheck(PsiJavaToken.class, element);
-    }
-
-    //TODO: duplicated!
-    public static boolean MethodCallExpression(PsiExpression element) {
-        return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }
 
     public static boolean expression(PsiElement element) {
