@@ -59,7 +59,8 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     /**
-     * Retrieving the "from" tree. This method should only be called
+     * Retrieving the "from" tree. This method should only be called after
+     * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
      *
      * @return the "from" tree
      */
@@ -70,8 +71,10 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     /**
-     * TODO @orenafek please comment
-     * @return
+     * Retrieving the "to" tree. This method should only be called after
+     * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
+     *
+     * @return the "to" tree
      */
     @Override
     public PsiElement getToPsiTree() {
