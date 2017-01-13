@@ -219,7 +219,7 @@ public enum iz {
                                 sn.equals(az.methodCallExpression(element).getMethodExpression().getText()));
     }
 
-    //TODO: ASK WHO DID THIS!
+
     public static boolean documentedElement(PsiElement e) {
         return typeCheck(PsiJavaDocumentedElement.class, e);
     }
@@ -246,7 +246,7 @@ public enum iz {
 
     //TODO @AnnaBel7 add every other enclosing statement.
     public static boolean enclosingStatement(PsiElement e) {
-        return iz.ifStatement(e) || iz.forStatement(e) || whileStatement(e) || switchStatement(e);
+        return iz.ifStatement(e) || iz.forStatement(e) || whileStatement(e) || switchStatement(e) || forEachStatement(e);
     }
 
     public static boolean synchronized¢(final PsiMember ¢) {

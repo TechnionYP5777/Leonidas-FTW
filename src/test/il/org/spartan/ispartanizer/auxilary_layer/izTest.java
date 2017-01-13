@@ -1,5 +1,6 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
+import com.intellij.diagnostic.Diagnostic;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
@@ -385,6 +386,80 @@ public class izTest extends TipperTest {
                 " */\n" +
                 "public class Main {}");
         assertTrue(iz.documentedElement(e));
+        PsiElement e2 = createTestClassFromString("public class Main {}");
+        assertTrue(iz.documentedElement(e2));
+        PsiMethod m =  createTestMethodFromString("public int getX(){return x;}");
+        assertTrue(iz.documentedElement(m));
+        PsiMethodCallExpression mc = createTestMethodCallExpression("foo","a");
+        assertFalse(iz.documentedElement(mc));
     }
+
+    public void testjavaDoc() throws Exception{
+        PsiElement e = createTestDocCommentFromString("/**\n" +
+                " * This is a main class JavaDoc\n" +
+                " */\n");
+        assertTrue(iz.javadoc(e));
+        PsiElement e2 = createTestCommentFromString("//comment");
+        assertFalse(iz.javadoc(e2));
+        PsiElement e3 = createTestCommentFromString("/*comment*/");
+        assertFalse(iz.javadoc(e3));
+    }
+
+    public void testWhileStatement() throws Exception{
+        PsiElement e1 = createTestWhileStatementFromString("while(true){}");
+        assertTrue(iz.whileStatement(e1));
+        PsiElement e2 = createTestDoWhileStatementFromString("do{}while(true)");
+        assertFalse(iz.whileStatement(e2));
+        PsiElement e3 = createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}");
+        assertFalse(iz.whileStatement(e3));
+    }
+
+    public void testSwitchStatement() throws Exception{
+        PsiElement e1 = createTestSwitchStatementFromString("switch(x){ case 1: break; case 2: break;}");
+        assertTrue(iz.switchStatement(e1));
+        PsiElement e2 = createTestSwitchStatementFromString("switch(x){ case 1: break; case 2: break; default: continue;}");
+        assertTrue(iz.switchStatement(e2));
+        PsiElement e3 = createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}");
+        assertFalse(iz.switchStatement(e3));
+
+    }
+
+    public void testEnclosingStatement() throws Exception{
+        PsiElement e1 = createTestSwitchStatementFromString("switch(x){ case 1: break; case 2: break;}");
+        assertTrue(iz.enclosingStatement(e1));
+        PsiElement e2 = createTestWhileStatementFromString("while(true){}");
+        assertTrue(iz.enclosingStatement(e2));
+        PsiElement e3= createTestForStatementFromString("for(int i =0 ; i< 10 ; i++){}");
+        assertTrue(iz.enclosingStatement(e3));
+        PsiElement e4= createTestForeachStatementFromString("for(int i : list){}");
+        assertTrue(iz.enclosingStatement(e4));
+        PsiElement e5 = createTestIfStatement("x > 2", "break;");
+        assertTrue(iz.enclosingStatement(e5));
+        PsiElement e6 = createTestStatementFromString("int x;");
+        assertFalse(iz.enclosingStatement(e6));
+    }
+
+    public void testSynchronized() throws Exception{
+        PsiMethod e1 = createTestMethodFromString("synchronized public int getX(){return x;}");
+        assertTrue(iz.synchronized¢(e1));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.synchronized¢(e2));
+    }
+
+    public void testNative() throws Exception{
+        PsiMethod e1 = createTestMethodFromString("native public int getX(){return x;}");
+        assertTrue(iz.native¢(e1));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.native¢(e2));
+    }
+
+    public void testDefault() throws Exception{
+        PsiMethod e1 = createTestMethodFromString("default public int getX(){return x;}");
+        assertTrue(iz.default¢(e1));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.default¢(e2));
+    }
+
+
 
 }

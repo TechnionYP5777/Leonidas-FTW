@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.*;
+import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
@@ -74,6 +75,26 @@ public abstract class TipperTest extends PsiTestCase {
 
     protected PsiIdentifier createTestIdentifierFromString(String s) {
         return getTestFactory().createIdentifier(s);
+    }
+
+    protected PsiDocComment createTestDocCommentFromString(String s) {
+        return getTestFactory().createDocCommentFromText(s);
+    }
+
+    protected PsiComment createTestCommentFromString(String s) {
+        return getTestFactory().createCommentFromText(s,getTestFile());
+    }
+
+    protected PsiWhileStatement createTestWhileStatementFromString(String s) {
+        return (PsiWhileStatement) getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
+    protected PsiDoWhileStatement createTestDoWhileStatementFromString(String s) {
+        return (PsiDoWhileStatement) getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
+    protected PsiSwitchStatement createTestSwitchStatementFromString(String s) {
+        return (PsiSwitchStatement) getTestFactory().createStatementFromText(s,getTestFile());
     }
 
     protected PsiForStatement createTestForStatementFromString(String s) {
