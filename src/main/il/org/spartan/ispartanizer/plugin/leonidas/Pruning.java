@@ -49,7 +49,7 @@ public class Pruning {
                 }
                 PsiElement prev = exp;
                 PsiElement next = exp.getParent();
-                while (iz.expression(next)) {
+                while (iz.expression(next) && next.getText().startsWith("booleanExpression")) {
                     prev = next;
                     next = next.getParent();
                 }

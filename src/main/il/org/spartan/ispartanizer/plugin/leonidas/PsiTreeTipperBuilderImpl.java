@@ -60,9 +60,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     /**
      * Retrieving the "from" tree. This method should only be called after
-     * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
      *
      * @return the "from" tree
+     * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
      */
     @Override
     public PsiElement getFromPsiTree() {
@@ -72,9 +72,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     /**
      * Retrieving the "to" tree. This method should only be called after
-     * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
      *
      * @return the "to" tree
+     * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
      */
     @Override
     public PsiElement getToPsiTree() {
@@ -124,13 +124,24 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     //TODO: should be changed upon adding the name to the annotations.
     private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
         Wrapper<PsiElement> result = new Wrapper<>();
+        Wrapper<Boolean> stop = new Wrapper<>(false);
         method.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitCodeBlock(PsiCodeBlock block) {
-                result.set(Arrays.stream(block.getChildren())
-                        .filter(e -> iz.ofType(e, rootElementType)).
-                                collect(Collectors.toList()).get(0));
+            public void visitElement(PsiElement element) {
+                super.visitElement(element);
+                if (!stop.get() && iz.ofType(element, rootElementType)) {
+                    result.set(element);
+                    stop.set(true);
+                }
             }
+
+            /*@Override
+            public void visitCodeBlock(PsiCodeBlock block) {
+                List<PsiElement> candidates = Arrays.stream(block.getChildren())
+                        .filter(e -> iz.ofType(e, rootElementType)).
+                                collect(Collectors.toList());
+                result.set(!candidates.isEmpty() ? candidates.get(0) : null);
+            }*/
         });
 
         return result.get();

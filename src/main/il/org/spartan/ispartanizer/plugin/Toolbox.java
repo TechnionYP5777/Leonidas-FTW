@@ -72,7 +72,10 @@ public enum Toolbox {
         }
         tipperMap.get(type.of(element)).stream() //
                 .filter(tipper -> tipper.canTip(element)) //
-                .forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project)));
+                .findFirst()
+                .get().tip(element).go(new PsiRewrite().psiFile(psiFile).project(project));
+
+        //.forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project)));
         return this;
     }
 

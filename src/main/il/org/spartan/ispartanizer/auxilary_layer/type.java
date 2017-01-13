@@ -76,6 +76,12 @@ public class type {
                 super.visitIfStatement(statement);
                 myClass.set(PsiIfStatement.class);
             }
+
+            @Override
+            public void visitWhileStatement(PsiWhileStatement statement) {
+                super.visitWhileStatement(statement);
+                myClass.set(PsiWhileStatement.class);
+            }
         });
         return myClass.get();
     }

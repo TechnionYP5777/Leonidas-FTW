@@ -29,18 +29,31 @@ public abstract class GenericPsiElementStub {
     }
 
     /**
-     * method stub representing a statement for leonidas tippers
+     * method stub representing an identifier for leonidas tippers
      *
-     * @param order the serial no to distinct between several integers in the same tipper
-     * @return
+     * @param order the serial no to distinct between several identifiers in the same tipper
+     * @return stub object
      */
-    protected final Integer integer(int order) {
-        return 0;
+    protected final Object identifier(int order) {
+        return new Object();
+    }
+
+    /**
+     * method stub representing an array identifier for leonidas tippers
+     *
+     * @param order the serial no to distinct between several array identifiers in the same tipper
+     * @return stub array
+     */
+
+    protected final Object[] arrayIdentifier(int order) {
+        return new Object[0];
     }
 
     public enum StubName {
         BOOLEAN_EXPRESSION("booleanExpression"),
-        STATEMENT("statement");
+        STATEMENT("statement"),
+        IDENTIFIER("identifier"),
+        ARRAY_IDENTIFIER("arrayIdentifier");
 
         private String stubName;
 
