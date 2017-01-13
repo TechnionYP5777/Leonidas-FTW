@@ -1,10 +1,14 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
+
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
+
 
 
 /**
@@ -385,6 +389,215 @@ public class izTest extends TipperTest {
                 " */\n" +
                 "public class Main {}");
         assertTrue(iz.documentedElement(e));
+        PsiElement e2 = createTestClassFromString("public class Main {}");
+        assertTrue(iz.documentedElement(e2));
+        PsiMethod m =  createTestMethodFromString("public int getX(){return x;}");
+        assertTrue(iz.documentedElement(m));
+        PsiMethodCallExpression mc = createTestMethodCallExpression("foo","a");
+        assertFalse(iz.documentedElement(mc));
+    }
+
+    public void testjavaDoc() throws Exception{
+        PsiElement e = createTestDocCommentFromString("/**\n" +
+                " * This is a main class JavaDoc\n" +
+                " */\n");
+        assertTrue(iz.javadoc(e));
+        PsiElement e2 = createTestCommentFromString("//comment");
+        assertFalse(iz.javadoc(e2));
+        PsiElement e3 = createTestCommentFromString("/*comment*/");
+        assertFalse(iz.javadoc(e3));
+    }
+
+    public void testWhileStatement() throws Exception{
+        PsiElement e1 = createTestWhileStatementFromString("while(true){}");
+        assertTrue(iz.whileStatement(e1));
+        PsiElement e2 = createTestDoWhileStatementFromString("do{}while(true)");
+        assertFalse(iz.whileStatement(e2));
+        PsiElement e3 = createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}");
+        assertFalse(iz.whileStatement(e3));
+    }
+
+    public void testSwitchStatement() throws Exception{
+        PsiElement e1 = createTestSwitchStatementFromString("switch(x){ case 1: break; case 2: break;}");
+        assertTrue(iz.switchStatement(e1));
+        PsiElement e2 = createTestSwitchStatementFromString("switch(x){ case 1: break; case 2: break; default: continue;}");
+        assertTrue(iz.switchStatement(e2));
+        PsiElement e3 = createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}");
+        assertFalse(iz.switchStatement(e3));
+
+    }
+
+    public void testEnclosingStatement() throws Exception{
+        PsiElement e1 = createTestSwitchStatementFromString("switch(x){ case 1: break; case 2: break;}");
+        assertTrue(iz.enclosingStatement(e1));
+        PsiElement e2 = createTestWhileStatementFromString("while(true){}");
+        assertTrue(iz.enclosingStatement(e2));
+        PsiElement e3= createTestForStatementFromString("for(int i =0 ; i< 10 ; i++){}");
+        assertTrue(iz.enclosingStatement(e3));
+        PsiElement e4= createTestForeachStatementFromString("for(int i : list){}");
+        assertTrue(iz.enclosingStatement(e4));
+        PsiElement e5 = createTestIfStatement("x > 2", "break;");
+        assertTrue(iz.enclosingStatement(e5));
+        PsiElement e6 = createTestStatementFromString("int x;");
+        assertFalse(iz.enclosingStatement(e6));
+    }
+
+    public void testSynchronized() throws Exception{
+        PsiMethod e1 = createTestMethodFromString("synchronized public int getX(){return x;}");
+        assertTrue(iz.synchronized¢(e1));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.synchronized¢(e2));
+    }
+
+    public void testNative() throws Exception{
+        PsiMethod e1 = createTestMethodFromString("native public int getX(){return x;}");
+        assertTrue(iz.native¢(e1));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.native¢(e2));
+    }
+
+    public void testFinalMember() throws Exception{
+        PsiMember e1 = createTestFieldDeclarationFromString("final private int x");
+        assertTrue(iz.final¢(e1));
+        PsiMember e2 = createTestFieldDeclarationFromString("private int x");
+        assertFalse(iz.final¢(e2));
+    }
+
+    public void testFinalVariable() throws Exception{
+        PsiVariable e1 = createTestFieldDeclarationFromString("final private int x");
+        assertTrue(iz.final¢(e1));
+        PsiVariable e2 = createTestFieldDeclarationFromString("private int x");
+        assertFalse(iz.final¢(e2));
+    }
+
+    public void testDefault() throws Exception{
+        PsiMethod e1 = createTestMethodFromString("default public int getX(){return x;}");
+        assertTrue(iz.default¢(e1));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.default¢(e2));
+    }
+
+    public void testAnnotation() throws Exception{
+        PsiElement e1 = createTestAnnotationFromString("@annotation");
+        assertTrue(iz.annotation(e1));
+        PsiMethod e2 = createTestMethodFromString("default public int getX(){@Wrong return x;}");
+        assertFalse(iz.annotation(e2));
+    }
+
+    public void testArrayInitializer() throws Exception{
+        PsiElement e1 = createTestExpression("{0,1,2}");
+        assertTrue(iz.arrayInitializer(e1));
+        PsiElement e2 = createTestExpression("{0}");
+        assertTrue(iz.arrayInitializer(e2));
+        PsiElement e3 = createTestExpression("{}");
+        assertTrue(iz.arrayInitializer(e3));
+        PsiElement e4 = createTestExpression("0");
+        assertFalse(iz.arrayInitializer(e4));
+    }
+
+    public void testAssignmentExpression() throws Exception{
+        PsiElement e1 = createTestExpression("x=5");
+        assertTrue(iz.assignment(e1));
+        PsiElement e2 = createTestExpression("x=++y");
+        assertTrue(iz.assignment(e2));
+        PsiElement e3 = createTestExpression("x>=5");
+        assertFalse(iz.assignment(e3));
+    }
+
+    public void testBreakStatement() throws Exception{
+        PsiElement e1 = createTestStatementFromString("break;");
+        assertTrue(iz.breakStatement(e1));
+        PsiElement e2 = createTestStatementFromString("continue;");
+        assertFalse(iz.breakStatement(e2));
+        PsiElement e3 = createTestStatementFromString("i++;");
+        assertFalse(iz.breakStatement(e3));
+    }
+
+    public void testCastExpression() throws Exception{
+        PsiElement e1 = createTestExpression("(double)x");
+        assertTrue(iz.castExpression(e1));
+        PsiElement e2 = createTestExpression("(Object)x");
+        assertTrue(iz.castExpression(e2));
+        PsiElement e3 = createTestExpression("(2 * x) * x");
+        assertFalse(iz.castExpression(e3));
+    }
+
+    public void testClassInstanceCreation() throws Exception{
+        PsiElement e1 = createTestExpression("new ArrayList()");
+        assertTrue(iz.classInstanceCreation(e1));
+    }
+
+    public void testBooleanLiteral() throws Exception{
+        PsiElement e1 = createTestExpression("true");
+        assertTrue(iz.booleanLiteral(e1));
+        PsiElement e2 = createTestExpression("false");
+        assertTrue(iz.booleanLiteral(e2));
+        PsiElement e3 = createTestExpression("null");
+        assertFalse(iz.booleanLiteral(e3));
+    }
+
+    public void testBooleanType() throws Exception{
+        PsiType e1 = createTestTypeFromString("boolean");
+        assertTrue(iz.booleanType(e1));
+        PsiType e3 = createTestTypeFromString("int");
+        assertFalse(iz.booleanType(e3));
+    }
+
+    public void testConditionalAnd() throws Exception{
+        PsiBinaryExpression e1 = (PsiBinaryExpression)createTestExpression("x && y");
+        assertTrue(iz.conditionalAnd(e1));
+        PsiBinaryExpression e2 = (PsiBinaryExpression)createTestExpression("x || y");
+        assertFalse(iz.conditionalAnd(e2));
+    }
+
+    public void testConditionalOr() throws Exception{
+        PsiBinaryExpression e1 = (PsiBinaryExpression)createTestExpression("x || y");
+        assertTrue(iz.conditionalOr(e1));
+        PsiBinaryExpression e2 = (PsiBinaryExpression)createTestExpression("x && y");
+        assertFalse(iz.conditionalOr(e2));
+    }
+
+    public void testEmptyStatement() throws Exception{
+        PsiElement e1 = createTestStatementFromString(";");
+        assertTrue(iz.emptyStatement(e1));
+        PsiElement e3 = createTestStatementFromString("int x;");
+        assertFalse(iz.emptyStatement(e3));
+    }
+
+    public void testEnumDeclaration() throws Exception{
+        PsiElement e1 = createEnumClassFromString("Day");
+        assertTrue(iz.enumDeclaration(e1));
+        PsiElement e2 = createTestClassFromString("public class Day{}");
+        assertFalse(iz.enumDeclaration(e2));
+    }
+
+    public void testInterface() throws Exception{
+        PsiElement e1 = createInterfaceClassFromString("A");
+        assertTrue(iz.interface¢(e1));
+        PsiElement e2 = createEnumClassFromString("A");
+        assertFalse(iz.interface¢(e2));
+    }
+
+    public void testStubMethodCall() throws Exception{
+        PsiElement e1 = createTestMethodCallExpression("booleanExpression");
+        assertTrue(iz.stubMethodCall(e1));
+        PsiElement e2 = createTestMethodCallExpression("foo");
+        assertFalse(iz.stubMethodCall(e2));
+    }
+
+    public void testConforms() throws Exception{
+        PsiElement e1 = (PsiBinaryExpression)createTestExpression("1+5");
+        PsiElement e2 = (PsiBinaryExpression)createTestExpression("1 > 5");
+        assertTrue(iz.conforms(e1,e2));
+        GenericPsiExpression ge = new GenericPsiExpression(PsiType.BOOLEAN,e2);
+        assertTrue(iz.conforms(e1,ge));
+        assertFalse(iz.conforms(ge,e1));
+        PsiElement e3 = createTestStatementFromString("return x");
+        PsiElement e4 = createTestStatementFromString("return y");
+        assertTrue(iz.conforms(e3,e4));
+        GenericPsiStatement gs = new GenericPsiStatement(e4);
+        assertTrue(iz.conforms(e3,gs));
+        assertFalse(iz.conforms(gs,e3));
     }
 
 }

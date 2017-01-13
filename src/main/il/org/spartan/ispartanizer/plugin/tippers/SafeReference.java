@@ -66,7 +66,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
                 (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText()));
 
-        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getElseExpression()) &&
+        boolean cond3 = cond1 && iz.methodCallExpression(az.conditionalExpression(e).getElseExpression()) &&
                 (az.methodCallExpression(az.conditionalExpression(e).getElseExpression()).getMethodExpression().getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText())) &&
                 az.methodCallExpression(az.conditionalExpression(e).getElseExpression()).getArgumentList().getExpressions().length == 0;
@@ -85,7 +85,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
                 (az.referenceExpression(az.conditionalExpression(e).getElseExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText()));
 
-        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getElseExpression()) &&
+        boolean cond3 = cond1 && iz.methodCallExpression(az.conditionalExpression(e).getElseExpression()) &&
                 (az.methodCallExpression(az.conditionalExpression(e).getElseExpression()).getMethodExpression().getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText())) &&
                 az.methodCallExpression(az.conditionalExpression(e).getElseExpression()).getArgumentList().getExpressions().length == 0;
@@ -104,7 +104,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
                 (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText()));
 
-        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getThenExpression()) &&
+        boolean cond3 = cond1 && iz.methodCallExpression(az.conditionalExpression(e).getThenExpression()) &&
                 (az.methodCallExpression(az.conditionalExpression(e).getThenExpression()).getMethodExpression().getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getLOperand().getText())) &&
                 az.methodCallExpression(az.conditionalExpression(e).getThenExpression()).getArgumentList().getExpressions().length == 0;
@@ -123,7 +123,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
                 (az.referenceExpression(az.conditionalExpression(e).getThenExpression()).getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText()));
 
-        boolean cond3 = cond1 && iz.MethodCallExpression(az.conditionalExpression(e).getThenExpression()) &&
+        boolean cond3 = cond1 && iz.methodCallExpression(az.conditionalExpression(e).getThenExpression()) &&
                 (az.methodCallExpression(az.conditionalExpression(e).getThenExpression()).getMethodExpression().getQualifier().getText().equals(
                         az.binaryExpression(az.conditionalExpression(e).getCondition()).getROperand().getText())) &&
                 az.methodCallExpression(az.conditionalExpression(e).getThenExpression()).getArgumentList().getExpressions().length == 0;

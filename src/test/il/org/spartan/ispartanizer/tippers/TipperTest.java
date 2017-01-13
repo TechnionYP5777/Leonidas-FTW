@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.*;
+import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
@@ -38,6 +39,14 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createClassFromText(s, getTestFile());
     }
 
+    protected PsiClass createEnumClassFromString(String s) {
+        return getTestFactory().createEnum(s);
+    }
+
+    protected PsiClass createInterfaceClassFromString(String s) {
+        return getTestFactory().createInterface(s);
+    }
+
     /**
      * doesn't work if there are several classes inside each other.
      *
@@ -64,6 +73,18 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createEnumConstantFromText(s, getTestFile());
     }
 
+    protected PsiDeclarationStatement createTestEnumDecFromString(String s) {
+        return (PsiDeclarationStatement) getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
+    protected PsiAnnotation createTestAnnotationFromString(String s) {
+        return getTestFactory().createAnnotationFromText(s,getTestFile());
+    }
+
+    protected PsiType createTestTypeFromString(String s) {
+        return getTestFactory().createTypeElementFromText(s,getTestFile()).getType();
+    }
+
     protected PsiField createTestFieldDeclarationFromString(String s) {
         return getTestFactory().createFieldFromText(s, getTestFile());
     }
@@ -74,6 +95,26 @@ public abstract class TipperTest extends PsiTestCase {
 
     protected PsiIdentifier createTestIdentifierFromString(String s) {
         return getTestFactory().createIdentifier(s);
+    }
+
+    protected PsiDocComment createTestDocCommentFromString(String s) {
+        return getTestFactory().createDocCommentFromText(s);
+    }
+
+    protected PsiComment createTestCommentFromString(String s) {
+        return getTestFactory().createCommentFromText(s,getTestFile());
+    }
+
+    protected PsiWhileStatement createTestWhileStatementFromString(String s) {
+        return (PsiWhileStatement) getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
+    protected PsiDoWhileStatement createTestDoWhileStatementFromString(String s) {
+        return (PsiDoWhileStatement) getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
+    protected PsiSwitchStatement createTestSwitchStatementFromString(String s) {
+        return (PsiSwitchStatement) getTestFactory().createStatementFromText(s,getTestFile());
     }
 
     protected PsiForStatement createTestForStatementFromString(String s) {

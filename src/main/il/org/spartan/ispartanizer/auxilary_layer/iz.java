@@ -62,7 +62,6 @@ public enum iz {
         return typeCheck(PsiEnumConstantImpl.class, element);
     }
 
-    //TODO: Maybe redundant?
     public static boolean fieldDeclaration(PsiElement element) {
         return typeCheck(PsiFieldImpl.class, element);
     }
@@ -106,12 +105,6 @@ public enum iz {
 
     public static boolean type(PsiElement element) {
         return typeCheck(PsiTypeElementImpl.class, element);
-    }
-
-
-    //TODO: DUPLICATED
-    public static boolean methodInvocation(PsiElement element) {
-        return typeCheck(PsiMethodCallExpressionImpl.class, element);
     }
 
     public static boolean expressionStatement(PsiElement element) {
@@ -174,11 +167,6 @@ public enum iz {
         return typeCheck(PsiJavaToken.class, element);
     }
 
-    //TODO: duplicated!
-    public static boolean MethodCallExpression(PsiExpression element) {
-        return typeCheck(PsiMethodCallExpressionImpl.class, element);
-    }
-
     public static boolean expression(PsiElement element) {
         return typeCheck(PsiExpression.class, element);
     }
@@ -219,7 +207,7 @@ public enum iz {
                                 sn.equals(az.methodCallExpression(element).getMethodExpression().getText()));
     }
 
-    //TODO: ASK WHO DID THIS!
+
     public static boolean documentedElement(PsiElement e) {
         return typeCheck(PsiJavaDocumentedElement.class, e);
     }
@@ -246,7 +234,7 @@ public enum iz {
 
     //TODO @AnnaBel7 add every other enclosing statement.
     public static boolean enclosingStatement(PsiElement e) {
-        return iz.ifStatement(e) || iz.forStatement(e) || whileStatement(e) || switchStatement(e);
+        return iz.ifStatement(e) || iz.forStatement(e) || whileStatement(e) || switchStatement(e) || forEachStatement(e);
     }
 
     public static boolean synchronized¢(final PsiMember ¢) {
@@ -261,13 +249,6 @@ public enum iz {
         return (¢.getModifierList().hasModifierProperty(PsiModifier.DEFAULT));
     }
 
-    /**
-     * @param ¢
-     * @return whether the Element is a class, enum, interface or annotation type
-     */
-    public static boolean abstractTypeDeclaration(final PsiElement ¢) {
-        return typeCheck(PsiClass.class, ¢);
-    }
 
     public static boolean annotation(final PsiElement ¢) {
         return typeCheck(PsiAnnotation.class, ¢);
@@ -291,10 +272,6 @@ public enum iz {
         return typeCheck(PsiAssignmentExpression.class, ¢);
     }
 
-    public static boolean bodyDeclaration(final PsiElement ¢) {
-        return typeCheck(PsiMember.class, ¢);
-    }
-
     /**
      * Determine whether a node is a boolean literal
      *
@@ -303,7 +280,7 @@ public enum iz {
      * literal
      */
     public static boolean booleanLiteral(final PsiElement ¢) {
-        return typeCheck(PsiLiteral.class, ¢) && ((PsiLiteral) ¢).getValue() instanceof Boolean;
+        return typeCheck(PsiLiteralExpression.class, ¢) && ((PsiLiteralExpression) ¢).getValue() instanceof Boolean;
     }
 
     /**
@@ -342,7 +319,7 @@ public enum iz {
      * whose operator is AND
      */
     public static boolean conditionalAnd(final PsiBinaryExpression ¢) {
-        return ¢.getOperationSign() == JavaTokenType.AND;
+        return ¢.getOperationSign().getTokenType().equals(JavaTokenType.ANDAND);
     }
 
     /**
@@ -353,7 +330,7 @@ public enum iz {
      * whose operator is OR
      */
     public static boolean conditionalOr(final PsiBinaryExpression ¢) {
-        return ¢.getOperationSign() == JavaTokenType.OR;
+        return ¢.getOperationSign().getTokenType().equals(JavaTokenType.OROR);
     }
 
     /**
@@ -367,13 +344,6 @@ public enum iz {
         return typeCheck(PsiEmptyStatement.class, ¢);
     }
 
-    static boolean enhancedFor(final PsiElement ¢) {
-        return typeCheck(PsiForeachStatement.class, ¢);
-    }
-
-    static boolean enumConstantDeclaration(final PsiElement ¢) {
-        return typeCheck(PsiEnumConstant.class, ¢);
-    }
 
     static boolean enumDeclaration(final PsiElement ¢) {
         return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isEnum());
@@ -402,19 +372,6 @@ public enum iz {
      */
     static boolean final¢(final PsiVariable ¢) {
         return ¢ != null && ¢.getModifierList().hasModifierProperty(PsiModifier.FINAL);
-    }
-
-    /**
-     * @param ¢ JD
-     * @return <code><b>true</b></code> <em>iff</em>the given node is an infix
-     * expression or false otherwise
-     */
-    static boolean infix(final PsiElement ¢) {
-        return typeCheck(PsiBinaryExpression.class, ¢);
-    }
-
-    static boolean instanceofExpression(final PsiExpression ¢) {
-        return typeCheck(PsiInstanceOfExpression.class, ¢);
     }
 
     /**
