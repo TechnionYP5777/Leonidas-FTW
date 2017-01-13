@@ -5,6 +5,8 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 
@@ -574,6 +576,28 @@ public class izTest extends TipperTest {
         assertTrue(iz.interface¢(e1));
         PsiElement e2 = createEnumClassFromString("A");
         assertFalse(iz.interface¢(e2));
+    }
+
+    public void testStubMethodCall() throws Exception{
+        PsiElement e1 = createTestMethodCallExpression("booleanExpression");
+        assertTrue(iz.stubMethodCall(e1));
+        PsiElement e2 = createTestMethodCallExpression("foo");
+        assertFalse(iz.stubMethodCall(e2));
+    }
+
+    public void testConforms() throws Exception{
+        PsiElement e1 = (PsiBinaryExpression)createTestExpression("1+5");
+        PsiElement e2 = (PsiBinaryExpression)createTestExpression("1 > 5");
+        assertTrue(iz.conforms(e1,e2));
+        GenericPsiExpression ge = new GenericPsiExpression(PsiType.BOOLEAN,e2);
+        assertTrue(iz.conforms(e1,ge));
+        assertFalse(iz.conforms(ge,e1));
+        PsiElement e3 = createTestStatementFromString("return x");
+        PsiElement e4 = createTestStatementFromString("return y");
+        assertTrue(iz.conforms(e3,e4));
+        GenericPsiStatement gs = new GenericPsiStatement(e4);
+        assertTrue(iz.conforms(e3,gs));
+        assertFalse(iz.conforms(gs,e3));
     }
 
 }
