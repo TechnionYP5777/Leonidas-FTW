@@ -39,6 +39,14 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createClassFromText(s, getTestFile());
     }
 
+    protected PsiClass createEnumClassFromString(String s) {
+        return getTestFactory().createEnum(s);
+    }
+
+    protected PsiClass createInterfaceClassFromString(String s) {
+        return getTestFactory().createInterface(s);
+    }
+
     /**
      * doesn't work if there are several classes inside each other.
      *
@@ -63,6 +71,18 @@ public abstract class TipperTest extends PsiTestCase {
 
     protected PsiEnumConstant createTestEnumFromString(String s) {
         return getTestFactory().createEnumConstantFromText(s, getTestFile());
+    }
+
+    protected PsiDeclarationStatement createTestEnumDecFromString(String s) {
+        return (PsiDeclarationStatement) getTestFactory().createStatementFromText(s,getTestFile());
+    }
+
+    protected PsiAnnotation createTestAnnotationFromString(String s) {
+        return getTestFactory().createAnnotationFromText(s,getTestFile());
+    }
+
+    protected PsiType createTestTypeFromString(String s) {
+        return getTestFactory().createTypeElementFromText(s,getTestFile()).getType();
     }
 
     protected PsiField createTestFieldDeclarationFromString(String s) {
