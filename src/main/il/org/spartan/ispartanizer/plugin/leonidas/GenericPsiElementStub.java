@@ -28,6 +28,16 @@ public abstract class GenericPsiElementStub {
     protected final void statement(int order) {
     }
 
+    /**
+     * method stub representing a statement for leonidas tippers
+     *
+     * @param order the serial no to distinct between several integers in the same tipper
+     * @return
+     */
+    protected final Integer integer(int order) {
+        return 0;
+    }
+
     public enum StubName {
         BOOLEAN_EXPRESSION("booleanExpression"),
         STATEMENT("statement");

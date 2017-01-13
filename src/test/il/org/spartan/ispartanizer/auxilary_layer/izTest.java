@@ -331,9 +331,9 @@ public class izTest extends TipperTest {
     }
 
     public void testConditionalExpression() throws Exception {
-        PsiConditionalExpression c1= createTestCondtionalExpression("x == null" , "x = true" , "null");
+        PsiConditionalExpression c1= createTestConditionalExpression("x == null" , "x = true" , "null");
         assertTrue(iz.conditionalExpression(c1));
-        PsiConditionalExpression c2= createTestCondtionalExpression("x != null" , "x = true" ,null);
+        PsiConditionalExpression c2= createTestConditionalExpression("x != null" , "x = true" ,null);
         assertTrue(iz.conditionalExpression(c2));
         PsiElement e = createTestStatementFromString("int x;");
         assertFalse(iz.identifier(e));
@@ -375,7 +375,7 @@ public class izTest extends TipperTest {
         assertTrue(iz.ofType(ws,PsiWhiteSpaceImpl.class));
         PsiElement e1 = createTestExpression("x == y");
         assertTrue(iz.ofType(e1, PsiBinaryExpressionImpl.class));
-        PsiConditionalExpression c1= createTestCondtionalExpression("x == null" , "x = true" , "null");
+        PsiConditionalExpression c1= createTestConditionalExpression("x == null" , "x = true" , "null");
         assertTrue(iz.ofType(c1, PsiConditionalExpressionImpl.class));
     }
 

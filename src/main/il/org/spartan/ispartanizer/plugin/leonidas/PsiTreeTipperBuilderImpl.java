@@ -36,11 +36,11 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     /**
-     * TODO @orenafek please comment
+     * Build both the "from" and "to" trees from source code, including pruning.
      *
      * @param fileName - the file name of the Leonidas tipper to build.
-     * @return
-     * @throws IOException
+     * @return @link{this}
+     * @throws IOException in case the file could not be opened.
      */
     public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
@@ -59,9 +59,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     /**
-     * TODO @orenafek please comment
+     * Retrieving the "from" tree. This method should only be called
      *
-     * @return
+     * @return the "from" tree
      */
     @Override
     public PsiElement getFromPsiTree() {

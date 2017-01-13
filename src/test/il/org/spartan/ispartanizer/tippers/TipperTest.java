@@ -61,11 +61,11 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiEnumConstant createTestEnumFromString(String s) {
-        return getTestFactory().createEnumConstantFromText(s,getTestFile());
+        return getTestFactory().createEnumConstantFromText(s, getTestFile());
     }
 
     protected PsiField createTestFieldDeclarationFromString(String s) {
-        return getTestFactory().createFieldFromText(s,getTestFile());
+        return getTestFactory().createFieldFromText(s, getTestFile());
     }
 
     protected PsiTypeElement createTestTypeElementFromString(String s) {
@@ -77,17 +77,18 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiForStatement createTestForStatementFromString(String s) {
-        return (PsiForStatement)getTestFactory().createStatementFromText(s,getTestFile());
+        return (PsiForStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
     protected PsiForeachStatement createTestForeachStatementFromString(String s) {
-        return (PsiForeachStatement)getTestFactory().createStatementFromText(s,getTestFile());
+        return (PsiForeachStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
+
     protected PsiImportList createTestImportListFromString(String s) {
-        PsiFile file = createTestFileFromString(s+
+        PsiFile file = createTestFileFromString(s +
                 "public class A{}");
         PsiElement importList = file.getNavigationElement().getFirstChild();
-        return (PsiImportList)importList;
+        return (PsiImportList) importList;
     }
 
     protected PsiCodeBlock createTestCodeBlockFromString(String s) {
@@ -117,7 +118,7 @@ public abstract class TipperTest extends PsiTestCase {
                 .createStatementFromText("if (" + cond + ") {" + then + "} ", getTestFile());
     }
 
-    protected PsiConditionalExpression createTestCondtionalExpression(String cond, String then, String else$) {
+    protected PsiConditionalExpression createTestConditionalExpression(String cond, String then, String else$) {
         return (PsiConditionalExpression) getTestFactory()
                 .createExpressionFromText(cond + " ? " + then + " : " + else$, getTestFile());
     }
@@ -149,6 +150,19 @@ public abstract class TipperTest extends PsiTestCase {
                 .createExpressionFromText(expression, getTestFile());
     }
 
+    protected boolean equalsByText(PsiElement e1, PsiElement e2) {
+        return (e1 == null && e2 == null) || (e1 != null && e2 != null && e1.getText().equals(e2.getText()));
+    }
+
+    protected void assertEqualsByText(PsiElement e1, PsiElement e2) {
+        if(e1 == null && e2 == null){
+            return;
+        }
+
+        assertNotNull(e1);
+        assertNotNull(e2);
+        assertEquals(e1.getText(), e2.getText());
+    }
 
     protected <T extends PsiElement> boolean testTip(Tipper<T> tipper, T element, PsiElement res) {
         PsiElement parent = element.getParent();

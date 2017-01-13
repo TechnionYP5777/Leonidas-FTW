@@ -18,7 +18,7 @@ public class UnlessTest extends TipperTest {
 
     @Test
     public void testcanTipThen() throws Exception {
-        PsiConditionalExpression k = createTestCondtionalExpression("x > 0", "null", "x");
+        PsiConditionalExpression k = createTestConditionalExpression("x > 0", "null", "x");
         assert (iz.nullExpression(k.getThenExpression()));
         assert ((new Unless()).canTip(k));
 
@@ -26,14 +26,14 @@ public class UnlessTest extends TipperTest {
 
     @Test
     public void testcantTip() throws Exception {
-        PsiConditionalExpression k = createTestCondtionalExpression("x > 0", "_null", "x");
+        PsiConditionalExpression k = createTestConditionalExpression("x > 0", "_null", "x");
         assert (!iz.nullExpression(k.getThenExpression()));
         assert (!(new Unless()).canTip(k));
     }
 
     @Test
     public void test1() throws Exception {
-        PsiConditionalExpression k = createTestCondtionalExpression("x > 0", "x", "null");
+        PsiConditionalExpression k = createTestConditionalExpression("x > 0", "x", "null");
         assert (!iz.nullExpression(k.getThenExpression()));
         assert (!(new Unless()).canTip(k));
     }

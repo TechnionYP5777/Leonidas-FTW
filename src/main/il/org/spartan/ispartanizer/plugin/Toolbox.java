@@ -49,7 +49,8 @@ public enum Toolbox {
     }
 
     private static void createLeonidasTipperBuilders() {
-        List<File> tippers = Arrays.asList(new File(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()).listFiles());
+        List<File> tippers = Arrays.asList(new File(Toolbox.class
+                .getResource("/spartanizer/LeonidasTippers").getPath()).listFiles());
         tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
 

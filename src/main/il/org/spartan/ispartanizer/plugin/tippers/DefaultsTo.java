@@ -9,10 +9,10 @@ import il.org.spartan.ispartanizer.auxilary_layer.step;
 import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 
 /**
- * Replace X != null ? X : Y with X ?? Y <br>
- * Replace X == null ? Y : X with X ?? Y <br>
- * Replace null == X ? Y : X with X ?? Y <br>
- * Replace null != X ? X : Y with X ?? Y <br>
+ * Replace X != null ? X : Y with defaults(X).to(Y) <br>
+ * Replace X == null ? Y : X with defaults(X).to(Y) <br>
+ * Replace null == X ? Y : X with defaults(X).to(Y) <br>
+ * Replace null != X ? X : Y with defaults(X).to(Y) <br>
  *
  * @author Oren Afek
  * @since 24-12-2016

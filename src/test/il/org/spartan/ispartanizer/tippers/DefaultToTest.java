@@ -1,6 +1,9 @@
 package il.org.spartan.ispartanizer.tippers;
 
+import com.intellij.psi.PsiConditionalExpression;
 import il.org.spartan.ispartanizer.plugin.tippers.DefaultsTo;
+
+import java.util.Arrays;
 
 
 /**
@@ -11,25 +14,32 @@ import il.org.spartan.ispartanizer.plugin.tippers.DefaultsTo;
 
 public class DefaultToTest extends TipperTest {
 
+    private final String legalCaseString1 = "x != null ? x : y";
+    private final String legalCaseString2 = "x == null ? y : x";
+    private final String legalCaseString3 = "null == x ? y : x";
+    private final String legalCaseString4 = "null != x ? x : y";
+
+    private final String[] legalCasesStrings = {legalCaseString1, legalCaseString2, legalCaseString3, legalCaseString4};
+    private final String legalReplacement = "defaults(x).to(y)";
 
     public void testCanTipFirstElementIsNotNullSecondIsNEOperator() {
         assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString("x != null ? x : y")));
+                createTestExpressionFromString(legalCaseString1)));
     }
 
     public void testCanTipFirstElementIsNotNullSecondIsEQOperator() {
         assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString("x == null ? y : x")));
+                createTestExpressionFromString(legalCaseString2)));
     }
 
     public void testCanTipFirstElementIsNullSecondIsNotEQOperator() {
         assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString("null == x ? y : x")));
+                createTestExpressionFromString(legalCaseString3)));
     }
 
     public void testCanTipFirstElementIsNullSecondIsNotNEOperator() {
         assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString("null != x ? x : y")));
+                createTestExpressionFromString(legalCaseString4)));
     }
 
     public void testCannotTipTwoElementsAreNullEQOperator() {
@@ -77,5 +87,20 @@ public class DefaultToTest extends TipperTest {
                 createTestExpressionFromString("null != x ? y : x")));
     }
 
+    public void testCreateReplacementLegalCases() {
+        Arrays.stream(legalCasesStrings).forEach(s ->
+                assertEqualsByText(new DefaultsTo().createReplacement(
+                        createConditionalExpressionFromLegalString(s)),
+                        createTestExpression(legalReplacement)));
+    }
+
+    private PsiConditionalExpression createConditionalExpressionFromLegalString(String conditionalString) {
+        int indexOfQuestionMark = conditionalString.indexOf('?');
+        int indexOfColon = conditionalString.indexOf(':');
+        String condition = conditionalString.substring(0, indexOfQuestionMark).trim();
+        String then = conditionalString.substring(indexOfQuestionMark + 1, indexOfColon).trim();
+        String else$ = conditionalString.substring(indexOfColon + 1).trim();
+        return createTestConditionalExpression(condition, then, else$);
+    }
 
 }
