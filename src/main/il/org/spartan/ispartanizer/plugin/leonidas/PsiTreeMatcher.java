@@ -33,14 +33,15 @@ public class PsiTreeMatcher {
             }
         }
         boolean res = true;
-        for (PsiElement treeTemplateChild = treeTemplate.getFirstChild(),
-             treeToMatchChild = treeToMatch.getFirstChild();
+        PsiElement treeTemplateChild, treeToMatchChild;
+        for (treeTemplateChild = treeTemplate.getFirstChild(),
+                     treeToMatchChild = treeToMatch.getFirstChild();
              treeTemplateChild != null && treeToMatchChild != null;
              treeTemplateChild = step.nextSibling(treeTemplateChild),
                      treeToMatchChild = step.nextSibling(treeToMatchChild)) {
             res = res && match(treeTemplateChild, treeToMatchChild);
         }
-        return res;
+        return treeTemplateChild != null && treeToMatchChild == null ? false : res;
     }
 
 }
