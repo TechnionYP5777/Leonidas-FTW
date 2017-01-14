@@ -3,9 +3,7 @@ package il.org.spartan.ispartanizer.tippers;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
-import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
-import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -67,7 +65,6 @@ public abstract class TipperTest extends PsiTestCase {
         });
         return classWrapper.get();
     }
-
 
     protected PsiMethod createTestMethodFromString(String s) {
         return getTestFactory().createMethodFromText(s, getTestFile());
@@ -214,21 +211,10 @@ public abstract class TipperTest extends PsiTestCase {
 
         assertNotNull(e1);
         assertNotNull(e2);
-        assertEquals(e1.getText(), e2.getText());
+        assertEquals(removeWhiteSpaces(e1.getText()), removeWhiteSpaces(e2.getText()));
     }
 
-    protected <T extends PsiElement> boolean testTip(Tipper<T> tipper, T element, PsiElement res) {
-        PsiElement parent = element.getParent();
-        int numberOfChild = 0;
-        for (PsiElement child = element.getParent().getFirstChild(); child != null; child = child.getNextSibling()) {
-            if (child.equals(element)) {
-                break;
-            }
-            numberOfChild++;
-        }
-        tipper.tip(element).go(new PsiRewrite());
-        PsiElement newChild = parent.getChildren()[numberOfChild];
-        return newChild.getText().equals(res.getText());
+    protected String removeWhiteSpaces(String s) {
+        return s.replaceAll("\\s+", "");
     }
-
 }
