@@ -33,8 +33,26 @@ public abstract class TipperTest extends PsiTestCase {
         return getTestFactory().createExpressionFromText(s, getTestFile());
     }
 
-    protected PsiClass createTestClassFromString(String s) {
-        return getTestFactory().createClassFromText(s, getTestFile());
+    protected PsiClass createTestClassFromString(String javadoc, String className, String classBody, String... classModifiers) {
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(classModifiers).forEach(m -> sb.append(m));
+        sb.append("class");
+        sb.append(className);
+        sb.append("{");
+        sb.append(classBody);
+        sb.append("}");
+        return getTestFactory().createClassFromText(sb.toString(), getTestFile());
+    }
+
+    protected PsiClass createTestInterfaceFromString(String interfaceName, String interfaceBody, String... interfaceModifiers) {
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(interfaceModifiers).forEach(m -> sb.append(m));
+        sb.append("interface");
+        sb.append(interfaceName);
+        sb.append("{");
+        sb.append(interfaceBody);
+        sb.append("}");
+        return getTestFactory().createClassFromText(sb.toString(), getTestFile());
     }
 
     protected PsiClass createEnumClassFromString(String s) {
@@ -193,11 +211,11 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiTryStatement createTestTryStatement(String try$, String catch$, String do$) {
-        return (PsiTryStatement) getTestFactory().createStatementFromText("try {" + try$ + "} catch(" + catch$ + "){" + do$ + "}", null);
+        return (PsiTryStatement) getTestFactory().createStatementFromText("try {" + try$ + "} catch(" + catch$ + "){" + do$ + "}", getTestFile());
     }
 
     protected PsiTryStatement createTestTryStatement(String try$, String catch$, String do$, String finally$) {
-        return (PsiTryStatement) getTestFactory().createStatementFromText("try {" + try$ + "} catch(" + catch$ + "){" + do$ + "} finally {" + finally$ + "}", null);
+        return (PsiTryStatement) getTestFactory().createStatementFromText("try {" + try$ + "} catch(" + catch$ + "){" + do$ + "} finally {" + finally$ + "}", getTestFile());
     }
 
     protected boolean equalsByText(PsiElement e1, PsiElement e2) {
@@ -216,5 +234,9 @@ public abstract class TipperTest extends PsiTestCase {
 
     protected String removeWhiteSpaces(String s) {
         return s.replaceAll("\\s+", "");
+    }
+
+    protected PsiLambdaExpression createTestLambdaExpression(String s) {
+        return (PsiLambdaExpression) getTestFactory().createExpressionFromText(s, getTestFile());
     }
 }

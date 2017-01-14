@@ -97,13 +97,13 @@ public class izTest extends TipperTest {
     }
 
     public void testClassDeclaration() throws Exception {
-        PsiElement c1 = createTestClassFromString("public class A{}");
+        PsiElement c1 = createTestClassFromString("", "A", "", "public");
         assertTrue(iz.classDeclaration(c1));
-        PsiElement c2 = createTestClassFromString("private class A{}");
+        PsiElement c2 = createTestClassFromString("", "A", "", "private");
         assertTrue(iz.classDeclaration(c2));
-        PsiElement i1 = createTestClassFromString("public interface A{}");
+        PsiElement i1 = createTestInterfaceFromString("", "A", "", "public");
         assertTrue(iz.classDeclaration(i1));
-        PsiElement c4 = createTestClassFromString("public abstract class A{}");
+        PsiElement c4 = createTestClassFromString("", "A", "", "public", "abstract");
         assertTrue(iz.classDeclaration(c4));
     }
 
@@ -250,7 +250,7 @@ public class izTest extends TipperTest {
         assertTrue(iz.method(e1));
         PsiElement e2 = createTestMethodFromString("static abstract public void method(int x);");
         assertTrue(iz.method(e2));
-        PsiElement e3 = createTestClassFromString("public class method(){}");
+        PsiElement e3 = createTestClassFromString("", "method()", "", "public");
         assertFalse(iz.method(e3));
     }
 
@@ -388,10 +388,9 @@ public class izTest extends TipperTest {
     public void testDocumentedElement() throws Exception {
         PsiElement e = createTestClassFromString("/**\n" +
                 " * This is a main class JavaDoc\n" +
-                " */\n" +
-                "public class Main {}");
+                " */\n", "Main", "", "public");
         assertTrue(iz.documentedElement(e));
-        PsiElement e2 = createTestClassFromString("public class Main {}");
+        PsiElement e2 = createTestClassFromString("", "Main", "", "public");
         assertTrue(iz.documentedElement(e2));
         PsiMethod m = createTestMethodFromString("public int getX(){return x;}");
         assertTrue(iz.documentedElement(m));
@@ -595,7 +594,7 @@ public class izTest extends TipperTest {
     public void testEnumDeclaration() throws Exception {
         PsiElement e1 = createEnumClassFromString("Day");
         assertTrue(iz.enumDeclaration(e1));
-        PsiElement e2 = createTestClassFromString("public class Day{}");
+        PsiElement e2 = createTestClassFromString("", "Day", "", "public");
         assertFalse(iz.enumDeclaration(e2));
     }
 
@@ -614,8 +613,8 @@ public class izTest extends TipperTest {
     }
 
     public void testConforms() throws Exception {
-        PsiElement e1 = (PsiBinaryExpression) createTestExpression("1+5");
-        PsiElement e2 = (PsiBinaryExpression) createTestExpression("1 > 5");
+        PsiElement e1 = createTestExpression("1+5");
+        PsiElement e2 = createTestExpression("1 > 5");
         assertTrue(iz.conforms(e1, e2));
         GenericPsiExpression ge = new GenericPsiExpression(PsiType.BOOLEAN, e2);
         assertTrue(iz.conforms(e1, ge));

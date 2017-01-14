@@ -1,6 +1,9 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
-import com.intellij.psi.*;
+import com.intellij.psi.PsiBinaryExpression;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiExpression;
+import com.intellij.psi.PsiStatement;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 /**
@@ -68,9 +71,9 @@ public class azTest extends TipperTest {
     }
 
     public void testAzMethodCallExpression() throws Exception{
-        PsiElement getterCall= (PsiMethodCallExpression) createTestExpression("getX()");
+        PsiElement getterCall = createTestExpression("getX()");
         assertNotNull(az.methodCallExpression(getterCall));
-        PsiElement foo= (PsiMethodCallExpression) createTestExpression("foo(x,y)");
+        PsiElement foo = createTestExpression("foo(x,y)");
         assertNotNull(az.methodCallExpression(foo));
         PsiElement listSize= createTestExpression("list.size()");
         assertNotNull(az.methodCallExpression(listSize));
@@ -101,13 +104,13 @@ public class azTest extends TipperTest {
     }
 
     public void testAzBinaryExpression() throws Exception {
-        PsiElement eq= (PsiBinaryExpression) createTestExpression("x == y");
+        PsiElement eq = createTestExpression("x == y");
         assertNotNull(az.binaryExpression(eq));
-        PsiElement neq= (PsiBinaryExpression) createTestExpression("x != y");
+        PsiElement neq = createTestExpression("x != y");
         assertNotNull(az.binaryExpression(neq));
-        PsiElement bPlus= (PsiBinaryExpression) createTestExpression("x + y");
+        PsiElement bPlus = createTestExpression("x + y");
         assertNotNull(az.binaryExpression(bPlus));
-        PsiElement bMod= (PsiBinaryExpression) createTestExpression("x % y");
+        PsiElement bMod = createTestExpression("x % y");
         assertNotNull(az.binaryExpression(bMod));
         PsiElement notBinary = createTestExpression("!x");
         assertNull(az.binaryExpression(notBinary));
@@ -134,13 +137,13 @@ public class azTest extends TipperTest {
     }
 
     public void testAzClassDeclaration() throws Exception {
-        PsiElement c1 = createTestClassFromString("public class A{}");
+        PsiElement c1 = createTestClassFromString("", "A", "", "public");
         assertNotNull(az.classDeclaration(c1));
-        PsiElement c2 = createTestClassFromString("private class A{}");
+        PsiElement c2 = createTestClassFromString("", "A", "", "private");
         assertNotNull(az.classDeclaration(c2));
-        PsiElement i1 = createTestClassFromString("public interface A{}");
+        PsiElement i1 = createTestInterfaceFromString("", "A", "", "public");
         assertNotNull(az.classDeclaration(i1));
-        PsiElement c4 = createTestClassFromString("public abstract class A{}");
+        PsiElement c4 = createTestClassFromString("", "A", "", "public", "abstract");
         assertNotNull(az.classDeclaration(c4));
     }
 
@@ -197,7 +200,7 @@ public class azTest extends TipperTest {
         assertNotNull(az.method(e1));
         PsiElement e2 = createTestMethodFromString("static abstract public void method(int x);");
         assertNotNull(az.method(e2));
-        PsiElement e3 = createTestClassFromString("public class method(){}");
+        PsiElement e3 = createTestClassFromString("", "method()", "", "public");
         assertNull(az.method(e3));
     }
 

@@ -11,9 +11,9 @@ import org.junit.Assert;
  */
 public class stepTest extends TipperTest {
     public void testDocCommentA() {
-        String src = "class A {}";
+        String className = "A";
         String doc = "";
-        Assert.assertEquals(step.docCommentString(createTestClassFromString(src)), doc);
+        Assert.assertEquals(step.docCommentString(createTestClassFromString("", className, "", "public")), doc);
     }
 
     public void testDocCommentB() {
@@ -23,8 +23,9 @@ public class stepTest extends TipperTest {
     }
 
     public void testDocCommentC() {
-        String src = "class A {/** javadoc */void foo() {}}";
+        String className = "A";
+        String classBody = "/** javadoc */void foo(){}";
         String doc = "";
-        Assert.assertEquals(step.docCommentString(createTestClassFromString(src)), doc);
+        Assert.assertEquals(step.docCommentString(createTestClassFromString("", className, classBody, "public")), doc);
     }
 }
