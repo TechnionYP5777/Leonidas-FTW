@@ -77,33 +77,4 @@ public class PsiTreeMatcherTest extends TipperTest {
         PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
         assertTrue(PsiTreeMatcher.match(b, y));
     }
-
-    public void testExtractInfo1() {
-        PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
-        Wrapper<Integer> count = new Wrapper<>(0);
-        b.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitCodeBlock(PsiCodeBlock block) {
-                super.visitCodeBlock(block);
-                block.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
-            }
-
-            @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression methodCallExpression) {
-                super.visitMethodCallExpression(methodCallExpression);
-                methodCallExpression.putUserData(KeyDescriptionParameters.GENERIC_NAME, methodCallExpression.getMethodExpression().getText());
-                methodCallExpression.putUserData(KeyDescriptionParameters.ID, count.get());
-
-                count.set(count.get() + 1);
-            }
-        });
-
-        Pruning.pruneAll(b);
-
-        PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
-        assertTrue(PsiTreeMatcher.match(b, y));
-        Map<Integer, PsiElement> m = PsiTreeMatcher.extractInfo(b, y);
-        assertTrue(iz.expression(m.get(0)));
-        assertTrue(iz.statement(m.get(1)));
-    }
 }

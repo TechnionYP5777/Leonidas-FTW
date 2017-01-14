@@ -3,7 +3,9 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
+import il.org.spartan.ispartanizer.auxilary_layer.step;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +32,7 @@ public class Replacer {
 
     public static PsiElement getReplacer(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
         PsiElement templateMatchingTree = builder.getFromPsiTree();
-        Map<Integer, PsiElement> map = PsiTreeMatcher.extractInfo(templateMatchingTree, treeToReplace);
+        Map<Integer, PsiElement> map = extractInfo(templateMatchingTree, treeToReplace);
         PsiElement templateReplacingTree = builder.getToPsiTree();
         // might not work due to replacing while recursively iterating.
         map.keySet().forEach(d -> {
@@ -48,4 +50,19 @@ public class Replacer {
     }
 
 
+    /**
+     * @param treeTemplate - The root of a tree already been matched.
+     * @param treeToMatch  - The patterns from which we extract the IDs
+     * @return a mapping between an ID to a PsiElement
+     */
+    public static Map<Integer, PsiElement> extractInfo(PsiElement treeTemplate, PsiElement treeToMatch) {
+        Map<Integer, PsiElement> mapping = new HashMap<>();
+        for (PsiElement treeTemplateChild = treeTemplate.getFirstChild(), treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChild != null && treeToMatchChild != null; treeTemplateChild = step.nextSibling(treeTemplateChild), treeToMatchChild = step.nextSibling(treeToMatchChild)) {
+            if (treeTemplateChild.getUserData(KeyDescriptionParameters.ID) != null) {
+                mapping.put(treeTemplateChild.getUserData(KeyDescriptionParameters.ID), treeToMatchChild);
+            }
+            mapping.putAll(extractInfo(treeTemplateChild, treeToMatchChild));
+        }
+        return mapping;
+    }
 }

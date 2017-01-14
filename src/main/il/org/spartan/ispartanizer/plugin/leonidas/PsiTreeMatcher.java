@@ -43,20 +43,4 @@ public class PsiTreeMatcher {
         return res;
     }
 
-    /**
-     * @param treeTemplate - The root of a tree already been matched.
-     * @param treeToMatch  - The patterns from which we extract the IDs
-     * @return a mapping between an ID to a PsiElement
-     */
-    public static Map<Integer, PsiElement> extractInfo(PsiElement treeTemplate, PsiElement treeToMatch) {
-        Map<Integer, PsiElement> mapping = new HashMap<>();
-        for (PsiElement treeTemplateChild = treeTemplate.getFirstChild(), treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChild != null && treeToMatchChild != null; treeTemplateChild = step.nextSibling(treeTemplateChild), treeToMatchChild = step.nextSibling(treeToMatchChild)) {
-            if (treeTemplateChild.getUserData(KeyDescriptionParameters.ID) != null) {
-                mapping.put(treeTemplateChild.getUserData(KeyDescriptionParameters.ID), treeToMatchChild);
-            }
-            mapping.putAll(extractInfo(treeTemplateChild, treeToMatchChild));
-        }
-        return mapping;
-    }
-
 }
