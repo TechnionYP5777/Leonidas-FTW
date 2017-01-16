@@ -239,4 +239,26 @@ public abstract class TipperTest extends PsiTestCase {
     protected PsiLambdaExpression createTestLambdaExpression(String s) {
         return (PsiLambdaExpression) getTestFactory().createExpressionFromText(s, getTestFile());
     }
+
+    protected PsiNewExpression createTestNewExpression(String typeName, String... parametes) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("new ")
+                .append(typeName)
+                .append("(");
+        Arrays.stream(parametes).forEach(s -> sb.append(s));
+        sb.append(")");
+        return (PsiNewExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
+    }
+
+    protected PsiMethodReferenceExpression createTestMethodReferenceEpression(String typeName, String methodName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(typeName)
+                .append("::")
+                .append(methodName);
+        return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
+    }
+
+    protected PsiRequiresStatement createTestRequiresStatement(String module) {
+        return (PsiRequiresStatement) getTestFactory().createStatementFromText("requires " + module + ";", getTestFile());
+    }
 }

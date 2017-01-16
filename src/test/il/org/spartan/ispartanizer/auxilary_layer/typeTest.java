@@ -4,6 +4,16 @@ import com.intellij.psi.*;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 public class typeTest extends TipperTest {
+    public void testCallExpression() {
+        PsiCallExpression e = createTestNewExpression("Object", "");
+        assertEquals(type.of(e), PsiCallExpression.class);
+    }
+
+    public void testMethodReferenceExpression() {
+        PsiMethodReferenceExpression e = createTestMethodReferenceEpression("Object", "toString");
+        assertEquals(type.of(e), PsiMethodReferenceExpression.class);
+    }
+
     public void testMethodCallExpression() {
         PsiMethodCallExpression e = createTestMethodCallExpression("banana", "5");
         assertEquals(type.of(e), PsiMethodCallExpression.class);
