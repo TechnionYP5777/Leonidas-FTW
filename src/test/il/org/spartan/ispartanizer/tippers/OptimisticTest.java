@@ -34,7 +34,7 @@ public class OptimisticTest extends TipperTest {
         assertTrue(haz.compilationErrors(createTestFileFromString(source1)));
     }
 
-    // TODO: @orenafek I made junit to ignore this test because it was failing (probably because CompilationCenter). Ask @RoeiRaz for more info
+    // TODO: @RoeyMaor I made junit to ignore this test because it was failing (probably because CompilationCenter). Ask @RoeiRaz for more info
     public void ignoreTestNoSyntaxErrors(){
         assertFalse(haz.syntaxErrors(createTestExpressionFromString("5 == 5")));
         assertFalse(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return false;}")));
