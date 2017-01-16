@@ -12,15 +12,11 @@ import java.util.Map;
  * @since 09/01/2017.
  */
 public class ReplacerTest extends TipperTest {
-    public void testReplace1() {
+    public void testGetReplacer1() {
 
     }
 
-    public void testReplace2() {
-
-    }
-
-    public void testReplace3() {
+    public void testGetReplacer2() {
 
     }
 

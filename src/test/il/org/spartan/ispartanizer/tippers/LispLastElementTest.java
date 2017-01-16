@@ -2,8 +2,6 @@ package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.ispartanizer.plugin.tippers.LispLastElement;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
-import junit.framework.TestCase;
 
 /**
  * @author AnnaBel7
