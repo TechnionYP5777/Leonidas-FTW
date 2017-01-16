@@ -207,7 +207,6 @@ public enum iz {
                                 sn.equals(az.methodCallExpression(element).getMethodExpression().getText()));
     }
 
-
     public static boolean documentedElement(PsiElement e) {
         return typeCheck(PsiJavaDocumentedElement.class, e);
     }

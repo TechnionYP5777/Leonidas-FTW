@@ -13,39 +13,39 @@ public abstract class GenericPsiElementStub {
     /**
      * method stub representing a boolean expression for leonidas tippers
      *
-     * @param order the serial no to distinct between several boolean expressions in the same tipper
+     * @param id the serial no to distinct between several boolean expressions in the same tipper
      * @return true
      */
-    protected final boolean booleanExpression(int order) {
+    protected final boolean booleanExpression(int id) {
         return true;
     }
 
     /**
      * method stub representing a statement for leonidas tippers
      *
-     * @param order the serial no to distinct between several statements in the same tipper
+     * @param id the serial no to distinct between several statements in the same tipper
      */
-    protected final void statement(int order) {
+    protected final void statement(int id) {
     }
 
     /**
      * method stub representing an identifier for leonidas tippers
      *
-     * @param order the serial no to distinct between several identifiers in the same tipper
+     * @param id the serial no to distinct between several identifiers in the same tipper
      * @return stub object
      */
-    protected final Object identifier(int order) {
+    protected final Object identifier(int id) {
         return new Object();
     }
 
     /**
      * method stub representing an array identifier for leonidas tippers
      *
-     * @param order the serial no to distinct between several array identifiers in the same tipper
+     * @param id the serial no to distinct between several array identifiers in the same tipper
      * @return stub array
      */
 
-    protected final Object[] arrayIdentifier(int order) {
+    protected final Object[] arrayIdentifier(int id) {
         return new Object[0];
     }
 
