@@ -24,12 +24,6 @@ public class type {
             }
 
             @Override
-            public void visitRequiresStatement(PsiRequiresStatement statement) {
-                super.visitRequiresStatement(statement);
-                myClass.set(PsiRequiresStatement.class);
-            }
-
-            @Override
             public void visitMethod(PsiMethod statement) {
                 super.visitMethod(statement);
                 myClass.set(PsiMethod.class);
