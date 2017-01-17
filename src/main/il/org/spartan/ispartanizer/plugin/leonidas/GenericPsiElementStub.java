@@ -2,6 +2,8 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.PsiMethodCallExpression;
 
+import java.util.Arrays;
+
 /**
  * This class defines methods that will represent generic structures of code
  * such as: statements, conditions, blocks, variable declaration and more.
@@ -62,16 +64,11 @@ public abstract class GenericPsiElementStub {
         }
 
         public static StubName valueOf(PsiMethodCallExpression expression){
-            if(expression.getMethodExpression().getText().equals(BOOLEAN_EXPRESSION.stubName)){
-                return BOOLEAN_EXPRESSION;
-            }
 
-            if(expression.getMethodExpression().getText().equals(STATEMENT.stubName)){
-                return STATEMENT;
-            }
+            return Arrays.stream(values())
+                    .filter(stub -> expression.getMethodExpression().getText().equals(stub.stubName()))
+                    .findFirst().orElseGet(null);
 
-            //TODO: ADD HERE MORE IF's UPON ADDING MORE TYPES !!!
-            return null;
         }
 
         public String stubName() {

@@ -64,7 +64,7 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected PsiBlockStatement createTestBlockStatementFromString(String s) {
-        return (PsiBlockStatement) getTestFactory().createStatementFromText(s,getTestFile());
+        return (PsiBlockStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
     /**
@@ -260,5 +260,20 @@ public abstract class TipperTest extends PsiTestCase {
 
     protected PsiRequiresStatement createTestRequiresStatement(String module) {
         return (PsiRequiresStatement) getTestFactory().createStatementFromText("requires " + module + ";", getTestFile());
+    }
+
+    protected class Pair<T, K> {
+
+        public T first;
+        public K second;
+
+        public Pair() {
+            this(null, null);
+        }
+
+        public Pair(T first, K second) {
+            this.first = first;
+            this.second = second;
+        }
     }
 }
