@@ -11,30 +11,6 @@ import com.intellij.psi.util.PsiTreeUtil;
 public enum haz {
     ;
 
-    public static boolean variableDefenition(final PsiElement p) {
-        final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
-        p.accept(new PsiRecursiveElementVisitor() {
-            @Override
-            public void visitElement(PsiElement e) {
-                if (iz.declarationStatement(e)) {
-                    PsiDeclarationStatement d = az.declarationStatement(e);
-                    super.visitElement(d);
-                    b.inner = d.getDeclaredElements().length > 0;
-                } else if (iz.enumConstant(e)) {
-                    PsiEnumConstant d = az.enumConstant(e);
-                    super.visitElement(d);
-                    b.inner = Boolean.TRUE;
-                } else if (iz.fieldDeclaration(e)) {
-                    PsiField d = az.fieldDeclaration(e);
-                    super.visitElement(d);
-                    b.inner = Boolean.TRUE;
-                }
-
-            }
-        });
-        return b.inner;
-    }
-
     public static boolean centVariableDefinition(final PsiElement p) {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
         p.accept(new JavaRecursiveElementVisitor() {
