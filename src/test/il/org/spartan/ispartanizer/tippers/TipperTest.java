@@ -4,6 +4,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -176,6 +177,19 @@ public abstract class TipperTest extends PsiTestCase {
     protected PsiIfStatement createTestIfStatement(String cond, String then) {
         return (PsiIfStatement) getTestFactory()
                 .createStatementFromText("if (" + cond + ") {" + then + "} ", getTestFile());
+    }
+
+    /**
+     * @param cond
+     * @param then
+     * @return if then has only one statement returns PsiIfStatement, otherwise null
+     */
+    protected PsiIfStatement createTestIfStatementNoBraces(String cond, String then) {
+        if (StringUtils.countMatches(then, ";") != 1) {
+            return null;
+        }
+        return (PsiIfStatement) getTestFactory()
+                .createStatementFromText("if (" + cond + ") " + then + " ", getTestFile());
     }
 
     protected PsiConditionalExpression createTestConditionalExpression(String cond, String then, String else$) {

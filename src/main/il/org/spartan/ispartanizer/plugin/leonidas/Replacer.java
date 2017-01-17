@@ -49,7 +49,6 @@ public class Replacer {
         return templateReplacingTree;
     }
 
-
     /**
      * @param treeTemplate - The root of a tree already been matched.
      * @param treeToMatch  - The patterns from which we extract the IDs
