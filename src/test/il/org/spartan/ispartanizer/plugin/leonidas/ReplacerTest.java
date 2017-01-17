@@ -40,7 +40,7 @@ public class ReplacerTest extends TipperTest {
             }
         });
 
-        Pruning.pruneAll(b);
+        Pruning.prune(b);
 
         PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
         assertTrue(PsiTreeMatcher.match(b, y));

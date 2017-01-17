@@ -1,6 +1,11 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.PsiType;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -97,6 +102,22 @@ public abstract class GenericPsiElementStub {
 
         public boolean matchesStubName(PsiMethodCallExpression e){
             return e.getMethodExpression().getText().equals(this.stubName);
+        }
+
+        public GenericPsi getGenericPsiType(PsiElement inner, Integer id) {
+            GenericPsi x;
+            switch (this) {
+                case BOOLEAN_EXPRESSION:
+                    x = new GenericPsiExpression(PsiType.BOOLEAN, inner);
+                    break;
+                case STATEMENT:
+                    x = new GenericPsiStatement(inner);
+                    break;
+                default:
+                    return null;
+            }
+            x.putUserData(KeyDescriptionParameters.ID, id);
+            return x;
         }
     }
 }

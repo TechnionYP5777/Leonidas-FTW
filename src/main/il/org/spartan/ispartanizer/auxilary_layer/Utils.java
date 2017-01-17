@@ -6,9 +6,12 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -118,5 +121,19 @@ public enum Utils {
 
     public static String showPsiTree(PsiElement e) {
         return showPsiTreeAux(e, 0);
+    }
+
+    public static <T extends PsiElement> List<T> getChildrenOfType(@Nullable PsiElement e, @NotNull Class<T> aClass) {
+        Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
+        e.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitElement(PsiElement element) {
+                super.visitElement(element);
+                if (aClass.isInstance(element)) {
+                    w.get().add((T) element);
+                }
+            }
+        });
+        return w.get();
     }
 }

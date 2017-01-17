@@ -1,11 +1,7 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.*;
-import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
-import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
-
-import java.util.Map;
 
 /**
  * Created by melanyc on 1/7/2017.
@@ -50,7 +46,7 @@ public class PsiTreeMatcherTest extends TipperTest {
             }
         });
 
-        Pruning.pruneAll(b);
+        Pruning.prune(b);
 
         PsiIfStatement y = createTestIfStatement("true && false", " if (true) { int y = 5; } ");
         assertTrue(PsiTreeMatcher.match(b, y));
@@ -72,7 +68,7 @@ public class PsiTreeMatcherTest extends TipperTest {
             }
         });
 
-        Pruning.pruneAll(b);
+        Pruning.prune(b);
 
         PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
         assertTrue(PsiTreeMatcher.match(b, y));

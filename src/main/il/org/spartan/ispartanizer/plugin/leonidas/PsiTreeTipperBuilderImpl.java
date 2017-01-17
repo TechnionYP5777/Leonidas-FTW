@@ -167,7 +167,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     private void pruneStubChildren(PsiElement method) {
-        Pruning.pruneAll(method);
+        Pruning.prune(method);
     }
 
     private PsiElement addOrderToUserData(PsiElement element, int order) {
