@@ -1,8 +1,11 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
-
-
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
+
+/**
+ * @author AnnaBel7
+ * @since 16/01/2017.
+ */
 public class AmountTest extends TipperTest {
     public void testAny() {
         Amount amount = Amount.ANY;
