@@ -1,10 +1,7 @@
 package spartanizer.LeonidasTippers;
 
-import com.intellij.psi.PsiArrayAccessExpression;
-import com.intellij.psi.PsiAssignmentExpression;
-import com.intellij.psi.PsiExpressionStatement;
 import com.intellij.psi.PsiIfStatement;
-import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElement;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub;
 import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
 
 /**
@@ -13,7 +10,7 @@ import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
  * @author Oren Afek
  * @since 01-12-17
  */
-public class IfDoubleNot extends GenericPsiElement {
+public class IfDoubleNot extends GenericPsiElementStub {
 
     @Leonidas(PsiIfStatement.class)
     public void from(){

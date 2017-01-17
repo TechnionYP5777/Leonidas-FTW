@@ -92,6 +92,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private PsiMethod getMethodFromTree(PsiFile file, String methodName) {
         Wrapper<PsiMethod> result = new Wrapper<>();
         file.accept(new JavaRecursiveElementVisitor() {
+
             @Override
             public void visitMethod(PsiMethod method) {
                 if (step.name(method).equals(methodName)) {
