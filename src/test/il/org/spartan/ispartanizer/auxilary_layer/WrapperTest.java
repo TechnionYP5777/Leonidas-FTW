@@ -43,6 +43,9 @@ public class WrapperTest extends TipperTest {
     }
 
     public void testEquals() {
-
+        Wrapper<Integer> wrapper = new Wrapper<>();
+        assertFalse(wrapper.equals(null));
+        assertTrue(wrapper.equals(wrapper));
+        assertTrue(wrapper.equals(new Wrapper<Integer>()));
     }
 }
