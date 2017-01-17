@@ -3,6 +3,7 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 import com.intellij.psi.PsiMethodCallExpression;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * This class defines methods that will represent generic structures of code
@@ -49,6 +50,17 @@ public abstract class GenericPsiElementStub {
 
     protected final Object[] arrayIdentifier(int id) {
         return new Object[0];
+    }
+
+    /**
+     * method stub representing an array identifier for leonidas tippers
+     *
+     * @param id the serial no to distinct between several array identifiers in the same tipper
+     * @return stub array
+     */
+
+    protected final <T> Stream<T> streamMethodInvocations(int id) {
+        return Stream.of();
     }
 
     public enum StubName {
