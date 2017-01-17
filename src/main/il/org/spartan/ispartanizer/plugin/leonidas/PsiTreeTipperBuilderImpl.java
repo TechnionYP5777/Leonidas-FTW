@@ -29,7 +29,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private boolean built;
     private PsiElement fromTree;
     private PsiElement toTree;
-    private Class<? extends PsiElement> fromRootType;
+    private Class<? extends PsiElement> fromRootElementType;
 
     public PsiTreeTipperBuilderImpl() {
         built = false;
@@ -45,17 +45,22 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
         PsiFile root = getPsiTreeFromFile(fileName);
-        PsiMethod from = getMethodFromTree(root, FROM_METHOD_NAME);
-        PsiMethod to = getMethodFromTree(root, TO_METHOD_NAME);
-        fromRootType = getPsiElementTypeFromAnnotation(from);
-        fromTree = getTreeFromRoot(from, fromRootType);
-        handleStubMethodCalls(fromTree);
-        pruneStubChildren(fromTree);
-        toTree = getTreeFromRoot(to, getPsiElementTypeFromAnnotation(to));
-        handleStubMethodCalls(toTree);
-        pruneStubChildren(toTree);
+        fromTree = buildMethodTree(root, FROM_METHOD_NAME);
+        toTree = buildMethodTree(root, TO_METHOD_NAME);
         built = true;
         return this;
+    }
+
+    private PsiElement buildMethodTree(PsiFile root, String methodName) {
+        PsiMethod method = getMethodFromTree(root, methodName);
+        Class<? extends PsiElement> rootType = getPsiElementTypeFromAnnotation(method);
+        if (methodName.equals(FROM_METHOD_NAME)) {
+            fromRootElementType = rootType;
+        }
+        PsiElement tree = getTreeFromRoot(method, rootType);
+        handleStubMethodCalls(tree);
+        pruneStubChildren(tree);
+        return tree;
     }
 
     /**
@@ -81,6 +86,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         assert (built);
         return toTree.copy();
     }
+
 
     private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
         File file = new File(this.getClass().getResource(FILE_PATH + fileName).getPath());
@@ -171,6 +177,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     @Override
     public Class<? extends PsiElement> getRootElementType() {
-        return fromRootType;
+        return fromRootElementType;
     }
+
 }

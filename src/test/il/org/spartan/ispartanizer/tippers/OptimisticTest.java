@@ -1,12 +1,5 @@
 package il.org.spartan.ispartanizer.tippers;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.module.impl.ModuleImpl;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElementFactory;
 import il.org.spartan.ispartanizer.auxilary_layer.CompilationCenter;
 import il.org.spartan.ispartanizer.auxilary_layer.haz;
 
