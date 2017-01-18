@@ -39,9 +39,7 @@ public class CompilationCenter {
         }
 
         assert(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME) != null);
-        System.out.println(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
         dummyCompilationTestFile = new File(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
-        System.out.println(dummyCompilationTestFile.canWrite());
         compiler = ToolProvider.getSystemJavaCompiler();
         output = new ByteArrayOutputStream();
         errors = new ByteArrayOutputStream();
@@ -68,7 +66,7 @@ public class CompilationCenter {
         }
         String source = file.getText();
         try {
-            Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE);
+            Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }

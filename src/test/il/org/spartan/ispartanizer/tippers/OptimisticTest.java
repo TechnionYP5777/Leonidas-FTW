@@ -14,32 +14,31 @@ public class OptimisticTest extends TipperTest {
         CompilationCenter.initialize();
     }
 
-    public void testDetectsSyntaxErrors() throws Exception {
+    public void testDetectsCompilationErrors() throws Exception {
         assertTrue(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5=!=5);}")));
         //changing a final variable error:
         String source1 = "package test; "+
-                        "public class Test { "+
-                            "public Test() { "+
-                                "final int x=3; x=5; System.out.println(\"lalala\"); "+
-                            "} "+
-                        "}";
+                "public class Test { "+
+                "public Test() { "+
+                "final int x=3; x=5; System.out.println(\"lalala\"); "+
+                "} "+
+                "}";
 
         assertTrue(haz.compilationErrors(createTestFileFromString(source1)));
     }
 
-    // TODO: @RoeyMaor I made junit to ignore this test because it was failing (probably because CompilationCenter). Ask @RoeiRaz for more info
-    public void ignoreTestNoSyntaxErrors(){
+    public void testNoCompilationErrors(){
         assertFalse(haz.syntaxErrors(createTestExpressionFromString("5 == 5")));
         assertFalse(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return false;}")));
         assertFalse(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5==5);}")));
         String source2 = "package test; "+
-                            "public class Test { "+
-                                "public Test() { "+
-                                    "final int x=3; System.out.println(\"lalala\"); "+
-                                "} "+
-                          "}";
-
+                "public class Test { "+
+                "public Test() { "+
+                "final int x=3; System.out.println(\"lalala\"); "+
+                "} "+
+                "}";
         assertFalse(haz.compilationErrors(createTestFileFromString(source2)));
+
     }
 
 }
