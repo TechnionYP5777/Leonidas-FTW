@@ -74,8 +74,6 @@ public enum Toolbox {
                 .filter(tipper -> tipper.canTip(element)) //
                 .findFirst()
                 .get().tip(element).go(new PsiRewrite().psiFile(psiFile).project(project));
-
-        //.forEach(tipper -> tipper.tip(element).go(new PsiRewrite().psiFile(psiFile).project(project)));
         return this;
     }
 
