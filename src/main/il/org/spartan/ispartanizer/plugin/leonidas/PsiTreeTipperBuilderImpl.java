@@ -90,6 +90,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
         File file = new File(this.getClass().getResource(FILE_PATH + fileName).getPath());
+        assert(file != null);
         return PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(fileName,
                 FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
                 String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));

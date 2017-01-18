@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.PsiFile;
+import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilderImpl;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 
 
 /**
@@ -36,8 +38,10 @@ public class CompilationCenter {
             return;
         }
 
-        assert(CompilationCenter.class.getClassLoader().getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME) != null);
-        dummyCompilationTestFile = new File(CompilationCenter.class.getClassLoader().getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
+        assert(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME) != null);
+        System.out.println(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
+        dummyCompilationTestFile = new File(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
+        System.out.println(dummyCompilationTestFile.canWrite());
         compiler = ToolProvider.getSystemJavaCompiler();
         output = new ByteArrayOutputStream();
         errors = new ByteArrayOutputStream();
@@ -64,7 +68,7 @@ public class CompilationCenter {
         }
         String source = file.getText();
         try {
-            Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
+            Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE);
         } catch (IOException e) {
             e.printStackTrace();
         }
