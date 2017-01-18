@@ -4,7 +4,7 @@ import il.org.spartan.ispartanizer.auxilary_layer.CompilationCenter;
 import il.org.spartan.ispartanizer.auxilary_layer.haz;
 
 /**
- * Created by maorroey on 1/4/2017.
+ * Created by Roey Maor on 1/4/2017.
  */
 public class OptimisticTest extends TipperTest {
 

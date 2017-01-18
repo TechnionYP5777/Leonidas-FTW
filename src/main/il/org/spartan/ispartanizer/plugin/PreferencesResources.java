@@ -5,7 +5,7 @@ import il.org.spartan.ispartanizer.plugin.tipping.TipperCategory;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * @author maorroey
+ * @author Yossi Gil, Roey Maor
  * @since 03-12-2016
  */
 public class PreferencesResources {

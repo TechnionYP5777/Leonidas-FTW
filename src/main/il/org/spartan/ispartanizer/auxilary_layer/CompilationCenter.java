@@ -13,10 +13,12 @@ import java.nio.file.Files;
 
 /**
  * A static util class that handles compilation inside the code
- * @author maorroey
+ * @author Roey Maor
  * @since 06-01-2017
  */
 public class CompilationCenter {
+    private static final String DUMMY_DIR_PATH = "/spartanizer/CompiledDummy/";
+    private static final String DUMMY_FILE_NAME = "Test.java";
     private static File dummyCompilationTestFile;
     private static JavaCompiler compiler;
     private static boolean initialized = false;
@@ -24,24 +26,25 @@ public class CompilationCenter {
     private static ByteArrayOutputStream errors;
 
     /**
-     * TODO @maorroey please comment
+     * initialize the compilation center:
+     * -dummy directory and file
+     * -compiler
+     * -output streams
      */
     public static void initialize(){
         if(initialized){
             return;
         }
-        File root = new File("/dummyJavaTestDir");
-        dummyCompilationTestFile = new File(root, "compilationTest/Test.java");
-        dummyCompilationTestFile.getParentFile().mkdirs();
+
+        assert(CompilationCenter.class.getClassLoader().getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME) != null);
+        dummyCompilationTestFile = new File(CompilationCenter.class.getClassLoader().getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
         compiler = ToolProvider.getSystemJavaCompiler();
         output = new ByteArrayOutputStream();
         errors = new ByteArrayOutputStream();
         initialized = true;
     }
 
-    /**
-     * TODO @maorroey please comment
-     */
+
     public static boolean hasCompilationErrors(PsiFile file) {
         compile(file);
         return errors.toString().length() != 0;
