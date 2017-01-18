@@ -8,6 +8,8 @@ import javax.tools.ToolProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -39,7 +41,8 @@ public class CompilationCenter {
         }
 
         assert(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME) != null);
-        dummyCompilationTestFile = new File(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
+        String fixedPath = Utils.fixSpacesProblemOnPath(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
+        dummyCompilationTestFile = new File(fixedPath);
         compiler = ToolProvider.getSystemJavaCompiler();
         output = new ByteArrayOutputStream();
         errors = new ByteArrayOutputStream();

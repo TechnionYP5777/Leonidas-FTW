@@ -9,6 +9,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -135,5 +137,21 @@ public enum Utils {
             }
         });
         return w.get();
+    }
+
+    /**
+     * fixed problems on machines where the project path has spaces in it:
+     * the .getPath() of getResource inserts %20 instead of spaces
+     * @param path the path to be fixed
+     * @return fixed path. on error, returns null
+     */
+    public static String fixSpacesProblemOnPath(String path){
+        String fixedPath = null;
+        try {
+            fixedPath = URLDecoder.decode(path, "UTF-8");
+        } catch(UnsupportedEncodingException u){
+
+        }
+        return fixedPath;
     }
 }
