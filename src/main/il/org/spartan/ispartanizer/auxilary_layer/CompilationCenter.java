@@ -44,12 +44,20 @@ public class CompilationCenter {
         initialized = true;
     }
 
-
+    /**
+     * Checks whether or not the given PsiFile has any compilation errors
+     * @param file
+     * @return has any compilation errors
+     */
     public static boolean hasCompilationErrors(PsiFile file) {
         compile(file);
         return errors.toString().length() != 0;
     }
 
+    /**
+     * Compile the given PsiFile and update the ourput buffers accordingly
+     * @param file
+     */
     private static void compile(PsiFile file){
         if(!initialized){
             initialize();
@@ -66,7 +74,8 @@ public class CompilationCenter {
     }
 
     /**
-     * TODO @maorroey please comment
+     *
+     * @return The compilation errors that result from the latest compile with the compile function
      */
     public static String getLatestCompilationErrors(){
         if(!initialized){
@@ -76,7 +85,8 @@ public class CompilationCenter {
     }
 
     /**
-     * TODO @maorroey please comment
+     *
+     * @return The compilation output that result from the latest compile with the compile function
      */
     public static String getLatestCompilationOutput(){
         if(!initialized){
