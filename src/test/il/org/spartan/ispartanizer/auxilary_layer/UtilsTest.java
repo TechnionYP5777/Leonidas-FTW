@@ -31,30 +31,57 @@ public class UtilsTest extends TipperTest {
         /*
             the assert statement is used as a latch to check if it is in a parent class or not
          */
-        String classExistsSource1 = "package test; "+
-                "public class Test { "+
-                "public Test() { "+
-                "final int x=3; assert(true); System.out.println(\"lalala\"); "+
-                "} "+
+        String classExistsSource1 = "package test; " +
+                "public class Test { " +
+                "public Test() { " +
+                "final int x=3; assert(true); System.out.println(\"lalala\"); " +
+                "} " +
                 "}";
 
-        PsiFile classExistsFile1 = createFile(dummyFileName,classExistsSource1);
+        PsiFile classExistsFile1 = createFile(dummyFileName, classExistsSource1);
         PsiAssertStatement assertInSource1 = Utils.getChildrenOfType(classExistsFile1, PsiAssertStatement.class).get(0);
 
         String classExistsSource2 =
-                "public Test() { "+
-                "final int x=3; assert(true); System.out.println(\"lalala\"); "+
-                "} ";
+                "public Test() { " +
+                        "final int x=3; assert(true); System.out.println(\"lalala\"); " +
+                        "} ";
 
         PsiMethod methodIn2 = createTestMethodFromString(classExistsSource2);
 
         assertTrue(Utils.findClass(assertInSource1) != null);
         assertTrue(Utils.findClass(assertInSource1).getName().equals("Test"));
         assertTrue(Utils.findClass(methodIn2) == null);
-
+        assertTrue(Utils.findClass(null) == null);
     }
 
     public void testfindMethodByName() throws Exception {
+        String source1 =  "public class Test{ "+
+                "public Test() { "+
+                "final int x=3; assert(true); System.out.println(\"lalala\"); "+
+                "} "+
+                "}";
+
+        String source2 = "public class Test2{ "+
+                            "double d = 3.0;" +
+                            "}";
+
+        String source3 =  "public class Test{ "+
+                "public mish() { "+
+                "} "+
+                "public mumkin() {"+
+                "} "+
+                "}";
+
+        PsiClass class1 = createTestClassFromString(source1);
+        PsiClass class2 = createTestClassFromString(source2);
+        PsiClass class3 = createTestClassFromString(source3);
+
+        assertTrue(Utils.findMethodByName(class1,"Test") != null);
+        assertTrue(Utils.findMethodByName(class1,"") == null);
+        assertTrue(Utils.findMethodByName(class2,"Test2") == null);
+        assertTrue(Utils.findMethodByName(class3,"mish") != null);
+        assertTrue(Utils.findMethodByName(class3,"mumkin") != null);
+        assertTrue(Utils.findMethodByName(null,"mumkin") == null);
 
     }
 
