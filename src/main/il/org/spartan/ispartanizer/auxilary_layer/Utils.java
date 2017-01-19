@@ -24,7 +24,7 @@ public enum Utils {
     ;
 
     public static <T> boolean in(T candidate, T... list) {
-        return Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
+        return list!=null && Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
     }
 
     public static PsiManager getPsiManager(Project project) {
