@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.plugin;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
@@ -21,7 +22,7 @@ public enum Toolbox {
 
     static boolean wasInitialize = false;
     final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap;
-    Set<PsiFile> excludedFiles;
+    Set<VirtualFile> excludedFiles;
 
     Toolbox() {
         this.tipperMap = new HashMap<>();
@@ -87,16 +88,24 @@ public enum Toolbox {
         return (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element))) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element));
     }
 
+    public <T extends PsiElement> Tipper<T> getTipper(PsiElement element) {
+        if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) &&
+                tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
+            return tipperMap.get(type.of(element)).stream().filter(tip -> tip.canTip(element)).findFirst().get();
+        }
+        return null;
+    }
+
     public boolean checkExcluded(PsiFile f) {
-        return f == null || excludedFiles.contains(f);
+        return f == null || excludedFiles.contains(f.getVirtualFile());
     }
 
     public void excludeFile(PsiFile f) {
-        excludedFiles.add(f);
+        excludedFiles.add(f.getVirtualFile());
     }
 
     public void includeFile(PsiFile f) {
-        excludedFiles.remove(f);
+        excludedFiles.remove(f.getVirtualFile());
     }
 
     private boolean canTipType(Class<? extends PsiElement> t) {

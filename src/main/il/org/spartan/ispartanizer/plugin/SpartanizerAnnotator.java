@@ -23,21 +23,19 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SpartanizerAnnotator implements Annotator {
 
-    AnnotationHolder myAH;
     @Override
     public void annotate(@NotNull final PsiElement e, @NotNull AnnotationHolder h) {
 
-        if (!Spartanizer.canTip(e))
+        if (!Spartanizer.canTip(e) || e.getContainingFile().getName().contains("Spartanizer"))
             return;
 
-        myAH = h;
         Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
         annotation.registerFix(new IntentionAction() {
             @Nls
             @NotNull
             @Override
             public String getText() {
-                return "Spartanize";
+                return Toolbox.getInstance().getTipper(e).description(e);
             }
 
             @Nls
@@ -51,7 +49,6 @@ public class SpartanizerAnnotator implements Annotator {
             public boolean isAvailable(@NotNull Project __, Editor e, PsiFile f) {
                 return true;
             }
-
             @Override
             public void invoke(@NotNull Project p, Editor ed, PsiFile f) throws IncorrectOperationException {
                 Spartanizer.spartanizeCode(Utils.findClass(e), e, p, f);
@@ -69,46 +66,4 @@ public class SpartanizerAnnotator implements Annotator {
 
     }
 
-    public void annotate(@NotNull final PsiElement e) {
-
-        if (!Spartanizer.canTip(e))
-            return;
-
-        Annotation annotation = myAH.createInfoAnnotation(e, "Spartanize This!");
-        annotation.registerFix(new IntentionAction() {
-            @Nls
-            @NotNull
-            @Override
-            public String getText() {
-                return "Spartanize";
-            }
-
-            @Nls
-            @NotNull
-            @Override
-            public String getFamilyName() {
-                return "SpartanizerAction";
-            }
-
-            @Override
-            public boolean isAvailable(@NotNull Project __, Editor e, PsiFile f) {
-                return true;
-            }
-
-            @Override
-            public void invoke(@NotNull Project p, Editor ed, PsiFile f) throws IncorrectOperationException {
-                Spartanizer.spartanizeCode(Utils.findClass(e), e, p, f);
-            }
-
-            @Override
-            public boolean startInWriteAction() {
-                return false;
-            }
-        });
-
-        TextAttributesKey.createTextAttributesKey("");
-        annotation.setEnforcedTextAttributes(
-                (new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0)));
-
-    }
 }

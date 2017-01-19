@@ -5,6 +5,7 @@ import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub;
 import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
 
 /**
+ * Remove redundent curly braces
  * @author Oren Afek
  * @since 06/01/17
  */

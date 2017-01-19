@@ -32,4 +32,6 @@ public interface PsiTreeTipperBuilder {
 
     Class<? extends PsiElement> getRootElementType();
 
+    String getDescription();
+
 }

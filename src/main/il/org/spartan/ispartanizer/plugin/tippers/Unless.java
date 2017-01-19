@@ -29,7 +29,7 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public String description(PsiConditionalExpression psiConditionalExpression) {
-        return "Change conditional expression: " + psiConditionalExpression.getText() + " to fluent Unless";
+        return "Change " + psiConditionalExpression.getText() + " to fluent eval().unless()";
     }
 
     /**

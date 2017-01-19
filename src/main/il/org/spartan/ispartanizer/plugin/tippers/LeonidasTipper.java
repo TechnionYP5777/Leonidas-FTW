@@ -42,7 +42,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
     @Override
     public String description(PsiElement e) {
-        return f.getName();
+        return b.getDescription();
     }
 
     @Override

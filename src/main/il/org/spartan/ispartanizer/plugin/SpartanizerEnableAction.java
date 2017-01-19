@@ -1,6 +1,6 @@
 package il.org.spartan.ispartanizer.plugin;
 
-import com.intellij.codeInsight.daemon.impl.DefaultHighlightVisitorBasedInspection;
+import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -8,38 +8,11 @@ import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.FileTime;
-import java.time.Instant;
-
 /**
  * @author michalcohen
  * @since 03-01-2017
  */
 public class SpartanizerEnableAction extends AnAction {
-    @Override
-    public void update(AnActionEvent e) {
-        Presentation presentation = e.getPresentation();
-
-        if (Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE))) {
-            presentation.setText("Enable Spartanization");
-        } else {
-            presentation.setText("Disable Spartanization");
-        }
-        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
-        psiFile.getVirtualFile().refresh(true, true);
-        File f = new File(psiFile.getVirtualFile().getPath());
-        try {
-            Files.setLastModifiedTime(f.toPath(), FileTime.from(Instant.now()));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        DefaultHighlightVisitorBasedInspection.runGeneralHighlighting(psiFile, false, true, true);
-
-    }
-
     @Override
     public void actionPerformed(AnActionEvent e) {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
@@ -50,5 +23,12 @@ public class SpartanizerEnableAction extends AnAction {
         } else {
             tb.excludeFile(psiFile);
         }
+        Presentation presentation = e.getPresentation();
+        if (Toolbox.getInstance().checkExcluded(e.getData(LangDataKeys.PSI_FILE))) {
+            presentation.setText("Enable Spartanization");
+        } else {
+            presentation.setText("Disable Spartanization");
+        }
+        DaemonCodeAnalyzer.getInstance(p).restart();
     }
 }

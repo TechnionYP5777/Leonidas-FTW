@@ -30,6 +30,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private PsiElement fromTree;
     private PsiElement toTree;
     private Class<? extends PsiElement> fromRootElementType;
+    private String descrption;
 
     public PsiTreeTipperBuilderImpl() {
         built = false;
@@ -45,6 +46,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
         PsiFile root = getPsiTreeFromFile(fileName);
+        descrption = Utils.getClassFromFile(root).getDocComment().getText().split("\n")[1];
         fromTree = buildMethodTree(root, FROM_METHOD_NAME);
         toTree = buildMethodTree(root, TO_METHOD_NAME);
         built = true;
@@ -87,7 +89,6 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return toTree.copy();
     }
 
-
     private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
         File file = new File(Utils.fixSpacesProblemOnPath(this.getClass().getResource(FILE_PATH + fileName).getPath()));
         assert(file != null);
@@ -111,7 +112,6 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod method) {
-
         return Arrays.stream(method.getModifierList().getAnnotations())
                 .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
                 .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
@@ -179,6 +179,11 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     @Override
     public Class<? extends PsiElement> getRootElementType() {
         return fromRootElementType;
+    }
+
+    @Override
+    public String getDescription() {
+        return descrption;
     }
 
 }
