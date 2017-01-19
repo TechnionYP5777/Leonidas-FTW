@@ -3,6 +3,7 @@ package il.org.spartan.ispartanizer.tippers;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
+import il.org.spartan.ispartanizer.auxilary_layer.Utils;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import org.apache.commons.lang.StringUtils;
 
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /**
- * @author Oren Afek
+ * @author Oren Afek, Roey Maor
  * @since 26/12/16
  */
 public abstract class TipperTest extends PsiTestCase {
@@ -32,6 +33,16 @@ public abstract class TipperTest extends PsiTestCase {
 
     protected PsiExpression createTestExpressionFromString(String s) {
         return getTestFactory().createExpressionFromText(s, getTestFile());
+    }
+
+    protected PsiClass createTestClassFromString(String s){
+        PsiClass dummyClass = getTestFactory().createClassFromText(s, getTestFile());
+        //for some reason classes that are created with file factory are wrapped with class _DUMMY_....
+        if (dummyClass==null){
+            return null;
+        }
+        PsiClass realClass = Utils.getChildrenOfType(dummyClass,PsiClass.class).get(0);
+        return realClass;
     }
 
     protected PsiClass createTestClassFromString(String javadoc, String className, String classBody, String... classModifiers) {

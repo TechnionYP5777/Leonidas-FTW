@@ -32,6 +32,11 @@ public enum Utils {
     }
 
     public static PsiClass findClass(PsiElement element) {
+
+        if(element == null){
+            return null;
+        }
+
         if (element instanceof PsiClass) {
             return (PsiClass) element;
         }
@@ -44,10 +49,13 @@ public enum Utils {
     }
 
     public static PsiMethod findMethodByName(PsiClass clazz, String name) {
+        if(clazz == null){
+            return null;
+        }
+
         Arrays.stream(clazz.getMethods());
         PsiMethod[] methods = clazz.getMethods();
-
-        // use reverse to find from botton as the duplicate conflict resolution policy requires this
+        // use reverse to find from bottom as the duplicate conflict resolution policy requires this
         for (int i = methods.length - 1; i >= 0; i--) {
             PsiMethod method = methods[i];
             if (name.equals(method.getName()))
