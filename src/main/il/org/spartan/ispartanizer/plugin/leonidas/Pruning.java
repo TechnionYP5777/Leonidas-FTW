@@ -25,6 +25,7 @@ public class Pruning {
      * @param e - the root from which all such stubs are pruned
      */
     public static PsiElement prune(PsiElement e) {
+        assert(e!=null);
         Utils.getChildrenOfType(e, PsiMethodCallExpression.class).forEach(exp -> {
             Arrays.stream(GenericPsiElementStub.StubName.values())
                     .filter(x -> x.stubName().equals(exp.getMethodExpression().getText()))

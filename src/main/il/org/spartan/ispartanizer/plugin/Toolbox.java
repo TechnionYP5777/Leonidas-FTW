@@ -4,7 +4,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiInvalidElementAccessException;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
+import il.org.spartan.ispartanizer.auxilary_layer.Utils;
 import il.org.spartan.ispartanizer.auxilary_layer.type;
 import il.org.spartan.ispartanizer.plugin.tippers.*;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
@@ -50,8 +52,8 @@ public enum Toolbox {
     }
 
     private static void createLeonidasTipperBuilders() {
-        List<File> tippers = Arrays.asList(new File(Toolbox.class
-                .getResource("/spartanizer/LeonidasTippers").getPath()).listFiles());
+        List<File> tippers = Arrays.asList(new File(Utils.fixSpacesProblemOnPath(Toolbox.class
+                .getResource("/spartanizer/LeonidasTippers").getPath())).listFiles());
         tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
 
@@ -89,10 +91,10 @@ public enum Toolbox {
     }
 
     public <T extends PsiElement> Tipper<T> getTipper(PsiElement element) {
-        if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) &&
-                tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
-            return tipperMap.get(type.of(element)).stream().filter(tip -> tip.canTip(element)).findFirst().get();
-        }
+            if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) &&
+                    tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
+                return tipperMap.get(type.of(element)).stream().filter(tip -> tip.canTip(element)).findFirst().get();
+            }
         return null;
     }
 

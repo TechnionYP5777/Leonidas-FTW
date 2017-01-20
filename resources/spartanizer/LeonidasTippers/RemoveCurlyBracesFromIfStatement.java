@@ -13,7 +13,7 @@ public class RemoveCurlyBracesFromIfStatement extends GenericPsiElementStub {
 
     @Leonidas(value = PsiIfStatement.class)
     public void from(){
-        if (booleanExpression(0)){
+        if (booleanExpression(0)) {
             statement(1);
         }
     }

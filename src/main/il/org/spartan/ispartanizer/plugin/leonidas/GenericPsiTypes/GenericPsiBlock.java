@@ -16,12 +16,12 @@ public class GenericPsiBlock extends GenericPsi{
 
     @Override
     public boolean isOfGenericType(PsiElement e) {
-        return iz.block(e);
+        return iz.blockStatement(e) || iz.block(e) || iz.statement(e);
     }
 
     @Override
     public String toString() {
-        return "Generic code-block" + inner.getUserData(KeyDescriptionParameters.ID);
+        return "Generic anyBlock" + inner.getUserData(KeyDescriptionParameters.ID);
     }
 
     @Override

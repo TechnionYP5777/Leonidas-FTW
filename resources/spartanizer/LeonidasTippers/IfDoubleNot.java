@@ -16,6 +16,7 @@ public class IfDoubleNot extends GenericPsiElementStub {
     public void from() {
         if (!(!(booleanExpression(0))))
             statement(1);
+
     }
 
     @Leonidas(PsiIfStatement.class)

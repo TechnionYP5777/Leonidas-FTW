@@ -64,6 +64,7 @@ public abstract class GenericPsiElementStub {
      * @param id the serial no to distinct between several identifiers in the same tipper
      */
     protected final void anyBlock(int id) {}
+    protected final void anyBlock() {}
 
     /**
      * method stub representing an array identifier for leonidas tippers
@@ -102,9 +103,7 @@ public abstract class GenericPsiElementStub {
 
         private String stubName;
 
-        StubName(String stubName) {
-            this.stubName = stubName;
-        }
+        StubName(String stubName) { this.stubName = stubName; }
 
         public static StubName valueOf(PsiMethodCallExpression expression) {
 

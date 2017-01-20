@@ -191,7 +191,7 @@ public enum iz {
     public static boolean conforms(PsiElement e1, PsiElement e2) {
         return iz.theSameType(e1, e2) ||
                (iz.expression(e1) && iz.genericExpression(e2))||
-               (iz.statement(e1) && iz.genericStatement(e2))||
+               (iz.statement(e1) && !iz.blockStatement(e1) && iz.genericStatement(e2))||
                (iz.block(e1) && iz.genereicBlock(e2));
     }
 
