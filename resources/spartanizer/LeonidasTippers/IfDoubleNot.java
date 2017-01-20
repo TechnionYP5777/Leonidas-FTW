@@ -13,11 +13,9 @@ import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
 public class IfDoubleNot extends GenericPsiElementStub {
 
     @Leonidas(PsiIfStatement.class)
-    public void from(){
-        if(!(!(booleanExpression(0))))
+    public void from() {
+        if (!(!(booleanExpression(0))))
             statement(1);
-
-
     }
 
     @Leonidas(PsiIfStatement.class)

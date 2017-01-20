@@ -19,7 +19,7 @@ import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParamete
 public class Pruning {
 
     /**
-     * Prunes all the stubs from the form "stub();" where "stub()"
+     * Prunes all the stubs of the form "stub();" where "stub()"
      * is a method call for the method defined in GenericPsiElementStub.
      *
      * @param e - the root from which all such stubs are pruned
@@ -28,7 +28,7 @@ public class Pruning {
         Utils.getChildrenOfType(e, PsiMethodCallExpression.class).forEach(exp -> {
             Arrays.stream(GenericPsiElementStub.StubName.values())
                     .filter(x -> x.stubName().equals(exp.getMethodExpression().getText()))
-                    .findFirst()
+                    .findFirst() //assuming there is only one enum value in StubName that fits the stub kind.
                     .ifPresent(y -> {
                         PsiElement prev = exp;
                         PsiElement next = exp.getParent();
@@ -38,7 +38,7 @@ public class Pruning {
                         }
                         GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
                         if (x != null) {
-                            prev.replace(x);
+                            prev.replace(x); //replace the stub tree with the generic psi type tree
                         }
                     });
         });
