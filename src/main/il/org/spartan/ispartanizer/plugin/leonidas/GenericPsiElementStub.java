@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiType;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
@@ -96,7 +97,8 @@ public abstract class GenericPsiElementStub {
         BOOLEAN_EXPRESSION("booleanExpression"),
         STATEMENT("statement"),
         IDENTIFIER("identifier"),
-        ARRAY_IDENTIFIER("arrayIdentifier");
+        ARRAY_IDENTIFIER("arrayIdentifier"),
+        ANY_BLOCK("anyBlock");
 
         private String stubName;
 
@@ -136,6 +138,9 @@ public abstract class GenericPsiElementStub {
                     break;
                 case STATEMENT:
                     x = new GenericPsiStatement(inner);
+                    break;
+                case ANY_BLOCK:
+                    x = new GenericPsiBlock(inner);
                     break;
                 default:
                     return null;

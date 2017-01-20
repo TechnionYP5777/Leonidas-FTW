@@ -161,20 +161,21 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
-    private void handleStubMethodCalls(PsiElement method, String methodName) {
-        method.accept(new JavaRecursiveElementVisitor() {
+    private void handleStubMethodCalls(PsiElement innerTree, String outerMethodName) {
+        innerTree.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 if (!iz.stubMethodCall(expression)) {
                     return;
                 }
                 Integer id;
-                if (methodName.equals(FROM_METHOD_NAME)) {
+                if (outerMethodName.equals(FROM_METHOD_NAME)) {
                     if (step.firstParamterExpression(expression) != null) {
                         mapToDef.put(az.integer(step.firstParamterExpression(expression)), defId);
                     }
                     id = defId++;
                 } else {
+                    //TODO: please explain the following line. @orenafek
                     id = step.firstParamterExpression(expression) != null ? mapToDef.get(az.integer(step.firstParamterExpression(expression))) : defId++;
                 }
                 addOrderToUserData(expression, id);
@@ -182,8 +183,8 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         });
     }
 
-    private void pruneStubChildren(PsiElement method) {
-        Pruning.prune(method);
+    private void pruneStubChildren(PsiElement innerTree) {
+        Pruning.prune(innerTree);
     }
 
     private PsiElement addOrderToUserData(PsiElement element, int order) {
