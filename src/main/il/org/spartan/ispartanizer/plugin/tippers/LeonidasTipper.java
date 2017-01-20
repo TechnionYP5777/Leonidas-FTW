@@ -14,6 +14,7 @@ import java.io.IOException;
 
 /**
  * From this class evey leonidas tipper will be instantiated.
+ *
  * @author michalcohen
  * @since 09-01-2017
  */
@@ -24,6 +25,15 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
     public LeonidasTipper(File f) {
         this.f = f;
+        try {
+            b.buildTipperPsiTree(f.getName());
+        } catch (IOException ignore) {
+        }
+    }
+
+    public LeonidasTipper(PsiTreeTipperBuilder builder, File file) {
+        b = builder;
+        f = file;
         try {
             b.buildTipperPsiTree(f.getName());
         } catch (IOException ignore) {

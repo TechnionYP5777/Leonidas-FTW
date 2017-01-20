@@ -32,3 +32,6 @@ intellij {
     version 'IC-2016.3'
     pluginName 'IntelliJ-Spartanizer'
 }
+
+repositories { jcenter() }
+dependencies { testCompile "org.mockito:mockito-core:2.+" }
