@@ -192,7 +192,7 @@ public enum iz {
         return iz.theSameType(e1, e2) ||
                (iz.expression(e1) && iz.genericExpression(e2))||
                (iz.statement(e1) && !iz.blockStatement(e1) && iz.genericStatement(e2))||
-               (iz.block(e1) && iz.genereicBlock(e2));
+               ((iz.block(e1) || iz.statement(e1)) && iz.genereicBlock(e2));
     }
 
     public static boolean whiteSpace(PsiElement e) {
