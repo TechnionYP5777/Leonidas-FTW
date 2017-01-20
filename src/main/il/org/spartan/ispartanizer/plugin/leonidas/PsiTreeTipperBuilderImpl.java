@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -32,8 +34,12 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private Class<? extends PsiElement> fromRootElementType;
     private String descrption;
 
+    private int defId;
+    private Map<Integer, Integer> mapToDef = new HashMap<>();
+
     public PsiTreeTipperBuilderImpl() {
         built = false;
+        defId = 0;
     }
 
     /**
@@ -60,7 +66,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
             fromRootElementType = rootType;
         }
         PsiElement tree = getTreeFromRoot(method, rootType);
-        handleStubMethodCalls(tree);
+        handleStubMethodCalls(tree, methodName);
         pruneStubChildren(tree);
         return tree;
     }
@@ -91,7 +97,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
         File file = new File(Utils.fixSpacesProblemOnPath(this.getClass().getResource(FILE_PATH + fileName).getPath()));
-        assert(file != null);
+        assert (file != null);
         return PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(fileName,
                 FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
                 String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
@@ -155,14 +161,23 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
-    private void handleStubMethodCalls(PsiElement method) {
+    private void handleStubMethodCalls(PsiElement method, String methodName) {
         method.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 if (!iz.stubMethodCall(expression)) {
                     return;
                 }
-                addOrderToUserData(expression, az.integer(step.firstParamterExpression(expression)));
+                Integer id;
+                if (methodName.equals(FROM_METHOD_NAME)) {
+                    if (step.firstParamterExpression(expression) != null) {
+                        mapToDef.put(az.integer(step.firstParamterExpression(expression)), defId);
+                    }
+                    id = defId++;
+                } else {
+                    id = step.firstParamterExpression(expression) != null ? mapToDef.get(az.integer(step.firstParamterExpression(expression))) : defId++;
+                }
+                addOrderToUserData(expression, id);
             }
         });
     }

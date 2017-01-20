@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 /**
  * This class defines methods that will represent generic structures of code
  * such as: statements, conditions, blocks, variable declaration and more.
+ *
  * @author Oren Afek
  * @since 06-01-2017
  */
@@ -25,6 +26,10 @@ public abstract class GenericPsiElementStub {
      * @return true
      */
     protected final boolean booleanExpression(int id) {
+        return booleanExpression();
+    }
+
+    protected final boolean booleanExpression() {
         return true;
     }
 
@@ -36,6 +41,9 @@ public abstract class GenericPsiElementStub {
     protected final void statement(int id) {
     }
 
+    protected final void statement() {
+    }
+
     /**
      * method stub representing an identifier for leonidas tippers
      *
@@ -43,6 +51,10 @@ public abstract class GenericPsiElementStub {
      * @return stub object
      */
     protected final Object identifier(int id) {
+        return identifier();
+    }
+
+    protected final Object identifier() {
         return new Object();
     }
 
@@ -52,8 +64,11 @@ public abstract class GenericPsiElementStub {
      * @param id the serial no to distinct between several array identifiers in the same tipper
      * @return stub array
      */
-
     protected final Object[] arrayIdentifier(int id) {
+        return arrayIdentifier();
+    }
+
+    protected final Object[] arrayIdentifier() {
         return new Object[0];
     }
 
@@ -63,8 +78,11 @@ public abstract class GenericPsiElementStub {
      * @param id the serial no to distinct between several array identifiers in the same tipper
      * @return stub array
      */
-
     protected final <T> Stream<T> streamMethodInvocations(int id) {
+        return streamMethodInvocations();
+    }
+
+    protected final <T> Stream<T> streamMethodInvocations() {
         return Stream.of();
     }
 
@@ -80,7 +98,7 @@ public abstract class GenericPsiElementStub {
             this.stubName = stubName;
         }
 
-        public static StubName valueOf(PsiMethodCallExpression expression){
+        public static StubName valueOf(PsiMethodCallExpression expression) {
 
             return Arrays.stream(values())
                     .filter(stub -> expression.getMethodExpression().getText().equals(stub.stubName()))
@@ -100,7 +118,7 @@ public abstract class GenericPsiElementStub {
             return String.format("%s();", stubName);
         }
 
-        public boolean matchesStubName(PsiMethodCallExpression e){
+        public boolean matchesStubName(PsiMethodCallExpression e) {
             return e.getMethodExpression().getText().equals(this.stubName);
         }
 
