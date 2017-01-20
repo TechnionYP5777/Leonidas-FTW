@@ -4,7 +4,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiInvalidElementAccessException;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Utils;
 import il.org.spartan.ispartanizer.auxilary_layer.type;
@@ -91,11 +90,14 @@ public enum Toolbox {
     }
 
     public <T extends PsiElement> Tipper<T> getTipper(PsiElement element) {
+        try {
             if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) &&
                     tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
                 return tipperMap.get(type.of(element)).stream().filter(tip -> tip.canTip(element)).findFirst().get();
             }
-        return null;
+        } catch (Exception ignore) {
+        }
+        return new NoTip<>();
     }
 
     public boolean checkExcluded(PsiFile f) {
