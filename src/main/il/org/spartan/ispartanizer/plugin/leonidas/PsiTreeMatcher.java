@@ -41,7 +41,7 @@ public class PsiTreeMatcher {
                      treeToMatchChild = step.nextSibling(treeToMatchChild)) {
             res = res && match(treeTemplateChild, treeToMatchChild);
         }
-        return treeTemplateChild == null && res;
+        return treeTemplateChild == null && (treeToMatchChild == null || iz.generic(treeTemplate)) && res;
     }
 
 }

@@ -9,6 +9,7 @@ import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub.StubName;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
@@ -19,6 +20,7 @@ import static com.intellij.psi.PsiModifier.STATIC;
 
 /**
  * Utils class that helps to check if a Psi element iz of a specific type
+ *
  * @author Oren Afek
  * @since 01-12-2016
  */
@@ -213,6 +215,10 @@ public enum iz {
 
     public static boolean javadoc(PsiElement e) {
         return typeCheck(PsiDocComment.class, e);
+    }
+
+    public static boolean generic(PsiElement e) {
+        return typeCheck(GenericPsi.class, e);
     }
 
     public static boolean genericExpression(PsiElement e) {
