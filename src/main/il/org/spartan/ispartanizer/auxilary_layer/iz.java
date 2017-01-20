@@ -10,6 +10,7 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub.StubName;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
@@ -46,6 +47,10 @@ public enum iz {
 
     public static boolean block(PsiElement element) {
         return typeCheck(PsiCodeBlock.class, element);
+    }
+
+    public static boolean genereicBlock(PsiElement element){
+        return typeCheck(GenericPsiBlock.class, element);
     }
 
     public static boolean blockStatement(PsiElement element) {
@@ -184,13 +189,10 @@ public enum iz {
      * e2 is the generic tree
      */
     public static boolean conforms(PsiElement e1, PsiElement e2) {
-        if (iz.theSameType(e1, e2)) {
-            return true;
-        }
-        if (iz.expression(e1) && iz.genericExpression(e2)) {
-            return true;
-        }
-        return iz.statement(e1) && iz.genericStatement(e2);
+        return iz.theSameType(e1, e2) ||
+               (iz.expression(e1) && iz.genericExpression(e2))||
+               (iz.statement(e1) && iz.genericStatement(e2))||
+               (iz.block(e1) && iz.genereicBlock(e2));
     }
 
     public static boolean whiteSpace(PsiElement e) {
