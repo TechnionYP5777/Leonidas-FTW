@@ -59,6 +59,12 @@ public abstract class GenericPsiElementStub {
     }
 
     /**
+     * method stub representing any code block
+     * @param id the serial no to distinct between several identifiers in the same tipper
+     */
+    protected final void anyBlock(int id) {}
+
+    /**
      * method stub representing an array identifier for leonidas tippers
      *
      * @param id the serial no to distinct between several array identifiers in the same tipper

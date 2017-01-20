@@ -43,7 +43,7 @@ public enum iz {
     }
 
     public static boolean block(PsiElement element) {
-        return typeCheck(PsiCodeBlockImpl.class, element);
+        return typeCheck(PsiCodeBlock.class, element);
     }
 
     public static boolean blockStatement(PsiElement element) {
