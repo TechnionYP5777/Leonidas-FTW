@@ -32,7 +32,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private PsiElement fromTree;
     private PsiElement toTree;
     private Class<? extends PsiElement> fromRootElementType;
-    private String descrption;
+    private String description;
 
     private int defId;
     private Map<Integer, Integer> mapToDef = new HashMap<>();
@@ -52,7 +52,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
         PsiFile root = getPsiTreeFromFile(fileName);
-        descrption = Utils.getClassFromFile(root).getDocComment().getText().split("\n")[1];
+        description = Utils.getClassFromFile(root).getDocComment().getText()
+                .split("\\n")[1].trim()
+                .split("\\*")[1].trim();
         fromTree = buildMethodTree(root, FROM_METHOD_NAME);
         toTree = buildMethodTree(root, TO_METHOD_NAME);
         built = true;
@@ -199,7 +201,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     @Override
     public String getDescription() {
-        return descrption;
+        return description;
     }
 
 }
