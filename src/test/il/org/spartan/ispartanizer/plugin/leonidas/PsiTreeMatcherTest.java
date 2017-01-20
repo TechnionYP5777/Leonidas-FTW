@@ -19,13 +19,6 @@ public class PsiTreeMatcherTest extends TipperTest {
     public void testMatch2() {
         PsiCodeBlock b = createTestCodeBlockFromString("{ int x = 5; }");
         b.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
-        b.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitStatement(PsiStatement statement) {
-                super.visitStatement(statement);
-                statement.deleteChildRange(statement.getFirstChild(), statement.getLastChild());
-            }
-        });
         PsiCodeBlock y = createTestCodeBlockFromString("{ int y = 10; }");
         assertTrue(PsiTreeMatcher.match(b, y));
     }
