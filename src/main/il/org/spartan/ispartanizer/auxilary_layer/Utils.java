@@ -73,9 +73,6 @@ public enum Utils {
     }
 
     public static boolean conforms(Class<?> from, Class<?> to) {
-        if (from == PsiMethod.class) {
-
-        }
         return from != null && (from == to ||
                 conforms(from.getSuperclass(), to) || (from.getInterfaces() != null &&
                 Arrays.stream(from.getInterfaces()).anyMatch(i -> conforms(i, to))));
@@ -83,13 +80,17 @@ public enum Utils {
 
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier i) {
         List<PsiIdentifier> identifiers = new ArrayList<>();
-
+        if(root == null || i == null){
+            return identifiers;
+        }
         root.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitIdentifier(PsiIdentifier identifier) {
                 super.visitIdentifier(identifier);
                 if (identifier.getText().equals(i.getText())) {
-                    identifiers.add(identifier);
+                    PsiElement context = identifier.getContext();
+                    if(iz.variable(context) || iz.referenceExpression(context))
+                        identifiers.add(identifier);
                 }
             }
         });

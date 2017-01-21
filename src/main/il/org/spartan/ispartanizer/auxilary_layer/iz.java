@@ -134,7 +134,7 @@ public enum iz {
         return typeCheck(PsiBinaryExpressionImpl.class, element);
     }
 
-    public static boolean referenceExpression(PsiExpression element) {
+    public static boolean referenceExpression(PsiElement element) {
         return typeCheck(PsiReferenceExpressionImpl.class, element);
     }
 
@@ -395,5 +395,9 @@ public enum iz {
      */
     static boolean interface¢(final PsiElement ¢) {
         return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isInterface());
+    }
+
+    static boolean variable(PsiElement element){
+        return typeCheck(PsiVariable.class, element);
     }
 }
