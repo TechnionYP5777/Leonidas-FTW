@@ -38,4 +38,18 @@ public class DelegatorTest extends TipperTest {
         PsiMethod method = createTestMethodFromString("int foo(int z) {return bar(z, 1);}");
         Assert.assertTrue(new Delegator().canTip(method));
     }
+
+    public void testG() {
+        String from = "int foo(int z) {return bar(z, 1);}";
+        String to = "/**" + new Delegator().tag() + "*/" + from;
+        PsiMethod method = createTestMethodFromString(from);
+        Assert.assertEquals(new Delegator().createReplacement(method).getText(), to);
+    }
+
+    public void testH() {
+        String from = "void foo(int x) {boo(x);}";
+        String to = "/**" + new Delegator().tag() + "*/" + from;
+        PsiMethod method = createTestMethodFromString(from);
+        Assert.assertEquals(new Delegator().createReplacement(method).getText(), to);
+    }
 }
