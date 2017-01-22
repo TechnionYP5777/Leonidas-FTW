@@ -49,7 +49,7 @@ public enum iz {
         return typeCheck(PsiCodeBlock.class, element);
     }
 
-    public static boolean genereicBlock(PsiElement element){
+    public static boolean genereicBlock(PsiElement element) {
         return typeCheck(GenericPsiBlock.class, element);
     }
 
@@ -190,9 +190,9 @@ public enum iz {
      */
     public static boolean conforms(PsiElement e1, PsiElement e2) {
         return iz.theSameType(e1, e2) ||
-               (iz.expression(e1) && iz.genericExpression(e2))||
-               (iz.statement(e1) && !iz.blockStatement(e1) && iz.genericStatement(e2))||
-               ((iz.block(e1) || iz.statement(e1)) && iz.genereicBlock(e2));
+                (iz.expression(e1) && iz.genericExpression(e2)) ||
+                (iz.statement(e1) && !iz.blockStatement(e1) && iz.genericStatement(e2)) ||
+                ((iz.block(e1) || iz.statement(e1)) && iz.genereicBlock(e2));
     }
 
     public static boolean whiteSpace(PsiElement e) {
@@ -397,7 +397,7 @@ public enum iz {
         return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isInterface());
     }
 
-    static boolean variable(PsiElement element){
+    static boolean variable(PsiElement element) {
         return typeCheck(PsiVariable.class, element);
     }
 }

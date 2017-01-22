@@ -5,6 +5,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
@@ -407,6 +408,44 @@ public class izTest extends TipperTest {
         assertFalse(iz.javadoc(e2));
         PsiElement e3 = createTestCommentFromString("/*comment*/");
         assertFalse(iz.javadoc(e3));
+    }
+
+    public void testGeneric() {
+        PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
+        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        assertTrue(iz.generic(genericPsiBlock));
+
+        psiElement = createTestStatementFromString("int x=0;");
+        GenericPsiStatement genericPsiStatement = new GenericPsiStatement(psiElement);
+        assertTrue(iz.generic(genericPsiStatement));
+
+        psiElement = createTestExpressionFromString("x+y");
+        PsiType psiType = createTestType("Integer");
+        GenericPsiExpression genericPsiExpression = new GenericPsiExpression(psiType, psiElement);
+        assertTrue(iz.generic(genericPsiExpression));
+
+        assertFalse(iz.generic(psiElement));
+    }
+
+    public void testGenericExpression() {
+        PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
+        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        assertFalse(iz.genericExpression(genericPsiBlock));
+
+        psiElement = createTestExpressionFromString("x+y");
+        PsiType psiType = createTestType("Integer");
+        GenericPsiExpression genericPsiExpression = new GenericPsiExpression(psiType, psiElement);
+        assertTrue(iz.genericExpression(genericPsiExpression));
+    }
+
+    public void testGenericStatement() {
+        PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
+        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        assertFalse(iz.genericStatement(genericPsiBlock));
+
+        psiElement = createTestStatementFromString("int x=0;");
+        GenericPsiStatement genericPsiStatement = new GenericPsiStatement(psiElement);
+        assertTrue(iz.genericStatement(genericPsiStatement));
     }
 
     public void testWhileStatement() throws Exception {
