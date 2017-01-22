@@ -448,6 +448,16 @@ public class izTest extends TipperTest {
         assertTrue(iz.genericStatement(genericPsiStatement));
     }
 
+    public void testGenericBlock() {
+        PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
+        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        assertTrue(iz.genericBlock(genericPsiBlock));
+
+        psiElement = createTestStatementFromString("int x=0;");
+        GenericPsiStatement genericPsiStatement = new GenericPsiStatement(psiElement);
+        assertFalse(iz.genericBlock(genericPsiStatement));
+    }
+
     public void testWhileStatement() throws Exception {
         PsiElement e1 = createTestWhileStatementFromString("while(true){}");
         assertTrue(iz.whileStatement(e1));

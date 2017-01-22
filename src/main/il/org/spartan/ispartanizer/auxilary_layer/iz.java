@@ -231,6 +231,10 @@ public enum iz {
         return typeCheck(GenericPsiStatement.class, e);
     }
 
+    public static boolean genericBlock(PsiElement e) {
+        return typeCheck(GenericPsiBlock.class, e);
+    }
+
     public static boolean whileStatement(PsiElement e) {
         return typeCheck(PsiWhileStatement.class, e);
     }
