@@ -85,20 +85,31 @@ public class UtilsTest extends TipperTest {
 
     }
 
-    public void testgetCurrentClass() throws Exception {
-
-    }
-
-    public void testconforms() throws Exception {
-
-    }
-
     public void testgetAllReferences() throws Exception {
-
+        PsiIdentifier id = createTestIdentifierFromString("id");
+        PsiIdentifier nonExistant = createTestIdentifierFromString("ahgrtjygk");
+        String m1String = "void foo(){ int k=5; }";
+        PsiMethod m1 = createTestMethodFromString(m1String);
+        String m2String = "int id() { int id=7; return 8;}";
+        PsiMethod m2 = createTestMethodFromString(m2String);
+        String m3String = "int id() { int id=7; return id;}";
+        PsiMethod m3 = createTestMethodFromString(m3String);
+        assertTrue(Utils.getAllReferences(null,null).size() == 0);
+        assertTrue(Utils.getAllReferences(null,id).size() == 0);
+        assertTrue(Utils.getAllReferences(m1,id).size() == 0);
+        assertTrue(Utils.getAllReferences(m2,id).size() == 1);
+        assertTrue(Utils.getAllReferences(m2,nonExistant).size() == 0);
+        assertTrue(Utils.getAllReferences(m3,id).size() == 2);
     }
 
-    public void testvisitRecursive() throws Exception {
-
+    public void ignoretestgetCurrentClass() throws Exception {
+        //Cannot be tested here, requires real editor with active moving caret
     }
+
+    public void ignoretestconforms() throws Exception {
+        //conforms is currently unused
+    }
+
+
 
 }

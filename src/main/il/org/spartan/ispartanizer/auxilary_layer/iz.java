@@ -49,7 +49,7 @@ public enum iz {
         return typeCheck(PsiCodeBlock.class, element);
     }
 
-    public static boolean genereicBlock(PsiElement element){
+    public static boolean genereicBlock(PsiElement element) {
         return typeCheck(GenericPsiBlock.class, element);
     }
 
@@ -134,7 +134,7 @@ public enum iz {
         return typeCheck(PsiBinaryExpressionImpl.class, element);
     }
 
-    public static boolean referenceExpression(PsiExpression element) {
+    public static boolean referenceExpression(PsiElement element) {
         return typeCheck(PsiReferenceExpressionImpl.class, element);
     }
 
@@ -190,9 +190,9 @@ public enum iz {
      */
     public static boolean conforms(PsiElement e1, PsiElement e2) {
         return iz.theSameType(e1, e2) ||
-               (iz.expression(e1) && iz.genericExpression(e2))||
-               (iz.statement(e1) && !iz.blockStatement(e1) && iz.genericStatement(e2))||
-               ((iz.block(e1) || iz.statement(e1)) && iz.genereicBlock(e2));
+                (iz.expression(e1) && iz.genericExpression(e2)) ||
+                (iz.statement(e1) && !iz.blockStatement(e1) && iz.genericStatement(e2)) ||
+                ((iz.block(e1) || iz.statement(e1)) && iz.genereicBlock(e2));
     }
 
     public static boolean whiteSpace(PsiElement e) {
@@ -229,6 +229,10 @@ public enum iz {
 
     public static boolean genericStatement(PsiElement e) {
         return typeCheck(GenericPsiStatement.class, e);
+    }
+
+    public static boolean genericBlock(PsiElement e) {
+        return typeCheck(GenericPsiBlock.class, e);
     }
 
     public static boolean whileStatement(PsiElement e) {
@@ -395,5 +399,9 @@ public enum iz {
      */
     static boolean interface¢(final PsiElement ¢) {
         return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isInterface());
+    }
+
+    static boolean variable(PsiElement element) {
+        return typeCheck(PsiVariable.class, element);
     }
 }
