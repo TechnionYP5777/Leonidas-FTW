@@ -5,24 +5,26 @@ import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub;
 import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
 
 /**
- * Replace if(!(!(b))); with if(b)
+ * Replace if(b){;} else{s;} with if(!b){s;}
  *
  * @author Oren Afek
- * @since 01-12-17
+ * @since 10/01/17
  */
-public class IfDoubleNot extends GenericPsiElementStub {
+public class IfEmptyThen3 extends GenericPsiElementStub {
 
     @Leonidas(PsiIfStatement.class)
-    public void from() {
-        if (!(!(booleanExpression(0))))
-            anyBlock(1);
+    public void from(){
+        if(booleanExpression(0)) {
 
+        }
+        else{
+            statement(1);
+        }
     }
 
     @Leonidas(PsiIfStatement.class)
-    public void to() {
-        if (booleanExpression(0))
-            anyBlock(1);
-
+    public void to(){
+        if(!(booleanExpression(0)))
+            statement(1);
     }
 }

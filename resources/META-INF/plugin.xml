@@ -1,8 +1,8 @@
 <idea-plugin version="2">
     <id>il.ac.technion.yearlyproject2016.team8</id>
     <name>Spartanizer</name>
-    <version>0.1</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">Team 8</vendor>
+    <version>0.2</version>
+    <vendor email="oren.afek@cs.technion.ac.il" url="http://www.cs.technion.ac.il">Team 8</vendor>
 
     <description><![CDATA[
       Spartanizer plugin for IntelliJ

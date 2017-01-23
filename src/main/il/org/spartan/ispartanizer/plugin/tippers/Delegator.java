@@ -16,7 +16,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
     }
 
     protected boolean hasOneStatement(PsiCodeBlock codeBlock) {
-        return codeBlock.getStatements().length == 1;
+        return (codeBlock != null) && codeBlock.getStatements().length == 1;
     }
 
     protected boolean hasOnlyMethodCall(PsiCodeBlock codeBlock) {
