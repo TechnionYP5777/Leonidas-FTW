@@ -19,17 +19,7 @@ See https://github.com/SpartanRefactoring/Spartanizer
 The plugin can be installed in one of two options:
 ### Option 1 - Download and Install from JetBrains Plugins Repository
 - Open Intellij IDEA Community Edition
-- Click On File -> Settings -> Plugins -> Install il.org.spartan.ispartanizer.plugin from disk
-
-![image](https://cloud.githubusercontent.com/assets/15859817/21104064/ce276d7a-c08d-11e6-9ce6-32698e89cc71.png)
-- Go to: https://github.com/TechnionYP5777/IntelliJ-Spartanizer/releases
-
-![1](https://cloud.githubusercontent.com/assets/15859817/21103983/64400a8e-c08d-11e6-96b6-f14785bf132a.PNG)
-- Click On the "IntelliJSpartanizer.jar"
-- Save the file on your disk, remember the location
-- Open Intellij IDEA
-- Click On File -> Settings -> Plugins -> Browse repositories
-
+- Go to On File -> Settings -> Plugins -> Browse repositories
 
 ![image](https://cloud.githubusercontent.com/assets/15859817/21104064/ce276d7a-c08d-11e6-9ce6-32698e89cc71.png)
 
@@ -48,7 +38,7 @@ The plugin can be installed in one of two options:
 - Click On the "IntelliJSpartanizer.jar"
 - Save the file on your disk, remember the location
 - Open Intellij IDEA
-- Click On File -> Settings -> Plugins -> Install il.org.spartan.ispartanizer.plugin from disk
+- Go to File -> Settings -> Plugins -> Install il.org.spartan.ispartanizer.plugin from disk
 
 ![image](https://cloud.githubusercontent.com/assets/15859817/21104064/ce276d7a-c08d-11e6-9ce6-32698e89cc71.png)
 
