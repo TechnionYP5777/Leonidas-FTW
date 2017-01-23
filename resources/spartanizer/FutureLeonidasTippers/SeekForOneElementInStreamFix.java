@@ -11,7 +11,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Replace arr[index]; index++ with arr[index++]
+ * Replace stream.[...].collect(); return !l.isEmpty() ? l.get(0) : null with
+ * return stream().[...].findAny().orElseGet(null);
  *
  * @author Oren Afek
  * @since 10/01/17
