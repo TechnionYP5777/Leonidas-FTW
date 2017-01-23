@@ -45,7 +45,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
 
     @Override
     public String description(PsiMethod psiMethod) {
-        return "";
+        return "Add \"Delegator\" javadoc";
     }
 
     protected abstract boolean prerequisites(PsiMethod ¢);

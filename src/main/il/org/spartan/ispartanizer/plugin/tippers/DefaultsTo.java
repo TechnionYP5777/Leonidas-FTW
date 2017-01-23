@@ -52,12 +52,10 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
                         (iz.notEqualsOperator(operator)) && rOp.getText().equals(thenExpr.getText())));
     }
 
+    //TODO change to better description
     @Override
     public String description(PsiConditionalExpression psiConditionalExpression) {
-        return "Replace X != null ? X : Y with X ?? Y <br>\n" +
-                "Replace X == null ? Y : X with X ?? Y <br>\n" +
-                "Replace null == X ? Y : X with X ?? Y <br>\n" +
-                "Replace null != X ? X : Y with X ?? Y <br>";
+        return "Replace to ??";
     }
 
     private boolean eqOperator(PsiConditionalExpression e) {

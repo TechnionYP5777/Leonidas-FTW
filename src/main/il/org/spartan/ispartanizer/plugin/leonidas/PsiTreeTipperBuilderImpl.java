@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -63,7 +64,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     private PsiElement buildMethodTree(PsiFile root, String methodName) {
         PsiMethod method = getMethodFromTree(root, methodName);
-        Class<? extends PsiElement> rootType = getPsiElementTypeFromAnnotation(method);
+        Class<? extends PsiElement> rootType = getPsiElementTypeFromAnnotationSwitch(method);
         if (methodName.equals(FROM_METHOD_NAME)) {
             fromRootElementType = rootType;
         }
@@ -119,6 +120,28 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
+    private Class<? extends PsiElement> getPsiElementTypeFromAnnotationSwitch(PsiMethod method) {
+        Optional<String> optionalType = Arrays.stream(method.getModifierList().getAnnotations())
+                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
+                .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
+                .map(s -> s.replace(".class", ""))
+                .findFirst();
+
+        if (!optionalType.isPresent()) {
+            return null;
+        }
+        String typeString = optionalType.get();
+        if (typeString.equals(PsiIfStatement.class.getSimpleName())) {
+            return PsiIfStatement.class;
+        }
+
+        if (typeString.equals(PsiWhileStatement.class.getSimpleName())) {
+            return PsiWhileStatement.class;
+        }
+
+        return PsiElement.class;
+
+    }
     private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod method) {
         return Arrays.stream(method.getModifierList().getAnnotations())
                 .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
@@ -129,11 +152,13 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
                     try {
                         return (Class<? extends PsiElement>) Class.forName(s); //TODO there is a warning here
                     } catch (ClassNotFoundException ignore) {
-                        System.out.println(ignore.getCause().toString());
+                        throw new NullPointerException();
+                        //System.out.println(ignore.getCause().toString());
                     }
-                    return PsiElement.class;
+                    //return PsiElement.class;
                 }).collect(Collectors.toList()).get(0);
     }
+
 
     //here assuming the root element to be replaced is a direct child of the method statement block
     //TODO: @orenafek, now assuming there is only one "direct son" in rootElemntType type,

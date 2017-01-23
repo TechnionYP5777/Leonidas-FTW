@@ -34,8 +34,8 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
     }
 
     @Override
-    public String description(PsiLambdaExpression __) {
-        return null;
+    public String description(PsiLambdaExpression e) {
+        return "Remove redundant curly braces";
     }
 
     @Override

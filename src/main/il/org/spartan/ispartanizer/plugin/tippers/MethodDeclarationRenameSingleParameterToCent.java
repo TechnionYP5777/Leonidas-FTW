@@ -38,14 +38,14 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
     }
 
     @Override
-    public Tip tip(PsiMethod m) {
-        return m == null || !canTip(m) ? null : new Tip(description(m), m, this.getClass()) {
+    public Tip tip(PsiMethod ¢) {
+        return ¢ == null || !canTip(¢) ? null : new Tip(description(¢), ¢, this.getClass()) {
             @Override
             public void go(final PsiRewrite r) {
-                PsiIdentifier cent = JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier("¢");
-                PsiIdentifier i = JavaPsiFacade.getElementFactory(m.getProject()).createIdentifier(m.getParameterList().getParameters()[0].getNameIdentifier().getText());
-                r.replace(m.getParameterList().getParameters()[0].getNameIdentifier(), cent);
-                List<PsiIdentifier> references = Utils.getAllReferences(m.getBody(), i);
+                PsiIdentifier cent = JavaPsiFacade.getElementFactory(¢.getProject()).createIdentifier("¢");
+                PsiIdentifier i = JavaPsiFacade.getElementFactory(¢.getProject()).createIdentifier(¢.getParameterList().getParameters()[0].getNameIdentifier().getText());
+                r.replace(¢.getParameterList().getParameters()[0].getNameIdentifier(), cent);
+                List<PsiIdentifier> references = Utils.getAllReferences(¢.getBody(), i);
                 Stream<PsiIdentifier> fields = references.stream().filter(q -> iz.javaToken(q.getPrevSibling().getPrevSibling()));
                 references.removeAll(fields.collect(Collectors.toList()));
                 references.stream().forEach(s -> r.replace(s, cent));
