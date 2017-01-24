@@ -34,7 +34,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
 
     @Override
     public String description(PsiMethod ¢) {
-        return ¢.getName();
+        return "change parameter to ¢";
     }
 
     @Override

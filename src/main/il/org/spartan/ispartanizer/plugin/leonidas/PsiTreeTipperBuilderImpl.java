@@ -25,7 +25,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private static final String FILE_PATH = "/spartanizer/LeonidasTippers/";
     private static final String FROM_METHOD_NAME = "from";
     private static final String TO_METHOD_NAME = "to";
-    private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
+    private static final String LEONIDAS_ANNOTATION_NAME = "Leonidas";//Leonidas.class.getSimpleName();
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
     private static final String LEONIDAS_ANNOTATION_ORDER = "order";
     private static final String PSI_PACKAGE_PREFIX = "com.intellij.psi.";
@@ -120,22 +120,22 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
-    private Class<? extends PsiElement> getPsiElementTypeFromAnnotationSwitch(PsiMethod method) {
-        Optional<String> optionalType = Arrays.stream(method.getModifierList().getAnnotations())
+    private Class<? extends PsiElement> getPsiElementTypeFromAnnotationSwitch(PsiMethod ¢) {
+        Optional<String> optionalType = Arrays.stream(¢.getModifierList().getAnnotations())
                 .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
                 .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
                 .map(s -> s.replace(".class", ""))
                 .findFirst();
 
         if (!optionalType.isPresent()) {
-            return null;
+            return PsiElement.class;
         }
         String typeString = optionalType.get();
-        if (typeString.equals(PsiIfStatement.class.getSimpleName())) {
+        if (typeString.equals("PsiIfStatement")) {
             return PsiIfStatement.class;
         }
 
-        if (typeString.equals(PsiWhileStatement.class.getSimpleName())) {
+        if (typeString.equals("PsiWhileStatement")) {
             return PsiWhileStatement.class;
         }
 
