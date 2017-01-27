@@ -20,31 +20,29 @@ import il.org.spartan.ispartanizer.auxilary_layer.step;
  */
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMethod> {
     @Override
-    public boolean canTip(PsiElement psiElement) {
-        return iz.method(psiElement) && !hasTag(az.method(psiElement)) && prerequisites(az.method(psiElement));
+    public boolean canTip(PsiElement ¢) {
+        return iz.method(¢) && !hasTag(az.method(¢)) && prerequisites(az.method(¢));
     }
 
     @Override
-    final public PsiElement createReplacement(PsiMethod e) {
-        String docOld = step.docCommentString(e);
+    public final PsiElement createReplacement(PsiMethod m) {
+        String docOld = step.docCommentString(m);
         String docNew = docOld + tag();
         final Wrapper<String> methodText = new Wrapper<>("");
-        e.acceptChildren(new JavaElementVisitor() {
+        m.acceptChildren(new JavaElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                if (!iz.javadoc(element)) {
-                    methodText.set(methodText.get() + element.getText());
-                }
-                super.visitElement(element);
+            public void visitElement(PsiElement ¢) {
+                if (!iz.javadoc(¢))
+                    methodText.set(methodText.get() + ¢.getText());
+                super.visitElement(¢);
             }
         });
-        String methodNewText = "/**" + docNew + "*/" + methodText;
-        PsiMethod methodNew = JavaPsiFacade.getElementFactory(e.getProject()).createMethodFromText(methodNewText, e.getContext());
-        return methodNew;
+        return JavaPsiFacade.getElementFactory(m.getProject())
+                .createMethodFromText(("/**" + docNew + "*/" + methodText), m.getContext());
     }
 
     @Override
-    public String description(PsiMethod psiMethod) {
+    public String description(PsiMethod __) {
         return "Add \"Delegator\" javadoc";
     }
 
@@ -54,7 +52,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
         return "[[" + this.getClass().getSimpleName() + "]]";
     }
 
-    private boolean hasTag(PsiMethod psiMethod) {
-        return step.docCommentString(psiMethod).contains(tag());
+    private boolean hasTag(PsiMethod ¢) {
+        return step.docCommentString(¢).contains(tag());
     }
 }

@@ -17,54 +17,52 @@ import java.util.List;
 public enum step {
     ;
 
-    public static List<PsiParameter> parameters(PsiMethod method) {
-        return method != null ? parameters(method.getParameterList()) : new ArrayList<>();
+    public static List<PsiParameter> parameters(PsiMethod ¢) {
+        return ¢ == null ? new ArrayList<>() : parameters(¢.getParameterList());
     }
 
     public static List<PsiParameter> parameters(PsiParameterList method) {
-        return method != null ? Arrays.asList(method.getParameters()) : new ArrayList<>();
+        return method == null ? new ArrayList<>() : Arrays.asList(method.getParameters());
     }
 
-    public static PsiParameter firstParameter(PsiParameterList parameterList) {
-        return !parameters(parameterList).isEmpty() ? parameterList.getParameters()[0] : null;
+    public static PsiParameter firstParameter(PsiParameterList ¢) {
+        return parameters(¢).isEmpty() ? null : ¢.getParameters()[0];
     }
 
-    public static PsiParameter firstParameter(PsiMethod method) {
-        return method != null ? firstParameter(method.getParameterList()) : null;
+    public static PsiParameter firstParameter(PsiMethod ¢) {
+        return ¢ == null ? null : firstParameter(¢.getParameterList());
     }
 
-    public static PsiExpression firstParamterExpression(PsiMethodCallExpression expression) {
-        return expression != null && expression.getArgumentList().getExpressions().length >= 1
-                ? expression.getArgumentList().getExpressions()[0] : null;
+    public static PsiExpression firstParamterExpression(PsiMethodCallExpression ¢) {
+        return ¢ == null || ¢.getArgumentList().getExpressions().length < 1 ? null : ¢.getArgumentList().getExpressions()[0];
     }
 
-    public static PsiStatement firstStatement(PsiCodeBlock block) {
-        return block != null && statements(block) != null && statements(block).size() >= 1 ?
-                statements(block).get(0) : null;
+    public static PsiStatement firstStatement(PsiCodeBlock ¢) {
+        return ¢ == null || statements(¢) == null || statements(¢).isEmpty() ? null : statements(¢).get(0);
     }
 
-    public static String name(PsiNamedElement element) {
-        return element != null ? element.getName() : null;
+    public static String name(PsiNamedElement ¢) {
+        return ¢ == null ? null : ¢.getName();
     }
 
-    public static List<PsiStatement> statements(PsiCodeBlock block) {
-        return block != null ? Arrays.asList(block.getStatements()) : new ArrayList<>();
+    public static List<PsiStatement> statements(PsiCodeBlock ¢) {
+        return ¢ == null ? new ArrayList<>() : Arrays.asList(¢.getStatements());
     }
 
-    public static PsiCodeBlock blockBody(PsiLambdaExpression lambdaExpression) {
-        return iz.block(lambdaExpression.getBody()) ? (PsiCodeBlock) lambdaExpression.getBody() : null;
+    public static PsiCodeBlock blockBody(PsiLambdaExpression ¢) {
+        return !iz.block(¢.getBody()) ? null : (PsiCodeBlock) ¢.getBody();
     }
 
-    public static PsiExpression expression(PsiReturnStatement s) {
-        return s != null ? s.getReturnValue() : null;
+    public static PsiExpression expression(PsiReturnStatement ¢) {
+        return ¢ == null ? null : ¢.getReturnValue();
     }
 
-    public static PsiExpression expression(PsiExpressionStatement s) {
-        return s != null ? s.getExpression() : null;
+    public static PsiExpression expression(PsiExpressionStatement ¢) {
+        return ¢ == null ? null : ¢.getExpression();
     }
 
-    public static PsiType returnType(PsiMethod m) {
-        return m != null ? m.getReturnType() : null;
+    public static PsiType returnType(PsiMethod ¢) {
+        return ¢ == null ? null : ¢.getReturnType();
     }
 
     public static List<PsiField> fields(PsiClass clazz) {
@@ -72,45 +70,41 @@ public enum step {
     }
 
 
-    public static PsiExpression conditionExpression(PsiConditionalExpression expr) {
-        return expr != null ? expr.getCondition() : null;
+    public static PsiExpression conditionExpression(PsiConditionalExpression ¢) {
+        return ¢ == null ? null : ¢.getCondition();
     }
 
-    public static IElementType operator(PsiBinaryExpression expr) {
-        return expr != null ? expr.getOperationTokenType() : null;
+    public static IElementType operator(PsiBinaryExpression ¢) {
+        return ¢ == null ? null : ¢.getOperationTokenType();
     }
 
-    public static PsiExpression leftOperand(PsiBinaryExpression expr) {
+    public static PsiExpression leftOperand(PsiBinaryExpression ¢) {
 
-        return expr != null ? expr.getLOperand() : null;
+        return ¢ == null ? null : ¢.getLOperand();
     }
 
-    public static PsiExpression rightOperand(PsiBinaryExpression expr) {
-        return expr != null ? expr.getROperand() : null;
+    public static PsiExpression rightOperand(PsiBinaryExpression ¢) {
+        return ¢ == null ? null : ¢.getROperand();
     }
 
-    public static PsiExpression thenExpression(PsiConditionalExpression expr) {
-        return expr != null ? expr.getThenExpression() : null;
+    public static PsiExpression thenExpression(PsiConditionalExpression ¢) {
+        return ¢ == null ? null : ¢.getThenExpression();
     }
 
-    public static PsiExpression elseExpression(PsiConditionalExpression expr) {
-        return expr != null ? expr.getElseExpression() : null;
+    public static PsiExpression elseExpression(PsiConditionalExpression ¢) {
+        return ¢ == null ? null : ¢.getElseExpression();
     }
 
-    public static PsiElement nextSibling(PsiElement e) {
-        PsiElement b = e.getNextSibling();
-        while (b != null && iz.whiteSpace(b)) {
-            b = b.getNextSibling();
-        }
-        return b;
+    public static PsiElement nextSibling(PsiElement ¢) {
+        PsiElement $ = ¢.getNextSibling();
+        while ($ != null && iz.whiteSpace($))
+            $ = $.getNextSibling();
+        return $;
     }
 
     @NotNull
     public static String docCommentString(@NotNull PsiJavaDocumentedElement e) {
         PsiDocComment doc = e.getDocComment();
-        if (doc == null) {
-            return "";
-        }
-        return doc.getText().substring(3, doc.getText().length() - 2);
+        return doc == null ? "" : doc.getText().substring(3, doc.getText().length() - 2);
     }
 }

@@ -23,12 +23,11 @@ public class WrapperTest extends TipperTest {
 
     public void testToString() {
         Wrapper<Integer> wrapper = new Wrapper<>();
-        assertEquals("null", wrapper.toString());
+        assertEquals("null", (wrapper + ""));
         Integer x = 2;
         wrapper.set(x);
-        assertEquals(x.toString(), wrapper.toString());
-        Wrapper<String> wrapper2 = new Wrapper<>("string");
-        assertEquals("string", wrapper2.toString());
+        assertEquals((x + ""), (wrapper + ""));
+        assertEquals("string", (new Wrapper<>("string") + ""));
     }
 
     public void testHashCode() {
@@ -39,7 +38,7 @@ public class WrapperTest extends TipperTest {
         assertEquals(x.hashCode(), wrapper.hashCode());
         wrapper.set(x);
         assertEquals(x.hashCode(), wrapper.hashCode());
-        assertEquals(new Integer(2).hashCode(), wrapper.hashCode());
+        assertEquals(Integer.valueOf(2).hashCode(), wrapper.hashCode());
     }
 
     public void testEquals() {

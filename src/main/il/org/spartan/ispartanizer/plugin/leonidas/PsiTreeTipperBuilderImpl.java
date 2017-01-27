@@ -65,13 +65,12 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private PsiElement buildMethodTree(PsiFile root, String methodName) {
         PsiMethod method = getMethodFromTree(root, methodName);
         Class<? extends PsiElement> rootType = getPsiElementTypeFromAnnotationSwitch(method);
-        if (methodName.equals(FROM_METHOD_NAME)) {
+        if (methodName.equals(FROM_METHOD_NAME))
             fromRootElementType = rootType;
-        }
-        PsiElement tree = getTreeFromRoot(method, rootType);
-        handleStubMethodCalls(tree, methodName);
-        pruneStubChildren(tree);
-        return tree;
+        PsiElement $ = getTreeFromRoot(method, rootType);
+        handleStubMethodCalls($, methodName);
+        pruneStubChildren($);
+        return $;
     }
 
     /**
@@ -106,15 +105,14 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
                 String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
     }
 
-    private PsiMethod getMethodFromTree(PsiFile file, String methodName) {
+    private PsiMethod getMethodFromTree(PsiFile f, String methodName) {
         Wrapper<PsiMethod> result = new Wrapper<>();
-        file.accept(new JavaRecursiveElementVisitor() {
+        f.accept(new JavaRecursiveElementVisitor() {
 
             @Override
-            public void visitMethod(PsiMethod method) {
-                if (step.name(method).equals(methodName)) {
-                    result.set(method);
-                }
+            public void visitMethod(PsiMethod ¢) {
+                if (step.name(¢).equals(methodName))
+                    result.set(¢);
             }
         });
         return result.get();
@@ -124,26 +122,16 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         Optional<String> optionalType = Arrays.stream(¢.getModifierList().getAnnotations())
                 .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
                 .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
-                .map(s -> s.replace(".class", ""))
-                .findFirst();
-
-        if (!optionalType.isPresent()) {
+                .map(s -> s.replace(".class", "")).findFirst();
+        if (!optionalType.isPresent())
             return PsiElement.class;
-        }
         String typeString = optionalType.get();
-        if (typeString.equals("PsiIfStatement")) {
-            return PsiIfStatement.class;
-        }
-
-        if (typeString.equals("PsiWhileStatement")) {
-            return PsiWhileStatement.class;
-        }
-
-        return PsiElement.class;
-
+        return "PsiIfStatement".equals(typeString) ? PsiIfStatement.class
+                : !"PsiWhileStatement".equals(typeString) ? PsiElement.class : PsiWhileStatement.class;
     }
-    private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod method) {
-        return Arrays.stream(method.getModifierList().getAnnotations())
+
+    private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod m) {
+        return Arrays.stream(m.getModifierList().getAnnotations())
                 .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
                 .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
                 .map(s -> s.replace(".class", ""))
@@ -163,17 +151,17 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     //here assuming the root element to be replaced is a direct child of the method statement block
     //TODO: @orenafek, now assuming there is only one "direct son" in rootElemntType type,
     //TODO: should be changed upon adding the name to the annotations.
-    private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
+    private PsiElement getTreeFromRoot(PsiMethod m, Class<? extends PsiElement> rootElementType) {
         Wrapper<PsiElement> result = new Wrapper<>();
         Wrapper<Boolean> stop = new Wrapper<>(false);
-        method.accept(new JavaRecursiveElementVisitor() {
+        m.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                if (!stop.get() && iz.ofType(element, rootElementType)) {
-                    result.set(element);
-                    stop.set(true);
-                }
+            public void visitElement(PsiElement ¢) {
+                super.visitElement(¢);
+                if (stop.get() || !iz.ofType(¢, rootElementType))
+                    return;
+                result.set(¢);
+                stop.set(true);
             }
 
             /*@Override
@@ -191,21 +179,19 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private void handleStubMethodCalls(PsiElement innerTree, String outerMethodName) {
         innerTree.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                if (!iz.stubMethodCall(expression)) {
+            public void visitMethodCallExpression(PsiMethodCallExpression x) {
+                if (!iz.stubMethodCall(x))
                     return;
-                }
                 Integer id;
-                if (outerMethodName.equals(FROM_METHOD_NAME)) {
-                    if (step.firstParamterExpression(expression) != null) {
-                        mapToDef.put(az.integer(step.firstParamterExpression(expression)), defId);
-                    }
+                if (!outerMethodName.equals(FROM_METHOD_NAME))
+                    id = step.firstParamterExpression(x) == null ? defId++
+                            : mapToDef.get(az.integer(step.firstParamterExpression(x)));
+                else {
+                    if (step.firstParamterExpression(x) != null)
+                        mapToDef.put(az.integer(step.firstParamterExpression(x)), defId);
                     id = defId++;
-                } else {
-                    //TODO: please explain the following line. @orenafek
-                    id = step.firstParamterExpression(expression) != null ? mapToDef.get(az.integer(step.firstParamterExpression(expression))) : defId++;
                 }
-                addOrderToUserData(expression, id);
+                addOrderToUserData(x, id);
             }
         });
     }
@@ -214,9 +200,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         Pruning.prune(innerTree);
     }
 
-    private PsiElement addOrderToUserData(PsiElement element, int order) {
-        element.putUserData(ID, order);
-        return element;
+    private PsiElement addOrderToUserData(PsiElement e, int order) {
+        e.putUserData(ID, order);
+        return e;
     }
 
     @Override

@@ -41,8 +41,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     @Override
-    public boolean canTip(PsiElement e) {
-        return PsiTreeMatcher.match(b.getFromPsiTree(), e);
+    public boolean canTip(PsiElement ¢) {
+        return PsiTreeMatcher.match(b.getFromPsiTree(), ¢);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     @Override
-    public String description(PsiElement e) {
+    public String description(PsiElement __) {
         return b.getDescription();
     }
 
@@ -59,8 +59,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     public Tip tip(PsiElement node) {
         return new Tip(description(node), node, this.getClass()) {
             @Override
-            public void go(PsiRewrite r) {
-                Replacer.replace(node, b, r);
+            public void go(PsiRewrite ¢) {
+                Replacer.replace(node, b, ¢);
             }
         };
     }

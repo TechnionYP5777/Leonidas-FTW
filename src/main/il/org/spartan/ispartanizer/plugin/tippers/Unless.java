@@ -14,12 +14,12 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     /**
-     * @param e
+     * @param ¢
      * @return true iff e is in the form: <boolean expression> ? null : <expression>
      */
     @Override
-    public boolean canTip(PsiElement e) {
-        return (iz.conditionalExpression(e) && (iz.nullExpression(az.conditionalExpression(e).getThenExpression())));
+    public boolean canTip(PsiElement ¢) {
+        return (iz.conditionalExpression(¢) && (iz.nullExpression(az.conditionalExpression(¢).getThenExpression())));
     }
 
     @Override
@@ -28,17 +28,17 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
     }
 
     @Override
-    public String description(PsiConditionalExpression psiConditionalExpression) {
-        return "Change " + psiConditionalExpression.getText() + " to fluent eval().unless()";
+    public String description(PsiConditionalExpression ¢) {
+        return "Change " + ¢.getText() + " to fluent eval().unless()";
     }
 
     /**
-     * @param e - the element to be replaced
+     * @param ¢ - the element to be replaced
      * @return a method invocation to unless function.
      */
     @Override
-    public PsiElement createReplacement(PsiConditionalExpression e) {
-        return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("eval(" + e.getElseExpression().getText() + ").unless( " + e.getCondition().getText() + ")", e);
+    public PsiElement createReplacement(PsiConditionalExpression ¢) {
+        return JavaPsiFacade.getElementFactory(¢.getProject()).createExpressionFromText("eval(" + ¢.getElseExpression().getText() + ").unless( " + ¢.getCondition().getText() + ")", ¢);
     }
 
     @Override

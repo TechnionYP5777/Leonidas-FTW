@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class GenericPsi extends CompositePsiElement {
 
-    final int myHC = CompositePsiElement.ourHC++;
+    final int myHC = ++CompositePsiElement.ourHC;
     PsiElement inner;
     PsiFile containingFile;
 
@@ -43,13 +43,13 @@ public abstract class GenericPsi extends CompositePsiElement {
     }
 
     @Override
-    public <T> T getUserData(@NotNull Key<T> key) {
-        return inner.getUserData(key);
+    public <T> T getUserData(@NotNull Key<T> ¢) {
+        return inner.getUserData(¢);
     }
 
     @Override
-    public <T> void putUserData(@NotNull Key<T> key, @Nullable T value) {
-        inner.putUserData(key, value);
+    public <T> void putUserData(@NotNull Key<T> t, @Nullable T value) {
+        inner.putUserData(t, value);
     }
 
     /**

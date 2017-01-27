@@ -105,10 +105,10 @@ public abstract class GenericPsiElementStub {
 
         StubName(String stubName) { this.stubName = stubName; }
 
-        public static StubName valueOf(PsiMethodCallExpression expression) {
+        public static StubName valueOf(PsiMethodCallExpression x) {
 
             return Arrays.stream(values())
-                    .filter(stub -> expression.getMethodExpression().getText().equals(stub.stubName()))
+                    .filter(stub -> x.getMethodExpression().getText().equals(stub.stubName()))
                     .findFirst().orElseGet(null);
 
         }
@@ -125,27 +125,27 @@ public abstract class GenericPsiElementStub {
             return String.format("%s();", stubName);
         }
 
-        public boolean matchesStubName(PsiMethodCallExpression e) {
-            return e.getMethodExpression().getText().equals(this.stubName);
+        public boolean matchesStubName(PsiMethodCallExpression ¢) {
+            return ¢.getMethodExpression().getText().equals(this.stubName);
         }
 
         public GenericPsi getGenericPsiType(PsiElement inner, Integer id) {
-            GenericPsi x;
+            GenericPsi $;
             switch (this) {
                 case BOOLEAN_EXPRESSION:
-                    x = new GenericPsiExpression(PsiType.BOOLEAN, inner);
+                    $ = new GenericPsiExpression(PsiType.BOOLEAN, inner);
                     break;
                 case STATEMENT:
-                    x = new GenericPsiStatement(inner);
+                    $ = new GenericPsiStatement(inner);
                     break;
                 case ANY_BLOCK:
-                    x = new GenericPsiBlock(inner);
+                    $ = new GenericPsiBlock(inner);
                     break;
                 default:
                     return null;
             }
-            x.putUserData(KeyDescriptionParameters.ID, id);
-            return x;
+            $.putUserData(KeyDescriptionParameters.ID, id);
+            return $;
         }
     }
 }

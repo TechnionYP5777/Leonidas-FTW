@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.*;
-import com.intellij.testFramework.PsiTestCase;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class UtilsTest extends TipperTest {
         PsiMethod methodIn2 = createTestMethodFromString(classExistsSource2);
 
         assertTrue(Utils.findClass(assertInSource1) != null);
-        assertTrue(Utils.findClass(assertInSource1).getName().equals("Test"));
+        assertTrue("Test".equals(Utils.findClass(assertInSource1).getName()));
         assertTrue(Utils.findClass(methodIn2) == null);
         assertTrue(Utils.findClass(null) == null);
     }
@@ -94,11 +93,11 @@ public class UtilsTest extends TipperTest {
         PsiMethod m2 = createTestMethodFromString(m2String);
         String m3String = "int id() { int id=7; return id;}";
         PsiMethod m3 = createTestMethodFromString(m3String);
-        assertTrue(Utils.getAllReferences(null,null).size() == 0);
-        assertTrue(Utils.getAllReferences(null,id).size() == 0);
-        assertTrue(Utils.getAllReferences(m1,id).size() == 0);
+        assertTrue(Utils.getAllReferences(null, null).isEmpty());
+        assertTrue(Utils.getAllReferences(null, id).isEmpty());
+        assertTrue(Utils.getAllReferences(m1, id).isEmpty());
         assertTrue(Utils.getAllReferences(m2,id).size() == 1);
-        assertTrue(Utils.getAllReferences(m2,nonExistant).size() == 0);
+        assertTrue(Utils.getAllReferences(m2, nonExistant).isEmpty());
         assertTrue(Utils.getAllReferences(m3,id).size() == 2);
     }
 

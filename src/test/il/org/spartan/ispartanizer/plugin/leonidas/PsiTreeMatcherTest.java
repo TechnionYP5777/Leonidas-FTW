@@ -12,58 +12,54 @@ public class PsiTreeMatcherTest extends TipperTest {
         PsiExpression x = createTestExpressionFromString("x + 1");
         PsiExpression y = createTestExpressionFromString("x + 1");
         assertTrue(PsiTreeMatcher.match(x, y));
-        PsiExpression z = createTestExpressionFromString("y + 1");
-        assertTrue(PsiTreeMatcher.match(x, z));
+        assertTrue(PsiTreeMatcher.match(x, createTestExpressionFromString("y + 1")));
     }
 
     public void testMatch2() {
         PsiCodeBlock b = createTestCodeBlockFromString("{ int x = 5; }");
         b.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
-        PsiCodeBlock y = createTestCodeBlockFromString("{ int y = 10; }");
-        assertTrue(PsiTreeMatcher.match(b, y));
+        assertTrue(PsiTreeMatcher.match(b, createTestCodeBlockFromString("{ int y = 10; }")));
     }
 
     public void testMatch3() {
         PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
         b.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitCodeBlock(PsiCodeBlock block) {
-                super.visitCodeBlock(block);
-                block.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
+            public void visitCodeBlock(PsiCodeBlock ¢) {
+                super.visitCodeBlock(¢);
+                ¢.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
             }
 
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression methodCallExpression) {
-                super.visitMethodCallExpression(methodCallExpression);
-                methodCallExpression.putUserData(KeyDescriptionParameters.GENERIC_NAME, methodCallExpression.getMethodExpression().getText());
+            public void visitMethodCallExpression(PsiMethodCallExpression ¢) {
+                super.visitMethodCallExpression(¢);
+                ¢.putUserData(KeyDescriptionParameters.GENERIC_NAME, ¢.getMethodExpression().getText());
             }
         });
 
         Pruning.prune(b);
 
-        PsiIfStatement y = createTestIfStatement("true && false", " if (true) { int y = 5; } ");
-        assertTrue(PsiTreeMatcher.match(b, y));
+        assertTrue(PsiTreeMatcher.match(b, createTestIfStatement("true && false", " if (true) { int y = 5; } ")));
     }
 
     public void testMatch4() {
         PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
         b.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitCodeBlock(PsiCodeBlock block) {
-                super.visitCodeBlock(block);
-                block.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
+            public void visitCodeBlock(PsiCodeBlock ¢) {
+                super.visitCodeBlock(¢);
+                ¢.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
             }
 
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression methodCallExpression) {
-                super.visitMethodCallExpression(methodCallExpression);
-                methodCallExpression.putUserData(KeyDescriptionParameters.GENERIC_NAME, methodCallExpression.getMethodExpression().getText());
+            public void visitMethodCallExpression(PsiMethodCallExpression ¢) {
+                super.visitMethodCallExpression(¢);
+                ¢.putUserData(KeyDescriptionParameters.GENERIC_NAME, ¢.getMethodExpression().getText());
             }
         });
 
         Pruning.prune(b);
 
-        PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
-        assertTrue(PsiTreeMatcher.match(b, y));
+        assertTrue(PsiTreeMatcher.match(b, createTestIfStatement("true", " int y = 5; ")));
     }
 }

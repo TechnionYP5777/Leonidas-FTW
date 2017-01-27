@@ -11,12 +11,12 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
  */
 public class NoTip<T extends PsiElement> implements Tipper<T> {
     @Override
-    public boolean canTip(PsiElement e) {
+    public boolean canTip(PsiElement __) {
         return true;
     }
 
     @Override
-    public String description(PsiElement element) {
+    public String description(PsiElement __) {
         return "";
     }
 
@@ -24,7 +24,7 @@ public class NoTip<T extends PsiElement> implements Tipper<T> {
     public Tip tip(T node) {
         return new Tip("", node, NoTip.class) {
             @Override
-            public void go(PsiRewrite r) {
+            public void go(PsiRewrite __) {
             }
         };
     }
