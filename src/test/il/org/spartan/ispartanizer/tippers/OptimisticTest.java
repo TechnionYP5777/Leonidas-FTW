@@ -16,16 +16,28 @@ public class OptimisticTest extends TipperTest {
 
     public void testDetectsCompilationErrors() throws Exception {
         assertTrue(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5=!=5);}")));
-        assertTrue(haz.compilationErrors(createTestFileFromString(("package test; " + "public class Test { "
-                + "public Test() { " + "final int x=3; x=5; System.out.println(\"lalala\"); " + "} " + "}"))));
+        //changing a final variable error:
+        String source1 = "package test; "+
+                "public class Test { "+
+                "public Test() { "+
+                "final int x=3; x=5; System.out.println(\"lalala\"); "+
+                "} "+
+                "}";
+
+        assertTrue(haz.compilationErrors(createTestFileFromString(source1)));
     }
 
     public void testNoCompilationErrors(){
         assertFalse(haz.syntaxErrors(createTestExpressionFromString("5 == 5")));
         assertFalse(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return false;}")));
         assertFalse(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5==5);}")));
-        assertFalse(haz.compilationErrors(createTestFileFromString(("package test; " + "public class Test { "
-                + "public Test() { " + "final int x=3; System.out.println(\"lalala\"); " + "} " + "}"))));
+        String source2 = "package test; "+
+                "public class Test { "+
+                "public Test() { "+
+                "final int x=3; System.out.println(\"lalala\"); "+
+                "} "+
+                "}";
+        assertFalse(haz.compilationErrors(createTestFileFromString(source2)));
 
     }
 

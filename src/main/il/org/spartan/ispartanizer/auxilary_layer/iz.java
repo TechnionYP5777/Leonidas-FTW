@@ -29,48 +29,48 @@ public enum iz {
     ;
     private static final String ABSTRACT = "abstract";
 
-    private static boolean typeCheck(Class<? extends PsiElement> type, PsiElement e) {
-        return e != null && type.isAssignableFrom(e.getClass());
+    private static boolean typeCheck(Class<? extends PsiElement> type, PsiElement element) {
+        return element != null && type.isAssignableFrom(element.getClass());
     }
 
-    public static boolean null$(PsiElement ¢) {
-        return iz.literal(¢) && az.literal(¢).textMatches("null");
+    public static boolean null$(PsiElement element) {
+        return iz.literal(element) && az.literal(element).textMatches("null");
     }
 
-    public static boolean notNull(PsiElement ¢) {
-        return !null$(¢);
+    public static boolean notNull(PsiElement element) {
+        return !null$(element);
     }
 
-    public static boolean statement(PsiElement ¢) {
-        return typeCheck(PsiStatement.class, ¢);
+    public static boolean statement(PsiElement element) {
+        return typeCheck(PsiStatement.class, element);
     }
 
-    public static boolean block(PsiElement ¢) {
-        return typeCheck(PsiCodeBlock.class, ¢);
+    public static boolean block(PsiElement element) {
+        return typeCheck(PsiCodeBlock.class, element);
     }
 
-    public static boolean genereicBlock(PsiElement ¢) {
-        return typeCheck(GenericPsiBlock.class, ¢);
+    public static boolean genereicBlock(PsiElement element) {
+        return typeCheck(GenericPsiBlock.class, element);
     }
 
-    public static boolean blockStatement(PsiElement ¢) {
-        return typeCheck(PsiBlockStatement.class, ¢);
+    public static boolean blockStatement(PsiElement element) {
+        return typeCheck(PsiBlockStatement.class, element);
     }
 
-    public static boolean methodCallExpression(PsiElement ¢) {
-        return typeCheck(PsiMethodCallExpression.class, ¢);
+    public static boolean methodCallExpression(PsiElement element) {
+        return typeCheck(PsiMethodCallExpression.class, element);
     }
 
-    public static boolean declarationStatement(PsiElement ¢) {
-        return typeCheck(PsiDeclarationStatement.class, ¢);
+    public static boolean declarationStatement(PsiElement element) {
+        return typeCheck(PsiDeclarationStatement.class, element);
     }
 
-    public static boolean enumConstant(PsiElement ¢) {
-        return typeCheck(PsiEnumConstantImpl.class, ¢);
+    public static boolean enumConstant(PsiElement element) {
+        return typeCheck(PsiEnumConstantImpl.class, element);
     }
 
-    public static boolean fieldDeclaration(PsiElement ¢) {
-        return typeCheck(PsiFieldImpl.class, ¢);
+    public static boolean fieldDeclaration(PsiElement element) {
+        return typeCheck(PsiFieldImpl.class, element);
     }
 
     public static boolean abstract$(PsiMethod element) {
@@ -85,8 +85,8 @@ public enum iz {
         return element.getParameterList().getParameters().length == 1;
     }
 
-    public static boolean method(PsiElement ¢) {
-        return typeCheck(PsiMethod.class, ¢);
+    public static boolean method(PsiElement element) {
+        return typeCheck(PsiMethod.class, element);
     }
 
     public static boolean void$(PsiMethod element) {
@@ -106,36 +106,36 @@ public enum iz {
                 "args".equals(step.name(step.firstParameter(element)));
     }
 
-    public static boolean returnStatement(PsiElement ¢) {
-        return typeCheck(PsiReturnStatementImpl.class, ¢);
+    public static boolean returnStatement(PsiElement element) {
+        return typeCheck(PsiReturnStatementImpl.class, element);
     }
 
-    public static boolean type(PsiElement ¢) {
-        return typeCheck(PsiTypeElementImpl.class, ¢);
+    public static boolean type(PsiElement element) {
+        return typeCheck(PsiTypeElementImpl.class, element);
     }
 
-    public static boolean expressionStatement(PsiElement ¢) {
-        return typeCheck(PsiExpressionStatementImpl.class, ¢);
+    public static boolean expressionStatement(PsiElement element) {
+        return typeCheck(PsiExpressionStatementImpl.class, element);
     }
 
-    public static boolean identifier(PsiElement ¢) {
-        return typeCheck(PsiIdentifier.class, ¢);
+    public static boolean identifier(PsiElement element) {
+        return typeCheck(PsiIdentifier.class, element);
     }
 
-    public static boolean conditionalExpression(PsiElement ¢) {
-        return typeCheck(PsiConditionalExpressionImpl.class, ¢);
+    public static boolean conditionalExpression(PsiElement element) {
+        return typeCheck(PsiConditionalExpressionImpl.class, element);
     }
 
-    public static boolean nullExpression(PsiExpression ¢) {
-        return "null".equals(¢.getText());
+    public static boolean nullExpression(PsiExpression e) {
+        return e.getText().equals("null");
     }
 
-    public static boolean binaryExpression(PsiElement ¢) {
-        return typeCheck(PsiBinaryExpressionImpl.class, ¢);
+    public static boolean binaryExpression(PsiElement element) {
+        return typeCheck(PsiBinaryExpressionImpl.class, element);
     }
 
-    public static boolean referenceExpression(PsiElement ¢) {
-        return typeCheck(PsiReferenceExpressionImpl.class, ¢);
+    public static boolean referenceExpression(PsiElement element) {
+        return typeCheck(PsiReferenceExpressionImpl.class, element);
     }
 
     public static boolean equalsOperator(IElementType operator) {
@@ -146,36 +146,36 @@ public enum iz {
         return operator != null && operator.equals(JavaTokenType.NE);
     }
 
-    public static boolean literal(PsiElement ¢) {
-        return typeCheck(PsiLiteralExpression.class, ¢);
+    public static boolean literal(PsiElement element) {
+        return typeCheck(PsiLiteralExpression.class, element);
     }
 
-    public static boolean classDeclaration(PsiElement ¢) {
-        return typeCheck(PsiClassImpl.class, ¢);
+    public static boolean classDeclaration(PsiElement element) {
+        return typeCheck(PsiClassImpl.class, element);
     }
 
-    public static boolean forStatement(PsiElement ¢) {
-        return typeCheck(PsiForStatement.class, ¢);
+    public static boolean forStatement(PsiElement element) {
+        return typeCheck(PsiForStatement.class, element);
     }
 
-    public static boolean forEachStatement(PsiElement ¢) {
-        return typeCheck(PsiForeachStatement.class, ¢);
+    public static boolean forEachStatement(PsiElement element) {
+        return typeCheck(PsiForeachStatement.class, element);
     }
 
-    public static boolean ifStatement(PsiElement ¢) {
-        return typeCheck(PsiIfStatement.class, ¢);
+    public static boolean ifStatement(PsiElement element) {
+        return typeCheck(PsiIfStatement.class, element);
     }
 
-    public static boolean importList(PsiElement ¢) {
-        return typeCheck(PsiImportList.class, ¢);
+    public static boolean importList(PsiElement element) {
+        return typeCheck(PsiImportList.class, element);
     }
 
-    public static boolean javaToken(PsiElement ¢) {
-        return typeCheck(PsiJavaToken.class, ¢);
+    public static boolean javaToken(PsiElement element) {
+        return typeCheck(PsiJavaToken.class, element);
     }
 
-    public static boolean expression(PsiElement ¢) {
-        return typeCheck(PsiExpression.class, ¢);
+    public static boolean expression(PsiElement element) {
+        return typeCheck(PsiExpression.class, element);
     }
 
     /**
@@ -195,64 +195,64 @@ public enum iz {
                 ((iz.block(e1) || iz.statement(e1)) && iz.genereicBlock(e2));
     }
 
-    public static boolean whiteSpace(PsiElement ¢) {
-        return typeCheck(PsiWhiteSpace.class, ¢);
+    public static boolean whiteSpace(PsiElement e) {
+        return typeCheck(PsiWhiteSpace.class, e);
     }
 
     public static boolean ofType(PsiElement e, Class<? extends PsiElement> type) {
         return typeCheck(type, e);
     }
 
-    public static boolean stubMethodCall(PsiElement e) {
-        return iz.methodCallExpression(e) &&
+    public static boolean stubMethodCall(PsiElement element) {
+        return iz.methodCallExpression(element) &&
                 Arrays.stream(StubName.values())
                         .map(StubName::stubName)
                         .anyMatch(sn ->
-                                sn.equals(az.methodCallExpression(e).getMethodExpression().getText()));
+                                sn.equals(az.methodCallExpression(element).getMethodExpression().getText()));
     }
 
-    public static boolean documentedElement(PsiElement ¢) {
-        return typeCheck(PsiJavaDocumentedElement.class, ¢);
+    public static boolean documentedElement(PsiElement e) {
+        return typeCheck(PsiJavaDocumentedElement.class, e);
     }
 
-    public static boolean javadoc(PsiElement ¢) {
-        return typeCheck(PsiDocComment.class, ¢);
+    public static boolean javadoc(PsiElement e) {
+        return typeCheck(PsiDocComment.class, e);
     }
 
-    public static boolean generic(PsiElement ¢) {
-        return typeCheck(GenericPsi.class, ¢);
+    public static boolean generic(PsiElement e) {
+        return typeCheck(GenericPsi.class, e);
     }
 
-    public static boolean genericExpression(PsiElement ¢) {
-        return typeCheck(GenericPsiExpression.class, ¢);
+    public static boolean genericExpression(PsiElement e) {
+        return typeCheck(GenericPsiExpression.class, e);
     }
 
-    public static boolean genericStatement(PsiElement ¢) {
-        return typeCheck(GenericPsiStatement.class, ¢);
+    public static boolean genericStatement(PsiElement e) {
+        return typeCheck(GenericPsiStatement.class, e);
     }
 
-    public static boolean genericBlock(PsiElement ¢) {
-        return typeCheck(GenericPsiBlock.class, ¢);
+    public static boolean genericBlock(PsiElement e) {
+        return typeCheck(GenericPsiBlock.class, e);
     }
 
-    public static boolean whileStatement(PsiElement ¢) {
-        return typeCheck(PsiWhileStatement.class, ¢);
+    public static boolean whileStatement(PsiElement e) {
+        return typeCheck(PsiWhileStatement.class, e);
     }
 
-    public static boolean switchStatement(PsiElement ¢) {
-        return typeCheck(PsiSwitchStatement.class, ¢);
+    public static boolean switchStatement(PsiElement e) {
+        return typeCheck(PsiSwitchStatement.class, e);
     }
 
-    public static boolean loopStatement(PsiElement ¢) {
-        return typeCheck(PsiLoopStatement.class, ¢);
+    public static boolean loopStatement(PsiElement e) {
+        return typeCheck(PsiLoopStatement.class, e);
     }
 
-    public static boolean tryStatement(PsiElement ¢) {
-        return typeCheck(PsiTryStatement.class, ¢);
+    public static boolean tryStatement(PsiElement e) {
+        return typeCheck(PsiTryStatement.class, e);
     }
 
-    public static boolean enclosingStatement(PsiElement ¢) {
-        return ifStatement(¢) || switchStatement(¢) || loopStatement(¢) || tryStatement(¢);
+    public static boolean enclosingStatement(PsiElement e) {
+        return ifStatement(e) || switchStatement(e) || loopStatement(e) || tryStatement(e);
     }
 
     public static boolean synchronized¢(final PsiMember ¢) {
@@ -401,7 +401,7 @@ public enum iz {
         return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isInterface());
     }
 
-    static boolean variable(PsiElement ¢) {
-        return typeCheck(PsiVariable.class, ¢);
+    static boolean variable(PsiElement element) {
+        return typeCheck(PsiVariable.class, element);
     }
 }

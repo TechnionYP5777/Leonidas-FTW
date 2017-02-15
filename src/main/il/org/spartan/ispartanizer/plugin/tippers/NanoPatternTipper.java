@@ -50,9 +50,10 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @return an element tip to apply on e.
      */
     public Tip tip(final N e) {
-        return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
+        if (!canTip(e)) return null;
+        return new Tip(description(e), e, this.getClass()) {
             @Override
-            public void go(PsiRewrite __) {
+            public void go(PsiRewrite r) {
                 PsiElement e_tag = createReplacement(e);
                 new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
                     @Override
@@ -80,7 +81,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @throws IOException if for some reason writing to the users disk throws exception.
      */
     private PsiFile insertSpartanizerUtils(PsiElement e) throws IOException {
-        PsiFile $;
+        PsiFile pf;
         PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
         // creates the directory and adds the file if needed
         try {
@@ -90,26 +91,28 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
             File file = new File(is.getPath());
             FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
             List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
-            $ = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
-            pd.add($);
-            Toolbox.getInstance().excludeFile($);
+            pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
+            pd.add(pf);
+            Toolbox.getInstance().excludeFile(pf);
         } catch (IncorrectOperationException x) {
-            $ = srcDir.getSubdirectories()[0].getFiles()[0];
+            PsiDirectory pd = srcDir.getSubdirectories()[0];
+            pf = pd.getFiles()[0];
         }
-        return $;
+        return pf;
     }
 
     /**
      * Inserts "import static spartanizer/SpartanizerUtils/*;" to the users code.
      *
      * @param e  - the PsiElement on which the tip is applied.
-     * @param f - the psi file in which e is contained.
+     * @param pf - the psi file in which e is contained.
      */
-    private void insertImportStatement(PsiElement e, PsiFile f) {
-        PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(f, PsiClass.class), "*");
+    private void insertImportStatement(PsiElement e, PsiFile pf) {
+        PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(pf, PsiClass.class), "*");
         PsiImportList pil = Utils.getImportList(e.getContainingFile());
-        if (!Arrays.stream(pil.getImportStaticStatements()).anyMatch(x -> x.getText().contains("spartanizer")))
+        if (!Arrays.stream(pil.getImportStaticStatements()).anyMatch(x -> x.getText().contains("spartanizer"))) {
             pil.add(piss);
+        }
 
     }
 
@@ -120,7 +123,8 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @throws IOException - if for some reason writing new file to the users disk throws exception.
      */
     private void createEnvironment(final N e) throws IOException {
-        insertImportStatement(e, insertSpartanizerUtils(e));
+        PsiFile pf = insertSpartanizerUtils(e);
+        insertImportStatement(e, pf);
     }
 
     protected abstract Tip pattern(final N ¢);

@@ -32,13 +32,15 @@ public class Pruning {
                     .findFirst() //assuming there is only one enum value in StubName that fits the stub kind.
                     .ifPresent(y -> {
                         PsiElement prev = exp;
-                        for (PsiElement next = exp.getParent(); next.getText().startsWith(y.stubName()); ) {
+                        PsiElement next = exp.getParent();
+                        while (next.getText().startsWith(y.stubName())) {
                             prev = next;
                             next = next.getParent();
                         }
                         GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
-                        if (x != null)
-                            prev.replace(x);
+                        if (x != null) {
+                            prev.replace(x); //replace the stub tree with the generic psi type tree
+                        }
                     });
         });
         return e;

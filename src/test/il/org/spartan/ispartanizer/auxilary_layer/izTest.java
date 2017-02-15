@@ -17,25 +17,29 @@ import il.org.spartan.ispartanizer.tippers.TipperTest;
  */
 public class izTest extends TipperTest {
     public void testNull$() throws Exception {
-        assertTrue(iz.null$(createTestNullExpression()));
+        PsiLiteralExpression x = createTestNullExpression();
+        assertTrue(iz.null$(x));
     }
 
     public void testNotNull() throws Exception {
         PsiLiteralExpression x = createTestNullExpression();
         assertFalse(iz.notNull(x));
-        assertTrue(iz.notNull(createTestExpressionFromString("x + 1")));
+        PsiExpression y = createTestExpressionFromString("x + 1");
+        assertTrue(iz.notNull(y));
     }
 
     public void testStatement() throws Exception {
         PsiStatement s = createTestStatementFromString("return x + 1;");
         assertTrue(iz.statement(s));
-        assertFalse(iz.statement(createTestCodeBlockFromString("{ return x + 1; }")));
+        PsiCodeBlock x = createTestCodeBlockFromString("{ return x + 1; }");
+        assertFalse(iz.statement(x));
     }
 
     public void testBlockStatement() throws Exception {
         PsiElement b = createTestBlockStatementFromString("{ int x = 5; }");
         assertTrue(iz.blockStatement(b));
-        assertFalse(iz.blockStatement(createTestStatementFromString("int x = 5;")));
+        PsiElement s = createTestStatementFromString("int x = 5;");
+        assertFalse(iz.blockStatement(s));
     }
 
     public void testBinaryExpression() throws Exception {
@@ -47,7 +51,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.binaryExpression(bPlus));
         PsiBinaryExpression bMod = (PsiBinaryExpression) createTestExpression("x % y");
         assertTrue(iz.binaryExpression(bMod));
-        assertFalse(iz.binaryExpression(createTestExpression("!x")));
+        PsiExpression notBinary = createTestExpression("!x");
+        assertFalse(iz.binaryExpression(notBinary));
     }
 
     public void testReferenceExpression() throws Exception {
@@ -57,7 +62,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.referenceExpression(rf2));
         PsiExpression rf3 = createTestExpression("x");
         assertTrue(iz.referenceExpression(rf3));
-        assertFalse(iz.referenceExpression(createTestExpression("x == false")));
+        PsiExpression exp = createTestExpression("x == false");
+        assertFalse(iz.referenceExpression(exp));
     }
 
     public void testEqualsOperator() throws Exception {
@@ -67,8 +73,8 @@ public class izTest extends TipperTest {
         assertFalse(iz.equalsOperator(t2.getTokenType()));
         PsiJavaToken t3 = ((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign();
         assertFalse(iz.equalsOperator(t3.getTokenType()));
-        assertFalse(iz.equalsOperator(
-                ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType()));
+        PsiJavaToken t4 = ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign();
+        assertFalse(iz.equalsOperator(t4.getTokenType()));
     }
 
     public void testNotEqualsOperator() throws Exception {
@@ -78,8 +84,8 @@ public class izTest extends TipperTest {
         assertFalse(iz.notEqualsOperator(t2.getTokenType()));
         PsiJavaToken t3 = ((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign();
         assertFalse(iz.notEqualsOperator(t3.getTokenType()));
-        assertFalse(iz.notEqualsOperator(
-                ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType()));
+        PsiJavaToken t4 = ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign();
+        assertFalse(iz.notEqualsOperator(t4.getTokenType()));
     }
 
     public void testLiteral() throws Exception {
@@ -87,7 +93,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.literal(l1));
         PsiExpression l2 = createTestExpression("false");
         assertTrue(iz.literal(l2));
-        assertFalse(iz.literal(createTestExpression("b == false")));
+        PsiExpression l3 = createTestExpression("b == false");
+        assertFalse(iz.literal(l3));
     }
 
     public void testClassDeclaration() throws Exception {
@@ -97,7 +104,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.classDeclaration(c2));
         PsiElement i1 = createTestInterfaceFromString("", "A", "", "public");
         assertTrue(iz.classDeclaration(i1));
-        assertTrue(iz.classDeclaration(createTestClassFromString("", "A", "", "public", "abstract")));
+        PsiElement c4 = createTestClassFromString("", "A", "", "public", "abstract");
+        assertTrue(iz.classDeclaration(c4));
     }
 
     public void testForStatement() throws Exception {
@@ -105,7 +113,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.forStatement(e1));
         PsiElement e2 = createTestForStatementFromString("for(int i =0 ; i< i+1 ; i--){}");
         assertTrue(iz.forStatement(e2));
-        assertFalse(iz.forStatement(createTestStatementFromString("for(int x : array){}")));
+        PsiElement e3 = createTestStatementFromString("for(int x : array){}");
+        assertFalse(iz.forStatement(e3));
 
     }
 
@@ -114,7 +123,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.forEachStatement(e1));
         PsiElement e2 = createTestForeachStatementFromString("for(Object o : new ArrayList<Object>()){}");
         assertTrue(iz.forEachStatement(e2));
-        assertFalse(iz.forEachStatement(createTestForStatementFromString("for(int i = 0 ; i<11 ; i++){}")));
+        PsiElement e3 = createTestForStatementFromString("for(int i = 0 ; i<11 ; i++){}");
+        assertFalse(iz.forEachStatement(e3));
     }
 
     public void testIfStatement() throws Exception {
@@ -122,7 +132,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.ifStatement(if1));
         PsiElement if2 = createTestIfStatement("x == 2", "continue;");
         assertTrue(iz.ifStatement(if2));
-        assertFalse(iz.ifStatement(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        PsiElement notIf = createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}");
+        assertFalse(iz.ifStatement(notIf));
 
     }
 
@@ -130,7 +141,8 @@ public class izTest extends TipperTest {
         PsiElement importList = createTestImportListFromString("import java.util.*;" +
                 "import sparta.boom;");
         assertTrue(iz.importList(importList));
-        assertFalse(iz.ifStatement(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        PsiElement notImportList = createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}");
+        assertFalse(iz.ifStatement(notImportList));
     }
 
     public void testJavaToken() throws Exception {
@@ -138,7 +150,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.javaToken(t1));
         PsiJavaToken t2 = ((PsiBinaryExpression) createTestExpression("x != y")).getOperationSign();
         assertTrue(iz.javaToken(t2));
-        assertFalse(iz.ifStatement(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        PsiElement notToken = createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}");
+        assertFalse(iz.ifStatement(notToken));
 
     }
 
@@ -151,14 +164,16 @@ public class izTest extends TipperTest {
         assertTrue(iz.methodCallExpression(listSize));
         PsiExpression ifExp = createTestExpression("x+y");
         assertFalse(iz.methodCallExpression(ifExp));
-        assertFalse(iz.methodCallExpression(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig = createTestMethodFromString("foo(int x,double y)");
+        assertFalse(iz.methodCallExpression(fooSig));
     }
 
     public void testTheSameType() throws Exception {
         PsiDeclarationStatement x = createTestDeclarationStatement("x", "Integer", "5 + 8");
         PsiStatement y = createTestStatementFromString("banana(5*x)");
         assertFalse(iz.theSameType(x, y));
-        assertTrue(iz.theSameType(y, createTestStatementFromString("apple(x - 4)")));
+        PsiStatement z = createTestStatementFromString("apple(x - 4)");
+        assertTrue(iz.theSameType(y, z));
     }
 
     @Override
@@ -169,7 +184,8 @@ public class izTest extends TipperTest {
     public void testBlock() throws Exception {
         PsiCodeBlock b = createTestCodeBlockFromString("{ int x = 5; }");
         assertTrue(iz.block(b));
-        assertFalse(iz.block(createTestStatementFromString("int x = 5;")));
+        PsiStatement s = createTestStatementFromString("int x = 5;");
+        assertFalse(iz.block(s));
     }
 
     public void testDeclarationStatement() throws Exception {
@@ -177,7 +193,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.declarationStatement(integerDec));
         PsiDeclarationStatement objDec = createTestDeclarationStatement("x", "Object", "null");
         assertTrue(iz.declarationStatement(objDec));
-        assertFalse(iz.declarationStatement(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig = createTestMethodFromString("foo(int x,double y)");
+        assertFalse(iz.declarationStatement(fooSig));
     }
 
     public void testEnumConstant() throws Exception {
@@ -185,7 +202,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.enumConstant(ec1));
         PsiEnumConstant ec2 = createTestEnumFromString("ENUM_VALUE_TWO(9)");
         assertTrue(iz.enumConstant(ec2));
-        assertFalse(iz.enumConstant(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig = createTestMethodFromString("foo(int x,double y)");
+        assertFalse(iz.enumConstant(fooSig));
 
     }
 
@@ -196,7 +214,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.fieldDeclaration(f2));
         PsiField f3 = createTestFieldDeclarationFromString("public static int x;");
         assertTrue(iz.fieldDeclaration(f3));
-        assertFalse(iz.fieldDeclaration(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig = createTestMethodFromString("foo(int x,double y)");
+        assertFalse(iz.fieldDeclaration(fooSig));
     }
 
     public void testAbstract$() throws Exception {
@@ -204,7 +223,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.abstract$(m1));
         PsiMethod m2 = createTestMethodFromString("abstract public void method(int x);");
         assertTrue(iz.abstract$(m2));
-        assertFalse(iz.abstract$(createTestMethodFromString("public void method(){}")));
+        PsiMethod m3 = createTestMethodFromString("public void method(){}");
+        assertFalse(iz.abstract$(m3));
 
     }
 
@@ -213,7 +233,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.static$(m1));
         PsiMethod m2 = createTestMethodFromString("static abstract public void method(int x);");
         assertTrue(iz.static$(m2));
-        assertFalse(iz.static$(createTestMethodFromString("public void method(){}")));
+        PsiMethod m3 = createTestMethodFromString("public void method(){}");
+        assertFalse(iz.static$(m3));
     }
 
     public void testSingleParameterMethod() throws Exception {
@@ -221,7 +242,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.singleParameterMethod(m1));
         PsiMethod m2 = createTestMethodFromString("public static void method(int x, int y){}");
         assertFalse(iz.singleParameterMethod(m2));
-        assertFalse(iz.singleParameterMethod(createTestMethodFromString("public void method(){}")));
+        PsiMethod m3 = createTestMethodFromString("public void method(){}");
+        assertFalse(iz.singleParameterMethod(m3));
     }
 
     public void testMethod() throws Exception {
@@ -229,7 +251,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.method(e1));
         PsiElement e2 = createTestMethodFromString("static abstract public void method(int x);");
         assertTrue(iz.method(e2));
-        assertFalse(iz.method(createTestClassFromString("", "method()", "", "public")));
+        PsiElement e3 = createTestClassFromString("", "method()", "", "public");
+        assertFalse(iz.method(e3));
     }
 
     public void testVoid$() throws Exception {
@@ -237,7 +260,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.void$(m1));
         PsiMethod m2 = createTestMethodFromString("protected void method(){}");
         assertTrue(iz.void$(m2));
-        assertFalse(iz.void$(createTestMethodFromString("public static boolean method(){return true;}")));
+        PsiMethod m3 = createTestMethodFromString("public static boolean method(){return true;}");
+        assertFalse(iz.void$(m3));
     }
 
     public void testPublic$() throws Exception {
@@ -247,7 +271,8 @@ public class izTest extends TipperTest {
         assertFalse(iz.public$(m2));
         PsiMethod m3 = createTestMethodFromString("private static boolean method(){return true;}");
         assertFalse(iz.public$(m3));
-        assertFalse(iz.public$(createTestMethodFromString("void method(){}")));
+        PsiMethod m4 = createTestMethodFromString("void method(){}");
+        assertFalse(iz.public$(m4));
     }
 
     public void testMain() throws Exception {
@@ -261,7 +286,8 @@ public class izTest extends TipperTest {
         assertFalse(iz.main(m4));
         PsiMethod m5 = createTestMethodFromString("public static void main(String [] arg){}");
         assertFalse(iz.main(m5));
-        assertFalse(iz.main(createTestMethodFromString("public void main(String [] args){}")));
+        PsiMethod m6 = createTestMethodFromString("public void main(String [] args){}");
+        assertFalse(iz.main(m6));
     }
 
     public void testReturnStatement() throws Exception {
@@ -271,7 +297,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.returnStatement(rt2));
         PsiStatement rt3 = createTestStatementFromString("return x == null ? y : x");
         assertTrue(iz.returnStatement(rt3));
-        assertFalse(iz.returnStatement(createTestStatementFromString("int x;")));
+        PsiStatement s = createTestStatementFromString("int x;");
+        assertFalse(iz.returnStatement(s));
 
     }
 
@@ -284,7 +311,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.type(te3));
         PsiElement te4 = createTestTypeElementFromString("List<T>");
         assertTrue(iz.type(te4));
-        assertFalse(iz.type(createTestStatementFromString("int x;")));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.type(e));
 
     }
 
@@ -294,7 +322,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.expressionStatement(s1));
         PsiStatement s2 = createTestStatementFromString("true");
         assertTrue(iz.expressionStatement(s2));
-        assertFalse(iz.expressionStatement(createTestStatementFromString("int x = 2+3")));
+        PsiStatement s3 = createTestStatementFromString("int x = 2+3");
+        assertFalse(iz.expressionStatement(s3));
     }
 
     public void testIdentifier() throws Exception {
@@ -304,7 +333,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.identifier(id2));
         PsiIdentifier id3 = createTestIdentifierFromString("$");
         assertTrue(iz.identifier(id3));
-        assertFalse(iz.identifier(createTestStatementFromString("int x;")));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.identifier(e));
     }
 
     public void testConditionalExpression() throws Exception {
@@ -312,7 +342,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.conditionalExpression(c1));
         PsiConditionalExpression c2 = createTestConditionalExpression("x != null", "x = true", null);
         assertTrue(iz.conditionalExpression(c2));
-        assertFalse(iz.identifier(createTestStatementFromString("int x;")));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.identifier(e));
     }
 
     public void testNullExpression() throws Exception {
@@ -321,9 +352,9 @@ public class izTest extends TipperTest {
         final Wrapper<PsiConditionalExpression> w = new Wrapper<>();
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitConditionalExpression(PsiConditionalExpression ¢) {
-                super.visitConditionalExpression(¢);
-                w.inner = ¢;
+            public void visitConditionalExpression(PsiConditionalExpression expression) {
+                super.visitConditionalExpression(expression);
+                w.inner = expression;
             }
         });
         assert (iz.conditionalExpression(w.inner));
@@ -335,13 +366,15 @@ public class izTest extends TipperTest {
         assertTrue(iz.expression(e1));
         PsiElement e2 = createTestExpression("3 >= y");
         assertTrue(iz.expression(e2));
-        assertFalse(iz.expression(createTestStatementFromString("int x;")));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.expression(e));
     }
 
     public void testWhitespace() throws Exception {
         PsiWhiteSpace ws = new PsiWhiteSpaceImpl("");
         assertTrue(iz.whiteSpace(ws));
-        assertFalse(iz.whiteSpace(createTestStatementFromString("int x;")));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertFalse(iz.whiteSpace(e));
     }
 
     public void testOfType() throws Exception {
@@ -349,8 +382,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.ofType(ws, PsiWhiteSpaceImpl.class));
         PsiElement e1 = createTestExpression("x == y");
         assertTrue(iz.ofType(e1, PsiBinaryExpressionImpl.class));
-        assertTrue(iz.ofType(createTestConditionalExpression("x == null", "x = true", "null"),
-                PsiConditionalExpressionImpl.class));
+        PsiConditionalExpression c1 = createTestConditionalExpression("x == null", "x = true", "null");
+        assertTrue(iz.ofType(c1, PsiConditionalExpressionImpl.class));
     }
 
     public void testDocumentedElement() throws Exception {
@@ -362,7 +395,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.documentedElement(e2));
         PsiMethod m = createTestMethodFromString("public int getX(){return x;}");
         assertTrue(iz.documentedElement(m));
-        assertFalse(iz.documentedElement(createTestMethodCallExpression("foo", "a")));
+        PsiMethodCallExpression mc = createTestMethodCallExpression("foo", "a");
+        assertFalse(iz.documentedElement(mc));
     }
 
     public void testjavaDoc() throws Exception {
@@ -372,7 +406,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.javadoc(e));
         PsiElement e2 = createTestCommentFromString("//comment");
         assertFalse(iz.javadoc(e2));
-        assertFalse(iz.javadoc(createTestCommentFromString("/*comment*/")));
+        PsiElement e3 = createTestCommentFromString("/*comment*/");
+        assertFalse(iz.javadoc(e3));
     }
 
     public void testGeneric() {
@@ -398,7 +433,9 @@ public class izTest extends TipperTest {
         assertFalse(iz.genericExpression(genericPsiBlock));
 
         psiElement = createTestExpressionFromString("x+y");
-        assertTrue(iz.genericExpression((new GenericPsiExpression(createTestType("Integer"), psiElement))));
+        PsiType psiType = createTestType("Integer");
+        GenericPsiExpression genericPsiExpression = new GenericPsiExpression(psiType, psiElement);
+        assertTrue(iz.genericExpression(genericPsiExpression));
     }
 
     public void testGenericStatement() {
@@ -407,7 +444,8 @@ public class izTest extends TipperTest {
         assertFalse(iz.genericStatement(genericPsiBlock));
 
         psiElement = createTestStatementFromString("int x=0;");
-        assertTrue(iz.genericStatement((new GenericPsiStatement(psiElement))));
+        GenericPsiStatement genericPsiStatement = new GenericPsiStatement(psiElement);
+        assertTrue(iz.genericStatement(genericPsiStatement));
     }
 
     public void testGenericBlock() {
@@ -416,7 +454,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.genericBlock(genericPsiBlock));
 
         psiElement = createTestStatementFromString("int x=0;");
-        assertFalse(iz.genericBlock((new GenericPsiStatement(psiElement))));
+        GenericPsiStatement genericPsiStatement = new GenericPsiStatement(psiElement);
+        assertFalse(iz.genericBlock(genericPsiStatement));
     }
 
     public void testWhileStatement() throws Exception {
@@ -424,7 +463,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.whileStatement(e1));
         PsiElement e2 = createTestDoWhileStatementFromString("do{}while(true)");
         assertFalse(iz.whileStatement(e2));
-        assertFalse(iz.whileStatement(createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}")));
+        PsiElement e3 = createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}");
+        assertFalse(iz.whileStatement(e3));
     }
 
     public void testSwitchStatement() throws Exception {
@@ -432,7 +472,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.switchStatement(e1));
         PsiElement e2 = createTestSwitchStatementFromString("switch(x){ case 1: break; case 2: break; default: continue;}");
         assertTrue(iz.switchStatement(e2));
-        assertFalse(iz.switchStatement(createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}")));
+        PsiElement e3 = createTestForStatementFromString("for(int i = 0 ; i< 5 ; i++){}");
+        assertFalse(iz.switchStatement(e3));
 
     }
 
@@ -443,7 +484,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.loopStatement(e2));
         PsiElement e3 = createTestWhileStatementFromString("while(true){}");
         assertTrue(iz.loopStatement(e3));
-        assertTrue(iz.loopStatement(createTestDoWhileStatementFromString("do{}while(true)")));
+        PsiElement e4 = createTestDoWhileStatementFromString("do{}while(true)");
+        assertTrue(iz.loopStatement(e4));
     }
 
     public void testTryStatement() {
@@ -451,7 +493,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.tryStatement(e1));
         PsiElement e2 = createTestTryStatement("", "Excepton ex", "", "");
         assertTrue(iz.tryStatement(e2));
-        assertFalse(iz.tryStatement(createTestWhileStatementFromString("while(true){}")));
+        PsiElement e3 = createTestWhileStatementFromString("while(true){}");
+        assertFalse(iz.tryStatement(e3));
     }
 
     public void testEnclosingStatement() throws Exception {
@@ -471,43 +514,50 @@ public class izTest extends TipperTest {
         assertTrue(iz.enclosingStatement(e7));
         PsiElement e8 = createTestDoWhileStatementFromString("do{}while(true)");
         assertTrue(iz.enclosingStatement(e8));
-        assertFalse(iz.enclosingStatement(createTestStatementFromString("int x;")));
+        PsiElement e9 = createTestStatementFromString("int x;");
+        assertFalse(iz.enclosingStatement(e9));
     }
 
     public void testSynchronized() throws Exception {
         PsiMethod e1 = createTestMethodFromString("synchronized public int getX(){return x;}");
         assertTrue(iz.synchronized¢(e1));
-        assertFalse(iz.synchronized¢(createTestMethodFromString("public int getX(){return x;}")));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.synchronized¢(e2));
     }
 
     public void testNative() throws Exception {
         PsiMethod e1 = createTestMethodFromString("native public int getX(){return x;}");
         assertTrue(iz.native¢(e1));
-        assertFalse(iz.native¢(createTestMethodFromString("public int getX(){return x;}")));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.native¢(e2));
     }
 
     public void testFinalMember() throws Exception {
         PsiMember e1 = createTestFieldDeclarationFromString("final private int x");
         assertTrue(iz.final¢(e1));
-        assertFalse(iz.final¢((PsiMember) createTestFieldDeclarationFromString("private int x")));
+        PsiMember e2 = createTestFieldDeclarationFromString("private int x");
+        assertFalse(iz.final¢(e2));
     }
 
     public void testFinalVariable() throws Exception {
         PsiVariable e1 = createTestFieldDeclarationFromString("final private int x");
         assertTrue(iz.final¢(e1));
-        assertFalse(iz.final¢((PsiVariable) createTestFieldDeclarationFromString("private int x")));
+        PsiVariable e2 = createTestFieldDeclarationFromString("private int x");
+        assertFalse(iz.final¢(e2));
     }
 
     public void testDefault() throws Exception {
         PsiMethod e1 = createTestMethodFromString("default public int getX(){return x;}");
         assertTrue(iz.default¢(e1));
-        assertFalse(iz.default¢(createTestMethodFromString("public int getX(){return x;}")));
+        PsiMethod e2 = createTestMethodFromString("public int getX(){return x;}");
+        assertFalse(iz.default¢(e2));
     }
 
     public void testAnnotation() throws Exception {
         PsiElement e1 = createTestAnnotationFromString("@annotation");
         assertTrue(iz.annotation(e1));
-        assertFalse(iz.annotation(createTestMethodFromString("default public int getX(){@Wrong return x;}")));
+        PsiMethod e2 = createTestMethodFromString("default public int getX(){@Wrong return x;}");
+        assertFalse(iz.annotation(e2));
     }
 
     public void testArrayInitializer() throws Exception {
@@ -517,7 +567,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.arrayInitializer(e2));
         PsiElement e3 = createTestExpression("{}");
         assertTrue(iz.arrayInitializer(e3));
-        assertFalse(iz.arrayInitializer(createTestExpression("0")));
+        PsiElement e4 = createTestExpression("0");
+        assertFalse(iz.arrayInitializer(e4));
     }
 
     public void testAssignmentExpression() throws Exception {
@@ -525,7 +576,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.assignment(e1));
         PsiElement e2 = createTestExpression("x=++y");
         assertTrue(iz.assignment(e2));
-        assertFalse(iz.assignment(createTestExpression("x>=5")));
+        PsiElement e3 = createTestExpression("x>=5");
+        assertFalse(iz.assignment(e3));
     }
 
     public void testBreakStatement() throws Exception {
@@ -533,7 +585,8 @@ public class izTest extends TipperTest {
         assertTrue(iz.breakStatement(e1));
         PsiElement e2 = createTestStatementFromString("continue;");
         assertFalse(iz.breakStatement(e2));
-        assertFalse(iz.breakStatement(createTestStatementFromString("i++;")));
+        PsiElement e3 = createTestStatementFromString("i++;");
+        assertFalse(iz.breakStatement(e3));
     }
 
     public void testCastExpression() throws Exception {
@@ -541,11 +594,13 @@ public class izTest extends TipperTest {
         assertTrue(iz.castExpression(e1));
         PsiElement e2 = createTestExpression("(Object)x");
         assertTrue(iz.castExpression(e2));
-        assertFalse(iz.castExpression(createTestExpression("(2 * x) * x")));
+        PsiElement e3 = createTestExpression("(2 * x) * x");
+        assertFalse(iz.castExpression(e3));
     }
 
     public void testClassInstanceCreation() throws Exception {
-        assertTrue(iz.classInstanceCreation(createTestExpression("new ArrayList()")));
+        PsiElement e1 = createTestExpression("new ArrayList()");
+        assertTrue(iz.classInstanceCreation(e1));
     }
 
     public void testBooleanLiteral() throws Exception {
@@ -553,49 +608,57 @@ public class izTest extends TipperTest {
         assertTrue(iz.booleanLiteral(e1));
         PsiElement e2 = createTestExpression("false");
         assertTrue(iz.booleanLiteral(e2));
-        assertFalse(iz.booleanLiteral(createTestExpression("null")));
+        PsiElement e3 = createTestExpression("null");
+        assertFalse(iz.booleanLiteral(e3));
     }
 
     public void testBooleanType() throws Exception {
         PsiType e1 = createTestTypeFromString("boolean");
         assertTrue(iz.booleanType(e1));
-        assertFalse(iz.booleanType(createTestTypeFromString("int")));
+        PsiType e3 = createTestTypeFromString("int");
+        assertFalse(iz.booleanType(e3));
     }
 
     public void testConditionalAnd() throws Exception {
         PsiBinaryExpression e1 = (PsiBinaryExpression) createTestExpression("x && y");
         assertTrue(iz.conditionalAnd(e1));
-        assertFalse(iz.conditionalAnd(((PsiBinaryExpression) createTestExpression("x || y"))));
+        PsiBinaryExpression e2 = (PsiBinaryExpression) createTestExpression("x || y");
+        assertFalse(iz.conditionalAnd(e2));
     }
 
     public void testConditionalOr() throws Exception {
         PsiBinaryExpression e1 = (PsiBinaryExpression) createTestExpression("x || y");
         assertTrue(iz.conditionalOr(e1));
-        assertFalse(iz.conditionalOr(((PsiBinaryExpression) createTestExpression("x && y"))));
+        PsiBinaryExpression e2 = (PsiBinaryExpression) createTestExpression("x && y");
+        assertFalse(iz.conditionalOr(e2));
     }
 
     public void testEmptyStatement() throws Exception {
         PsiElement e1 = createTestStatementFromString(";");
         assertTrue(iz.emptyStatement(e1));
-        assertFalse(iz.emptyStatement(createTestStatementFromString("int x;")));
+        PsiElement e3 = createTestStatementFromString("int x;");
+        assertFalse(iz.emptyStatement(e3));
     }
 
     public void testEnumDeclaration() throws Exception {
         PsiElement e1 = createEnumClassFromString("Day");
         assertTrue(iz.enumDeclaration(e1));
-        assertFalse(iz.enumDeclaration(createTestClassFromString("", "Day", "", "public")));
+        PsiElement e2 = createTestClassFromString("", "Day", "", "public");
+        assertFalse(iz.enumDeclaration(e2));
     }
 
     public void testInterface() throws Exception {
         PsiElement e1 = createInterfaceClassFromString("A");
         assertTrue(iz.interface¢(e1));
-        assertFalse(iz.interface¢(createEnumClassFromString("A")));
+        PsiElement e2 = createEnumClassFromString("A");
+        assertFalse(iz.interface¢(e2));
     }
 
     public void testStubMethodCall() throws Exception {
         PsiElement e1 = createTestMethodCallExpression("booleanExpression");
         assertTrue(iz.stubMethodCall(e1));
-        assertFalse(iz.stubMethodCall(createTestMethodCallExpression("foo")));
+        PsiElement e2 = createTestMethodCallExpression("foo");
+        assertFalse(iz.stubMethodCall(e2));
     }
 
     public void testConforms() throws Exception {

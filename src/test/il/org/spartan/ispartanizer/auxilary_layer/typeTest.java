@@ -5,44 +5,52 @@ import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 public class typeTest extends TipperTest {
     public void testCallExpression() {
-        assertEquals(type.of(createTestNewExpression("Object", "")), PsiCallExpression.class);
+        PsiCallExpression e = createTestNewExpression("Object", "");
+        assertEquals(type.of(e), PsiCallExpression.class);
     }
 
     public void testMethodReferenceExpression() {
-        assertEquals(type.of(createTestMethodReferenceEpression("Object", "toString")),
-                PsiMethodReferenceExpression.class);
+        PsiMethodReferenceExpression e = createTestMethodReferenceEpression("Object", "toString");
+        assertEquals(type.of(e), PsiMethodReferenceExpression.class);
     }
 
     public void testMethodCallExpression() {
-        assertEquals(type.of(createTestMethodCallExpression("banana", "5")), PsiMethodCallExpression.class);
+        PsiMethodCallExpression e = createTestMethodCallExpression("banana", "5");
+        assertEquals(type.of(e), PsiMethodCallExpression.class);
     }
 
     public void testMethod() {
-        assertEquals(type.of(createTestMethodFromString("int foo() { return 5; }")), PsiMethod.class);
+        PsiMethod e = createTestMethodFromString("int foo() { return 5; }");
+        assertEquals(type.of(e), PsiMethod.class);
     }
 
     public void testConditionalExpression() {
-        assertEquals(type.of(createTestConditionalExpression("x > 0", "null", "x")), PsiConditionalExpression.class);
+        PsiConditionalExpression e = createTestConditionalExpression("x > 0", "null", "x");
+        assertEquals(type.of(e), PsiConditionalExpression.class);
     }
 
     public void testIdentifier() {
-        assertEquals(type.of(createTestIdentifierFromString("banana")), PsiIdentifier.class);
+        PsiIdentifier e = createTestIdentifierFromString("banana");
+        assertEquals(type.of(e), PsiIdentifier.class);
     }
 
     public void testForeachStatement() {
-        assertEquals(type.of(createTestForeachStatementFromString("for(Object x : list) { x.toString(); }")),
-                PsiForeachStatement.class);
+        PsiForeachStatement e = createTestForeachStatementFromString("for(Object x : list) { x.toString(); }");
+        assertEquals(type.of(e), PsiForeachStatement.class);
     }
 
     public void testLambdaExpression() {
-        assertEquals(type.of(createTestLambdaExpression("x -> x + 2")), PsiLambdaExpression.class);
+        PsiLambdaExpression e = createTestLambdaExpression("x -> x + 2");
+        assertEquals(type.of(e), PsiLambdaExpression.class);
     }
 
     public void testIfStatement() {
-        assertEquals(type.of(createTestIfStatement("x > 0", "return 5")), PsiIfStatement.class);
+        PsiIfStatement e = createTestIfStatement("x > 0", "return 5");
+        assertEquals(type.of(e), PsiIfStatement.class);
     }
 
     public void testWhileStatement() {
-        assertEquals(type.of(createTestWhileStatementFromString("while(x > 0) { x--; }")), PsiWhileStatement.class);
+        PsiWhileStatement e = createTestWhileStatementFromString("while(x > 0) { x--; }");
+        assertEquals(type.of(e), PsiWhileStatement.class);
     }
 }

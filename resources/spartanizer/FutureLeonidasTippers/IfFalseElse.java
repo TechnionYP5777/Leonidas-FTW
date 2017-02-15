@@ -20,12 +20,12 @@ public class IfFalseElse extends GenericPsiElementStub {
         if (false) {
             statement();
         } else {
-            statement(0);
+            statement(1);
         }
     }
 
     @Leonidas(PsiExpressionStatement.class)
     public void to() {
-        statement(0);
+        statement(1);
     }
 }

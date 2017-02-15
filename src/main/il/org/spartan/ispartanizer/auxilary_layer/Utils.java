@@ -27,33 +27,49 @@ public enum Utils {
         return list!=null && Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
     }
 
-    public static PsiManager getPsiManager(Project ¢) {
-        return PsiManager.getInstance(¢);
+    public static PsiManager getPsiManager(Project project) {
+        return PsiManager.getInstance(project);
     }
 
-    public static PsiClass findClass(PsiElement ¢) {
-        return ¢ == null ? null
-                : ¢ instanceof PsiClass ? (PsiClass) ¢ : ¢.getParent() == null ? null : findClass(¢.getParent());
+    public static PsiClass findClass(PsiElement element) {
+
+        if(element == null){
+            return null;
+        }
+
+        if (element instanceof PsiClass) {
+            return (PsiClass) element;
+        }
+
+        if (element.getParent() != null) {
+            return findClass(element.getParent());
+        }
+
+        return null;
     }
 
     public static PsiMethod findMethodByName(PsiClass clazz, String name) {
-        if (clazz == null)
+        if(clazz == null){
             return null;
+        }
 
         Arrays.stream(clazz.getMethods());
         PsiMethod[] methods = clazz.getMethods();
         // use reverse to find from bottom as the duplicate conflict resolution policy requires this
-        for (int ¢ = methods.length - 1; ¢ >= 0; --¢)
-            if (name.equals(methods[¢].getName()))
-                return methods[¢];
+        for (int i = methods.length - 1; i >= 0; i--) {
+            PsiMethod method = methods[i];
+            if (name.equals(method.getName()))
+                return method;
+        }
         return null;
     }
 
-    public static PsiClass getCurrentClass(PsiJavaFile f, Editor e) {
-        if (f == null)
+    public static PsiClass getCurrentClass(PsiJavaFile javaFile, Editor editor) {
+        if (javaFile == null) {
             return null;
-        PsiElement element = f.findElementAt(e.getCaretModel().getOffset());
-        return element == null ? null : findClass(element);
+        }
+        PsiElement element = javaFile.findElementAt(editor.getCaretModel().getOffset());
+        return element != null ? findClass(element) : null;
     }
 
     public static boolean conforms(Class<?> from, Class<?> to) {
@@ -63,33 +79,34 @@ public enum Utils {
     }
 
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier i) {
-        List<PsiIdentifier> $ = new ArrayList<>();
-        if (root == null || i == null)
-            return $;
+        List<PsiIdentifier> identifiers = new ArrayList<>();
+        if(root == null || i == null){
+            return identifiers;
+        }
         root.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitIdentifier(PsiIdentifier id) {
-                super.visitIdentifier(id);
-                if (!id.getText().equals(i.getText()))
-                    return;
-                PsiElement context = id.getContext();
-                if (iz.variable(context) || iz.referenceExpression(context))
-                    $.add(id);
+            public void visitIdentifier(PsiIdentifier identifier) {
+                super.visitIdentifier(identifier);
+                if (identifier.getText().equals(i.getText())) {
+                    PsiElement context = identifier.getContext();
+                    if(iz.variable(context) || iz.referenceExpression(context))
+                        identifiers.add(identifier);
+                }
             }
         });
-        return $;
+        return identifiers;
     }
 
-    public static PsiClass getContainingClass(PsiElement ¢) {
-        return iz.classDeclaration(¢.getParent()) ? az.classDeclaration(¢.getParent()) : getContainingClass(¢.getParent());
+    public static PsiClass getContainingClass(PsiElement e) {
+        return iz.classDeclaration(e.getParent()) ? az.classDeclaration(e.getParent()) : getContainingClass(e.getParent());
     }
 
-    public static PsiImportList getImportList(PsiFile ¢) {
-        return az.importList(PsiTreeUtil.getChildOfType(¢, PsiImportList.class));
+    public static PsiImportList getImportList(PsiFile f) {
+        return az.importList(PsiTreeUtil.getChildOfType(f, PsiImportList.class));
     }
 
-    public static PsiClass getClassFromFile(PsiFile ¢) {
-        return az.classDeclaration(¢.getChildren()[4]);
+    public static PsiClass getClassFromFile(PsiFile f) {
+        return az.classDeclaration(f.getChildren()[4]);
     }
 
     public static Document getDocumentFromPsiElement(PsiElement e) {
@@ -103,26 +120,29 @@ public enum Utils {
 
     private static String showPsiTreeAux(PsiElement e, int indent) {
         StringBuilder s = new StringBuilder();
-        for (int ¢ = 0; ¢ < indent; ++¢)
+        for (int i = 0; i < indent; i++) {
             s.append("\t");
+        }
         s.append(e.getClass().getName() + ": " + e.getText() + "\n");
-        for (PsiElement child : e.getChildren())
+        for (PsiElement child : e.getChildren()) {
             s.append(showPsiTreeAux(child, indent + 1));
-        return s + "";
+        }
+        return s.toString();
     }
 
-    public static String showPsiTree(PsiElement ¢) {
-        return showPsiTreeAux(¢, 0);
+    public static String showPsiTree(PsiElement e) {
+        return showPsiTreeAux(e, 0);
     }
 
     public static <T extends PsiElement> List<T> getChildrenOfType(@Nullable PsiElement e, @NotNull Class<T> aClass) {
         Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement ¢) {
-                super.visitElement(¢);
-                if (aClass.isInstance(¢))
-                    w.get().add((T) ¢);
+            public void visitElement(PsiElement element) {
+                super.visitElement(element);
+                if (aClass.isInstance(element)) {
+                    w.get().add((T) element);
+                }
             }
         });
         return w.get();
@@ -135,12 +155,12 @@ public enum Utils {
      * @return fixed path. on error, returns null
      */
     public static String fixSpacesProblemOnPath(String path){
-        String $ = null;
+        String fixedPath = null;
         try {
-            $ = URLDecoder.decode(path, "UTF-8");
+            fixedPath = URLDecoder.decode(path, "UTF-8");
         } catch(UnsupportedEncodingException u){
 
         }
-        return $;
+        return fixedPath;
     }
 }

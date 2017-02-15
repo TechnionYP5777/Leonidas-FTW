@@ -97,9 +97,10 @@ public class DefaultToTest extends TipperTest {
     private PsiConditionalExpression createConditionalExpressionFromLegalString(String conditionalString) {
         int indexOfQuestionMark = conditionalString.indexOf('?');
         int indexOfColon = conditionalString.indexOf(':');
-        return createTestConditionalExpression(conditionalString.substring(0, indexOfQuestionMark).trim(),
-                conditionalString.substring(indexOfQuestionMark + 1, indexOfColon).trim(),
-                conditionalString.substring(indexOfColon + 1).trim());
+        String condition = conditionalString.substring(0, indexOfQuestionMark).trim();
+        String then = conditionalString.substring(indexOfQuestionMark + 1, indexOfColon).trim();
+        String else$ = conditionalString.substring(indexOfColon + 1).trim();
+        return createTestConditionalExpression(condition, then, else$);
     }
 
 }

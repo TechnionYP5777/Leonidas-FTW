@@ -6,6 +6,7 @@ import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
+import org.codehaus.groovy.ast.stmt.IfStatement;
 
 import java.util.Map;
 
@@ -31,8 +32,8 @@ public class ReplacerTest extends TipperTest {
         }
         PsiRewrite rewrite = new PsiRewrite().project(ifStatement.getProject()).psiFile(ifStatement.getContainingFile());
         PsiIfStatement newIfStatement = createTestIfStatementNoBraces(COND, THEN);
-        assertTrue(PsiTreeMatcher.match(Replacer.getReplacer(ifStatement, tipperBuilder, rewrite), newIfStatement));
-        assertFalse(PsiTreeMatcher.match(Replacer.getReplacer(ifStatement, tipperBuilder, rewrite), ifStatement));
+        assertTrue(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), newIfStatement));
+        assertFalse(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), ifStatement));
     }
 
     public void testGetReplacer2() {
@@ -44,9 +45,9 @@ public class ReplacerTest extends TipperTest {
         }
         assertNotNull(tipperBuilder);
         PsiRewrite rewrite = new PsiRewrite().project(whileStatement.getProject()).psiFile(whileStatement.getContainingFile());
-        PsiWhileStatement newWhileStatement = createTestWhileStatementFromString("while(" + COND + ")" + THEN);
-        assertTrue(PsiTreeMatcher.match(Replacer.getReplacer(whileStatement, tipperBuilder, rewrite), newWhileStatement));
-        assertFalse(PsiTreeMatcher.match(Replacer.getReplacer(whileStatement, tipperBuilder, rewrite), whileStatement));
+        PsiWhileStatement newWhileStatement = createTestWhileStatementFromString("while(" + COND + ")" + THEN + "");
+        assertTrue(PsiTreeMatcher.match(replacer.getReplacer(whileStatement, tipperBuilder, rewrite), newWhileStatement));
+        assertFalse(PsiTreeMatcher.match(replacer.getReplacer(whileStatement, tipperBuilder, rewrite), whileStatement));
     }
 
     public void testGetReplace3() {
@@ -59,8 +60,8 @@ public class ReplacerTest extends TipperTest {
         assertNotNull(tipperBuilder);
         PsiRewrite rewrite = new PsiRewrite().project(ifStatement.getProject()).psiFile(ifStatement.getContainingFile());
         PsiIfStatement newIfStatement = createTestIfStatement(COND, THEN);
-        assertTrue(PsiTreeMatcher.match(Replacer.getReplacer(ifStatement, tipperBuilder, rewrite), newIfStatement));
-        assertFalse(PsiTreeMatcher.match(Replacer.getReplacer(ifStatement, tipperBuilder, rewrite), ifStatement));
+        assertTrue(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), newIfStatement));
+        assertFalse(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), ifStatement));
     }
 
     public void testReplace() {
@@ -73,7 +74,7 @@ public class ReplacerTest extends TipperTest {
         }
         PsiRewrite rewrite = new PsiRewrite().project(ifStatement.getProject()).psiFile(ifStatement.getContainingFile());
         PsiIfStatement newIfStatement = createTestIfStatementNoBraces(COND, THEN);
-        assertTrue(PsiTreeMatcher.match(Replacer.replace(ifStatement, tipperBuilder, rewrite), newIfStatement));
+        assertTrue(PsiTreeMatcher.match(replacer.replace(ifStatement, tipperBuilder, rewrite), newIfStatement));
         assertTrue(PsiTreeMatcher.match(PsiTreeUtil.findChildOfType(parent, PsiIfStatement.class), newIfStatement));
 
     }
@@ -83,16 +84,16 @@ public class ReplacerTest extends TipperTest {
         Wrapper<Integer> count = new Wrapper<>(0);
         b.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitCodeBlock(PsiCodeBlock ¢) {
-                super.visitCodeBlock(¢);
-                ¢.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
+            public void visitCodeBlock(PsiCodeBlock block) {
+                super.visitCodeBlock(block);
+                block.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
             }
 
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression ¢) {
-                super.visitMethodCallExpression(¢);
-                ¢.putUserData(KeyDescriptionParameters.GENERIC_NAME, ¢.getMethodExpression().getText());
-                ¢.putUserData(KeyDescriptionParameters.ID, count.get());
+            public void visitMethodCallExpression(PsiMethodCallExpression methodCallExpression) {
+                super.visitMethodCallExpression(methodCallExpression);
+                methodCallExpression.putUserData(KeyDescriptionParameters.GENERIC_NAME, methodCallExpression.getMethodExpression().getText());
+                methodCallExpression.putUserData(KeyDescriptionParameters.ID, count.get());
 
                 count.set(count.get() + 1);
             }
@@ -102,7 +103,7 @@ public class ReplacerTest extends TipperTest {
 
         PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
         assertTrue(PsiTreeMatcher.match(b, y));
-        Map<Integer, PsiElement> m = Replacer.extractInfo(b, y);
+        Map<Integer, PsiElement> m = replacer.extractInfo(b, y);
         assertTrue(iz.expression(m.get(0)));
         assertTrue(iz.statement(m.get(1)));
     }

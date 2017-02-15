@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
-import com.intellij.psi.PsiBinaryExpression;
-import com.intellij.psi.PsiElement;
+import com.intellij.psi.*;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 /**
@@ -19,7 +18,8 @@ public class hazTest extends TipperTest {
         assertFalse(haz.centVariableDefinition(e3));
         PsiElement e4 = createTestMethodFromString("public static int getSomething(){int ¢ = 5; return ¢;}");
         assertTrue(haz.centVariableDefinition(e4));
-        assertTrue(haz.centVariableDefinition(createTestClassFromString("", "A", "private int ¢;", "public")));
+        PsiElement e5 = createTestClassFromString("","A","private int ¢;","public");
+        assertTrue(haz.centVariableDefinition(e5));
     }
 
     public void testHazFunctionNamed() throws Exception{
@@ -29,8 +29,8 @@ public class hazTest extends TipperTest {
         assertTrue(haz.functionNamed(e2,"getX"));
         PsiElement e3 = createTestClassFromString("","A","pubic A(){} private static int getY(){return 1;}","public");
         assertFalse(haz.functionNamed(e3,"getX"));
-        assertTrue(haz.functionNamed(createTestInterfaceFromString("", "A", "private static int getX();", "public"),
-                "getX"));
+        PsiElement e4 = createTestInterfaceFromString("","A","private static int getX();","public");
+        assertTrue(haz.functionNamed(e4,"getX"));
 
     }
 
@@ -39,7 +39,8 @@ public class hazTest extends TipperTest {
         assertTrue(haz.equalsOperator(e1));
         PsiBinaryExpression e2 = (PsiBinaryExpression) createTestExpression("x != y");
         assertFalse(haz.equalsOperator(e2));
-        assertFalse(haz.equalsOperator(((PsiBinaryExpression) createTestExpression("x > y"))));
+        PsiBinaryExpression e3 = (PsiBinaryExpression) createTestExpression("x > y");
+        assertFalse(haz.equalsOperator(e3));
     }
 
     public void testHazNotEqualsOperator() throws Exception{
@@ -47,7 +48,8 @@ public class hazTest extends TipperTest {
         assertFalse(haz.notEqualsOperator(e1));
         PsiBinaryExpression e2 = (PsiBinaryExpression) createTestExpression("x != y");
         assertTrue(haz.notEqualsOperator(e2));
-        assertFalse(haz.notEqualsOperator(((PsiBinaryExpression) createTestExpression("x > y"))));
+        PsiBinaryExpression e3 = (PsiBinaryExpression) createTestExpression("x > y");
+        assertFalse(haz.notEqualsOperator(e3));
     }
 
 //    public void testHazSyntaxErrors() throws Exception{

@@ -15,8 +15,8 @@ public class GenericPsiBlock extends GenericPsi{
     }
 
     @Override
-    public boolean isOfGenericType(PsiElement ¢) {
-        return iz.blockStatement(¢) || iz.block(¢) || iz.statement(¢);
+    public boolean isOfGenericType(PsiElement e) {
+        return iz.blockStatement(e) || iz.block(e) || iz.statement(e);
     }
 
     @Override

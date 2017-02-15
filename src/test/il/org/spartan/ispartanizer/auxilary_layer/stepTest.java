@@ -11,16 +11,21 @@ import org.junit.Assert;
  */
 public class stepTest extends TipperTest {
     public void testDocCommentA() {
-        Assert.assertEquals(step.docCommentString(createTestClassFromString("", "A", "", "public")), "");
+        String className = "A";
+        String doc = "";
+        Assert.assertEquals(step.docCommentString(createTestClassFromString("", className, "", "public")), doc);
     }
 
     public void testDocCommentB() {
-        Assert.assertEquals(step.docCommentString(getClassInFile(createTestFileFromString("/**javadoc*/class A {}"))),
-                "javadoc");
+        String src = "/**javadoc*/class A {}";
+        String doc = "javadoc";
+        Assert.assertEquals(step.docCommentString(getClassInFile(createTestFileFromString(src))), doc);
     }
 
     public void testDocCommentC() {
-        Assert.assertEquals(
-                step.docCommentString(createTestClassFromString("", "A", "/** javadoc */void foo(){}", "public")), "");
+        String className = "A";
+        String classBody = "/** javadoc */void foo(){}";
+        String doc = "";
+        Assert.assertEquals(step.docCommentString(createTestClassFromString("", className, classBody, "public")), doc);
     }
 }

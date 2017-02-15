@@ -27,17 +27,22 @@ public abstract class TipperTest extends PsiTestCase {
         return JavaPsiFacade.getElementFactory(getTestFile().getProject());
     }
 
-    protected PsiStatement createTestStatementFromString(String ¢) {
-        return getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiStatement createTestStatementFromString(String s) {
+        return getTestFactory().createStatementFromText(s, getTestFile());
     }
 
-    protected PsiExpression createTestExpressionFromString(String ¢) {
-        return getTestFactory().createExpressionFromText(¢, getTestFile());
+    protected PsiExpression createTestExpressionFromString(String s) {
+        return getTestFactory().createExpressionFromText(s, getTestFile());
     }
 
     protected PsiClass createTestClassFromString(String s){
         PsiClass dummyClass = getTestFactory().createClassFromText(s, getTestFile());
-        return dummyClass == null ? null : Utils.getChildrenOfType(dummyClass, PsiClass.class).get(0);
+        //for some reason classes that are created with file factory are wrapped with class _DUMMY_....
+        if (dummyClass==null){
+            return null;
+        }
+        PsiClass realClass = Utils.getChildrenOfType(dummyClass,PsiClass.class).get(0);
+        return realClass;
     }
 
     protected PsiClass createTestClassFromString(String javadoc, String className, String classBody, String... classModifiers) {
@@ -48,7 +53,7 @@ public abstract class TipperTest extends PsiTestCase {
         sb.append("{");
         sb.append(classBody);
         sb.append("}");
-        return getTestFactory().createClassFromText((sb + ""), getTestFile());
+        return getTestFactory().createClassFromText(sb.toString(), getTestFile());
     }
 
     protected PsiClass createTestInterfaceFromString(String interfaceName, String interfaceBody, String... interfaceModifiers) {
@@ -59,19 +64,19 @@ public abstract class TipperTest extends PsiTestCase {
         sb.append("{");
         sb.append(interfaceBody);
         sb.append("}");
-        return getTestFactory().createClassFromText((sb + ""), getTestFile());
+        return getTestFactory().createClassFromText(sb.toString(), getTestFile());
     }
 
-    protected PsiClass createEnumClassFromString(String ¢) {
-        return getTestFactory().createEnum(¢);
+    protected PsiClass createEnumClassFromString(String s) {
+        return getTestFactory().createEnum(s);
     }
 
-    protected PsiClass createInterfaceClassFromString(String ¢) {
-        return getTestFactory().createInterface(¢);
+    protected PsiClass createInterfaceClassFromString(String s) {
+        return getTestFactory().createInterface(s);
     }
 
-    protected PsiBlockStatement createTestBlockStatementFromString(String ¢) {
-        return (PsiBlockStatement) getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiBlockStatement createTestBlockStatementFromString(String s) {
+        return (PsiBlockStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
     /**
@@ -91,89 +96,93 @@ public abstract class TipperTest extends PsiTestCase {
         return classWrapper.get();
     }
 
-    protected PsiMethod createTestMethodFromString(String ¢) {
-        return getTestFactory().createMethodFromText(¢, getTestFile());
+    protected PsiMethod createTestMethodFromString(String s) {
+        return getTestFactory().createMethodFromText(s, getTestFile());
     }
 
-    protected PsiEnumConstant createTestEnumFromString(String ¢) {
-        return getTestFactory().createEnumConstantFromText(¢, getTestFile());
+    protected PsiEnumConstant createTestEnumFromString(String s) {
+        return getTestFactory().createEnumConstantFromText(s, getTestFile());
     }
 
-    protected PsiDeclarationStatement createTestEnumDecFromString(String ¢) {
-        return (PsiDeclarationStatement) getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiDeclarationStatement createTestEnumDecFromString(String s) {
+        return (PsiDeclarationStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
-    protected PsiAnnotation createTestAnnotationFromString(String ¢) {
-        return getTestFactory().createAnnotationFromText(¢, getTestFile());
+    protected PsiAnnotation createTestAnnotationFromString(String s) {
+        return getTestFactory().createAnnotationFromText(s, getTestFile());
     }
 
-    protected PsiType createTestTypeFromString(String ¢) {
-        return getTestFactory().createTypeElementFromText(¢, getTestFile()).getType();
+    protected PsiType createTestTypeFromString(String s) {
+        return getTestFactory().createTypeElementFromText(s, getTestFile()).getType();
     }
 
-    protected PsiField createTestFieldDeclarationFromString(String ¢) {
-        return getTestFactory().createFieldFromText(¢, getTestFile());
+    protected PsiField createTestFieldDeclarationFromString(String s) {
+        return getTestFactory().createFieldFromText(s, getTestFile());
     }
 
-    protected PsiTypeElement createTestTypeElementFromString(String ¢) {
-        return getTestFactory().createTypeElementFromText(¢, getTestFile());
+    protected PsiTypeElement createTestTypeElementFromString(String s) {
+        return getTestFactory().createTypeElementFromText(s, getTestFile());
     }
 
-    protected PsiIdentifier createTestIdentifierFromString(String ¢) {
-        return getTestFactory().createIdentifier(¢);
+    protected PsiIdentifier createTestIdentifierFromString(String s) {
+        return getTestFactory().createIdentifier(s);
     }
 
-    protected PsiDocComment createTestDocCommentFromString(String ¢) {
-        return getTestFactory().createDocCommentFromText(¢);
+    protected PsiDocComment createTestDocCommentFromString(String s) {
+        return getTestFactory().createDocCommentFromText(s);
     }
 
-    protected PsiComment createTestCommentFromString(String ¢) {
-        return getTestFactory().createCommentFromText(¢, getTestFile());
+    protected PsiComment createTestCommentFromString(String s) {
+        return getTestFactory().createCommentFromText(s, getTestFile());
     }
 
-    protected PsiWhileStatement createTestWhileStatementFromString(String ¢) {
-        return (PsiWhileStatement) getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiWhileStatement createTestWhileStatementFromString(String s) {
+        return (PsiWhileStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
-    protected PsiDoWhileStatement createTestDoWhileStatementFromString(String ¢) {
-        return (PsiDoWhileStatement) getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiDoWhileStatement createTestDoWhileStatementFromString(String s) {
+        return (PsiDoWhileStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
-    protected PsiSwitchStatement createTestSwitchStatementFromString(String ¢) {
-        return (PsiSwitchStatement) getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiSwitchStatement createTestSwitchStatementFromString(String s) {
+        return (PsiSwitchStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
-    protected PsiForStatement createTestForStatementFromString(String ¢) {
-        return (PsiForStatement) getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiForStatement createTestForStatementFromString(String s) {
+        return (PsiForStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
-    protected PsiForeachStatement createTestForeachStatementFromString(String ¢) {
-        return (PsiForeachStatement) getTestFactory().createStatementFromText(¢, getTestFile());
+    protected PsiForeachStatement createTestForeachStatementFromString(String s) {
+        return (PsiForeachStatement) getTestFactory().createStatementFromText(s, getTestFile());
     }
 
-    protected PsiImportList createTestImportListFromString(String ¢) {
-        return (PsiImportList) createTestFileFromString(¢ + "public class A{}").getNavigationElement().getFirstChild();
+    protected PsiImportList createTestImportListFromString(String s) {
+        PsiFile file = createTestFileFromString(s +
+                "public class A{}");
+        PsiElement importList = file.getNavigationElement().getFirstChild();
+        return (PsiImportList) importList;
     }
 
-    protected PsiCodeBlock createTestCodeBlockFromString(String ¢) {
-        return getTestFactory().createCodeBlockFromText(¢, getTestFile());
+    protected PsiCodeBlock createTestCodeBlockFromString(String s) {
+        return getTestFactory().createCodeBlockFromText(s, getTestFile());
     }
 
-    protected PsiFile createTestFileFromString(String ¢) {
-        return createDummyFile(dummyTestFileName, ¢);
+    protected PsiFile createTestFileFromString(String s) {
+        return createDummyFile(dummyTestFileName, s);
     }
 
     protected PsiLiteralExpression createTestNullExpression() {
         return (PsiLiteralExpression) getTestFactory().createExpressionFromText("null", getTestFile());
     }
 
-    protected PsiType createTestType(String ¢) {
-        return getTestFactory().createType(getTestFactory().createClass(¢));
+    protected PsiType createTestType(String s) {
+        return getTestFactory().createType(getTestFactory().createClass(s));
     }
 
     protected PsiDeclarationStatement createTestDeclarationStatement(String name, String type, String initializer) {
-        return getTestFactory().createVariableDeclarationStatement(name, createTestType(type),
-                createTestExpressionFromString(initializer));
+        PsiType t = createTestType(type);
+        PsiExpression i = createTestExpressionFromString(initializer);
+        return getTestFactory().createVariableDeclarationStatement(name, t, i);
     }
 
     protected PsiIfStatement createTestIfStatement(String cond, String then) {
@@ -187,9 +196,11 @@ public abstract class TipperTest extends PsiTestCase {
      * @return if then has only one statement returns PsiIfStatement, otherwise null
      */
     protected PsiIfStatement createTestIfStatementNoBraces(String cond, String then) {
-        return StringUtils.countMatches(then, ";") != 1 ? null
-                : (PsiIfStatement) getTestFactory().createStatementFromText("if (" + cond + ") " + then + " ",
-                getTestFile());
+        if (StringUtils.countMatches(then, ";") != 1) {
+            return null;
+        }
+        return (PsiIfStatement) getTestFactory()
+                .createStatementFromText("if (" + cond + ") " + then + " ", getTestFile());
     }
 
     protected PsiConditionalExpression createTestConditionalExpression(String cond, String then, String else$) {
@@ -201,11 +212,11 @@ public abstract class TipperTest extends PsiTestCase {
         Wrapper<Integer> tabs = new Wrapper<>(0);
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement e) {
+            public void visitElement(PsiElement element) {
                 IntStream.range(0, tabs.get()).forEach(x -> System.out.print("\t"));
-                System.out.println(e);
+                System.out.println(element);
                 tabs.set(tabs.get() + 1);
-                super.visitElement(e);
+                super.visitElement(element);
             }
         });
     }
@@ -216,7 +227,7 @@ public abstract class TipperTest extends PsiTestCase {
         Arrays.stream(args).forEach(f -> sb.append(f));
         sb.append(")");
         return (PsiMethodCallExpression) getTestFactory()
-                .createExpressionFromText((sb + ""), getTestFile());
+                .createExpressionFromText(sb.toString(), getTestFile());
     }
 
     protected PsiExpression createTestExpression(String expression) {
@@ -237,20 +248,21 @@ public abstract class TipperTest extends PsiTestCase {
     }
 
     protected void assertEqualsByText(PsiElement e1, PsiElement e2) {
-        if (e1 == null && e2 == null)
+        if (e1 == null && e2 == null) {
             return;
+        }
 
         assertNotNull(e1);
         assertNotNull(e2);
         assertEquals(removeWhiteSpaces(e1.getText()), removeWhiteSpaces(e2.getText()));
     }
 
-    protected String removeWhiteSpaces(String ¢) {
-        return ¢.replaceAll("\\s+", "");
+    protected String removeWhiteSpaces(String s) {
+        return s.replaceAll("\\s+", "");
     }
 
-    protected PsiLambdaExpression createTestLambdaExpression(String ¢) {
-        return (PsiLambdaExpression) getTestFactory().createExpressionFromText(¢, getTestFile());
+    protected PsiLambdaExpression createTestLambdaExpression(String s) {
+        return (PsiLambdaExpression) getTestFactory().createExpressionFromText(s, getTestFile());
     }
 
     protected PsiNewExpression createTestNewExpression(String typeName, String... parametes) {
@@ -260,7 +272,7 @@ public abstract class TipperTest extends PsiTestCase {
                 .append("(");
         Arrays.stream(parametes).forEach(s -> sb.append(s));
         sb.append(")");
-        return (PsiNewExpression) getTestFactory().createExpressionFromText((sb + ""), getTestFile());
+        return (PsiNewExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
     }
 
     protected PsiMethodReferenceExpression createTestMethodReferenceEpression(String typeName, String methodName) {
@@ -268,7 +280,7 @@ public abstract class TipperTest extends PsiTestCase {
         sb.append(typeName)
                 .append("::")
                 .append(methodName);
-        return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText((sb + ""), getTestFile());
+        return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
     }
 
     protected PsiRequiresStatement createTestRequiresStatement(String module) {

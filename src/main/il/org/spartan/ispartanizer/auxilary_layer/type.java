@@ -12,14 +12,14 @@ public class type {
         Wrapper<Class<? extends PsiElement>> myClass = new Wrapper<>(PsiElement.class);
         x.accept(new JavaElementVisitor() {
             @Override
-            public void visitCallExpression(PsiCallExpression ¢) {
-                super.visitCallExpression(¢);
+            public void visitCallExpression(PsiCallExpression callExpression) {
+                super.visitCallExpression(callExpression);
                 myClass.set(PsiCallExpression.class);
             }
 
             @Override
-            public void visitMethodReferenceExpression(PsiMethodReferenceExpression ¢) {
-                super.visitMethodReferenceExpression(¢);
+            public void visitMethodReferenceExpression(PsiMethodReferenceExpression expression) {
+                super.visitMethodReferenceExpression(expression);
                 myClass.set(PsiMethodReferenceExpression.class);
             }
 
@@ -42,8 +42,8 @@ public class type {
             }
 
             @Override
-            public void visitForeachStatement(PsiForeachStatement ¢) {
-                super.visitForeachStatement(¢);
+            public void visitForeachStatement(PsiForeachStatement statement) {
+                super.visitForeachStatement(statement);
                 myClass.set(PsiForeachStatement.class);
             }
 
@@ -66,14 +66,14 @@ public class type {
             }
 
             @Override
-            public void visitIfStatement(PsiIfStatement ¢) {
-                super.visitIfStatement(¢);
+            public void visitIfStatement(PsiIfStatement statement) {
+                super.visitIfStatement(statement);
                 myClass.set(PsiIfStatement.class);
             }
 
             @Override
-            public void visitWhileStatement(PsiWhileStatement ¢) {
-                super.visitWhileStatement(¢);
+            public void visitWhileStatement(PsiWhileStatement statement) {
+                super.visitWhileStatement(statement);
                 myClass.set(PsiWhileStatement.class);
             }
         });

@@ -27,8 +27,8 @@ public class GenericPsiExpression extends GenericPsi {
     }
 
     @Override
-    public boolean isOfGenericType(PsiElement ¢) {
-        return iz.expression(¢);
+    public boolean isOfGenericType(PsiElement e) {
+        return iz.expression(e);
     }
 
     @Override

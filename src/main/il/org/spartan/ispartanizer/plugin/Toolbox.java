@@ -21,8 +21,8 @@ import java.util.*;
 public enum Toolbox {
     INSTANCE;
 
-    static boolean wasInitialize;
-    private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap;
+    static boolean wasInitialize = false;
+    final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap;
     Set<VirtualFile> excludedFiles;
 
     Toolbox() {
@@ -31,8 +31,9 @@ public enum Toolbox {
     }
 
     public static Toolbox getInstance() {
-        if (!wasInitialize)
+        if (!wasInitialize) {
             initializeInstance();
+        }
         return INSTANCE;
     }
 
@@ -50,15 +51,14 @@ public enum Toolbox {
     }
 
     private static void createLeonidasTipperBuilders() {
-        Arrays.asList(new File(
-                Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
-                .listFiles())
-                .forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
+        List<File> tippers = Arrays.asList(new File(Utils.fixSpacesProblemOnPath(Toolbox.class
+                .getResource("/spartanizer/LeonidasTippers").getPath())).listFiles());
+        tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
 
-    private Toolbox add(Tipper<? extends PsiElement> ¢) {
-        tipperMap.putIfAbsent(¢.getPsiClass(), new LinkedList<>());
-        tipperMap.get(¢.getPsiClass()).add(¢);
+    private Toolbox add(Tipper<? extends PsiElement> tipper) {
+        tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
+        tipperMap.get(tipper.getPsiClass()).add(tipper);
         return this;
     }
 
@@ -67,50 +67,52 @@ public enum Toolbox {
         return this;
     }
 
-    public Toolbox executeAllTippers(PsiElement e, Project p, PsiFile f) {
+    public Toolbox executeAllTippers(PsiElement element, Project project, PsiFile psiFile) {
 
-        if (checkExcluded(e.getContainingFile()))
+        if (checkExcluded(element.getContainingFile())) {
             return this;
-        tipperMap.get(type.of(e)).stream() //
-                .filter(tipper -> tipper.canTip(e)) //
+        }
+        tipperMap.get(type.of(element)).stream() //
+                .filter(tipper -> tipper.canTip(element)) //
                 .findFirst()
-                .get().tip(e).go(new PsiRewrite().psiFile(f).project(p));
+                .get().tip(element).go(new PsiRewrite().psiFile(psiFile).project(project));
         return this;
     }
 
     /**
      * Can element by spartanized
      *
-     * @param e JD
+     * @param element JD
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
-    public boolean canTip(PsiElement e) {
-        return (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e))) && tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e));
+    public boolean canTip(PsiElement element) {
+        return (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element))) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element));
     }
 
-    public <T extends PsiElement> Tipper<T> getTipper(PsiElement e) {
+    public <T extends PsiElement> Tipper<T> getTipper(PsiElement element) {
         try {
-            if (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e)) &&
-                    tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e)))
-                return tipperMap.get(type.of(e)).stream().filter(tip -> tip.canTip(e)).findFirst().get();
+            if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) &&
+                    tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
+                return tipperMap.get(type.of(element)).stream().filter(tip -> tip.canTip(element)).findFirst().get();
+            }
         } catch (Exception ignore) {
         }
         return new NoTip<>();
     }
 
-    public boolean checkExcluded(PsiFile ¢) {
-        return ¢ == null || excludedFiles.contains(¢.getVirtualFile());
+    public boolean checkExcluded(PsiFile f) {
+        return f == null || excludedFiles.contains(f.getVirtualFile());
     }
 
-    public void excludeFile(PsiFile ¢) {
-        excludedFiles.add(¢.getVirtualFile());
+    public void excludeFile(PsiFile f) {
+        excludedFiles.add(f.getVirtualFile());
     }
 
-    public void includeFile(PsiFile ¢) {
-        excludedFiles.remove(¢.getVirtualFile());
+    public void includeFile(PsiFile f) {
+        excludedFiles.remove(f.getVirtualFile());
     }
 
-    private boolean canTipType(Class<? extends PsiElement> e) {
-        return tipperMap.keySet().stream().anyMatch(x -> x.equals(e));
+    private boolean canTipType(Class<? extends PsiElement> t) {
+        return tipperMap.keySet().stream().anyMatch(x -> x.equals(t));
     }
 }

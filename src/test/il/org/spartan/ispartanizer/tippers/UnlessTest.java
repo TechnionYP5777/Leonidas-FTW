@@ -1,8 +1,10 @@
 package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiConditionalExpression;
+import com.intellij.psi.PsiExpression;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.tippers.Unless;
+import org.junit.Test;
 
 /**
  * @author michal cohen
@@ -15,6 +17,7 @@ public class UnlessTest extends TipperTest {
         super.setUp();
     }
 
+    @Test
     public void testcanTipThen() throws Exception {
         PsiConditionalExpression k = createTestConditionalExpression("x > 0", "null", "x");
         assert (iz.nullExpression(k.getThenExpression()));
@@ -22,23 +25,27 @@ public class UnlessTest extends TipperTest {
 
     }
 
+    @Test
     public void testcantTip() throws Exception {
         PsiConditionalExpression k = createTestConditionalExpression("x > 0", "_null", "x");
         assert (!iz.nullExpression(k.getThenExpression()));
         assert (!(new Unless()).canTip(k));
     }
 
+    @Test
     public void test1() throws Exception {
         PsiConditionalExpression k = createTestConditionalExpression("x > 0", "x", "null");
         assert (!iz.nullExpression(k.getThenExpression()));
         assert (!(new Unless()).canTip(k));
     }
 
+    @Test
     public void testCreateReplacement() throws Exception {
         PsiConditionalExpression k = createTestConditionalExpression("x > 0", "null", "x");
         assert (iz.nullExpression(k.getThenExpression()));
         Unless u = new Unless();
         assert (u.canTip(k));
-        assertEqualsByText(u.createReplacement(k), createTestExpression("eval(x).unless(x > 0)"));
+        PsiExpression e = createTestExpression("eval(x).unless(x > 0)");
+        assertEqualsByText(u.createReplacement(k), e);
     }
 }

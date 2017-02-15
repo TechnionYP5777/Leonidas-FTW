@@ -12,12 +12,15 @@ import com.intellij.psi.PsiFile;
 enum Spartanizer {
     ;
 
-    static boolean canTip(PsiElement ¢) {
-        return Toolbox.getInstance().canTip(¢);
+    static boolean canTip(PsiElement element) {
+        return Toolbox.getInstance().canTip(element);
     }
 
-    static void spartanizeCode(PsiClass __, PsiElement e, Project p, PsiFile f) {
-        if (!"SpartanizerUtils.java".equals(f.getName()))
-            Toolbox.getInstance().executeAllTippers(e, p, f);
+    static void spartanizeCode(PsiClass psiClass, PsiElement element, Project project, PsiFile psiFile) {
+        if (psiFile.getName().equals("SpartanizerUtils.java")) {
+            return;
+        }
+        Toolbox toolbox = Toolbox.getInstance();
+        toolbox.executeAllTippers(element, project, psiFile);
     }
 }

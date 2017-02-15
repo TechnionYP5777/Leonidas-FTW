@@ -12,8 +12,8 @@ import il.org.spartan.ispartanizer.tippers.TipperTest;
  */
 public class azTest extends TipperTest {
 
-    public static boolean typeCheck(Class<? extends PsiElement> type, PsiElement e) {
-        return e != null && type.isAssignableFrom(e.getClass());
+    public static boolean typeCheck(Class<? extends PsiElement> type, PsiElement element) {
+        return element != null && type.isAssignableFrom(element.getClass());
     }
 
     public void testAzStatement() throws Exception{
@@ -21,13 +21,15 @@ public class azTest extends TipperTest {
         assertNotNull(az.statement(e1));
         PsiElement e2 = createTestStatementFromString("return true;");
         assertNotNull(az.statement(e2));
-        assertNull(az.statement(createTestExpressionFromString("x== null ? null : x")));
+        PsiElement e3 = createTestExpressionFromString("x== null ? null : x");
+        assertNull(az.statement(e3));
     }
 
     public void testAzCodeBlock() throws Exception{
         PsiElement e1 = createTestCodeBlockFromString("{ int x = 5; }");
         assertNotNull(az.block(e1));
-        assertNull(az.block(createTestStatementFromString("int x = 5;")));
+        PsiElement e2 = createTestStatementFromString("int x = 5;");
+        assertNull(az.block(e2));
     }
 
     public void testAzDeclarationStatement() throws Exception{
@@ -35,7 +37,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.declarationStatement(integerDec));
         PsiElement objDec = createTestDeclarationStatement("x", "Object" , "null");
         assertNotNull(az.declarationStatement(objDec));
-        assertNull(az.declarationStatement(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig= createTestMethodFromString("foo(int x,double y)");
+        assertNull(az.declarationStatement(fooSig));
     }
 
     public void testAzEnumConstant() throws Exception{
@@ -43,7 +46,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.enumConstant(ec1));
         PsiElement ec2 = createTestEnumFromString("ENUM_VALUE_TWO(9)");
         assertNotNull(az.enumConstant(ec2));
-        assertNull(az.enumConstant(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig= createTestMethodFromString("foo(int x,double y)");
+        assertNull(az.enumConstant(fooSig));
     }
 
     public void testAzFieldDeclaration() throws Exception{
@@ -53,7 +57,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.fieldDeclaration(f2));
         PsiElement f3 = createTestFieldDeclarationFromString("public static int x;");
         assertNotNull(az.fieldDeclaration(f3));
-        assertNull(az.fieldDeclaration(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig= createTestMethodFromString("foo(int x,double y)");
+        assertNull(az.fieldDeclaration(fooSig));
     }
 
     public void testAzExpressionStaement() throws Exception{
@@ -61,7 +66,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.expressionStatement(s1));
         PsiElement s2 = createTestStatementFromString("true");
         assertNotNull(az.expressionStatement(s2));
-        assertNull(az.expressionStatement(createTestStatementFromString("int x = 2+3")));
+        PsiElement s3 = createTestStatementFromString("int x = 2+3");
+        assertNull(az.expressionStatement(s3));
     }
 
     public void testAzMethodCallExpression() throws Exception{
@@ -73,7 +79,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.methodCallExpression(listSize));
         PsiElement ifExp= createTestExpression("x+y");
         assertNull(az.methodCallExpression(ifExp));
-        assertNull(az.methodCallExpression(createTestMethodFromString("foo(int x,double y)")));
+        PsiElement fooSig= createTestMethodFromString("foo(int x,double y)");
+        assertNull(az.methodCallExpression(fooSig));
     }
 
     public void testAzIdentifier() throws Exception {
@@ -83,7 +90,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.identifier(id2));
         PsiElement id3 = createTestIdentifierFromString("$");
         assertNotNull(az.identifier(id3));
-        assertNull(az.identifier(createTestStatementFromString("int x;")));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertNull(az.identifier(e));
     }
 
     public void testAzConditionalExpression() throws Exception {
@@ -91,7 +99,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.conditionalExpression(c1));
         PsiElement c2= createTestConditionalExpression("x != null" , "x = true" ,null);
         assertNotNull(az.conditionalExpression(c2));
-        assertNull(az.conditionalExpression(createTestStatementFromString("int x;")));
+        PsiElement e = createTestStatementFromString("int x;");
+        assertNull(az.conditionalExpression(e));
     }
 
     public void testAzBinaryExpression() throws Exception {
@@ -103,7 +112,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.binaryExpression(bPlus));
         PsiElement bMod = createTestExpression("x % y");
         assertNotNull(az.binaryExpression(bMod));
-        assertNull(az.binaryExpression(createTestExpression("!x")));
+        PsiElement notBinary = createTestExpression("!x");
+        assertNull(az.binaryExpression(notBinary));
     }
 
     public void testAzReferenceExpression() throws Exception {
@@ -113,7 +123,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.referenceExpression(rf2));
         PsiExpression rf3 = createTestExpression("x");
         assertNotNull(az.referenceExpression(rf3));
-        assertNull(az.referenceExpression(createTestExpression("x == false")));
+        PsiExpression exp = createTestExpression("x == false");
+        assertNull(az.referenceExpression(exp));
     }
 
     public void testAzLiteral() throws Exception {
@@ -121,7 +132,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.literal(l1));
         PsiElement l2 = createTestExpression("false");
         assertNotNull(az.literal(l2));
-        assertNull(az.literal(createTestExpression("b == false")));
+        PsiElement l3 = createTestExpression("b == false");
+        assertNull(az.literal(l3));
     }
 
     public void testAzClassDeclaration() throws Exception {
@@ -131,7 +143,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.classDeclaration(c2));
         PsiElement i1 = createTestInterfaceFromString("", "A", "", "public");
         assertNotNull(az.classDeclaration(i1));
-        assertNotNull(az.classDeclaration(createTestClassFromString("", "A", "", "public", "abstract")));
+        PsiElement c4 = createTestClassFromString("", "A", "", "public", "abstract");
+        assertNotNull(az.classDeclaration(c4));
     }
 
     public void testAzForEachStatement() throws Exception {
@@ -139,7 +152,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.forEachStatement(e1));
         PsiElement e2= createTestForeachStatementFromString("for(Object o : new ArrayList<Object>()){}");
         assertNotNull(az.forEachStatement(e2));
-        assertNull(az.forEachStatement(createTestForStatementFromString("for(int i = 0 ; i<11 ; i++){}")));
+        PsiElement e3= createTestForStatementFromString("for(int i = 0 ; i<11 ; i++){}");
+        assertNull(az.forEachStatement(e3));
     }
 
     public void testIfStatement() throws Exception {
@@ -147,7 +161,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.ifStatement(if1));
         PsiElement if2 = createTestIfStatement("x == 2", "continue;");
         assertNotNull(az.ifStatement(if2));
-        assertNull(az.ifStatement(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        PsiElement notIf = createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}");
+        assertNull(az.ifStatement(notIf));
 
     }
 
@@ -167,7 +182,8 @@ public class azTest extends TipperTest {
         PsiElement importList = createTestImportListFromString("import java.util.*;"+
                 "import sparta.boom;");
         assertNotNull(az.importList(importList));
-        assertNull(az.ifStatement(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        PsiElement notImportList = createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}");
+        assertNull(az.ifStatement(notImportList));
     }
 
     public void testAzJavaToken() throws Exception {
@@ -175,7 +191,8 @@ public class azTest extends TipperTest {
         assertNotNull(az.javaToken(t1));
         PsiElement t2 = ((PsiBinaryExpression)createTestExpression("x != y")).getOperationSign();
         assertNotNull(az.javaToken(t2));
-        assertNull(az.javaToken(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        PsiElement notToken = createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}");
+        assertNull(az.javaToken(notToken));
     }
 
     public void testAzMethod() throws Exception{
@@ -183,13 +200,15 @@ public class azTest extends TipperTest {
         assertNotNull(az.method(e1));
         PsiElement e2 = createTestMethodFromString("static abstract public void method(int x);");
         assertNotNull(az.method(e2));
-        assertNull(az.method(createTestClassFromString("", "method()", "", "public")));
+        PsiElement e3 = createTestClassFromString("", "method()", "", "public");
+        assertNull(az.method(e3));
     }
 
     public void testAzBlockStatement() throws Exception {
         PsiElement b = createTestBlockStatementFromString("{ int x = 5; }");
         assertNotNull(az.blockStatement(b));
-        assertNull(az.blockStatement(createTestStatementFromString("int x = 5;")));
+        PsiElement s = createTestStatementFromString("int x = 5;");
+        assertNull(az.blockStatement(s));
     }
 
 }

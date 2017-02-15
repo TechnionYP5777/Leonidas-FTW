@@ -1,5 +1,6 @@
 package il.org.spartan.ispartanizer.tippers;
 
+import com.intellij.psi.PsiMethod;
 import il.org.spartan.ispartanizer.plugin.tippers.Delegator;
 import org.junit.Assert;
 
@@ -9,38 +10,46 @@ import org.junit.Assert;
  */
 public class DelegatorTest extends TipperTest {
     public void testA() {
-        Assert.assertTrue(new Delegator().canTip(createTestMethodFromString("void foo() {boo();}")));
+        PsiMethod method = createTestMethodFromString("void foo() {boo();}");
+        Assert.assertTrue(new Delegator().canTip(method));
     }
 
     public void testB() {
-        Assert.assertTrue(new Delegator().canTip(createTestMethodFromString("void foo(int x) {boo(x);}")));
+        PsiMethod method = createTestMethodFromString("void foo(int x) {boo(x);}");
+        Assert.assertTrue(new Delegator().canTip(method));
     }
 
     public void testC() {
-        Assert.assertFalse(new Delegator().canTip(createTestMethodFromString("void foo(int y) {boo(y + 1);}")));
+        PsiMethod method = createTestMethodFromString("void foo(int y) {boo(y + 1);}");
+        Assert.assertFalse(new Delegator().canTip(method));
     }
 
     public void testD() {
-        Assert.assertFalse(new Delegator().canTip(createTestMethodFromString("int foo(int z) {return rect.bar(z);}")));
+        PsiMethod method = createTestMethodFromString("int foo(int z) {return rect.bar(z);}");
+        Assert.assertFalse(new Delegator().canTip(method));
     }
 
     public void testE() {
-        Assert.assertFalse(new Delegator().canTip(createTestMethodFromString("int foo(int z) {return z.bar(z);}")));
+        PsiMethod method = createTestMethodFromString("int foo(int z) {return z.bar(z);}");
+        Assert.assertFalse(new Delegator().canTip(method));
     }
 
     public void testF() {
-        Assert.assertTrue(new Delegator().canTip(createTestMethodFromString("int foo(int z) {return bar(z, 1);}")));
+        PsiMethod method = createTestMethodFromString("int foo(int z) {return bar(z, 1);}");
+        Assert.assertTrue(new Delegator().canTip(method));
     }
 
     public void testG() {
-        Assert.assertEquals(new Delegator()
-                        .createReplacement(createTestMethodFromString("int foo(int z) {return bar(z, 1);}")).getText(),
-                ("/**" + new Delegator().tag() + "*/" + "int foo(int z) {return bar(z, 1);}"));
+        String from = "int foo(int z) {return bar(z, 1);}";
+        String to = "/**" + new Delegator().tag() + "*/" + from;
+        PsiMethod method = createTestMethodFromString(from);
+        Assert.assertEquals(new Delegator().createReplacement(method).getText(), to);
     }
 
     public void testH() {
-        Assert.assertEquals(
-                new Delegator().createReplacement(createTestMethodFromString("void foo(int x) {boo(x);}")).getText(),
-                ("/**" + new Delegator().tag() + "*/" + "void foo(int x) {boo(x);}"));
+        String from = "void foo(int x) {boo(x);}";
+        String to = "/**" + new Delegator().tag() + "*/" + from;
+        PsiMethod method = createTestMethodFromString(from);
+        Assert.assertEquals(new Delegator().createReplacement(method).getText(), to);
     }
 }
