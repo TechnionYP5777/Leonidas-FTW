@@ -13,7 +13,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.JBColor;
 import com.intellij.util.IncorrectOperationException;
-import il.org.spartan.ispartanizer.auxilary_layer.Utils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,7 +50,7 @@ public class SpartanizerAnnotator implements Annotator {
             }
             @Override
             public void invoke(@NotNull Project p, Editor ed, PsiFile f) throws IncorrectOperationException {
-                Spartanizer.spartanizeCode(Utils.findClass(e), e, p, f);
+                Spartanizer.spartanizeElement(e);
             }
 
             @Override

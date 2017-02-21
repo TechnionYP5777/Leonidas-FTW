@@ -1,6 +1,5 @@
 package il.org.spartan.ispartanizer.plugin;
 
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -22,13 +21,9 @@ public enum Toolbox {
     INSTANCE;
 
     static boolean wasInitialize = false;
-    final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap;
-    Set<VirtualFile> excludedFiles;
-
-    Toolbox() {
-        this.tipperMap = new HashMap<>();
-        excludedFiles = new HashSet<>();
-    }
+    final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
+    Set<VirtualFile> excludedFiles = new HashSet<>();
+    Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
 
     public static Toolbox getInstance() {
         if (!wasInitialize) {
@@ -58,24 +53,27 @@ public enum Toolbox {
 
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
         tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
+        operableTypes.add(tipper.getPsiClass());
         tipperMap.get(tipper.getPsiClass()).add(tipper);
         return this;
     }
 
-    public Toolbox getEmptyToolbox() {
-        this.tipperMap.clear();
-        return this;
+    public boolean isElementOfOperableType(PsiElement element) {
+        return operableTypes.stream().anyMatch(t -> t.isAssignableFrom(element.getClass()));
     }
 
-    public Toolbox executeAllTippers(PsiElement element, Project project, PsiFile psiFile) {
+    public Toolbox executeAllTippers(PsiElement element) {
 
         if (checkExcluded(element.getContainingFile())) {
+            return this;
+        }
+        if (!isElementOfOperableType(element)) {
             return this;
         }
         tipperMap.get(type.of(element)).stream() //
                 .filter(tipper -> tipper.canTip(element)) //
                 .findFirst()
-                .get().tip(element).go(new PsiRewrite().psiFile(psiFile).project(project));
+                .ifPresent(t -> t.tip(element).go(new PsiRewrite().psiFile(element.getContainingFile()).project(element.getProject())));
         return this;
     }
 

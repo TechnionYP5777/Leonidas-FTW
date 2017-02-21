@@ -21,11 +21,10 @@ public class SpartanizerAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        PsiElement element = getPsiElementFromContext(e);
         PsiClass psiClass = getPsiClassFromContext(e);
 
-        if (element != null && psiClass != null)
-            Spartanizer.spartanizeCode(psiClass, element, getEventProject(e), psiClass.getContainingFile());
+        if (psiClass != null)
+            Spartanizer.spartanizeFileOnePass(psiClass.getContainingFile());
 
     }
 

@@ -31,6 +31,10 @@
                 text="Disable Spartanization">
             <add-to-group group-id="RefactoringMenu" anchor="last"/>
         </action>
+        <action class="il.org.spartan.ispartanizer.plugin.SpartanizerAction" id="myPlugin3"
+                text="Spartanize">
+            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>

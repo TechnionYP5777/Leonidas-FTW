@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.plugin;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiClass;
+import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 
@@ -16,11 +15,25 @@ enum Spartanizer {
         return Toolbox.getInstance().canTip(element);
     }
 
-    static void spartanizeCode(PsiClass psiClass, PsiElement element, Project project, PsiFile psiFile) {
+    static void spartanizeElement(PsiElement element) {
+        if (element.getContainingFile().getName().equals("SpartanizerUtils.java")) {
+            return;
+        }
+        Toolbox toolbox = Toolbox.getInstance();
+        toolbox.executeAllTippers(element);
+    }
+
+    static void spartanizeFileOnePass(PsiFile psiFile) {
         if (psiFile.getName().equals("SpartanizerUtils.java")) {
             return;
         }
         Toolbox toolbox = Toolbox.getInstance();
-        toolbox.executeAllTippers(element, project, psiFile);
+        psiFile.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitElement(PsiElement element) {
+                super.visitElement(element);
+                toolbox.executeAllTippers(element);
+            }
+        });
     }
 }
