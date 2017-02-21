@@ -21,7 +21,7 @@ public class GenericPsiStatement extends GenericPsi implements PsiStatement {
     }
 
     @Override
-    public boolean isOfGenericType(PsiElement e) {
+    public boolean generalizes(PsiElement e) {
         return iz.statement(e) && !iz.blockStatement(e);
     }
 

@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.*;
+import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
 /**
  * Utils class that helps converting Psi element to a specific Psi type
@@ -92,5 +93,9 @@ public enum az {
 
     public static PsiMethod method(PsiElement element) {
         return element != null && iz.method(element) ? (PsiMethod) element : null;
+    }
+
+    public static GenericPsi generic(PsiElement element) {
+        return element != null && iz.generic(element) ? (GenericPsi) element : null;
     }
 }

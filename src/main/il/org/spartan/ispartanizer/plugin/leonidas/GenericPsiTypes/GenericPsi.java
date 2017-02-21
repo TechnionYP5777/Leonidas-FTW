@@ -58,6 +58,6 @@ public abstract class GenericPsi extends CompositePsiElement {
      * @param e - the element to be checked
      * @return true iff e is of the generic type
      */
-    public abstract boolean isOfGenericType(PsiElement e);
+    public abstract boolean generalizes(PsiElement e);
 
 }
