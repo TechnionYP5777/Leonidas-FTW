@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
 import il.org.spartan.ispartanizer.auxilary_layer.*;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,19 +30,19 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
     private static final String LEONIDAS_ANNOTATION_ORDER = "order";
     private static final String PSI_PACKAGE_PREFIX = "com.intellij.psi.";
-    private boolean built;
-    private PsiElement fromTree;
-    private PsiElement toTree;
+    private boolean built = false;
+    private EncapsulatingNode fromTree;
+    private EncapsulatingNode toTree;
     private Class<? extends PsiElement> fromRootElementType;
     private String description;
 
-    private int defId;
+    private int defId = 0;
     private Map<Integer, Integer> mapToDef = new HashMap<>();
 
-    public PsiTreeTipperBuilderImpl() {
+    /*public PsiTreeTipperBuilderImpl() {
         built = false;
         defId = 0;
-    }
+    }*/
 
     /**
      * Build both the "from" and "to" trees from source code, including pruning.
@@ -62,7 +63,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return this;
     }
 
-    private PsiElement buildMethodTree(PsiFile root, String methodName) {
+    private EncapsulatingNode buildMethodTree(PsiFile root, String methodName) {
         PsiMethod method = getMethodFromTree(root, methodName);
         Class<? extends PsiElement> rootType = getPsiElementTypeFromAnnotationSwitch(method);
         if (methodName.equals(FROM_METHOD_NAME)) {
@@ -70,8 +71,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         }
         PsiElement tree = getTreeFromRoot(method, rootType);
         handleStubMethodCalls(tree, methodName);
-        pruneStubChildren(tree);
-        return tree;
+        EncapsulatingNode e = EncapsulatingNode.buildTreeFromPsi(tree);
+        pruneStubChildren(e);
+        return e;
     }
 
     /**
@@ -81,7 +83,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
      * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
      */
     @Override
-    public PsiElement getFromPsiTree() {
+    public EncapsulatingNode getFromPsiTree() {
         assert (built);
         return fromTree;
     }
@@ -93,9 +95,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
      * @link {@link PsiTreeTipperBuilder}.buildTipperPsiTree was called.
      */
     @Override
-    public PsiElement getToPsiTree() {
+    public EncapsulatingNode getToPsiTree() {
         assert (built);
-        return toTree.copy();
+        return toTree.clone();
     }
 
     private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
@@ -210,7 +212,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         });
     }
 
-    private void pruneStubChildren(PsiElement innerTree) {
+    private void pruneStubChildren(EncapsulatingNode innerTree) {
         Pruning.prune(innerTree);
     }
 

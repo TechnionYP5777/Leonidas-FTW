@@ -3,6 +3,8 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiType;
+import il.org.spartan.ispartanizer.auxilary_layer.iz;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
@@ -146,6 +148,23 @@ public abstract class GenericPsiElementStub {
             }
             x.putUserData(KeyDescriptionParameters.ID, id);
             return x;
+        }
+
+        public boolean goUpwards(EncapsulatingNode prv, EncapsulatingNode next) {
+            switch (this) {
+                case BOOLEAN_EXPRESSION:
+                    return prv.getText().equals(next.getText());
+                case STATEMENT:
+                    return prv.getText().equals(next.getText()) || next.getText().equals(prv.getText() + ";");
+                case ANY_BLOCK:
+                    return !iz.block(prv.getInner());//return prv.getText().equals(next.getText());
+                case ARRAY_IDENTIFIER:
+                    return prv.getText().equals(next.getText());
+                case IDENTIFIER:
+                    return prv.getText().equals(next.getText());
+                default:
+                    return prv.getText().equals(next.getText());
+            }
         }
     }
 }

@@ -14,15 +14,17 @@ public class IfDoubleNot extends GenericPsiElementStub {
 
     @Leonidas(PsiIfStatement.class)
     public void from() {
-        if (!(!(booleanExpression(0))))
+        if (!(!(booleanExpression(0)))){
             anyBlock(1);
+        }
 
     }
 
     @Leonidas(PsiIfStatement.class)
     public void to() {
-        if (booleanExpression(0))
+        if (booleanExpression(0)){
             anyBlock(1);
+        }
 
     }
 }

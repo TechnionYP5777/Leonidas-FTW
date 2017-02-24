@@ -2,6 +2,7 @@ package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiConditionalExpression;
 import com.intellij.psi.PsiElement;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilder;
 import il.org.spartan.ispartanizer.plugin.tippers.LeonidasTipper;
 import org.mockito.Mockito;
@@ -52,13 +53,13 @@ public class LeonidasTipperTest extends TipperTest {
 
     public void testCanTip() {
         $ = createTestObject();
-        Mockito.when(builderMock.getFromPsiTree()).thenReturn(createTestStatementFromString(statement));
+        Mockito.when(builderMock.getFromPsiTree()).thenReturn(EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(statement)));
         assertTrue($.canTip(createTestStatementFromString(statement)));
     }
 
     public void testCanNotTip() {
         $ = createTestObject();
-        Mockito.when(builderMock.getFromPsiTree()).thenReturn(createTestStatementFromString(statement));
+        Mockito.when(builderMock.getFromPsiTree()).thenReturn(EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(statement)));
         assertFalse($.canTip(createTestExpressionFromString(expression)));
     }
 

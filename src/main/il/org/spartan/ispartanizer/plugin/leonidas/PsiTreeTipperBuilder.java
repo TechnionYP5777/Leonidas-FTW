@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 
 import java.io.IOException;
 
@@ -23,12 +24,12 @@ public interface PsiTreeTipperBuilder {
     /**
      * @return - the generic Psi tree representing the pattern with which we match the users' code.
      */
-    PsiElement getFromPsiTree();
+    EncapsulatingNode getFromPsiTree();
 
     /**
      * @return - the generic Psi tree representing the pattern to which  the users' code is replaced.
      */
-    PsiElement getToPsiTree();
+    EncapsulatingNode getToPsiTree();
 
     Class<? extends PsiElement> getRootElementType();
 

@@ -1,8 +1,11 @@
 package il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiInvalidElementAccessException;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Roey Maor, Amir sagiv
@@ -11,7 +14,7 @@ import il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters;
 public class GenericPsiBlock extends GenericPsi{
 
     public GenericPsiBlock(PsiElement element) {
-        super(element);
+        super(element, "generic block");
     }
 
     @Override
@@ -19,13 +22,20 @@ public class GenericPsiBlock extends GenericPsi{
         return iz.blockStatement(e) || iz.block(e) || iz.statement(e);
     }
 
+    @NotNull
+    @Override
+    public Project getProject() throws PsiInvalidElementAccessException {
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Generic anyBlock" + inner.getUserData(KeyDescriptionParameters.ID);
     }
 
-    @Override
+    /*@Override
     public GenericPsiBlock copy() {
         return new GenericPsiBlock(inner.copy());
     }
+    */
 }

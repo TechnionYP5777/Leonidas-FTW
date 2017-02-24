@@ -1,10 +1,9 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
-import com.intellij.psi.JavaRecursiveElementVisitor;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIfStatement;
-import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNodeVisitor;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 import java.io.IOException;
@@ -24,8 +23,8 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
         $ = new PsiTreeTipperBuilderImpl();
         try {
             $.buildTipperPsiTree(TEST_FILE_NAME);
-            PsiElement actualFrom = $.getFromPsiTree();
-            assertTrue(iz.ifStatement(actualFrom));
+            EncapsulatingNode actualFrom = $.getFromPsiTree();
+            assertTrue(iz.ifStatement(actualFrom.getInner()));
         } catch (IOException ignore) {
             fail();
         }
@@ -36,11 +35,12 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
         $ = new PsiTreeTipperBuilderImpl();
         try {
             $.buildTipperPsiTree(TEST_FILE_NAME);
-            PsiElement actualFrom = $.getFromPsiTree();
-            actualFrom.accept(new JavaRecursiveElementVisitor() {
+            EncapsulatingNode actualFrom = $.getFromPsiTree();
+            actualFrom.accept(new EncapsulatingNodeVisitor() {
                 @Override
-                public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                    assertEquals(Integer.valueOf(0), expression.getUserData(KeyDescriptionParameters.ID));
+                public void visit(EncapsulatingNode e) {
+                    if (iz.methodCallExpression(e.getInner()))
+                        assertEquals(Integer.valueOf(0), e.getInner().getUserData(KeyDescriptionParameters.ID));
                 }
             });
         } catch (IOException ignore) {
@@ -52,11 +52,12 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
         $ = new PsiTreeTipperBuilderImpl();
         try {
             $.buildTipperPsiTree(TEST_FILE_NAME);
-            PsiElement actualFrom = $.getFromPsiTree();
-            actualFrom.accept(new JavaRecursiveElementVisitor() {
+            EncapsulatingNode actualFrom = $.getFromPsiTree();
+            actualFrom.accept(new EncapsulatingNodeVisitor() {
                 @Override
-                public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                    assertEquals(0, expression.getChildren().length);
+                public void visit(EncapsulatingNode e) {
+                    if (iz.methodCallExpression(e.getInner()))
+                        assertEquals(0, e.getChildren().size());
                 }
             });
         } catch (IOException ignore) {
@@ -68,8 +69,8 @@ public class PsiTreeTipperBuilderTest extends TipperTest {
         $ = new PsiTreeTipperBuilderImpl();
         try {
             $.buildTipperPsiTree(TEST_FILE_NAME);
-            PsiElement actualTo = $.getToPsiTree();
-            assertTrue(iz.ifStatement(actualTo));
+            EncapsulatingNode actualTo = $.getToPsiTree();
+            assertTrue(iz.ifStatement(actualTo.getInner()));
         } catch (IOException ignore) {
             fail();
         }

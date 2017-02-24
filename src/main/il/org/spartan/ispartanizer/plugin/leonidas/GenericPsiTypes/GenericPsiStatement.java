@@ -12,7 +12,7 @@ import il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters;
 public class GenericPsiStatement extends GenericPsi implements PsiStatement {
 
     public GenericPsiStatement(PsiElement inner) {
-        super(inner);
+        super(inner, "generic statement");
     }
 
     @Override
@@ -25,8 +25,9 @@ public class GenericPsiStatement extends GenericPsi implements PsiStatement {
         return iz.statement(e) && !iz.blockStatement(e);
     }
 
-    @Override
+    /*@Override
     public GenericPsiStatement copy() {
         return new GenericPsiStatement(inner.copy());
     }
+    */
 }

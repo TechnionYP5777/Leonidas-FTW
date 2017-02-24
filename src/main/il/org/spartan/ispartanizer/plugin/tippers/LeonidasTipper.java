@@ -2,6 +2,7 @@ package il.org.spartan.ispartanizer.plugin.tippers;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeMatcher;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilder;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilderImpl;
@@ -42,7 +43,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
     @Override
     public boolean canTip(PsiElement e) {
-        return PsiTreeMatcher.match(b.getFromPsiTree(), e);
+        return PsiTreeMatcher.match(b.getFromPsiTree(), EncapsulatingNode.buildTreeFromPsi(e));
     }
 
     @Override

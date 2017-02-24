@@ -1,9 +1,10 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
-import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.step;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNodeVisitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,29 +25,30 @@ public class Replacer {
      * @param r             - Rewrite object
      * @return the replaced element
      */
-    public static PsiElement replace(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
-        PsiElement templateReplacingTree = builder.getToPsiTree();
-        r.replace(treeToReplace, getReplacer(treeToReplace, builder, r));
-        return templateReplacingTree;
+    public static EncapsulatingNode replace(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
+        //EncapsulatingNode templateReplacingTree = builder.getToPsiTree();
+        PsiElement n = getReplacer(treeToReplace, builder, r);
+        r.replace(treeToReplace, n);
+        return EncapsulatingNode.buildTreeFromPsi(n);
     }
 
     public static PsiElement getReplacer(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
-        PsiElement templateMatchingTree = builder.getFromPsiTree();
+        EncapsulatingNode templateMatchingTree = builder.getFromPsiTree();
         Map<Integer, PsiElement> map = extractInfo(templateMatchingTree, treeToReplace);
-        PsiElement templateReplacingTree = builder.getToPsiTree();
+        EncapsulatingNode templateReplacingTree = builder.getToPsiTree();
         // might not work due to replacing while recursively iterating.
         map.keySet().forEach(d -> {
-            templateReplacingTree.accept(new JavaRecursiveElementVisitor() {
+            templateReplacingTree.accept(new EncapsulatingNodeVisitor() {
                 @Override
-                public void visitElement(PsiElement element) {
-                    super.visitElement(element);
-                    if (element.getUserData(KeyDescriptionParameters.ID) != null) {
-                        r.replace(element, map.get(element.getUserData(KeyDescriptionParameters.ID)));
+                public void visit(EncapsulatingNode e) {
+                    if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent()) {
+                        Pruning.getRealParent(e, Pruning.getStubName(e).get()).replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
                     }
                 }
             });
         });
-        return templateReplacingTree;
+
+        return templateReplacingTree.getInner();
     }
 
     /**
@@ -54,13 +56,15 @@ public class Replacer {
      * @param treeToMatch  - The patterns from which we extract the IDs
      * @return a mapping between an ID to a PsiElement
      */
-    public static Map<Integer, PsiElement> extractInfo(PsiElement treeTemplate, PsiElement treeToMatch) {
+    public static Map<Integer, PsiElement> extractInfo(EncapsulatingNode treeTemplate, PsiElement treeToMatch) {
         Map<Integer, PsiElement> mapping = new HashMap<>();
-        for (PsiElement treeTemplateChild = treeTemplate.getFirstChild(), treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChild != null && treeToMatchChild != null; treeTemplateChild = step.nextSibling(treeTemplateChild), treeToMatchChild = step.nextSibling(treeToMatchChild)) {
-            if (treeTemplateChild.getUserData(KeyDescriptionParameters.ID) != null) {
-                mapping.put(treeTemplateChild.getUserData(KeyDescriptionParameters.ID), treeToMatchChild);
+        EncapsulatingNode.Iterator treeTemplateChile = treeTemplate.iterator();
+        for (PsiElement treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChile.hasNext() && treeToMatchChild != null; treeTemplateChile.next(), treeToMatchChild = step.nextSibling(treeToMatchChild)) {
+            if (treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID) != null) {
+                mapping.put(treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID), treeToMatchChild);
+            } else {
+                mapping.putAll(extractInfo(treeTemplateChile.value(), treeToMatchChild));
             }
-            mapping.putAll(extractInfo(treeTemplateChild, treeToMatchChild));
         }
         return mapping;
     }

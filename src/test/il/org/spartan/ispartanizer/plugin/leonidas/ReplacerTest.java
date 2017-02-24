@@ -5,8 +5,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
+import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.tippers.TipperTest;
-import org.codehaus.groovy.ast.stmt.IfStatement;
 
 import java.util.Map;
 
@@ -32,8 +32,8 @@ public class ReplacerTest extends TipperTest {
         }
         PsiRewrite rewrite = new PsiRewrite().project(ifStatement.getProject()).psiFile(ifStatement.getContainingFile());
         PsiIfStatement newIfStatement = createTestIfStatementNoBraces(COND, THEN);
-        assertTrue(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), newIfStatement));
-        assertFalse(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), ifStatement));
+        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(Replacer.getReplacer(ifStatement, tipperBuilder, rewrite)), EncapsulatingNode.buildTreeFromPsi(newIfStatement)));
+        assertFalse(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(Replacer.getReplacer(ifStatement, tipperBuilder, rewrite)), EncapsulatingNode.buildTreeFromPsi(ifStatement)));
     }
 
     public void testGetReplacer2() {
@@ -46,8 +46,9 @@ public class ReplacerTest extends TipperTest {
         assertNotNull(tipperBuilder);
         PsiRewrite rewrite = new PsiRewrite().project(whileStatement.getProject()).psiFile(whileStatement.getContainingFile());
         PsiWhileStatement newWhileStatement = createTestWhileStatementFromString("while(" + COND + ")" + THEN + "");
-        assertTrue(PsiTreeMatcher.match(replacer.getReplacer(whileStatement, tipperBuilder, rewrite), newWhileStatement));
-        assertFalse(PsiTreeMatcher.match(replacer.getReplacer(whileStatement, tipperBuilder, rewrite), whileStatement));
+        PsiElement n = Replacer.getReplacer(whileStatement, tipperBuilder, rewrite);
+        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(n), EncapsulatingNode.buildTreeFromPsi(newWhileStatement)));
+        assertFalse(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(n), EncapsulatingNode.buildTreeFromPsi(whileStatement)));
     }
 
     public void testGetReplace3() {
@@ -60,8 +61,9 @@ public class ReplacerTest extends TipperTest {
         assertNotNull(tipperBuilder);
         PsiRewrite rewrite = new PsiRewrite().project(ifStatement.getProject()).psiFile(ifStatement.getContainingFile());
         PsiIfStatement newIfStatement = createTestIfStatement(COND, THEN);
-        assertTrue(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), newIfStatement));
-        assertFalse(PsiTreeMatcher.match(replacer.getReplacer(ifStatement, tipperBuilder, rewrite), ifStatement));
+        PsiElement n = Replacer.getReplacer(ifStatement, tipperBuilder, rewrite);
+        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(n), EncapsulatingNode.buildTreeFromPsi(newIfStatement)));
+        assertFalse(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(n), EncapsulatingNode.buildTreeFromPsi(ifStatement)));
     }
 
     public void testReplace() {
@@ -74,8 +76,10 @@ public class ReplacerTest extends TipperTest {
         }
         PsiRewrite rewrite = new PsiRewrite().project(ifStatement.getProject()).psiFile(ifStatement.getContainingFile());
         PsiIfStatement newIfStatement = createTestIfStatementNoBraces(COND, THEN);
-        assertTrue(PsiTreeMatcher.match(replacer.replace(ifStatement, tipperBuilder, rewrite), newIfStatement));
-        assertTrue(PsiTreeMatcher.match(PsiTreeUtil.findChildOfType(parent, PsiIfStatement.class), newIfStatement));
+        EncapsulatingNode x = Replacer.replace(ifStatement, tipperBuilder, rewrite);
+        EncapsulatingNode y = EncapsulatingNode.buildTreeFromPsi(newIfStatement);
+        assertTrue(PsiTreeMatcher.match(x, y));
+        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(PsiTreeUtil.findChildOfType(parent, PsiIfStatement.class)), EncapsulatingNode.buildTreeFromPsi(newIfStatement)));
 
     }
 
@@ -98,12 +102,12 @@ public class ReplacerTest extends TipperTest {
                 count.set(count.get() + 1);
             }
         });
-
-        Pruning.prune(b);
+        EncapsulatingNode n = EncapsulatingNode.buildTreeFromPsi(b);
+        Pruning.prune(n);
 
         PsiIfStatement y = createTestIfStatement("true", " int y = 5; ");
-        assertTrue(PsiTreeMatcher.match(b, y));
-        Map<Integer, PsiElement> m = replacer.extractInfo(b, y);
+        assertTrue(PsiTreeMatcher.match(n, EncapsulatingNode.buildTreeFromPsi(y)));
+        Map<Integer, PsiElement> m = Replacer.extractInfo(n, y);
         assertTrue(iz.expression(m.get(0)));
         assertTrue(iz.statement(m.get(1)));
     }

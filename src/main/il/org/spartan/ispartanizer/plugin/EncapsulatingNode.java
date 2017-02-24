@@ -1,0 +1,123 @@
+package il.org.spartan.ispartanizer.plugin;
+
+
+import com.intellij.psi.PsiElement;
+import il.org.spartan.ispartanizer.auxilary_layer.iz;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+/**
+ * @author michalcohen
+ * @since 22-02-2017
+ */
+public class EncapsulatingNode implements Cloneable, Iterable {
+    PsiElement inner;
+    EncapsulatingNode parent;
+    List<EncapsulatingNode> children = new LinkedList<>();
+
+    public EncapsulatingNode(PsiElement e) {
+        inner = e;
+        Arrays.stream(e.getChildren()).forEach(child -> children.add(new EncapsulatingNode(child, this)));
+    }
+
+    public EncapsulatingNode(PsiElement e, EncapsulatingNode parent) {
+        this(e);
+        this.parent = parent;
+    }
+
+    public static EncapsulatingNode buildTreeFromPsi(PsiElement e) {
+        return new EncapsulatingNode(e);
+    }
+
+    public EncapsulatingNode replace(EncapsulatingNode newNode) {
+        if (parent == null) {
+            return this;
+        }
+        if (!iz.generic(newNode.inner)) {
+            inner.replace(newNode.inner);
+            inner = newNode.inner;
+        }
+
+        parent.children.replaceAll(e -> (e == this) ? newNode : e);
+        return this;
+    }
+
+    public List<EncapsulatingNode> getChildren() {
+        return children;
+    }
+
+    public EncapsulatingNode getParent() {
+        return parent;
+    }
+
+    public void accept(EncapsulatingNodeVisitor v) {
+        children.forEach(child -> child.accept(v));
+        v.visit(this);
+    }
+
+    public <T> T accept(EncapsulatingNodeValueVisitor v, BinaryOperator<T> accumulator) {
+        return children.stream().map(child -> child.accept(v, accumulator)).reduce(accumulator).get();
+    }
+
+    public PsiElement getInner() {
+        return inner;
+    }
+
+    public int getAmountOfNoneWhiteSpaceChildren() {
+        return children.stream().filter(child -> !iz.whiteSpace(child.getInner())).collect(Collectors.toList()).size();
+    }
+
+    public String toString() {
+        return inner.toString();
+    }
+
+    public String getText() {
+        return inner.getText();
+    }
+
+    public EncapsulatingNode clone() {
+        return buildTreeFromPsi(inner);
+    }
+
+    @Override
+    public EncapsulatingNode.Iterator iterator() {
+        return new EncapsulatingNode.Iterator();
+    }
+
+    @Override
+    public void forEach(Consumer action) {
+        children.stream().forEach(action);
+    }
+
+    public class Iterator implements java.util.Iterator {
+        int location = 0;
+        List<EncapsulatingNode> noSpaceChildren;
+
+        public Iterator() {
+            noSpaceChildren = children.stream().filter(child -> !iz.whiteSpace(child.getInner())).collect(Collectors.toList());
+        }
+
+        @Override
+        public boolean hasNext() {
+            return location < noSpaceChildren.size();
+        }
+
+        @Override
+        public Object next() {
+            EncapsulatingNode e = noSpaceChildren.get(location);
+            location++;
+            return e;
+        }
+
+        public EncapsulatingNode value() {
+            return noSpaceChildren.get(location);
+        }
+
+
+    }
+}
