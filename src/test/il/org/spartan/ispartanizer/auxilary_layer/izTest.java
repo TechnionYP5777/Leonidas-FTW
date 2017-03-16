@@ -5,17 +5,17 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 
 /**
  * @author michal cohen & Amir Sagiv
  * @since 12/22/2016.
  */
-public class izTest extends TipperTest {
+public class izTest extends PsiTypeHelper {
     public void testNull$() throws Exception {
         PsiLiteralExpression x = createTestNullExpression();
         assertTrue(iz.null$(x));

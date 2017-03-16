@@ -113,4 +113,14 @@ public enum step {
         }
         return doc.getText().substring(3, doc.getText().length() - 2);
     }
+
+    public static PsiElement getHighestParent(PsiElement element) {
+        PsiElement prev = element;
+        PsiElement next = element.getParent();
+        while (next != null && next.getText().startsWith(prev.getText())) {
+            prev = next;
+            next = next.getParent();
+        }
+        return prev;
+    }
 }

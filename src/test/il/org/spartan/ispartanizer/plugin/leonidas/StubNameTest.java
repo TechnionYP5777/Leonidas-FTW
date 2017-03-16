@@ -1,8 +1,8 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.PsiMethodCallExpression;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub.StubName;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * @author Oren Afek
  * @since 17/01/17
  */
-public class StubNameTest extends TipperTest {
+public class StubNameTest extends PsiTypeHelper {
 
     private final Stream<Pair<StubName, PsiMethodCallExpression>> stubs;
 
@@ -23,7 +23,7 @@ public class StubNameTest extends TipperTest {
     }
 
     public void testValueOfLegal() {
-        stubs.forEach(p -> assertEquals(p.first, StubName.valueOf(p.second)));
+        stubs.forEach(p -> assertEquals(p.first, StubName.valueOfMethodCall(p.second)));
     }
 
 }

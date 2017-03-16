@@ -1,12 +1,13 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 
 
 /**
  * @author AnnaBel7
  * @since 16/01/2017.
  */
-public class AmountTest extends TipperTest {
+public class AmountTest extends PsiTypeHelper {
     public void testAny() {
         Amount amount = Amount.ANY;
         assertTrue(amount.conforms(1));

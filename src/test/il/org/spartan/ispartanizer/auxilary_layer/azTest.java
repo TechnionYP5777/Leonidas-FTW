@@ -4,13 +4,13 @@ import com.intellij.psi.PsiBinaryExpression;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiStatement;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 
 /**
  * @author Amir Sagiv
  * @since 13/01/2017.
  */
-public class azTest extends TipperTest {
+public class azTest extends PsiTypeHelper {
 
     public static boolean typeCheck(Class<? extends PsiElement> type, PsiElement element) {
         return element != null && type.isAssignableFrom(element.getClass());

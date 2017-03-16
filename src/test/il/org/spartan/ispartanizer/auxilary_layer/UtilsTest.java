@@ -1,8 +1,7 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.*;
-import com.intellij.testFramework.PsiTestCase;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +11,7 @@ import java.util.List;
  * @author Roey Maor, michal cohen
  * @since 12/22/2016.
  */
-public class UtilsTest extends TipperTest {
+public class UtilsTest extends PsiTypeHelper {
     static final String dummyFileName = "test.java";
 
     public void testin() throws Exception {

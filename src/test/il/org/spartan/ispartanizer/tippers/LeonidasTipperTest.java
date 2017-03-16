@@ -2,6 +2,7 @@ package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiConditionalExpression;
 import com.intellij.psi.PsiElement;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilder;
 import il.org.spartan.ispartanizer.plugin.tippers.LeonidasTipper;
@@ -14,7 +15,7 @@ import java.io.IOException;
  * @author Oren Afek
  * @since 20/01/17
  */
-public class LeonidasTipperTest extends TipperTest {
+public class LeonidasTipperTest extends PsiTypeHelper {
 
     private LeonidasTipper $;
     private PsiTreeTipperBuilder builderMock = Mockito.mock(PsiTreeTipperBuilder.class);

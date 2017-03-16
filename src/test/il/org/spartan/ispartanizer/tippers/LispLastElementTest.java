@@ -1,13 +1,14 @@
 package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiMethodCallExpression;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.tippers.LispLastElement;
 
 /**
  * @author AnnaBel7
  * @since 12/01/2017.
  */
-public class LispLastElementTest extends TipperTest {
+public class LispLastElementTest extends PsiTypeHelper {
     public void testCanTipLegal() {
         assertTrue(new LispLastElement().canTip(createTestExpressionFromString("l.get(l.size()-1)")));
     }

@@ -1,15 +1,15 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import org.junit.Assert;
 
-// TODO @OrenAfek @RoeiRaz refactor this, stepTest shouldn't extend TipperTest because it isn't a tipper..
+// TODO @OrenAfek @RoeiRaz refactor this, stepTest shouldn't extend PsiTypeHelper because it isn't a tipper..
 
 /**
  * @author RoeiRaz
  * @since 2017
  */
-public class stepTest extends TipperTest {
+public class stepTest extends PsiTypeHelper {
     public void testDocCommentA() {
         String className = "A";
         String doc = "";

@@ -1,12 +1,12 @@
 package il.org.spartan.ispartanizer.plugin;
 
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 
 /**
  * @author Michal Cohen
  * @since 21-02-2017
  */
-public class ToolboxTest extends TipperTest {
+public class ToolboxTest extends PsiTypeHelper {
     public void testIsElementOfOperableType() throws Exception {
         Toolbox instance = Toolbox.getInstance();
         assertFalse(instance.isElementOfOperableType(createTestNullExpression()));

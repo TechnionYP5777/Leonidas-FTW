@@ -1,9 +1,9 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.*;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 
-public class typeTest extends TipperTest {
+public class typeTest extends PsiTypeHelper {
     public void testCallExpression() {
         PsiCallExpression e = createTestNewExpression("Object", "");
         assertEquals(type.of(e), PsiCallExpression.class);

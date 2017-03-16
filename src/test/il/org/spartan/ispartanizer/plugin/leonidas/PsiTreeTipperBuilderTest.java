@@ -1,10 +1,10 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.PsiIfStatement;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNodeVisitor;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author Oren Afek
  * @since 08/01/17
  */
-public class PsiTreeTipperBuilderTest extends TipperTest {
+public class PsiTreeTipperBuilderTest extends PsiTypeHelper {
 
     private static final String TEST_FILE_NAME = "RemoveCurlyBracesFromIfStatement" + ".java";
 

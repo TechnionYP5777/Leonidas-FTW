@@ -1,15 +1,13 @@
 package il.org.spartan.ispartanizer.tippers;
 
-import com.intellij.psi.*;
-import com.intellij.testFramework.PsiTestCase;
-import il.org.spartan.ispartanizer.plugin.tippers.DefaultsTo;
+import com.intellij.psi.PsiConditionalExpression;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.tippers.SafeReference;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 /**
  * Created by amirsagiv on 12/24/16.
  */
-public class SafeReferenceTest extends TipperTest {
+public class SafeReferenceTest extends PsiTypeHelper {
 
     public void testFirstScenarioLegal() {
         assertTrue(new SafeReference().canTip(createTestExpressionFromString("x == null ? null : x.y")));

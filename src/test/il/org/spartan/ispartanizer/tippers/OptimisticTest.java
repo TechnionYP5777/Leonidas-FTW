@@ -1,12 +1,13 @@
 package il.org.spartan.ispartanizer.tippers;
 
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.auxilary_layer.CompilationCenter;
 import il.org.spartan.ispartanizer.auxilary_layer.haz;
 
 /**
  * Created by Roey Maor on 1/4/2017.
  */
-public class OptimisticTest extends TipperTest {
+public class OptimisticTest extends PsiTypeHelper {
 
     @Override
     protected void setUp() throws Exception {

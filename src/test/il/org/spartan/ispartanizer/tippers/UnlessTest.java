@@ -2,6 +2,7 @@ package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiConditionalExpression;
 import com.intellij.psi.PsiExpression;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.tippers.Unless;
 import org.junit.Test;
@@ -10,7 +11,7 @@ import org.junit.Test;
  * @author michal cohen
  * @since 12/22/2016.
  */
-public class UnlessTest extends TipperTest {
+public class UnlessTest extends PsiTypeHelper {
 
     @Override
     protected void setUp() throws Exception {

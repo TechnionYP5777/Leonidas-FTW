@@ -1,8 +1,8 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 
-public class WrapperTest extends TipperTest {
+public class WrapperTest extends PsiTypeHelper {
 
     public void testGetAndSet() {
         Wrapper<Integer> wrapper = new Wrapper<>();

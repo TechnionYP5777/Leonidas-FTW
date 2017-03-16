@@ -1,11 +1,12 @@
 package il.org.spartan.ispartanizer.tippers;
 
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
 
 /**
  * Created by amirsagiv on 1/4/17.
  */
-public class MethodDeclarationRenameSingleParameterToCentTest extends TipperTest{
+public class MethodDeclarationRenameSingleParameterToCentTest extends PsiTypeHelper {
 
     public void testConstructorFails() {
         assertFalse(new MethodDeclarationRenameSingleParameterToCent().canTip(createTestMethodFromString("A(int x){this.x = x;}")));

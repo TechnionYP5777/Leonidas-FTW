@@ -2,11 +2,11 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import java.util.Map;
  * @author AnnaBel7
  * @since 09/01/2017.
  */
-public class ReplacerTest extends TipperTest {
+public class ReplacerTest extends PsiTypeHelper {
 
     private static final String TIPPER_FILE_NAME_1 = "RemoveCurlyBracesFromIfStatement.java";
     private static final String TIPPER_FILE_NAME_2 = "RemoveCurlyBracesFromWhileStatement.java";

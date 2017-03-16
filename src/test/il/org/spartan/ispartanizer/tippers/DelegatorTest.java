@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiMethod;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.tippers.Delegator;
 import org.junit.Assert;
 
@@ -8,7 +9,7 @@ import org.junit.Assert;
  * @author RoeiRaz
  * @since 2017
  */
-public class DelegatorTest extends TipperTest {
+public class DelegatorTest extends PsiTypeHelper {
     public void testA() {
         PsiMethod method = createTestMethodFromString("void foo() {boo();}");
         Assert.assertTrue(new Delegator().canTip(method));

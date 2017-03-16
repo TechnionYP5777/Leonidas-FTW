@@ -1,13 +1,14 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
-import com.intellij.psi.*;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
+import com.intellij.psi.PsiBinaryExpression;
+import com.intellij.psi.PsiElement;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 
 /**
  * @author  Amir Sagiv
  * @since 17/01/2017.
  */
-public class hazTest extends TipperTest {
+public class hazTest extends PsiTypeHelper {
 
     public void testHazCentVariableDefinition() throws Exception {
         PsiElement e1 = createTestStatementFromString("int ¢ = 5;");

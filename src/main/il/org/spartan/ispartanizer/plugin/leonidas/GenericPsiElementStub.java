@@ -1,8 +1,7 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethodCallExpression;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.*;
+import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
@@ -107,12 +106,53 @@ public abstract class GenericPsiElementStub {
 
         StubName(String stubName) { this.stubName = stubName; }
 
-        public static StubName valueOf(PsiMethodCallExpression expression) {
-
+        public static StubName valueOfMethodCall(PsiMethodCallExpression expression) {
             return Arrays.stream(values())
                     .filter(stub -> expression.getMethodExpression().getText().equals(stub.stubName()))
                     .findFirst().orElseGet(null);
 
+        }
+
+        public static StubName valueOfStringExpression(String s) {
+            return Arrays.stream(values())
+                    .filter(stub -> s.equals(stub.stubMethodCallExpression()))
+                    .findFirst().orElseGet(null);
+        }
+
+        public static StubName getGeneralTye(PsiElement element) {
+            Wrapper<StubName> name = new Wrapper<>(null);
+            element.accept(new JavaElementVisitor() {
+                @Override
+                public void visitCodeBlock(PsiCodeBlock block) {
+                    super.visitCodeBlock(block);
+                    name.set(ANY_BLOCK);
+                }
+
+                @Override
+                public void visitExpression(PsiExpression expression) {
+                    super.visitExpression(expression);
+                    name.set(BOOLEAN_EXPRESSION);
+                }
+
+                @Override
+                public void visitStatement(PsiStatement statement) {
+                    super.visitStatement(statement);
+                    name.set(STATEMENT);
+                }
+
+                @Override
+                public void visitIdentifier(PsiIdentifier identifier) {
+                    super.visitIdentifier(identifier);
+                    name.set(IDENTIFIER);
+                }
+
+                @Override
+                public void visitArrayAccessExpression(PsiArrayAccessExpression expression) {
+                    super.visitArrayAccessExpression(expression);
+                    name.set(ARRAY_IDENTIFIER);
+                }
+            });
+            return name.get();
         }
 
         public String stubName() {

@@ -1,13 +1,13 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.*;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
-import il.org.spartan.ispartanizer.tippers.TipperTest;
 
 /**
  * Created by melanyc on 1/7/2017.
  */
-public class PsiTreeMatcherTest extends TipperTest {
+public class PsiTreeMatcherTest extends PsiTypeHelper {
 
     public void testMatch1() {
         PsiExpression x = createTestExpressionFromString("x + 1");

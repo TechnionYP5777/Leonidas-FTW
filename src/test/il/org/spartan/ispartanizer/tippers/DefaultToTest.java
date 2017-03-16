@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.tippers;
 
 import com.intellij.psi.PsiConditionalExpression;
+import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.tippers.DefaultsTo;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.Arrays;
  */
 
 
-public class DefaultToTest extends TipperTest {
+public class DefaultToTest extends PsiTypeHelper {
 
     private final String legalCaseString1 = "x != null ? x : y";
     private final String legalCaseString2 = "x == null ? y : x";
