@@ -14,6 +14,7 @@ See https://github.com/SpartanRefactoring/Spartanizer
 - Amir Sagiv sagiva@campus.technion.ac.il
 - Roey Maor sroeym@campus.technion.ac.il
 - Roei Raz sroeiraz@campus.technion.ac.il
+- Sharon Levenzon Kuninin sharonkl@campus.technion.ac.il
 
 ## Installation
 The plugin can be installed in one of two options:
