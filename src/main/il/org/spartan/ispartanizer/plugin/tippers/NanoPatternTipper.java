@@ -75,6 +75,18 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      */
     public abstract PsiElement createReplacement(final N e);
 
+    private PsiFile createUtilsFile(PsiElement e, PsiDirectory pd) throws IOException {
+        URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
+        File file = new File(is.getPath());
+        FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
+        List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
+        PsiFile pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
+        pd.add(pf);
+        Arrays.stream(pd.getFiles()).filter(f -> f.getName().equals("SpartanizerUtils.java")).findFirst().get().getVirtualFile().setWritable(false);
+        Toolbox.getInstance().excludeFile(pf);
+        return pf;
+    }
+
     /**
      * @param e the PsiElement that the tip is applied to
      * @return the PsiFile in which e is contained
@@ -87,17 +99,14 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         try {
             srcDir.checkCreateSubdirectory("spartanizer");
             PsiDirectory pd = srcDir.createSubdirectory("spartanizer");
-            URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
-            File file = new File(is.getPath());
-            FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
-            List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
-            pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
-            pd.add(pf);
-            Arrays.stream(pd.getFiles()).filter(f -> f.getName().equals("SpartanizerUtils.java")).findFirst().get().getVirtualFile().setWritable(false);
-            Toolbox.getInstance().excludeFile(pf);
+            pf = createUtilsFile(e, pd);
         } catch (IncorrectOperationException x) {
-            PsiDirectory pd = srcDir.getSubdirectories()[0];
-            pf = pd.getFiles()[0];
+            PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(d -> d.getName().equals("spartanizer")).findAny().get();
+            if (Arrays.stream(pd.getFiles()).noneMatch(f -> f.getName().equals("SpartanizerUtils.java"))) {
+                pf = createUtilsFile(e, pd);
+            } else {
+                pf = Arrays.stream(pd.getFiles()).filter(f -> f.getName().equals("SpartanizerUtils.java")).findFirst().get();
+            }
         }
         return pf;
     }
