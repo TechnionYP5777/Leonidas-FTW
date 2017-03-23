@@ -86,13 +86,14 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         // creates the directory and adds the file if needed
         try {
             srcDir.checkCreateSubdirectory("spartanizer");
-            PsiDirectory pd = e.getContainingFile().getContainingDirectory().createSubdirectory("spartanizer");
+            PsiDirectory pd = srcDir.createSubdirectory("spartanizer");
             URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
             File file = new File(is.getPath());
             FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
             List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
             pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
             pd.add(pf);
+            Arrays.stream(pd.getFiles()).filter(f -> f.getName().equals("SpartanizerUtils.java")).findFirst().get().getVirtualFile().setWritable(false);
             Toolbox.getInstance().excludeFile(pf);
         } catch (IncorrectOperationException x) {
             PsiDirectory pd = srcDir.getSubdirectories()[0];
