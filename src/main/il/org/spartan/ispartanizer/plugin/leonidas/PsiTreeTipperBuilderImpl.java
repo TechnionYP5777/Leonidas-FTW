@@ -12,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -26,23 +25,19 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private static final String FILE_PATH = "/spartanizer/LeonidasTippers/";
     private static final String FROM_METHOD_NAME = "from";
     private static final String TO_METHOD_NAME = "to";
-    private static final String LEONIDAS_ANNOTATION_NAME = "Leonidas";//Leonidas.class.getSimpleName();
+    private static final String LEONIDAS_ANNOTATION_NAME = "il.org.spartan.ispartanizer.plugin.leonidas.Leonidas";
+    private static final String SHORT_LEONIDAS_ANNOTATION_NAME = "Leonidas";
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
     private static final String LEONIDAS_ANNOTATION_ORDER = "order";
     private static final String PSI_PACKAGE_PREFIX = "com.intellij.psi.";
+    static boolean tmp1 = false;
     private boolean built = false;
     private EncapsulatingNode fromTree;
     private EncapsulatingNode toTree;
     private Class<? extends PsiElement> fromRootElementType;
     private String description;
-
     private int defId = 0;
     private Map<Integer, Integer> mapToDef = new HashMap<>();
-
-    /*public PsiTreeTipperBuilderImpl() {
-        built = false;
-        defId = 0;
-    }*/
 
     /**
      * Build both the "from" and "to" trees from source code, including pruning.
@@ -122,27 +117,22 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return result.get();
     }
 
-    private Class<? extends PsiElement> getPsiElementTypeFromAnnotationSwitch(PsiMethod ¢) {
-        Optional<String> optionalType = Arrays.stream(¢.getModifierList().getAnnotations())
-                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
-                .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
-                .map(s -> s.replace(".class", ""))
-                .findFirst();
-
-        if (!optionalType.isPresent()) {
-            return PsiElement.class;
+    private Class<? extends PsiElement> getPsiClass(String s) {
+        switch (s) {
+            case ("PsiIfStatement"):
+                return PsiIfStatement.class;
+            case ("PsiWhileStatement"):
+                return PsiWhileStatement.class;
+            default:
+                return PsiElement.class;
         }
-        String typeString = optionalType.get();
-        if (typeString.equals("PsiIfStatement")) {
-            return PsiIfStatement.class;
-        }
+    }
 
-        if (typeString.equals("PsiWhileStatement")) {
-            return PsiWhileStatement.class;
-        }
-
-        return PsiElement.class;
-
+    private Class<? extends PsiElement> getPsiElementTypeFromAnnotationSwitch(PsiMethod x) {
+        return Arrays.stream(x.getModifierList().getAnnotations())
+                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()) || SHORT_LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
+                .map(a -> getPsiClass(a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText().replace(".class", "")))
+                .findFirst().get();
     }
     private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod method) {
         return Arrays.stream(method.getModifierList().getAnnotations())

@@ -12,14 +12,14 @@ import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
  */
 public class InliningPrefix extends GenericPsiElementStub {
 
-    @Leonidas(value = PsiArrayAccessExpression.class)
+    @Leonidas(PsiArrayAccessExpression.class)
     public void from(){
         arrayIdentifier(0)[identifier(1)];
         identifier(1)++;
 
     }
 
-    @Leonidas(value = PsiArrayAccessExpression.class)
+    @Leonidas(PsiArrayAccessExpression.class)
     public void to(){
         arrayIdentifier(0)[identifier(1)++];
     }

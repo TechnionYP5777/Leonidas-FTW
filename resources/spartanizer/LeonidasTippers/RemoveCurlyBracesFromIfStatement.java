@@ -11,7 +11,7 @@ import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
  */
 public class RemoveCurlyBracesFromIfStatement extends GenericPsiElementStub {
 
-    @Leonidas(value = PsiIfStatement.class)
+    @Leonidas(PsiIfStatement.class)
     public void from(){
         if (booleanExpression(0)) {
             statement(1);

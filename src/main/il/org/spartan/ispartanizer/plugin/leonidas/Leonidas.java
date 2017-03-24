@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiExpression;
 
 /**
  * Annotation that annotates the methods "from" and "to" in a Leonidas
@@ -11,5 +10,5 @@ import com.intellij.psi.PsiExpression;
  * @since 06-01-2017
  */
 public @interface Leonidas {
-    Class<? extends PsiElement> value() default PsiExpression.class;
+    Class<? extends PsiElement> value() default PsiElement.class;
 }

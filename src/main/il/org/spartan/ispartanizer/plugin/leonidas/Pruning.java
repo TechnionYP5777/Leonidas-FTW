@@ -28,7 +28,7 @@ public class Pruning {
      * @param e - the root from which all such stubs are pruned
      */
     public static EncapsulatingNode prune(EncapsulatingNode e) {
-        assert(e!=null);
+        assert (e != null);
         e.accept(new EncapsulatingNodeVisitor() {
             @Override
             public void visit(EncapsulatingNode e) {

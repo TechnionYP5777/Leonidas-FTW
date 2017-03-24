@@ -24,6 +24,7 @@ public enum Toolbox {
     final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
     Set<VirtualFile> excludedFiles = new HashSet<>();
     Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
+    boolean tmp = false;
 
     public static Toolbox getInstance() {
         if (!wasInitialize) {
@@ -84,7 +85,14 @@ public enum Toolbox {
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
     public boolean canTip(PsiElement element) {
-        return (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element))) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element));
+        if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
+            if (!tmp) {
+                //JOptionPane.showMessageDialog(null, "" + type.of(element).getName() +" \n\n"+ tipperMap.get(type.of(element)).stream().map(t -> t.description()).reduce((s1, s2) -> s1 + "\n" + s2), "toolbox", JOptionPane.WARNING_MESSAGE);
+                tmp = !tmp;
+            }
+            return true;
+        }
+        return false;
     }
 
     public <T extends PsiElement> Tipper<T> getTipper(PsiElement element) {

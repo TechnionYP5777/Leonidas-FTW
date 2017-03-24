@@ -13,14 +13,14 @@ import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
  */
 public class RemoveCurlyBracesFromWhileStatement extends GenericPsiElementStub {
 
-    @Leonidas(value = PsiWhileStatement.class)
+    @Leonidas(PsiWhileStatement.class)
     public void from() {
         while (booleanExpression(0)) {
             statement(1);
         }
     }
 
-    @Leonidas(value = PsiWhileStatement.class)
+    @Leonidas(PsiWhileStatement.class)
     public void to() {
         while (booleanExpression(0))
             statement(1);
