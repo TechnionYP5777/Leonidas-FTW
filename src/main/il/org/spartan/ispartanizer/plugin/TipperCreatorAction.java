@@ -7,6 +7,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
+import il.org.spartan.ispartanizer.auxilary_layer.step;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -20,20 +21,11 @@ public class TipperCreatorAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         PsiClass psiClass = getPsiClassFromContext(e);
-        PsiElement psiElement = e.getData(LangDataKeys.PSI_ELEMENT);
         final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
         final SelectionModel selectionModel = editor.getSelectionModel();
         final int start = selectionModel.getSelectionStart();
-        final int end = selectionModel.getSelectionEnd();
         PsiFile psiFile = psiClass.getContainingFile();
-        PsiElement element = psiFile.findElementAt(start);
-        PsiElement prev = element;
-        PsiElement next = element.getParent();
-        while (next != null && next.getText().startsWith(prev.getText())) {
-            prev = next;
-            next = next.getParent();
-        }
-        TipperCreator frame = new TipperCreator(prev);
+        new TipperCreator(step.getHighestParent(psiFile.findElementAt(start)));
 
     }
 
