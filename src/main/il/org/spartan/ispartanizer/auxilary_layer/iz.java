@@ -147,7 +147,7 @@ public enum iz {
     }
 
     public static boolean literal(PsiElement element) {
-        return typeCheck(PsiLiteralExpression.class, element);
+        return typeCheck(PsiLiteral.class, element);
     }
 
     public static boolean classDeclaration(PsiElement element) {
@@ -185,11 +185,28 @@ public enum iz {
         return typeCheck(e2.getClass(), e1);
     }
 
+
+    private static boolean literalConforms(PsiElement e1, PsiElement e2) {
+        return (iz.literal(e1) && iz.literal(e2) && !iz.generic(e2) && az.literal(e1).getText().equals(az.literal(e2).getText()));
+    }
+
+    private static boolean tokenConforms(PsiElement e1, PsiElement e2) {
+        return (iz.javaToken(e1) && iz.javaToken(e2) && !iz.generic(e2) && az.javaToken(e1).getText().equals(az.javaToken(e2).getText()));
+    }
+
+    private static boolean genericConforms(PsiElement e1, PsiElement e2) {
+        return iz.generic(e2) && az.generic(e2).generalizes(e1);
+    }
+
+    private static boolean elseConforms(PsiElement e1, PsiElement e2) {
+        return !iz.generic(e2) && !iz.literal(e1) && !iz.literal(e2) && !iz.javaToken(e1) && !iz.javaToken(e2) && iz.theSameType(e1, e2);
+    }
+
     /**
      * e2 is the generic tree
      */
     public static boolean conforms(PsiElement e1, PsiElement e2) {
-        return iz.theSameType(e1, e2) || iz.generic(e2) && (az.generic(e2).generalizes(e1));
+        return literalConforms(e1, e2) || tokenConforms(e1, e2) || genericConforms(e1, e2) || elseConforms(e1, e2);
     }
 
     public static boolean whiteSpace(PsiElement e) {

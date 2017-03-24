@@ -14,14 +14,14 @@ public class PsiTreeMatcherTest extends PsiTypeHelper {
         PsiExpression y = createTestExpressionFromString("x + 1");
         assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(x), EncapsulatingNode.buildTreeFromPsi(y)));
         PsiExpression z = createTestExpressionFromString("y + 1");
-        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(x), EncapsulatingNode.buildTreeFromPsi(z)));
+        assertFalse(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(x), EncapsulatingNode.buildTreeFromPsi(z)));
     }
 
     public void testMatch2() {
         PsiCodeBlock b = createTestCodeBlockFromString("{ int x = 5; }");
         b.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.EXACTLY_ONE);
         PsiCodeBlock y = createTestCodeBlockFromString("{ int y = 10; }");
-        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(b), EncapsulatingNode.buildTreeFromPsi(y)));
+        assertFalse(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(b), EncapsulatingNode.buildTreeFromPsi(y)));
     }
 
     public void testMatch3() {
