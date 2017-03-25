@@ -35,7 +35,7 @@ public class TipperCreator extends JFrame {
         $$$setupUI$$$();
     }
 
-    public TipperCreator(PsiElement element) {
+    TipperCreator(PsiElement element) {
         super("Create new tipper");
         root = element;
         setContentPane(panel1);
