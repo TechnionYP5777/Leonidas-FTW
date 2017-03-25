@@ -4,8 +4,7 @@ This is the Intellij version of the Spartanizer project of Eclipse.
 See https://github.com/SpartanRefactoring/Spartanizer
 
 # Build Status
-
-[![Build Status](http://team8spartanizer.ddns.net:8080/job/team8spartanizer/badge/icon)](http://team8spartanizer.ddns.net:8080/job/team8spartanizer/)
+[![Build Status](https://travis-ci.org/TechnionYP5777/IntelliJ-Spartanizer.svg?branch=master)](https://travis-ci.org/TechnionYP5777/IntelliJ-Spartanizer)
 
 # Contributors
 - Oren Afek oren.afek@cs.technion.ac.il
