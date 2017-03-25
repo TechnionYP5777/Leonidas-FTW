@@ -34,6 +34,7 @@ public class SpartanizerAnnotator implements Annotator {
             @NotNull
             @Override
             public String getText() {
+                //noinspection unchecked
                 return Toolbox.getInstance().getTipper(e).description(e);
             }
 

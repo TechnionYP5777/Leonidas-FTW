@@ -15,15 +15,15 @@ public class Delegator extends JavadocMarkerNanoPattern {
         return delegation(psiMethod);
     }
 
-    protected boolean hasOneStatement(PsiCodeBlock codeBlock) {
+    private boolean hasOneStatement(PsiCodeBlock codeBlock) {
         return (codeBlock != null) && codeBlock.getStatements().length == 1;
     }
 
-    protected boolean hasOnlyMethodCall(PsiCodeBlock codeBlock) {
+    private boolean hasOnlyMethodCall(PsiCodeBlock codeBlock) {
         return getMethodCallExpression(codeBlock) != null;
     }
 
-    protected PsiMethodCallExpression getMethodCallExpression(PsiCodeBlock codeBlock) {
+    private PsiMethodCallExpression getMethodCallExpression(PsiCodeBlock codeBlock) {
         if (!hasOneStatement(codeBlock)) {
             return null;
         }
@@ -37,7 +37,8 @@ public class Delegator extends JavadocMarkerNanoPattern {
         return null;
     }
 
-    protected boolean argumentsParametersMatch(PsiParameterList parameterList, PsiExpressionList argumentList) {
+    @SuppressWarnings("ConstantConditions")
+    private boolean argumentsParametersMatch(PsiParameterList parameterList, PsiExpressionList argumentList) {
         for (PsiExpression expression : argumentList.getExpressions()) {
             if (iz.literal(expression)) {
                 continue;
@@ -64,11 +65,12 @@ public class Delegator extends JavadocMarkerNanoPattern {
         return true;
     }
 
-    protected boolean delegation(PsiMethod psiMethod) {
+    private boolean delegation(PsiMethod psiMethod) {
         if (!hasOnlyMethodCall(psiMethod.getBody())) {
             return false;
         }
         PsiMethodCallExpression methodCallExpression = getMethodCallExpression(psiMethod.getBody());
+        assert methodCallExpression != null;
         if (!argumentsParametersMatch(psiMethod.getParameterList(), methodCallExpression.getArgumentList())) {
             return false;
         }

@@ -16,6 +16,7 @@ public class SpartanizerEnableAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
+        assert psiFile != null;
         Project p = psiFile.getProject();
         Toolbox tb = Toolbox.getInstance();
         if (tb.checkExcluded(psiFile)) {

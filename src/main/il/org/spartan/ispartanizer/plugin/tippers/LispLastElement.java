@@ -14,18 +14,18 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
 
     private boolean canTip(PsiMethodCallExpression e) {
         // holds $x
-        PsiReferenceExpression[] outterReference = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiReferenceExpression.class);
+        PsiReferenceExpression[] outerReference = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiReferenceExpression.class);
         // holds "get"
-        PsiIdentifier[] outterIdentifier = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiIdentifier.class);
+        PsiIdentifier[] outerIdentifier = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiIdentifier.class);
         //checks the call is to $x.get
-        if (outterReference == null || outterIdentifier == null || outterReference.length != 1 || outterIdentifier.length != 1 || !outterIdentifier[0].getText().equals("get")) {
+        if (outerReference == null || outerIdentifier == null || outerReference.length != 1 || outerIdentifier.length != 1 || !outerIdentifier[0].getText().equals("get")) {
             return false;
         }
 
         // holds the arguments
         PsiExpression[] arguments = e.getArgumentList().getExpressions();
         // checks there is only one argument and it is a binary expression
-        if (arguments == null || arguments.length != 1 || !iz.binaryExpression(arguments[0])) {
+        if (arguments.length != 1 || !iz.binaryExpression(arguments[0])) {
             return false;
         }
 
@@ -34,10 +34,11 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
         //holds "size"
         PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(az.methodCallExpression(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
         // checks that the left operand of the binary expression is $x.size
-        if (innerIdentifier == null || innerReference == null || !outterReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")) {
+        if (innerIdentifier == null || innerReference == null || !outerReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")) {
             return false;
         }
         // checks minus 1
+        //noinspection ConstantConditions
         return az.binaryExpression(arguments[0]).getROperand().getText().equals("1")
                 && az.binaryExpression(arguments[0]).getOperationSign().getText().equals("-");
     }
@@ -54,7 +55,7 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
 
     @Override
     public PsiElement createReplacement(PsiMethodCallExpression e) {
-        PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiReferenceExpression.class)[0];
+        @SuppressWarnings("ConstantConditions") PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiReferenceExpression.class)[0];
         return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("last(" + container.getText() + ")", e);
     }
 

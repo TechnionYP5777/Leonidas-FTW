@@ -55,12 +55,9 @@ public class PsiTypeHelper extends PsiTestCase {
      */
     public PsiClass createTestClassFromString(String s) {
         PsiClass dummyClass = getTestFactory().createClassFromText(s, getTestFile());
-        //for some reason classes that are created with file factory are wrapped with class _DUMMY_....
-        if (dummyClass==null){
-            return null;
-        }
-        PsiClass realClass = Utils.getChildrenOfType(dummyClass,PsiClass.class).get(0);
-        return realClass;
+        //noinspection ConstantConditions
+        assert dummyClass != null;
+        return Utils.getChildrenOfType(dummyClass, PsiClass.class).get(0);
     }
 
     /**
@@ -72,7 +69,7 @@ public class PsiTypeHelper extends PsiTestCase {
      */
     public PsiClass createTestClassFromString(String javadoc, String className, String classBody, String... classModifiers) {
         StringBuilder sb = new StringBuilder();
-        Arrays.stream(classModifiers).forEach(m -> sb.append(m));
+        Arrays.stream(classModifiers).forEach(sb::append);
         sb.append("class")
                 .append(className)
                 .append("{")
@@ -82,14 +79,14 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     /**
-     * @param interfaceName
-     * @param interfaceBody
-     * @param interfaceModifiers
+     * @param interfaceName JD
+     * @param interfaceBody JD
+     * @param interfaceModifiers JD
      * @return PsiInterface element representing the given content
      */
     public PsiClass createTestInterfaceFromString(String interfaceName, String interfaceBody, String... interfaceModifiers) {
         StringBuilder sb = new StringBuilder();
-        Arrays.stream(interfaceModifiers).forEach(m -> sb.append(m));
+        Arrays.stream(interfaceModifiers).forEach(sb::append);
         sb.append("interface")
                 .append(interfaceName)
                 .append("{")
@@ -113,8 +110,8 @@ public class PsiTypeHelper extends PsiTestCase {
     /**
      * doesn't work if there are several classes inside each other.
      *
-     * @param f
-     * @return
+     * @param f JD
+     * @return the highest class defined in the file
      */
     public PsiClass getClassInFile(PsiFile f) {
         Wrapper<PsiClass> classWrapper = new Wrapper<>(null);
@@ -222,8 +219,8 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     /**
-     * @param cond
-     * @param then
+     * @param cond JD
+     * @param then JD
      * @return if then has only one statement returns PsiIfStatement, otherwise null
      */
     public PsiIfStatement createTestIfStatementNoBraces(String cond, String then) {
@@ -255,7 +252,7 @@ public class PsiTypeHelper extends PsiTestCase {
     public PsiMethodCallExpression createTestMethodCallExpression(String methodName, String... args) {
         StringBuilder sb = new StringBuilder();
         sb.append(methodName).append("(");
-        Arrays.stream(args).forEach(f -> sb.append(f));
+        Arrays.stream(args).forEach(sb::append);
         sb.append(")");
         return (PsiMethodCallExpression) getTestFactory()
                 .createExpressionFromText(sb.toString(), getTestFile());
@@ -297,17 +294,16 @@ public class PsiTypeHelper extends PsiTestCase {
         sb.append("new ")
                 .append(typeName)
                 .append("(");
-        Arrays.stream(parametes).forEach(s -> sb.append(s));
+        Arrays.stream(parametes).forEach(sb::append);
         sb.append(")");
         return (PsiNewExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
     }
 
     public PsiMethodReferenceExpression createTestMethodReferenceEpression(String typeName, String methodName) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(typeName)
-                .append("::")
-                .append(methodName);
-        return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
+        String sb = typeName +
+                "::" +
+                methodName;
+        return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(sb, getTestFile());
     }
 
     public PsiRequiresStatement createTestRequiresStatement(String module) {

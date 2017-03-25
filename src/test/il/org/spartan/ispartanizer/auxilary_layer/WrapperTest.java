@@ -44,8 +44,6 @@ public class WrapperTest extends PsiTypeHelper {
 
     public void testEquals() {
         Wrapper<Integer> wrapper = new Wrapper<>();
-        assertFalse(wrapper.equals(null));
-        assertTrue(wrapper.equals(wrapper));
         assertTrue(wrapper.equals(new Wrapper<Integer>()));
     }
 }

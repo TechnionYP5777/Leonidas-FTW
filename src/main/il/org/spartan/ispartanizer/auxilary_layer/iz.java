@@ -49,10 +49,6 @@ public enum iz {
         return typeCheck(PsiCodeBlock.class, element);
     }
 
-    public static boolean genereicBlock(PsiElement element) {
-        return typeCheck(GenericPsiBlock.class, element);
-    }
-
     public static boolean blockStatement(PsiElement element) {
         return typeCheck(PsiBlockStatement.class, element);
     }
@@ -269,14 +265,17 @@ public enum iz {
         return ifStatement(e) || switchStatement(e) || loopStatement(e) || tryStatement(e);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static boolean synchronized¢(final PsiMember ¢) {
         return (¢.getModifierList().hasModifierProperty(PsiModifier.SYNCHRONIZED));
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static boolean native¢(final PsiMember ¢) {
         return (¢.getModifierList().hasModifierProperty(PsiModifier.NATIVE));
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static boolean default¢(final PsiMember ¢) {
         return (¢.getModifierList().hasModifierProperty(PsiModifier.DEFAULT));
     }
@@ -317,7 +316,7 @@ public enum iz {
 
     /**
      * @param ¢ JD
-     * @return
+     * @return true iff ¢ is "boolean"
      */
     public static boolean booleanType(final PsiType ¢) {
         return ¢ != null && ¢ instanceof PsiPrimitiveType && ¢.getPresentableText().equals(PsiType.BOOLEAN.getPresentableText());
@@ -329,15 +328,15 @@ public enum iz {
 
     /**
      * @param ¢ JD
-     * @return
+     * @return true iff ¢ is casting
      */
     public static boolean castExpression(final PsiElement ¢) {
         return typeCheck(PsiTypeCastExpression.class, ¢);
     }
 
     /**
-     * @param ¢
-     * @return
+     * @param ¢ JD
+     * @return true iff ¢ is new instance creation
      */
     public static boolean classInstanceCreation(final PsiElement ¢) {
         return typeCheck(PsiNewExpression.class, ¢);
@@ -366,11 +365,11 @@ public enum iz {
     }
 
     /**
-     * Determine whether a node is an EmpyStatement
+     * Determine whether a node is an EmptyStatement
      *
      * @param ¢ pattern JD
      * @return <code><b>true</b></code> <i>iff</i> the parameter is an
-     * empty statment
+     * empty statement
      */
     static boolean emptyStatement(final PsiElement ¢) {
         return typeCheck(PsiEmptyStatement.class, ¢);
@@ -391,6 +390,7 @@ public enum iz {
      * @param ¢ JD
      * @return <code><b>true</b></code> <em>iff</em>declaration is final
      */
+    @SuppressWarnings("ConstantConditions")
     static boolean final¢(final PsiMember ¢) {
         return (¢.getModifierList().hasModifierProperty(PsiModifier.FINAL));
     }
@@ -402,6 +402,7 @@ public enum iz {
      * @return <code><b>true</b></code> <i>iff</i> the variable is declared as
      * final
      */
+    @SuppressWarnings("ConstantConditions")
     static boolean final¢(final PsiVariable ¢) {
         return ¢ != null && ¢.getModifierList().hasModifierProperty(PsiModifier.FINAL);
     }

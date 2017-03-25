@@ -40,6 +40,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
     @Override
     public Tip tip(PsiMethod ¢) {
         return ¢ == null || !canTip(¢) ? null : new Tip(description(¢), ¢, this.getClass()) {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void go(final PsiRewrite r) {
                 PsiIdentifier cent = JavaPsiFacade.getElementFactory(¢.getProject()).createIdentifier("¢");

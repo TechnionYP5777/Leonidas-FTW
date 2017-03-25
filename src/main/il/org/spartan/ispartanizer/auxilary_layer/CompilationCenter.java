@@ -1,19 +1,14 @@
 package il.org.spartan.ispartanizer.auxilary_layer;
 
 import com.intellij.psi.PsiFile;
-import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilderImpl;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
-
 
 /**
  * A static util class that handles compilation inside the code
@@ -51,7 +46,7 @@ public class CompilationCenter {
 
     /**
      * Checks whether or not the given PsiFile has any compilation errors
-     * @param file
+     * @param file - JD
      * @return has any compilation errors
      */
     public static boolean hasCompilationErrors(PsiFile file) {
@@ -60,8 +55,8 @@ public class CompilationCenter {
     }
 
     /**
-     * Compile the given PsiFile and update the ourput buffers accordingly
-     * @param file
+     * Compile the given PsiFile and update the output buffers accordingly
+     * @param file - JD
      */
     private static void compile(PsiFile file){
         if(!initialized){

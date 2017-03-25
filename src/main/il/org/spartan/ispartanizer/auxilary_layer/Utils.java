@@ -23,6 +23,7 @@ import java.util.List;
 public enum Utils {
     ;
 
+    @SafeVarargs
     public static <T> boolean in(T candidate, T... list) {
         return list!=null && Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
     }
@@ -123,7 +124,7 @@ public enum Utils {
         for (int i = 0; i < indent; i++) {
             s.append("\t");
         }
-        s.append(e.getClass().getName() + ": " + e.getText() + "\n");
+        s.append(e.getClass().getName()).append(": ").append(e.getText()).append("\n");
         for (PsiElement child : e.getChildren()) {
             s.append(showPsiTreeAux(child, indent + 1));
         }
@@ -136,11 +137,13 @@ public enum Utils {
 
     public static <T extends PsiElement> List<T> getChildrenOfType(@Nullable PsiElement e, @NotNull Class<T> aClass) {
         Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
+        assert e != null;
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitElement(PsiElement element) {
                 super.visitElement(element);
                 if (aClass.isInstance(element)) {
+                    //noinspection unchecked
                     w.get().add((T) element);
                 }
             }
@@ -158,8 +161,7 @@ public enum Utils {
         String fixedPath = null;
         try {
             fixedPath = URLDecoder.decode(path, "UTF-8");
-        } catch(UnsupportedEncodingException u){
-
+        } catch (UnsupportedEncodingException ignore) {
         }
         return fixedPath;
     }

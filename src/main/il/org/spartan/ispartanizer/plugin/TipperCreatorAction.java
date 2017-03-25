@@ -24,6 +24,7 @@ public class TipperCreatorAction extends AnAction {
         final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
         final SelectionModel selectionModel = editor.getSelectionModel();
         final int start = selectionModel.getSelectionStart();
+        assert psiClass != null;
         PsiFile psiFile = psiClass.getContainingFile();
         new TipperCreator(step.getHighestParent(psiFile.findElementAt(start)));
 

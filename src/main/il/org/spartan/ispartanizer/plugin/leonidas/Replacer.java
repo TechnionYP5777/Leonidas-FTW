@@ -4,7 +4,6 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.step;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
-import il.org.spartan.ispartanizer.plugin.EncapsulatingNodeVisitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,16 +36,11 @@ public class Replacer {
         Map<Integer, PsiElement> map = extractInfo(templateMatchingTree, treeToReplace);
         EncapsulatingNode templateReplacingTree = builder.getToPsiTree();
         // might not work due to replacing while recursively iterating.
-        map.keySet().forEach(d -> {
-            templateReplacingTree.accept(new EncapsulatingNodeVisitor() {
-                @Override
-                public void visit(EncapsulatingNode e) {
-                    if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent()) {
-                        Pruning.getRealParent(e, Pruning.getStubName(e).get()).replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
-                    }
-                }
-            });
-        });
+        map.keySet().forEach(d -> templateReplacingTree.accept(e -> {
+            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent()) {
+                Pruning.getRealParent(e, Pruning.getStubName(e).get()).replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
+            }
+        }));
 
         return templateReplacingTree.getInner();
     }

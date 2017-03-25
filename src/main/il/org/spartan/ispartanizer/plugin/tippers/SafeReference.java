@@ -26,6 +26,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
         return "Replace null conditional ternary with ?.";
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public PsiElement createReplacement(PsiConditionalExpression e) {
 
@@ -55,6 +56,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
         return PsiConditionalExpression.class;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private boolean firstScenario(PsiElement e) {
         // (x == null) ? null : x.y
         boolean cond1 = iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
@@ -74,6 +76,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
         return (cond2 || cond3);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private boolean secondScenario(PsiElement e) {
         // (null == x) ? null : x.y
         boolean cond1 = iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
@@ -93,6 +96,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
         return (cond2 || cond3);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private boolean thirdScenario(PsiElement e) {
         // (x != null) ? x.y : null
         boolean cond1 = iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&
@@ -112,6 +116,7 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
         return (cond2 || cond3);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private boolean fourthScenario(PsiElement e) {
         // (null != x.y) ? x.y : null
         boolean cond1 = iz.conditionalExpression(e) && iz.binaryExpression(az.conditionalExpression(e).getCondition()) &&

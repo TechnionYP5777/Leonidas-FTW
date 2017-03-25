@@ -30,6 +30,7 @@ sourceSets {
 
 // Basic configuration of org.jetbrains.intellij plugin
 intellij {
+    //noinspection GroovyAssignabilityCheck
     version 'IC-2016.3'
     pluginName 'IntelliJ-Spartanizer'
 }

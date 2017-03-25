@@ -5,7 +5,8 @@ import il.org.spartan.ispartanizer.auxilary_layer.CompilationCenter;
 import il.org.spartan.ispartanizer.auxilary_layer.haz;
 
 /**
- * Created by Roey Maor on 1/4/2017.
+ * @author Roey Maor
+ * @since 04-01-2017.
  */
 public class OptimisticTest extends PsiTypeHelper {
 
@@ -21,7 +22,7 @@ public class OptimisticTest extends PsiTypeHelper {
         String source1 = "package test; "+
                 "public class Test { "+
                 "public Test() { "+
-                "final int x=3; x=5; System.out.println(\"lalala\"); "+
+                "final int x=3; x=5; System.out.println(\"banana\"); " +
                 "} "+
                 "}";
 

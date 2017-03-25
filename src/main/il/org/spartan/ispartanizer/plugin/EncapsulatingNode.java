@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
  * @author michalcohen
  * @since 22-02-2017
  */
-public class EncapsulatingNode implements Cloneable, Iterable {
-    PsiElement inner;
-    EncapsulatingNode parent;
-    List<EncapsulatingNode> children = new LinkedList<>();
+public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode> {
+    private PsiElement inner;
+    private EncapsulatingNode parent;
+    private List<EncapsulatingNode> children = new LinkedList<>();
 
     public EncapsulatingNode(PsiElement e) {
         inner = e;
         Arrays.stream(e.getChildren()).forEach(child -> children.add(new EncapsulatingNode(child, this)));
     }
 
-    public EncapsulatingNode(PsiElement e, EncapsulatingNode parent) {
+    private EncapsulatingNode(PsiElement e, EncapsulatingNode parent) {
         this(e);
         this.parent = parent;
     }
@@ -60,6 +60,7 @@ public class EncapsulatingNode implements Cloneable, Iterable {
         v.visit(this);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public <T> T accept(EncapsulatingNodeValueVisitor v, BinaryOperator<T> accumulator) {
         return children.stream().map(child -> child.accept(v, accumulator)).reduce(accumulator).get();
     }
@@ -80,6 +81,7 @@ public class EncapsulatingNode implements Cloneable, Iterable {
         return inner.getText();
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public EncapsulatingNode clone() {
         return buildTreeFromPsi(inner);
     }
@@ -90,11 +92,11 @@ public class EncapsulatingNode implements Cloneable, Iterable {
     }
 
     @Override
-    public void forEach(Consumer action) {
+    public void forEach(Consumer<? super EncapsulatingNode> action) {
         children.stream().forEach(action);
     }
 
-    public class Iterator implements java.util.Iterator {
+    public class Iterator implements java.util.Iterator<EncapsulatingNode> {
         int location = 0;
         List<EncapsulatingNode> noSpaceChildren;
 
@@ -108,7 +110,7 @@ public class EncapsulatingNode implements Cloneable, Iterable {
         }
 
         @Override
-        public Object next() {
+        public EncapsulatingNode next() {
             EncapsulatingNode e = noSpaceChildren.get(location);
             location++;
             return e;

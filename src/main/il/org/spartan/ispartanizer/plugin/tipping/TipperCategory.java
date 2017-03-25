@@ -1,12 +1,11 @@
 package il.org.spartan.ispartanizer.plugin.tipping;
 
-/**
- * TODO @maorroey is it needed?
- * Created by Roey Maor on 12/3/2016.
- */
-
 import il.org.spartan.ispartanizer.plugin.PreferencesResources.TipperGroup;
 
+/**
+ * @author Roey Maor
+ * @since 03-12-2016.
+ */
 public interface TipperCategory {
     String categoryDescription();
 

@@ -64,6 +64,7 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
         return iz.equalsOperator(operator);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public PsiElement createReplacement(PsiConditionalExpression e) {
         String replacement = "defaults(" +

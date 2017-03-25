@@ -4,7 +4,6 @@ import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.ispartanizer.auxilary_layer.az;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
-import il.org.spartan.ispartanizer.plugin.EncapsulatingNodeVisitor;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
 import java.util.Arrays;
@@ -19,7 +18,7 @@ import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParamete
  * @author michalcohen
  * @since 07-01-2017
  */
-public class Pruning {
+class Pruning {
 
     /**
      * Prunes all the stubs of the form "stub();" where "stub()"
@@ -27,29 +26,26 @@ public class Pruning {
      *
      * @param e - the root from which all such stubs are pruned
      */
-    public static EncapsulatingNode prune(EncapsulatingNode e) {
+    static EncapsulatingNode prune(EncapsulatingNode e) {
         assert (e != null);
-        e.accept(new EncapsulatingNodeVisitor() {
-            @Override
-            public void visit(EncapsulatingNode e) {
-                if (!iz.methodCallExpression(e.getInner())) {
-                    return;
-                }
-                PsiMethodCallExpression exp = az.methodCallExpression(e.getInner());
-
-                Pruning.getStubName(e).ifPresent(y -> {
-                    EncapsulatingNode prev = Pruning.getRealParent(e, y);
-                    GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
-                    if (x != null) {
-                        prev.replace(EncapsulatingNode.buildTreeFromPsi(x)); //replace the stub tree with the generic psi type tree
-                    }
-                });
+        e.accept(e1 -> {
+            if (!iz.methodCallExpression(e1.getInner())) {
+                return;
             }
+            PsiMethodCallExpression exp = az.methodCallExpression(e1.getInner());
+
+            Pruning.getStubName(e1).ifPresent(y -> {
+                EncapsulatingNode prev = Pruning.getRealParent(e1, y);
+                GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
+                if (x != null) {
+                    prev.replace(EncapsulatingNode.buildTreeFromPsi(x)); //replace the stub tree with the generic psi type tree
+                }
+            });
         });
         return e;
     }
 
-    public static Optional<GenericPsiElementStub.StubName> getStubName(EncapsulatingNode e) {
+    static Optional<GenericPsiElementStub.StubName> getStubName(EncapsulatingNode e) {
         if (!iz.methodCallExpression(e.getInner()))
             return Optional.empty();
         PsiMethodCallExpression exp = az.methodCallExpression(e.getInner());
@@ -59,7 +55,7 @@ public class Pruning {
                 .findFirst(); //assuming there is only one enum value in StubName that fits the stub kind.
     }
 
-    public static EncapsulatingNode getRealParent(EncapsulatingNode e, GenericPsiElementStub.StubName y) {
+    static EncapsulatingNode getRealParent(EncapsulatingNode e, GenericPsiElementStub.StubName y) {
         EncapsulatingNode prev = e;
         EncapsulatingNode next = e.getParent();
         while (y.goUpwards(prev, next)) {

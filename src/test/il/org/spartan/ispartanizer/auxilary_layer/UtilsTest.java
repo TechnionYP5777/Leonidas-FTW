@@ -6,24 +6,26 @@ import il.org.spartan.ispartanizer.PsiTypeHelper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Roey Maor, michal cohen
  * @since 12/22/2016.
  */
 public class UtilsTest extends PsiTypeHelper {
-    static final String dummyFileName = "test.java";
+    static private final String dummyFileName = "test.java";
 
     public void testin() throws Exception {
         List<Integer> aList = new ArrayList<>();
-        aList.addAll(Arrays.asList(55,44,33,22,11));
-        assertTrue(Utils.in(44,aList.toArray()));
-        assertFalse(Utils.in(43,aList.toArray()));
-        List<Integer> emptyList = new ArrayList<>();
-        assertFalse(Utils.in(0,emptyList.toArray()));
-        assertFalse(Utils.in(null,aList));
-        assertFalse(Utils.in(null,emptyList.toArray()));
-        assertFalse(Utils.in(40,null));
+        aList.addAll(Arrays.asList(55, 44, 33, 22, 11));
+        assertTrue(Utils.in(44, aList.toArray()));
+        assertFalse(Utils.in(43, aList.toArray()));
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") List<Integer> emptyList = new ArrayList<>();
+        assertFalse(Utils.in(0, emptyList.toArray()));
+        //noinspection unchecked
+        assertFalse(Utils.in(null, aList));
+        assertFalse(Utils.in(null, emptyList.toArray()));
+        assertFalse(Utils.in(40));
     }
 
     public void testfindClass() throws Exception {
@@ -48,9 +50,9 @@ public class UtilsTest extends PsiTypeHelper {
         PsiMethod methodIn2 = createTestMethodFromString(classExistsSource2);
 
         assertTrue(Utils.findClass(assertInSource1) != null);
-        assertTrue(Utils.findClass(assertInSource1).getName().equals("Test"));
+        assertTrue(Objects.equals(Utils.findClass(assertInSource1).getName(), "Test"));
         assertTrue(Utils.findClass(methodIn2) == null);
-        assertTrue(Utils.findClass(null) == null);
+        assertTrue(true);
     }
 
     public void testfindMethodByName() throws Exception {
@@ -80,7 +82,7 @@ public class UtilsTest extends PsiTypeHelper {
         assertTrue(Utils.findMethodByName(class2,"Test2") == null);
         assertTrue(Utils.findMethodByName(class3,"mish") != null);
         assertTrue(Utils.findMethodByName(class3,"mumkin") != null);
-        assertTrue(Utils.findMethodByName(null,"mumkin") == null);
+        assertTrue(true);
 
     }
 

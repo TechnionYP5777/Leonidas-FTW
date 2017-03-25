@@ -24,6 +24,7 @@ public class LeonidasTipperTest extends PsiTypeHelper {
     private String statement = "System.out.println(\"Hello, World!\")";
     private String expression = "69 > 69 ? 69 : 69";
     private String testFileName = "testFileName.java";
+    @SuppressWarnings("FieldCanBeLocal")
     private String mockDescription = "This is just for fun. TEAM 8 IS THE BEST!!!";
 
     public LeonidasTipperTest() {

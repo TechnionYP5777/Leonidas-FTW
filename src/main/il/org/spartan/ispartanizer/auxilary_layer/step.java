@@ -39,7 +39,7 @@ public enum step {
     }
 
     public static PsiStatement firstStatement(PsiCodeBlock block) {
-        return block != null && statements(block) != null && statements(block).size() >= 1 ?
+        return block != null && statements(block).size() >= 1 ?
                 statements(block).get(0) : null;
     }
 

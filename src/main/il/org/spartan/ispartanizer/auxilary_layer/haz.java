@@ -22,6 +22,7 @@ public enum haz {
                 }
             }
         });
+        assert b.inner != null;
         return b.inner;
     }
 
@@ -34,6 +35,7 @@ public enum haz {
                 b.inner = method.getName().equals(name) ? Boolean.TRUE : b.inner;
             }
         });
+        assert b.inner != null;
         return b.inner;
     }
 

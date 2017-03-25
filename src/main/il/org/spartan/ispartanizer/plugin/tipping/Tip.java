@@ -55,8 +55,8 @@ public abstract class Tip extends Range {
      * A factory function that converts a sequence of PSIElements into a
      * {@link Range}
      *
-     * @param e  arbitrary
-     * @param es
+     * @param e  JD
+     * @param es a list of Psi elements
      */
     static Range range(final PsiElement e, final PsiElement... es) {
         return range(singleNodeRange(e), es);

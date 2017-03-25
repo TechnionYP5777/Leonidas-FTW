@@ -39,8 +39,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
             }
         });
         String methodNewText = "/**" + docNew + "*/" + methodText;
-        PsiMethod methodNew = JavaPsiFacade.getElementFactory(e.getProject()).createMethodFromText(methodNewText, e.getContext());
-        return methodNew;
+        return JavaPsiFacade.getElementFactory(e.getProject()).createMethodFromText(methodNewText, e.getContext());
     }
 
     @Override

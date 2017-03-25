@@ -12,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
 
@@ -46,6 +45,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
      * @return @link{this}
      * @throws IOException in case the file could not be opened.
      */
+    @SuppressWarnings("ConstantConditions")
     public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
         PsiFile root = getPsiTreeFromFile(fileName);
@@ -60,7 +60,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     private EncapsulatingNode buildMethodTree(PsiFile root, String methodName) {
         PsiMethod method = getMethodFromTree(root, methodName);
-        Class<? extends PsiElement> rootType = getPsiElementTypeFromAnnotationSwitch(method);
+        Class<? extends PsiElement> rootType = getPsiElementTypeFromAnnotation(method);
         if (methodName.equals(FROM_METHOD_NAME)) {
             fromRootElementType = rootType;
         }
@@ -97,7 +97,6 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
 
     private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
         File file = new File(Utils.fixSpacesProblemOnPath(this.getClass().getResource(FILE_PATH + fileName).getPath()));
-        assert (file != null);
         return PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(fileName,
                 FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
                 String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
@@ -118,43 +117,22 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     }
 
     private Class<? extends PsiElement> getPsiClass(String s) {
-        switch (s) {
-            case ("PsiIfStatement"):
-                return PsiIfStatement.class;
-            case ("PsiWhileStatement"):
-                return PsiWhileStatement.class;
-            default:
-                return PsiElement.class;
+        try {
+            //noinspection unchecked
+            return (Class<? extends PsiElement>) Class.forName("com.intellij.psi." + s);
+        } catch (ClassNotFoundException ignore) {
         }
+        return PsiElement.class;
     }
 
-    private Class<? extends PsiElement> getPsiElementTypeFromAnnotationSwitch(PsiMethod x) {
+    @SuppressWarnings({"ConstantConditions", "OptionalGetWithoutIsPresent"})
+    private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod x) {
         return Arrays.stream(x.getModifierList().getAnnotations())
                 .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()) || SHORT_LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
                 .map(a -> getPsiClass(a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText().replace(".class", "")))
                 .findFirst().get();
     }
-    private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod method) {
-        return Arrays.stream(method.getModifierList().getAnnotations())
-                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
-                .map(a -> a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText())
-                .map(s -> s.replace(".class", ""))
-                .map(s -> PSI_PACKAGE_PREFIX + s)
-                .map(s -> {
-                    try {
-                        return (Class<? extends PsiElement>) Class.forName(s); //TODO there is a warning here
-                    } catch (ClassNotFoundException ignore) {
-                        throw new NullPointerException();
-                        //System.out.println(ignore.getCause().toString());
-                    }
-                    //return PsiElement.class;
-                }).collect(Collectors.toList()).get(0);
-    }
 
-
-    //here assuming the root element to be replaced is a direct child of the method statement block
-    //TODO: @orenafek, now assuming there is only one "direct son" in rootElemntType type,
-    //TODO: should be changed upon adding the name to the annotations.
     private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
         Wrapper<PsiElement> result = new Wrapper<>();
         Wrapper<Boolean> stop = new Wrapper<>(false);

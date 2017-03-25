@@ -46,6 +46,7 @@ public enum Toolbox {
         createLeonidasTipperBuilders();
     }
 
+    @SuppressWarnings("ConstantConditions")
     private static void createLeonidasTipperBuilders() {
         List<File> tippers = Arrays.asList(new File(Utils.fixSpacesProblemOnPath(Toolbox.class
                 .getResource("/spartanizer/LeonidasTippers").getPath())).listFiles());
@@ -71,6 +72,7 @@ public enum Toolbox {
         if (!isElementOfOperableType(element)) {
             return this;
         }
+        //noinspection unchecked
         tipperMap.get(type.of(element)).stream() //
                 .filter(tipper -> tipper.canTip(element)) //
                 .findFirst()
@@ -85,17 +87,11 @@ public enum Toolbox {
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
     public boolean canTip(PsiElement element) {
-        if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
-            if (!tmp) {
-                //JOptionPane.showMessageDialog(null, "" + type.of(element).getName() +" \n\n"+ tipperMap.get(type.of(element)).stream().map(t -> t.description()).reduce((s1, s2) -> s1 + "\n" + s2), "toolbox", JOptionPane.WARNING_MESSAGE);
-                tmp = !tmp;
-            }
-            return true;
-        }
-        return false;
+        return (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element)));
     }
 
-    public <T extends PsiElement> Tipper<T> getTipper(PsiElement element) {
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public Tipper getTipper(PsiElement element) {
         try {
             if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) &&
                     tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {

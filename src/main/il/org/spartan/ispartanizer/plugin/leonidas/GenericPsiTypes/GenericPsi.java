@@ -30,9 +30,9 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken {
 
-    //final int myHC = CompositePsiElement.ourHC++;
     PsiElement inner;
-    PsiFile containingFile;
+    @SuppressWarnings("FieldCanBeLocal")
+    private PsiFile containingFile;
 
     protected GenericPsi(PsiElement inner, String text) {
         super(JavaElementType.DUMMY_ELEMENT, text);
@@ -45,21 +45,6 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
         return getElementType();
     }
 
-    /* @Override
-     public final int hashCode() {
-         return myHC;
-     }
- */
-    /*@Override
-    public PsiFile getContainingFile() {
-        return containingFile;
-    }
-
-    @Override
-    public boolean isValid() {
-        return true;
-    }
-*/
     @Override
     public <T> T getUserData(@NotNull Key<T> key) {
         return inner.getUserData(key);
@@ -104,13 +89,6 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
         return inner.getContainingFile();
     }
 
-
-    //maybe problematic
-    /*@Override
-    public PsiReference findReferenceAt(int offset) {
-        return SharedPsiElementImplUtil.findReferenceAt(this, offset);
-    }
-*/
     @Override
     public PsiElement copy() {
         ASTNode elementCopy = copyElement();
@@ -122,20 +100,6 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
         return true;
     }
 
-    //maybe problematic
-    /*
-    @Override
-    public PsiReference getReference() {
-        return null;
-    }
-
-
-    @Override
-    @NotNull
-    public PsiReference[] getReferences() {
-        return SharedPsiElementImplUtil.getReferences(this);
-    }
-    */
     @Override
     public void delete() throws IncorrectOperationException {
         //LOG.assertTrue(getTreeParent() != null);
@@ -217,7 +181,7 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
             return project;
         }
         final PsiManager manager = getManager();
-        if (manager == null) return null;
+        assert (manager != null);
         return manager.getProject();
     }
 

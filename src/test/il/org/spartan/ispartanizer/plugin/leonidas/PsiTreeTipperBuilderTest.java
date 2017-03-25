@@ -4,7 +4,6 @@ import com.intellij.psi.PsiIfStatement;
 import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
-import il.org.spartan.ispartanizer.plugin.EncapsulatingNodeVisitor;
 
 import java.io.IOException;
 
@@ -36,12 +35,9 @@ public class PsiTreeTipperBuilderTest extends PsiTypeHelper {
         try {
             $.buildTipperPsiTree(TEST_FILE_NAME);
             EncapsulatingNode actualFrom = $.getFromPsiTree();
-            actualFrom.accept(new EncapsulatingNodeVisitor() {
-                @Override
-                public void visit(EncapsulatingNode e) {
-                    if (iz.methodCallExpression(e.getInner()))
-                        assertEquals(Integer.valueOf(0), e.getInner().getUserData(KeyDescriptionParameters.ID));
-                }
+            actualFrom.accept(e -> {
+                if (iz.methodCallExpression(e.getInner()))
+                    assertEquals(Integer.valueOf(0), e.getInner().getUserData(KeyDescriptionParameters.ID));
             });
         } catch (IOException ignore) {
             fail();
@@ -53,12 +49,9 @@ public class PsiTreeTipperBuilderTest extends PsiTypeHelper {
         try {
             $.buildTipperPsiTree(TEST_FILE_NAME);
             EncapsulatingNode actualFrom = $.getFromPsiTree();
-            actualFrom.accept(new EncapsulatingNodeVisitor() {
-                @Override
-                public void visit(EncapsulatingNode e) {
-                    if (iz.methodCallExpression(e.getInner()))
-                        assertEquals(0, e.getChildren().size());
-                }
+            actualFrom.accept(e -> {
+                if (iz.methodCallExpression(e.getInner()))
+                    assertEquals(0, e.getChildren().size());
             });
         } catch (IOException ignore) {
             fail();

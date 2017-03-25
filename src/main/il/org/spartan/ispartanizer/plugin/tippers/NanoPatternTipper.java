@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * Represents a tipper that changes the code of the user to a code that need the creation of
- *  a special environmant.
+ *  a special environment.
  * @author Roey Maor, michalcohen
  * @since 26-12-2016
  */
@@ -33,6 +33,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         return n != null && ns.stream().anyMatch(t -> t.canTip(n));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     protected static <N extends PsiElement> Tipper<N> firstTipperThatCanTip(final Collection<Tipper<N>> ns, final N n) {
         return ns.stream().filter(t -> t.canTip(n)).findFirst().get();
     }
@@ -75,6 +76,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      */
     public abstract PsiElement createReplacement(final N e);
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private PsiFile createUtilsFile(PsiElement e, PsiDirectory pd) throws IOException {
         URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
         File file = new File(is.getPath());
@@ -92,6 +94,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @return the PsiFile in which e is contained
      * @throws IOException if for some reason writing to the users disk throws exception.
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private PsiFile insertSpartanizerUtils(PsiElement e) throws IOException {
         PsiFile pf;
         PsiDirectory srcDir = e.getContainingFile().getContainingDirectory();
@@ -117,6 +120,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @param e  - the PsiElement on which the tip is applied.
      * @param pf - the psi file in which e is contained.
      */
+    @SuppressWarnings("ConstantConditions")
     private void insertImportStatement(PsiElement e, PsiFile pf) {
         PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(pf, PsiClass.class), "*");
         PsiImportList pil = Utils.getImportList(e.getContainingFile());

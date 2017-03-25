@@ -5,7 +5,8 @@ import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.tippers.SafeReference;
 
 /**
- * Created by amirsagiv on 12/24/16.
+ * @author amirsagiv
+ * @since 24-12-2016.
  */
 public class SafeReferenceTest extends PsiTypeHelper {
 

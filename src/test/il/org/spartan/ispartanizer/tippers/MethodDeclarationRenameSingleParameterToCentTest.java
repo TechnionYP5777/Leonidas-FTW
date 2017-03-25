@@ -4,7 +4,8 @@ import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
 
 /**
- * Created by amirsagiv on 1/4/17.
+ * @author amirsagiv
+ * @since 04-01-2017.
  */
 public class MethodDeclarationRenameSingleParameterToCentTest extends PsiTypeHelper {
 

@@ -14,7 +14,7 @@ import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 
     /**
-     * @param e
+     * @param e JD
      * @return true iff e is in the form: <boolean expression> ? null : <expression>
      */
     @Override
@@ -36,6 +36,7 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
      * @param e - the element to be replaced
      * @return a method invocation to unless function.
      */
+    @SuppressWarnings("ConstantConditions")
     @Override
     public PsiElement createReplacement(PsiConditionalExpression e) {
         return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("eval(" + e.getElseExpression().getText() + ").unless( " + e.getCondition().getText() + ")", e);

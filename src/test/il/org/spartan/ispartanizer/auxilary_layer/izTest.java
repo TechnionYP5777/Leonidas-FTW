@@ -489,9 +489,9 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testTryStatement() {
-        PsiElement e1 = createTestTryStatement("", "Excepton ex", "");
+        PsiElement e1 = createTestTryStatement("", "Exception ex", "");
         assertTrue(iz.tryStatement(e1));
-        PsiElement e2 = createTestTryStatement("", "Excepton ex", "", "");
+        PsiElement e2 = createTestTryStatement("", "Exception ex", "", "");
         assertTrue(iz.tryStatement(e2));
         PsiElement e3 = createTestWhileStatementFromString("while(true){}");
         assertFalse(iz.tryStatement(e3));
@@ -508,9 +508,9 @@ public class izTest extends PsiTypeHelper {
         assertTrue(iz.enclosingStatement(e4));
         PsiElement e5 = createTestIfStatement("x > 2", "break;");
         assertTrue(iz.enclosingStatement(e5));
-        PsiElement e6 = createTestTryStatement("", "Excepton ex", "");
+        PsiElement e6 = createTestTryStatement("", "Exception ex", "");
         assertTrue(iz.enclosingStatement(e6));
-        PsiElement e7 = createTestTryStatement("", "Excepton ex", "", "");
+        PsiElement e7 = createTestTryStatement("", "Exception ex", "", "");
         assertTrue(iz.enclosingStatement(e7));
         PsiElement e8 = createTestDoWhileStatementFromString("do{}while(true)");
         assertTrue(iz.enclosingStatement(e8));

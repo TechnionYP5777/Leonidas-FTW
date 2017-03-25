@@ -25,7 +25,7 @@ public class GenericPsiBlock extends GenericPsi{
     @NotNull
     @Override
     public Project getProject() throws PsiInvalidElementAccessException {
-        return null;
+        return inner.getProject();
     }
 
     @Override

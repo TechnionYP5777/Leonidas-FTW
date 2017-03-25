@@ -61,7 +61,7 @@ public class azTest extends PsiTypeHelper {
         assertNull(az.fieldDeclaration(fooSig));
     }
 
-    public void testAzExpressionStaement() throws Exception{
+    public void testAzExpressionStatement() throws Exception {
         PsiElement s1 = createTestStatementFromString("2+3");
         assertNotNull(az.expressionStatement(s1));
         PsiElement s2 = createTestStatementFromString("true");

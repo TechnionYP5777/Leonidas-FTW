@@ -5,7 +5,8 @@ import il.org.spartan.ispartanizer.PsiTypeHelper;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 
 /**
- * Created by melanyc on 1/7/2017.
+ * @author michalcohen
+ * @since 07-01-2017.
  */
 public class PsiTreeMatcherTest extends PsiTypeHelper {
 
