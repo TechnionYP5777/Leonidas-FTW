@@ -4,9 +4,9 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeMatcher;
+import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeReplacer;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilder;
 import il.org.spartan.ispartanizer.plugin.leonidas.PsiTreeTipperBuilderImpl;
-import il.org.spartan.ispartanizer.plugin.leonidas.Replacer;
 import il.org.spartan.ispartanizer.plugin.tipping.Tip;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
@@ -61,7 +61,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return new Tip(description(node), node, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
-                Replacer.replace(node, b, r);
+                PsiTreeReplacer.replace(node, b, r);
             }
         };
     }

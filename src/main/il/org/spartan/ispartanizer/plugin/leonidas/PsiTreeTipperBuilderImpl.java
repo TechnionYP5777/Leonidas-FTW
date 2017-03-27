@@ -26,9 +26,10 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private static final String TO_METHOD_NAME = "to";
     private static final String LEONIDAS_ANNOTATION_NAME = "il.org.spartan.ispartanizer.plugin.leonidas.Leonidas";
     private static final String SHORT_LEONIDAS_ANNOTATION_NAME = "Leonidas";
-    private static final String LEONIDAS_ANNOTATION_VALUE = "value";
     private static final String LEONIDAS_ANNOTATION_ORDER = "order";
     private static final String PSI_PACKAGE_PREFIX = "com.intellij.psi.";
+    private static final String LEONIDAS_ANNOTATION_VALUE = "value";
+
     static boolean tmp1 = false;
     private boolean built = false;
     private EncapsulatingNode fromTree;
@@ -145,16 +146,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
                     stop.set(true);
                 }
             }
-
-            /*@Override
-            public void visitCodeBlock(PsiCodeBlock block) {
-                List<PsiElement> candidates = Arrays.stream(block.getChildren())
-                        .filter(e -> iz.ofType(e, rootElementType)).
-                                collect(Collectors.toList());
-                result.set(!candidates.isEmpty() ? candidates.get(0) : null);
-            }*/
         });
-
         return result.get();
     }
 

@@ -314,18 +314,4 @@ public class PsiTypeHelper extends PsiTestCase {
         return JavaPsiFacade.getElementFactory(p).createDummyHolder(s, IElementType.)
     }*/
 
-    public class Pair<T, K> {
-
-        public T first;
-        public K second;
-
-        public Pair() {
-            this(null, null);
-        }
-
-        public Pair(T first, K second) {
-            this.first = first;
-            this.second = second;
-        }
-    }
 }

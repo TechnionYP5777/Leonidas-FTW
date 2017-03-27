@@ -53,6 +53,8 @@ public enum Toolbox {
         tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
 
+    //TODO get Leonidas resources
+
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
         tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
         operableTypes.add(tipper.getPsiClass());

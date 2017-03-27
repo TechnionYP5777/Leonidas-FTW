@@ -9,29 +9,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Sharon Kuninin, michalcohen
- * @since 26-03-2017.
+ * This class provides replacing services for a given tree template.
+ *
+ * @author AnnaBel7 michalcohen
+ * @since 09-01-2017
  */
-public interface Replacer {
-    void template();
-
+public class PsiTreeReplacer {
 
     /**
      * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder
      *
      * @param treeToReplace - the given tree that matched the "from" tree.
+     * @param builder       - PsiTreeTipperBuilder that includes the "from" tree that matched treeToReplace
      * @param r             - Rewrite object
      * @return the replaced element
      */
-    default EncapsulatingNode replace(PsiElement treeToReplace, EncapsulatingNode templateMatchingTree, EncapsulatingNode templateReplacingTree, PsiRewrite r) {
+    public static EncapsulatingNode replace(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
         //EncapsulatingNode templateReplacingTree = builder.getToPsiTree();
-        PsiElement n = getReplacer(treeToReplace, templateMatchingTree, templateReplacingTree, r);
+        PsiElement n = getReplacer(treeToReplace, builder, r);
         r.replace(treeToReplace, n);
         return EncapsulatingNode.buildTreeFromPsi(n);
     }
 
-    default PsiElement getReplacer(PsiElement treeToReplace, EncapsulatingNode templateMatchingTree, EncapsulatingNode templateReplacingTree, PsiRewrite r) {
+    public static PsiElement getReplacer(PsiElement treeToReplace, PsiTreeTipperBuilder builder, PsiRewrite r) {
+        EncapsulatingNode templateMatchingTree = builder.getFromPsiTree();
         Map<Integer, PsiElement> map = extractInfo(templateMatchingTree, treeToReplace);
+        EncapsulatingNode templateReplacingTree = builder.getToPsiTree();
+        // might not work due to replacing while recursively iterating.
         map.keySet().forEach(d -> templateReplacingTree.accept(e -> {
             if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent()) {
                 Pruning.getRealParent(e, Pruning.getStubName(e).get()).replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
@@ -46,7 +50,7 @@ public interface Replacer {
      * @param treeToMatch  - The patterns from which we extract the IDs
      * @return a mapping between an ID to a PsiElement
      */
-    default Map<Integer, PsiElement> extractInfo(EncapsulatingNode treeTemplate, PsiElement treeToMatch) {
+    public static Map<Integer, PsiElement> extractInfo(EncapsulatingNode treeTemplate, PsiElement treeToMatch) {
         Map<Integer, PsiElement> mapping = new HashMap<>();
         EncapsulatingNode.Iterator treeTemplateChile = treeTemplate.iterator();
         for (PsiElement treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChile.hasNext() && treeToMatchChild != null; treeTemplateChile.next(), treeToMatchChild = step.nextSibling(treeToMatchChild)) {

@@ -419,4 +419,8 @@ public enum iz {
     static boolean variable(PsiElement element) {
         return typeCheck(PsiVariable.class, element);
     }
+
+    static boolean newExpression(PsiElement element) {
+        return typeCheck(PsiNewExpression.class, element);
+    }
 }

@@ -98,4 +98,8 @@ public enum az {
     public static GenericPsi generic(PsiElement element) {
         return element != null && iz.generic(element) ? (GenericPsi) element : null;
     }
+
+    public static PsiNewExpression newExpression(PsiElement element) {
+        return element != null && iz.newExpression(element) ? (PsiNewExpression) element : null;
+    }
 }

@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * @author Oren Afek
  * @since 06-01-2017
  */
-public abstract class GenericPsiElementStub {
+public class GenericPsiElementStub {
 
     /**
      * method stub representing a boolean expression for leonidas tippers
@@ -27,11 +27,11 @@ public abstract class GenericPsiElementStub {
      * @param id the serial no to distinct between several boolean expressions in the same tipper
      * @return true
      */
-    protected final boolean booleanExpression(int id) {
+    public static boolean booleanExpression(int id) {
         return booleanExpression();
     }
 
-    protected final boolean booleanExpression() {
+    public static boolean booleanExpression() {
         return true;
     }
 
@@ -40,10 +40,10 @@ public abstract class GenericPsiElementStub {
      *
      * @param id the serial no to distinct between several statements in the same tipper
      */
-    protected final void statement(int id) {
+    public static void statement(int id) {
     }
 
-    protected final void statement() {
+    public static void statement() {
     }
 
     /**
@@ -52,11 +52,11 @@ public abstract class GenericPsiElementStub {
      * @param id the serial no to distinct between several identifiers in the same tipper
      * @return stub object
      */
-    protected final Object identifier(int id) {
+    public static Object identifier(int id) {
         return identifier();
     }
 
-    protected final Object identifier() {
+    public static Object identifier() {
         return new Object();
     }
 
@@ -64,8 +64,11 @@ public abstract class GenericPsiElementStub {
      * method stub representing any code block
      * @param id the serial no to distinct between several identifiers in the same tipper
      */
-    protected final void anyBlock(int id) {}
-    protected final void anyBlock() {}
+    public static void anyBlock(int id) {
+    }
+
+    public static void anyBlock() {
+    }
 
     /**
      * method stub representing an array identifier for leonidas tippers
@@ -73,11 +76,11 @@ public abstract class GenericPsiElementStub {
      * @param id the serial no to distinct between several array identifiers in the same tipper
      * @return stub array
      */
-    protected final Object[] arrayIdentifier(int id) {
+    public static Object[] arrayIdentifier(int id) {
         return arrayIdentifier();
     }
 
-    protected final Object[] arrayIdentifier() {
+    public static Object[] arrayIdentifier() {
         return new Object[0];
     }
 
@@ -87,11 +90,11 @@ public abstract class GenericPsiElementStub {
      * @param id the serial no to distinct between several array identifiers in the same tipper
      * @return stub array
      */
-    protected final <T> Stream<T> streamMethodInvocations(int id) {
+    public static <T> Stream<T> streamMethodInvocations(int id) {
         return streamMethodInvocations();
     }
 
-    protected final <T> Stream<T> streamMethodInvocations() {
+    public static <T> Stream<T> streamMethodInvocations() {
         return Stream.of();
     }
 

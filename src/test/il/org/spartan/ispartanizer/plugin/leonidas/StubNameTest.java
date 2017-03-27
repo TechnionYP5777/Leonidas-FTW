@@ -2,6 +2,7 @@ package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.ispartanizer.PsiTypeHelper;
+import il.org.spartan.ispartanizer.auxilary_layer.Pair;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub.StubName;
 
 import java.util.Arrays;

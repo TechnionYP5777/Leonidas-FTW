@@ -18,7 +18,7 @@ import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParamete
  * @author michalcohen
  * @since 07-01-2017
  */
-class Pruning {
+public class Pruning {
 
     /**
      * Prunes all the stubs of the form "stub();" where "stub()"
@@ -26,7 +26,7 @@ class Pruning {
      *
      * @param e - the root from which all such stubs are pruned
      */
-    static EncapsulatingNode prune(EncapsulatingNode e) {
+    public static EncapsulatingNode prune(EncapsulatingNode e) {
         assert (e != null);
         e.accept(e1 -> {
             if (!iz.methodCallExpression(e1.getInner())) {
@@ -45,7 +45,7 @@ class Pruning {
         return e;
     }
 
-    static Optional<GenericPsiElementStub.StubName> getStubName(EncapsulatingNode e) {
+    public static Optional<GenericPsiElementStub.StubName> getStubName(EncapsulatingNode e) {
         if (!iz.methodCallExpression(e.getInner()))
             return Optional.empty();
         PsiMethodCallExpression exp = az.methodCallExpression(e.getInner());
@@ -55,7 +55,7 @@ class Pruning {
                 .findFirst(); //assuming there is only one enum value in StubName that fits the stub kind.
     }
 
-    static EncapsulatingNode getRealParent(EncapsulatingNode e, GenericPsiElementStub.StubName y) {
+    public static EncapsulatingNode getRealParent(EncapsulatingNode e, GenericPsiElementStub.StubName y) {
         EncapsulatingNode prev = e;
         EncapsulatingNode next = e.getParent();
         while (y.goUpwards(prev, next)) {

@@ -12,7 +12,7 @@ import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.GenericPsiSta
 
 
 /**
- * @author michal cohen & Amir Sagiv
+ * @author michal cohen, Amir Sagiv
  * @since 12/22/2016.
  */
 public class izTest extends PsiTypeHelper {
