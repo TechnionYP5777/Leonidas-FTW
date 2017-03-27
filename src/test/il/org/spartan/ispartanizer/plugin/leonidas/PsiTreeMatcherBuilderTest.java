@@ -8,7 +8,7 @@ import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
  * @author michalcohen
  * @since 07-01-2017.
  */
-public class PsiTreeMatcherTest extends PsiTypeHelper {
+public class PsiTreeMatcherBuilderTest extends PsiTypeHelper {
 
     public void testMatch1() {
         PsiExpression x = createTestExpressionFromString("x + 1");

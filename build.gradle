@@ -28,6 +28,11 @@ sourceSets {
     }
 }
 
+// Include sources in jar
+jar {
+    from sourceSets.main.allSource
+}
+
 // Basic configuration of org.jetbrains.intellij plugin
 intellij {
     //noinspection GroovyAssignabilityCheck

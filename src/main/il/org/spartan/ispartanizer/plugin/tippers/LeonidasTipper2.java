@@ -33,6 +33,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
 
     String description;
     Matcher matcher;
+
     Replacer replacer;
     Class<? extends PsiElement> rootType;
     File file;
@@ -45,8 +46,8 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         description = Utils.getClassFromFile(root).getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
-        matcher = tipperDefinition.getMatcher(root);
-        replacer = tipperDefinition.getReplacer(root);
+        matcher = tipperDefinition.matcherBuilder().initialzeSourceCode(root).build();
+        replacer = tipperDefinition.replacer();
         rootType = getPsiElementTypeFromAnnotation(getSuperParam(0));
     }
 
@@ -74,11 +75,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     /**
      * @param i - The index of the generic element in the template tree.
      * @return the i'th parameter to the super constructor all when the user creates new LeonidasTipperDefinition.
-     * the first parameter is the matcher and the second one is the replacer.
+     * the first parameter is the matcherBuilder and the second one is the replacer.
      * the structure of the class is:
      * class ~TipperName~ extends LeonidasTipperDefinition{
      * public ~TipperName~() {
-     * super(new Matcher() {
+     * super(new MatcherBuilder() {
      * '@'Override
      * '@'Leonidas(~PsiRootElementType~.class) protected void template() {
      * ~templateBody~
