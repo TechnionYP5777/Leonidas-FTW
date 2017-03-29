@@ -46,14 +46,15 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         description = Utils.getClassFromFile(root).getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
-        matcher = tipperDefinition.matcherBuilder().initialzeSourceCode(root).build();
-        replacer = tipperDefinition.replacer();
+        matcher = new Matcher().initialzeSourceCode(root).build();
+        replacer = null; /*TODO: @michalcohen */
         rootType = getPsiElementTypeFromAnnotation(getSuperParam(0));
     }
 
     @Override
     public boolean canTip(PsiElement e) {
-        return matcher.match(EncapsulatingNode.buildTreeFromPsi(e));
+        return false;
+        //TODO: @michalcohen matcher.match(EncapsulatingNode.buildTreeFromPsi(e));
     }
 
     @Override
@@ -79,7 +80,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
      * the structure of the class is:
      * class ~TipperName~ extends LeonidasTipperDefinition{
      * public ~TipperName~() {
-     * super(new MatcherBuilder() {
+     * super(new Matcher() {
      * '@'Override
      * '@'Leonidas(~PsiRootElementType~.class) protected void template() {
      * ~templateBody~

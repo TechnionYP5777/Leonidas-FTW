@@ -1,6 +1,7 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
@@ -27,6 +28,7 @@ public class GenericPsiElementStub {
      * @param id the serial no to distinct between several boolean expressions in the same tipper
      * @return true
      */
+
     public static boolean booleanExpression(int id) {
         return booleanExpression();
     }
@@ -40,11 +42,9 @@ public class GenericPsiElementStub {
      *
      * @param id the serial no to distinct between several statements in the same tipper
      */
-    public static void statement(int id) {
-    }
+    public static Object statement(int id) {return new Object();}
 
-    public static void statement() {
-    }
+    public static Object statement() {return new Object();}
 
     /**
      * method stub representing an identifier for leonidas tippers
@@ -67,8 +67,7 @@ public class GenericPsiElementStub {
     public static void anyBlock(int id) {
     }
 
-    public static void anyBlock() {
-    }
+    public static void anyBlock() {/**/}
 
     /**
      * method stub representing an array identifier for leonidas tippers

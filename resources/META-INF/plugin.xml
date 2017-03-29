@@ -2,7 +2,7 @@
 <idea-plugin version="2">
     <id>il.ac.technion.yearlyproject2016.team8</id>
     <name>Spartanizer</name>
-    <version>0.2</version>
+    <version>0.4</version>
     <vendor email="oren.afek@cs.technion.ac.il" url="http://www.cs.technion.ac.il">Team 8</vendor>
 
     <description><![CDATA[
@@ -13,7 +13,6 @@
 
     ]]>
     </change-notes>
-
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="141.0"/>
 

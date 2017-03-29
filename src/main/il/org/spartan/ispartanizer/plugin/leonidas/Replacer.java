@@ -9,12 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Sharon Kuninin, michalcohen
- * @since 26-03-2017.
+ * @author Oren Afek
+ * @since 3/29/2017.
  */
 public interface Replacer {
-    void template();
-
 
     /**
      * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder
@@ -59,3 +57,4 @@ public interface Replacer {
         return mapping;
     }
 }
+
