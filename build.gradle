@@ -28,6 +28,12 @@ sourceSets {
     }
 }
 
+task srcZip(type: Zip) {
+    classifier = 'src'
+    from projectDir
+    include 'src/**/*'
+}
+
 // Include sources in jar
 jar {
     from sourceSets.main.allSource

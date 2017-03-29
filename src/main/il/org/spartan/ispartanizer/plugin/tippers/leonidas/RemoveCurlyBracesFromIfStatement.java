@@ -10,8 +10,6 @@ import static il.org.spartan.ispartanizer.plugin.leonidas.The.the;
 /**
  * @author :O
  */
-
-/*@SuppressWarnings("Convert2Lambda")*/
 public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinition {
 
     @Override
@@ -26,20 +24,20 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
 
     @Override
     @Leonidas(PsiIfStatement.class)
-    public Matcher matcher() {
-        return () -> {
+    public Template matcher() {
+        return new Template(() -> {
             if (booleanExpression(0)) {
-                statement(1);
+                statement();
             }
-        };
+        });
     }
 
     @Override
-    public Replacer replacer() {
-        return () -> {
+    public Template replacer() {
+        return new Template(() -> {
             if (booleanExpression(0))
                 statement(1);
-        };
+        });
     }
 
 

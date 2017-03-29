@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.plugin.leonidas;
 
 import com.intellij.psi.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import il.org.spartan.ispartanizer.auxilary_layer.Wrapper;
 import il.org.spartan.ispartanizer.auxilary_layer.iz;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;

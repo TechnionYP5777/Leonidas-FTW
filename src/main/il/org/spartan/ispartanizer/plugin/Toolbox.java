@@ -9,6 +9,7 @@ import il.org.spartan.ispartanizer.auxilary_layer.type;
 import il.org.spartan.ispartanizer.plugin.tippers.*;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.*;
 
@@ -43,7 +44,7 @@ public enum Toolbox {
                 .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new Delegator());
-        createLeonidasTipperBuilders();
+        createLeonidasTipperBuilders2();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -54,7 +55,13 @@ public enum Toolbox {
     }
 
     //TODO get Leonidas resources
-
+    private static void createLeonidasTipperBuilders2() {
+        File x = new File(".");
+        JOptionPane.showMessageDialog(null, x.getAbsolutePath());
+        List<File> tippers = Arrays.asList(new File(Utils.fixSpacesProblemOnPath(Toolbox.class
+                .getResource("/spartanizer/LeonidasTippers").getPath())).listFiles());
+        tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
+    }
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
         tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
         operableTypes.add(tipper.getPsiClass());
