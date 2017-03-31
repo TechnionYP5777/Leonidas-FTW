@@ -38,7 +38,7 @@ class LogFileUtils {
         if (ourPlugin == null) {
             throw new RuntimeException("Cannot retrieve plugin descriptor");
         }
-        return ourPlugin.getPath().getPath() + SLASH + BASE_LOG_NAME + SLASH + BASE_LOG_NAME + DOT + LOG_EXT;
+        return ourPlugin.getPath().getPath() + SLASH + RELATIVE_LOG_PATH + SLASH + BASE_LOG_NAME + DOT + LOG_EXT;
     }
 
     /**
