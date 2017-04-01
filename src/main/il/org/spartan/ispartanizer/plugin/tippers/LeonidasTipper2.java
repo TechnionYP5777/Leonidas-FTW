@@ -3,7 +3,6 @@ package il.org.spartan.ispartanizer.plugin.tippers;
 import com.google.common.io.Files;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
 import il.org.spartan.ispartanizer.auxilary_layer.*;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.Constraint;
@@ -51,7 +50,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         matcher.setRoot(getMatcherRootTree());
         map = getConstraints();
         buildMatcherTree(matcher);
-        replacer = new Replacer2(matcher);
+        replacer = new Replacer2(matcher, getReplacerRootTree());
         rootType = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
     }
 
@@ -190,39 +189,9 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
             @Override
             public void go(PsiRewrite r) {
                 if (!canTip(node)) return;
-                replacer.replace(node, getMatcherRootTree(), getToTree(), r);
+                replacer.replace(node, matcher.extractInfo(node), r);
             }
         };
-    }
-
-    /**
-     * @param i - The index of the generic element in the template tree.
-     * @return the i'th parameter to the super constructor all when the user creates new LeonidasTipperDefinition.
-     * the first parameter is the matcherBuilder and the second one is the replacer.
-     * the structure of the class is:
-     * class ~TipperName~ extends LeonidasTipperDefinition{
-     * public ~TipperName~() {
-     * super(new Matcher() {
-     * '@'Override
-     * '@'Leonidas(~PsiRootElementType~.class) protected void template() {
-     * ~templateBody~
-     * }
-     * }, new Replacer() {
-     * '@'Override
-     * '@'Leonidas(~PsiRootElementType~.class) public void template() {
-     * ~templateBody~
-     * }
-     * });
-     * <p>
-     * }
-     * }
-     */
-    private PsiMethod getSuperParam(int i) {
-        return az.newExpression(az.methodCallExpression(PsiTreeUtil.getChildOfType(file, PsiClass.class)
-                .getConstructors()[0].getBody().getStatements()[0])
-                .getArgumentList().getExpressions()[i])
-                .getAnonymousClass()
-                .getMethods()[0];
     }
 
     /**
@@ -258,19 +227,19 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     }
 
     /**
-     * @return the generic tree representing the "to" template
+     * @return the generic tree representing the "from" template
      */
-    private EncapsulatingNode getToTree() {
-        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(getInterfaceMethod("replacer"),
-                getPsiElementTypeFromAnnotation(getSuperParam(1)))));
+    private EncapsulatingNode getMatcherRootTree() {
+        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(getInterfaceMethod("matcher"),
+                getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher")))));
     }
 
     /**
      * @return the generic tree representing the "from" template
      */
-    private EncapsulatingNode getMatcherRootTree() {
+    private EncapsulatingNode getReplacerRootTree() {
         return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(getInterfaceMethod("matcher"),
-                getPsiElementTypeFromAnnotation(getSuperParam(0)))));
+                getPsiElementTypeFromAnnotation(getInterfaceMethod("replacer")))));
     }
 
     @Override

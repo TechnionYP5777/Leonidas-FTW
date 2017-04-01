@@ -77,6 +77,15 @@ public class Matcher2 {
         return mapping;
     }
 
+    /**
+     * @param treeToMatch - The patterns from which we extract the IDs
+     * @return a mapping between an ID to a PsiElement
+     */
+    public Map<Integer, PsiElement> extractInfo(PsiElement treeToMatch) {
+        return extractInfo(root, treeToMatch);
+    }
+
+
     public List<Integer> getGenericElements() {
         List<Integer> s = root.accept(new EncapsulatingNodeValueVisitor() {
             @Override
