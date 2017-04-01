@@ -25,9 +25,10 @@ class LogFileUtils {
     private static final String DOT = ".";
 
     /**
-     * When running tests, the path seems to be:
+     * When running tests through intellij, the path seems to be:
      * <IDEA_PROJECTS_DIR>/<PROJECT_DIR>/build/resources/...
-     * When running idea through gradle, the path seems to be:
+     * NOTE: there is no need to put logs in tests.
+     * When running idea instance through gradle, the path seems to be:
      * <IDEA_PROJECTS_DIR>/<PROJECT_DIR>/build/idea-sandbox/plugins/<PLUGIN_NAME>/...
      *
      * @return The path of the logfile to be used.
