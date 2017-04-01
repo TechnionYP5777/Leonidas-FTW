@@ -16,22 +16,6 @@ public interface LeonidasTipperDefinition {
 
     void constraints();
 
-    /**
-     * Created by on 3/27/2017.
-     */
-    @FunctionalInterface
-    interface Matcher {
-        void template();
-    }
-
-    /**
-     * @author Sharon Kuninin, michalcohen
-     * @since 26-03-2017.
-     */
-    interface Replacer {
-        void template();
-    }
-
     class Template {
         public Template(Runnable __) {/**/}
 
