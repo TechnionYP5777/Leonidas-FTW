@@ -9,6 +9,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
+import il.org.spartan.ispartanizer.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -19,12 +20,18 @@ import org.jetbrains.annotations.Nullable;
  */
 public class SpartanizerAction extends AnAction {
 
+    private static Logger logger = new Logger(SpartanizerAction.class);
+
     @Override
     public void actionPerformed(AnActionEvent e) {
         PsiClass psiClass = getPsiClassFromContext(e);
 
-        if (psiClass != null)
+        if (psiClass != null) {
+            logger.info("Spartanization action on class PSI class '" + psiClass.getQualifiedName() + "'");
             Spartanizer.spartanizeFileOnePass(psiClass.getContainingFile());
+        } else {
+            logger.warn("Spartanization action retrieved null PSI class");
+        }
 
     }
 

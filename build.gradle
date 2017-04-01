@@ -7,7 +7,7 @@ buildscript {
 
 // Attach useful gradle plugins
 plugins {
-    id "org.jetbrains.intellij" version "0.1.10"
+    id "org.jetbrains.intellij" version "0.2.7"
     id "idea"
     id "java"
 }
