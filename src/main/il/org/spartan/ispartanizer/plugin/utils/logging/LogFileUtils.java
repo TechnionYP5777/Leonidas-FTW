@@ -33,12 +33,12 @@ class LogFileUtils {
      * @return The path of the logfile to be used.
      */
     private static String getPath() {
-        IdeaPluginDescriptor ourPlugin =
-                PluginManager.getPlugin(PluginId.getId(PluginDescriptorReader.getPluginId()));
+        PluginId ourPluginId = PluginId.getId(PluginDescriptorReader.getPluginId());
+        IdeaPluginDescriptor ourPlugin = PluginManager.getPlugin(ourPluginId);
         if (ourPlugin == null) {
             throw new RuntimeException("Cannot retrieve plugin descriptor");
         }
-        return ourPlugin.getPath().getPath() + SLASH + RELATIVE_LOG_PATH + SLASH + BASE_LOG_NAME + DOT + LOG_EXT;
+        return ourPlugin.getPath().getPath() + SLASH + RELATIVE_LOG_PATH + BASE_LOG_NAME + DOT + LOG_EXT;
     }
 
     /**
@@ -67,6 +67,8 @@ class LogFileUtils {
     synchronized static void appendToLogFile(String str) {
         try {
             ensureLogExistance();
+            // Uncomment this if you want to see where (and if) the log is written:
+            // System.out.println("wrote " + str + " to " + getPath());
             new FileWriter(getPath(), true).append(str).flush();
         } catch (IOException e) {
             e.printStackTrace();
