@@ -42,7 +42,7 @@ jar {
 // Basic configuration of org.jetbrains.intellij plugin
 intellij {
     //noinspection GroovyAssignabilityCheck
-    version 'IC-2016.3'
+    version 'IC-2017.1'
     pluginName 'IntelliJ-Spartanizer'
 }
 

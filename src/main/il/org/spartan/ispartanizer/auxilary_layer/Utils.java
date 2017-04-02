@@ -9,15 +9,18 @@ import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * General utils class
+ *
  * @author 01-12-2016
  */
 public enum Utils {
@@ -25,7 +28,7 @@ public enum Utils {
 
     @SafeVarargs
     public static <T> boolean in(T candidate, T... list) {
-        return list!=null && Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
+        return list != null && Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
     }
 
     public static PsiManager getPsiManager(Project project) {
@@ -34,7 +37,7 @@ public enum Utils {
 
     public static PsiClass findClass(PsiElement element) {
 
-        if(element == null){
+        if (element == null) {
             return null;
         }
 
@@ -50,7 +53,7 @@ public enum Utils {
     }
 
     public static PsiMethod findMethodByName(PsiClass clazz, String name) {
-        if(clazz == null){
+        if (clazz == null) {
             return null;
         }
 
@@ -81,7 +84,7 @@ public enum Utils {
 
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier i) {
         List<PsiIdentifier> identifiers = new ArrayList<>();
-        if(root == null || i == null){
+        if (root == null || i == null) {
             return identifiers;
         }
         root.accept(new JavaRecursiveElementVisitor() {
@@ -90,7 +93,7 @@ public enum Utils {
                 super.visitIdentifier(identifier);
                 if (identifier.getText().equals(i.getText())) {
                     PsiElement context = identifier.getContext();
-                    if(iz.variable(context) || iz.referenceExpression(context))
+                    if (iz.variable(context) || iz.referenceExpression(context))
                         identifiers.add(identifier);
                 }
             }
@@ -151,13 +154,65 @@ public enum Utils {
         return w.get();
     }
 
+    public static void main(String[] args) {
+        try {
+            File f = getSourceCode(Utils.class);
+            BufferedReader linesStream = new BufferedReader(new FileReader(f));
+            String line = linesStream.readLine();
+            System.out.println(line);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static File getSourceCode(Class<?> c) throws IOException {
+        File f = File.createTempFile(c.getName(), ".akl");
+
+        try (InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
+                FileOutputStream os = new FileOutputStream(f)) {
+            int read;
+            byte[] bytes = new byte[1024];
+
+            while ((read = is.read(bytes)) != -1) {
+                os.write(bytes, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return f;
+    }
+
+    /**
+     * Returns path to... // TODO sharon
+     *
+     * @param c class to get path to
+     * @return path to the class
+     */
+    public static String pathToClass(Class<?> c) {
+        String FS = System.getProperty("file.separator");
+        ClassLoader loader = Utils.class.getClassLoader();
+
+        //loader.getResource();
+        String currDir = loader.getResource(c.getName().replaceAll("\\.", "/") + ".class").toString()
+                .replaceAll("/", Matcher.quoteReplacement(FS))
+                .replaceAll("\\\\", Matcher.quoteReplacement(FS));
+        String redundantPrefix = "file:\\";
+
+        String $ = currDir.startsWith(redundantPrefix) ? currDir.substring(redundantPrefix.length()) : currDir;
+        $ = $.replaceAll("\\.class", ".java");
+
+        return $;
+    }
+
     /**
      * fixed problems on machines where the project path has spaces in it:
      * the .getPath() of getResource inserts %20 instead of spaces
+     *
      * @param path the path to be fixed
      * @return fixed path. on error, returns null
      */
-    public static String fixSpacesProblemOnPath(String path){
+    public static String fixSpacesProblemOnPath(String path) {
         String fixedPath = null;
         try {
             fixedPath = URLDecoder.decode(path, "UTF-8");

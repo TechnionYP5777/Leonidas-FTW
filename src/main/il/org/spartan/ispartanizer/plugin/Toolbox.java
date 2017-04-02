@@ -7,12 +7,16 @@ import il.org.spartan.ispartanizer.auxilary_layer.PsiRewrite;
 import il.org.spartan.ispartanizer.auxilary_layer.Utils;
 import il.org.spartan.ispartanizer.auxilary_layer.type;
 import il.org.spartan.ispartanizer.plugin.tippers.*;
+import il.org.spartan.ispartanizer.plugin.tippers.leonidas.LeonidasTipperDefinition;
+import il.org.spartan.ispartanizer.plugin.tippers.leonidas.RemoveCurlyBracesFromIfStatement;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 /**
@@ -58,18 +62,19 @@ public enum Toolbox {
 
     //TODO get Leonidas resources
     private static void createLeonidasTipperBuilders2() {
-        List<String> path = new LinkedList<String>(Arrays.asList(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath().split("/")));
-        path.remove(path.size() - 1);
-        path.remove(path.size() - 1);
-        String additionalPath[] = {"il", "org", "spartan", "ispartanizer", "plugin", "tippers", "leonidas"};
-        path.addAll(Arrays.asList(additionalPath));
-        String x = String.join("/", path);
-        File k = new File(Utils.fixSpacesProblemOnPath(x));//TODO @oren afek
+        String x = "";
+        x = Utils.pathToClass(LeonidasTipperDefinition.class);
+        File k = null;
+        try {
+            k = Utils.getSourceCode(RemoveCurlyBracesFromIfStatement.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         JOptionPane.showMessageDialog(null, k.getAbsolutePath());
-        JOptionPane.showMessageDialog(null, Arrays.stream(k.listFiles()).map(l -> l.getName()).reduce((l1, l2) -> l1 + "\n" + l2));
+        JOptionPane.showMessageDialog(null, Arrays.stream(k.getParentFile().listFiles()).map(l -> l.getName()).reduce((l1, l2) -> l1 + "\n" + l2));
 
-        List<File> tippers = Arrays.stream(new File(x).listFiles()).filter(f -> f.getName().endsWith(".class") && !f.getName().equals("LeonidasTipperDefinion.java")).collect(Collectors.toList());
-        String y = tippers.stream().map(t -> t.getName()).reduce((t1, t2) -> t1 + "\n" + t2).get();
+        List<File> tippers = Arrays.stream(k.getParentFile().listFiles()).filter(f -> f.getName().endsWith(".class") && !f.getName().equals("LeonidasTipperDefinion.java")).collect(Collectors.toList());
+        //String y = tippers.stream().map(t -> t.getName()).reduce((t1, t2) -> t1 + "\n" + t2).get();
         tippers.forEach(f -> {
             try {
                 INSTANCE.add(new LeonidasTipper2(f));
