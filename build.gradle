@@ -28,16 +28,30 @@ sourceSets {
     }
 }
 
-// TODO @RoeiRaz do we really need this task?
-task srcZip(type: Zip) {
-    classifier = 'src'
-    from projectDir
-    include 'src/**/*'
+/**
+ * Copies the 'advanced' tippers, as .java files, to the resources directory.
+ * It relies on the current packages paths, so changing them might make this
+ * task broken. Intellij probably can't auto refactor the paths here, so be aware.
+ * See issue #149.
+ */
+// TODO @RoeiRaz its not a good solution, only a temporary patch. Make the team meembers aware of the dangers.
+task copyTippers(type: Copy) {
+    // Assumes we use the last added source directory for the tippers.
+    // The first source directory seems to be src.main.java by default.
+    def sourcePath = sourceSets.main.java.srcDirs.last().getPath()
+    def resourcesPath = sourceSets.main.resources.srcDirs.last().getPath()
+    def tippersRelativePath = "/il/org/spartan/ispartanizer/plugin/tippers/leonidas"
+    def tippersSourcePath = sourcePath + tippersRelativePath
+    def tippersResourcesPath = resourcesPath + tippersRelativePath
+
+    // note for the team: you can use 'println sourcePath' for a messy debugging.
+
+    from file(tippersSourcePath)
+    into file(tippersResourcesPath)
 }
 
-// issue #149
-// TODO @RoeiRaz its a quick fix for now, check for the 'right' solution
-jar.dependsOn += srcZip
+// Transfer the tippers sources before handling the resources.
+processResources.dependsOn copyTippers
 
 // Basic configuration of org.jetbrains.intellij plugin
 intellij {
