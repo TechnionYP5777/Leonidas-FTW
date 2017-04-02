@@ -149,4 +149,9 @@ public enum Toolbox {
     private boolean canTipType(Class<? extends PsiElement> t) {
         return tipperMap.keySet().stream().anyMatch(x -> x.equals(t));
     }
+
+    //stub method
+    public static List<LeonidasTipper> getAllTippers(){
+        return new ArrayList<>();
+    }
 }

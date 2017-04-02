@@ -28,7 +28,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <Label alignment="CENTER" layoutX="80.0" layoutY="99.0" prefHeight="112.0" prefWidth="597.0" text="Choose the Tippers you want to be notified on" textAlignment="CENTER" AnchorPane.bottomAnchor="547.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Label  alignment="CENTER" layoutX="80.0" layoutY="99.0" prefHeight="112.0" prefWidth="597.0" text="Choose the Tippers you want to be notified on" textAlignment="CENTER" AnchorPane.bottomAnchor="547.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <HBox layoutY="538.0" prefHeight="33.0" prefWidth="597.0" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="538.0">
                                        <children>
                                           <Button fx:id="SelectAllButton" mnemonicParsing="false" text="Select All">
@@ -47,6 +47,7 @@
                                              </HBox.margin>
                                           </Button>
                                        </children></HBox>
+                                    <Label fx:id="description" alignment="CENTER" layoutX="281.0" layoutY="106.0" prefHeight="410.0" prefWidth="597.0" textAlignment="CENTER" AnchorPane.bottomAnchor="143.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="106.0" />
                                  </children>
                               </AnchorPane>
                           </items>
