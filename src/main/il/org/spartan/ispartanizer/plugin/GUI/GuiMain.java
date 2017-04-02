@@ -17,7 +17,7 @@ public class GuiMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-       //getClass().getResource("SpartanizerServices.fxml");
+
         Parent root = FXMLLoader.load(getClass().getResource("/SpartanizerServices.fxml"));
         primaryStage.setTitle("Spartanizer");
         primaryStage.setResizable(false);
