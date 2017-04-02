@@ -14,9 +14,11 @@ import java.util.Date;
  */
 public class BasicLogEntry {
 
-    static final private String WEAK_SEPERATOR = "  ";
+
+    static final private String SPACE = "  ";
     static final private String DATE_FORMAT = "HH:mm:ss  dd/MM";
     static final private String LOG_ENTRY_TRAILER = "\n";
+    static final private String LOG_MSG_LEADER = ">    ";
 
     private Logger.LEVEL logLevel;
     private Class clazz;
@@ -50,9 +52,15 @@ public class BasicLogEntry {
         return new SimpleDateFormat(DATE_FORMAT).format(this.date);
     }
 
+    private String getFormatedMsg() {
+        return LOG_MSG_LEADER
+                + this.msg.replace("\r\n", "\r\n" + LOG_MSG_LEADER)
+                .replace("\n", "\n" + LOG_MSG_LEADER);
+    }
+
     @Override
     public String toString() {
-        return getFormatedDate() + WEAK_SEPERATOR + logLevel + WEAK_SEPERATOR + clazz.getSimpleName() + WEAK_SEPERATOR
-                + msg.replace("\n", "").replace("\r", "") + LOG_ENTRY_TRAILER;
+        return getFormatedDate() + SPACE + logLevel + SPACE + clazz.getName() + SPACE + ":" + "\n"
+                + getFormatedMsg() + LOG_ENTRY_TRAILER;
     }
 }

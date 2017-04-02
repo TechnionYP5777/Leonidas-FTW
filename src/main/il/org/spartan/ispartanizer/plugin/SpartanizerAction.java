@@ -27,7 +27,7 @@ public class SpartanizerAction extends AnAction {
         PsiClass psiClass = getPsiClassFromContext(e);
 
         if (psiClass != null) {
-            logger.info("Spartanization action on class PSI class '" + psiClass.getQualifiedName() + "'");
+            logger.info("Spartanization action on\nPSI class '" + psiClass.getQualifiedName() + "'");
             Spartanizer.spartanizeFileOnePass(psiClass.getContainingFile());
         } else {
             logger.warn("Spartanization action retrieved null PSI class");

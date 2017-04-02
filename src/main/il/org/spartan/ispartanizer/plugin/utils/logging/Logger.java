@@ -4,7 +4,6 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Used as a frontend for the logging tool.
- * TODO @RoeiRaz support multiline log entries (very useful for debugging trees!).
  * TODO @Team8 we need a way (preferably a gui) to control the settings of the logging tool, like default log level, log path, etc.
  *
  * @author RoeiRaz

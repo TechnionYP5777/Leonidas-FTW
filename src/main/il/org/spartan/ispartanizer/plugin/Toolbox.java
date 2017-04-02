@@ -11,12 +11,9 @@ import il.org.spartan.ispartanizer.plugin.tippers.leonidas.LeonidasTipperDefinit
 import il.org.spartan.ispartanizer.plugin.tippers.leonidas.RemoveCurlyBracesFromIfStatement;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 /**
@@ -70,8 +67,10 @@ public enum Toolbox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, k.getAbsolutePath());
-        JOptionPane.showMessageDialog(null, Arrays.stream(k.getParentFile().listFiles()).map(l -> l.getName()).reduce((l1, l2) -> l1 + "\n" + l2));
+
+        // TODO use the logger instead!
+        //JOptionPane.showMessageDialog(null, k.getAbsolutePath());
+        //JOptionPane.showMessageDialog(null, Arrays.stream(k.getParentFile().listFiles()).map(l -> l.getName()).reduce((l1, l2) -> l1 + "\n" + l2));
 
         List<File> tippers = Arrays.stream(k.getParentFile().listFiles()).filter(f -> f.getName().endsWith(".class") && !f.getName().equals("LeonidasTipperDefinion.java")).collect(Collectors.toList());
         //String y = tippers.stream().map(t -> t.getName()).reduce((t1, t2) -> t1 + "\n" + t2).get();
@@ -83,6 +82,11 @@ public enum Toolbox {
                 e.printStackTrace();
             }
         });
+    }
+
+    //stub method
+    public static List<LeonidasTipper> getAllTippers() {
+        return new ArrayList<>();
     }
 
     private Toolbox add(Tipper<? extends PsiElement> tipper) {
@@ -148,10 +152,5 @@ public enum Toolbox {
 
     private boolean canTipType(Class<? extends PsiElement> t) {
         return tipperMap.keySet().stream().anyMatch(x -> x.equals(t));
-    }
-
-    //stub method
-    public static List<LeonidasTipper> getAllTippers(){
-        return new ArrayList<>();
     }
 }
