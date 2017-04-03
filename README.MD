@@ -4,7 +4,7 @@ This is the Intellij version of the Spartanizer project of Eclipse.
 See https://github.com/SpartanRefactoring/Spartanizer
 
 # Build Status
-[![Build Status](https://travis-ci.org/TechnionYP5777/IntelliJ-Spartanizer.svg?branch=master)](https://travis-ci.org/TechnionYP5777/IntelliJ-Spartanizer)
+[![Build Status](https://travis-ci.org/TechnionYP5777/Leonidas-FTW.svg?branch=master)](https://travis-ci.org/TechnionYP5777/IntelliJ-Spartanizer)
 
 # Contributors
 - Oren Afek oren.afek@cs.technion.ac.il
