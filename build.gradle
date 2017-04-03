@@ -10,6 +10,7 @@ plugins {
     id "org.jetbrains.intellij" version "0.2.7"
     id "idea"
     id "java"
+    id "jacoco"
 }
 
 // Order the compiler to use UTF-8 encoding
@@ -60,6 +61,13 @@ intellij {
     pluginName 'IntelliJ-Spartanizer'
 }
 
+// Used to generate data regarding test coverage, used by CodeCov
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
 
 repositories { jcenter() }
 dependencies { testCompile "org.mockito:mockito-core:2.+" }
