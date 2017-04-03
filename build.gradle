@@ -1,3 +1,5 @@
+apply plugin: 'jacoco'
+
 // http://stackoverflow.com/questions/17773817/purpose-of-buildscript-in-gradle
 buildscript {
     repositories {
@@ -10,7 +12,6 @@ plugins {
     id "org.jetbrains.intellij" version "0.2.7"
     id "idea"
     id "java"
-    id "jacoco"
 }
 
 // Order the compiler to use UTF-8 encoding
@@ -68,6 +69,8 @@ jacocoTestReport {
         html.enabled false
     }
 }
+
+check.dependsOn jacocoTestReport
 
 repositories { jcenter() }
 dependencies { testCompile "org.mockito:mockito-core:2.+" }
