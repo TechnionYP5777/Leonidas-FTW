@@ -1,4 +1,4 @@
-package il.org.spartan.ispartanizer.plugin.GUI;
+package il.org.spartan.ispartanizer.plugin.GUI.SpartanizerToolBoxController;
 
 import com.intellij.codeInsight.template.postfix.templates.SoutPostfixTemplate;
 import javafx.application.Application;

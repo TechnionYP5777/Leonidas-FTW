@@ -1,4 +1,4 @@
-package il.org.spartan.ispartanizer.plugin.GUI;
+package il.org.spartan.ispartanizer.plugin.GUI.SpartanizerToolBoxController;
 
 import il.org.spartan.ispartanizer.plugin.Toolbox;
 import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
