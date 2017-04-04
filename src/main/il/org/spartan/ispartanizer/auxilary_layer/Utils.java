@@ -26,6 +26,8 @@ import java.util.regex.Matcher;
 public enum Utils {
     ;
 
+    public static final String SUFFIX = ".java";
+
     @SafeVarargs
     public static <T> boolean in(T candidate, T... list) {
         return list != null && Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
@@ -166,7 +168,7 @@ public enum Utils {
     }
 
     public static File getSourceCode(Class<?> c) throws IOException {
-        File f = File.createTempFile(c.getName(), ".akl");
+        File f = File.createTempFile(c.getName(), SUFFIX);
 
         try (InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
                 FileOutputStream os = new FileOutputStream(f)) {

@@ -14,12 +14,7 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
 
     @Override
     public void constraints() {
-        the(booleanExpression(0)).isNot(() -> !booleanExpression(2));
-        the(statement(1)).is(() -> {
-            if (booleanExpression(3)) {
-                statement(4);
-            }
-        }).ofType(PsiIfStatement.class);
+
     }
 
     @Override

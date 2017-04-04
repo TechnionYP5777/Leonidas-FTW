@@ -43,9 +43,9 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     @SuppressWarnings("ConstantConditions")
     public LeonidasTipper2(File f) throws IOException {
         file = getPsiTreeFromFile(f);
-        description = Utils.getClassFromFile(file).getDocComment().getText()
+        description = /*Utils.getClassFromFile(file).getDocComment().getText()
                 .split("\\n")[1].trim()
-                .split("\\*")[1].trim();
+                .split("\\*")[1].trim();*/ "";
         matcher = new Matcher2();
         matcher.setRoot(getMatcherRootTree());
         map = getConstraints();
@@ -113,7 +113,12 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
 
     private Map<Integer, List<Constraint>> getConstraints() {
         Map<Integer, List<Constraint>> map = new HashMap<>();
-        Arrays.stream(getInterfaceMethod("constraints").getBody().getStatements()).forEach(s -> {
+        PsiMethod constrainsMethod = getInterfaceMethod("constraints");
+        if(!haz.body(constrainsMethod)){
+            return map;
+        }
+
+        Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
             Integer key = extractId(s);
             PsiElement y = getLambdaExpressionBody(s);
             Optional<Class<? extends PsiElement>> q = getTypeOf(s);

@@ -87,18 +87,15 @@ public class Matcher2 {
 
 
     public List<Integer> getGenericElements() {
-        List<Integer> s = root.accept(new EncapsulatingNodeValueVisitor() {
-            @Override
-            public List<Integer> visit(EncapsulatingNode e) {
-                if (iz.generic(e.getInner())) {
-                    List<Integer> tmp = new LinkedList<>();
-                    tmp.add(e.getInner().getUserData(KeyDescriptionParameters.ID));
-                    return tmp;
-                }
+        List<Integer> s = root.accept(e -> {
+            if (iz.generic(e.getInner())) {
                 List<Integer> tmp = new LinkedList<>();
-                tmp.add(-2);
+                tmp.add(e.getInner().getUserData(KeyDescriptionParameters.ID));
                 return tmp;
             }
+            List<Integer> tmp = new LinkedList<>();
+            tmp.add(-2);
+            return tmp;
         }, (l1, l2) -> Stream.concat(l1.stream(), l2.stream()).collect(Collectors.toList()));
         return s.stream().filter(x -> x != -2).collect(Collectors.toList());
     }

@@ -14,7 +14,7 @@ public interface LeonidasTipperDefinition {
 
     Template replacer();
 
-    void constraints();
+    default void constraints(){};
 
     class Template {
         public Template(Runnable __) {/**/}

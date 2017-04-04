@@ -72,4 +72,7 @@ jacocoTestReport {
 check.dependsOn jacocoTestReport
 
 repositories { jcenter() }
-dependencies { testCompile "org.mockito:mockito-core:2.+" }
+dependencies {
+    testCompile "org.mockito:mockito-core:2.+"
+    compile "org.reflections:reflections:0.9.10"
+}

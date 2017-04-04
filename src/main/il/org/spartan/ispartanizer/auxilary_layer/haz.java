@@ -54,4 +54,10 @@ public enum haz {
     public static boolean syntaxErrors(PsiElement element) {
         return (PsiTreeUtil.hasErrorElements(element));
     }
+
+    public static boolean body(PsiMethod m){
+        return m != null && m.getBody() != null;
+    }
+
+
 }

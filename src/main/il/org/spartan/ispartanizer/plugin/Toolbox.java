@@ -10,11 +10,16 @@ import il.org.spartan.ispartanizer.plugin.tippers.*;
 import il.org.spartan.ispartanizer.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.ispartanizer.plugin.tippers.leonidas.RemoveCurlyBracesFromIfStatement;
 import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
+import il.org.spartan.ispartanizer.plugin.utils.logging.Logger;
+import org.reflections.Reflections;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static il.org.spartan.ispartanizer.auxilary_layer.Utils.SUFFIX;
 
 /**
  * @author Oren Afek
@@ -63,18 +68,20 @@ public enum Toolbox {
         x = Utils.pathToClass(LeonidasTipperDefinition.class);
         File k = null;
         try {
+            Reflections r = new Reflections();
             k = Utils.getSourceCode(RemoveCurlyBracesFromIfStatement.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ignore) {/**/}
 
         // TODO use the logger instead!
         //JOptionPane.showMessageDialog(null, k.getAbsolutePath());
         //JOptionPane.showMessageDialog(null, Arrays.stream(k.getParentFile().listFiles()).map(l -> l.getName()).reduce((l1, l2) -> l1 + "\n" + l2));
 
-        List<File> tippers = Arrays.stream(k.getParentFile().listFiles()).filter(f -> f.getName().endsWith(".class") && !f.getName().equals("LeonidasTipperDefinion.java")).collect(Collectors.toList());
-        //String y = tippers.stream().map(t -> t.getName()).reduce((t1, t2) -> t1 + "\n" + t2).get();
+        Stream<File> tippers = Arrays.stream(k.getParentFile().listFiles()).filter(f -> f.getName().endsWith(SUFFIX));
+        /* && !f.getName() //
+                        .equals(LeonidasTipperDefinition.class.getSimpleName())).collect(Collectors.toList());*/
+        //String y = tippers.stream().map(t -> t.getName()).reduce((t1, t2) -> t1 + "\n" + t2).get();\
         tippers.forEach(f -> {
+            f.deleteOnExit();
             try {
                 INSTANCE.add(new LeonidasTipper2(f));
             } catch (IOException e) {
