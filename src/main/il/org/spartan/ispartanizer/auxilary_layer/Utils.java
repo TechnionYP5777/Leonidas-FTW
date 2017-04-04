@@ -6,11 +6,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import il.org.spartan.ispartanizer.plugin.tippers.leonidas.RemoveCurlyBracesFromIfStatement;
+import il.org.spartan.ispartanizer.plugin.utils.logging.Logger;
+import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +27,7 @@ import java.util.regex.Matcher;
  */
 public enum Utils {
     ;
+    static Logger logger = new Logger(Utils.class);
 
     public static final String SUFFIX = ".java";
 
@@ -158,31 +161,23 @@ public enum Utils {
 
     public static void main(String[] args) {
         try {
-            File f = getSourceCode(Utils.class);
-            BufferedReader linesStream = new BufferedReader(new FileReader(f));
-            String line = linesStream.readLine();
-            System.out.println(line);
+            String source = getSourceCode(RemoveCurlyBracesFromIfStatement.class);
+            System.out.println(source);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
-    public static File getSourceCode(Class<?> c) throws IOException {
-        File f = File.createTempFile(c.getName(), SUFFIX);
+    public static String getSourceCode(Class<?> c) throws IOException {
 
-        try (InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
-                FileOutputStream os = new FileOutputStream(f)) {
-            int read;
-            byte[] bytes = new byte[1024];
-
-            while ((read = is.read(bytes)) != -1) {
-                os.write(bytes, 0, read);
-            }
+        try (InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java")) {
+            BufferedReader pluginXmlBuffer = new BufferedReader(new InputStreamReader(is));
+            return IOUtils.toString(pluginXmlBuffer);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
-        return f;
+        return "";
     }
 
     /**

@@ -1,6 +1,8 @@
 package il.org.spartan.ispartanizer.plugin.tippers;
 
 import com.google.common.io.Files;
+import com.intellij.lang.Language;
+import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
 import il.org.spartan.ispartanizer.auxilary_layer.*;
@@ -41,8 +43,9 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     Map<Integer, List<Constraint>> map;
 
     @SuppressWarnings("ConstantConditions")
-    public LeonidasTipper2(File f) throws IOException {
-        file = getPsiTreeFromFile(f);
+    public LeonidasTipper2(String tipperName, String fileContent) throws IOException {
+        //file = getPsiTreeFromFile(f);
+          file = getPsiTreeFromString("roei_oren" + tipperName, fileContent);
         description = /*Utils.getClassFromFile(file).getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();*/ "";
@@ -270,9 +273,14 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
      * @return PsiFile element representing the given file
      * @throws IOException - if the file could not be opened or read.
      */
-    private PsiFile getPsiTreeFromFile(File file) throws IOException {
+    private PsiFile getPsiTreeFromFile(File file)  throws IOException {
         return PsiFileFactory.getInstance(Utils.getProject())
                 .createFileFromText(file.getName(), FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
                         String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
+    }
+
+    private PsiFile getPsiTreeFromString(String psiFileName, String s){
+        return PsiFileFactory.getInstance(Utils.getProject())
+                .createFileFromText(JavaLanguage.INSTANCE, s);
     }
 }
