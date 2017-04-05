@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -8,12 +9,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="577.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.org.spartan.ispartanizer.plugin.GUI.PlaygroundController.PlaygroundServicesController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.org.spartan.ispartanizer.plugin.GUI.PlaygroundController.PlaygroundServicesController">
    <children>
-      <TextArea layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="415.0" promptText="Insert code" />
-      <Text layoutX="14.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="415.0" />
-      <Button layoutX="476.0" layoutY="252.0" mnemonicParsing="false" text="Spartanize" />
-      <Button layoutX="476.0" layoutY="299.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="84.0" text="Clear" />
+      <TextArea fx:id="inputCode" layoutX="20.0" layoutY="15.0" prefHeight="275.0" prefWidth="410.0" promptText="Insert code" />
+      <ScrollPane layoutX="20.0" layoutY="310.0" prefHeight="275.0" prefViewportHeight="15.310546875" prefViewportWidth="406.66998291015625" prefWidth="410.0">
+         <content>
+            <Text fx:id="outputCode" layoutX="20.0" layoutY="322.568359375" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="406.66998291015625" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </content>
+      </ScrollPane>
+      <Button fx:id="spartanizeButton" layoutX="483.0" layoutY="263.0" mnemonicParsing="false" text="Spartanize" />
+      <Button fx:id="clearButton" layoutX="483.0" layoutY="310.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="84.0" text="Clear" />
    </children>
 </AnchorPane>
