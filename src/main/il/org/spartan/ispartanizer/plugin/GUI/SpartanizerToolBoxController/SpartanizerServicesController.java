@@ -13,10 +13,7 @@ import kotlin.reflect.jvm.internal.impl.util.Check;
 
 import java.awt.event.ActionEvent;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * @author Amir Sagiv
@@ -32,14 +29,22 @@ public class SpartanizerServicesController implements Initializable {
     public Button CleanAllButton;
     public Label description;
 
+    /**
+     * this method is responsible of controlling the gui and defining be
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<LeonidasTipper> tippers = Toolbox.getAllTippers();
+        Map<String, LeonidasTipper> tippersMap = createMapFromTipperList(tippers);
 
+
+        // creating the checkBox list.
         for(LeonidasTipper tipper : tippers){
             tipperList.getChildren().add(new CheckBox(tipper.getClass().getName()));
-           // tipperList.getChildren().add(new CheckBox("tip"));
         }
+        //TODO: remove when done.
         tipperList.getChildren().add(new CheckBox("tip"));
 
         SelectAllButton.setOnAction(event -> {
@@ -53,11 +58,22 @@ public class SpartanizerServicesController implements Initializable {
         tipperList.getChildren().forEach(tip ->{
             tip.setOnMouseEntered(event -> {
                 description.setText("hello!");
+                //description.setText((tippersMap.get(((CheckBox)tip).getText())).description());
             });
             tip.setOnMouseExited(event -> {
                 description.setText("");
             });
         });
 
+    }
+
+
+    private Map<String,LeonidasTipper> createMapFromTipperList(List<LeonidasTipper> list){
+        Map<String,LeonidasTipper> tipperMap = new HashMap<>();
+        list.forEach(tip -> {
+            tipperMap.put(tip.getClass().getName(),tip);
+        });
+
+        return tipperMap;
     }
 }
