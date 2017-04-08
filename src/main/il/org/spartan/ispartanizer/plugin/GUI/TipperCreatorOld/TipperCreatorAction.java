@@ -1,4 +1,4 @@
-package il.org.spartan.ispartanizer.plugin;
+package il.org.spartan.ispartanizer.plugin.GUI.TipperCreatorOld;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.Editor;
