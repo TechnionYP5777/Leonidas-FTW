@@ -1,4 +1,4 @@
-package il.org.spartan.ispartanizer.plugin;
+package il.org.spartan.ispartanizer.plugin.GUI.TipperCreatorOld;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.uiDesigner.core.GridConstraints;
