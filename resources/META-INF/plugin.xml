@@ -43,6 +43,10 @@
             <keyboard-shortcut first-keystroke="ctrl m" keymap="$default"/>
             <add-to-group group-id="RefactoringMenu" anchor="last"/>
         </action>
+        <action class="il.org.spartan.ispartanizer.plugin.GUI.PlaygroundController.PlaygroundAction" id="myPlugin5"
+                text="Playground">
+            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>

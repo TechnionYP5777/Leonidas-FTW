@@ -8,7 +8,7 @@ import com.intellij.psi.PsiFile;
  * @author Oren Afek
  * @since 09-12-2016
  */
-enum Spartanizer {
+public enum Spartanizer {
     ;
 
     static boolean canTip(PsiElement element) {
@@ -23,7 +23,7 @@ enum Spartanizer {
         toolbox.executeAllTippers(element);
     }
 
-    static void spartanizeFileOnePass(PsiFile psiFile) {
+    public static void spartanizeFileOnePass(PsiFile psiFile) {
         if (psiFile.getName().equals("SpartanizerUtils.java")) {
             return;
         }
