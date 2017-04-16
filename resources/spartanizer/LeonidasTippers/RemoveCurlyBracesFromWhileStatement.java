@@ -1,8 +1,8 @@
 package spartanizer.LeonidasTippers;
 
 import com.intellij.psi.PsiWhileStatement;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
+import il.org.spartan.leonidas.plugin.leonidas.GenericPsiElementStub;
+import il.org.spartan.leonidas.plugin.leonidas.Leonidas;
 
 /**
  * Remove redundent curly braces

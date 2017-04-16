@@ -1,8 +1,8 @@
 package spartanizer.FutureLeonidasTippers;
 
 import com.intellij.psi.PsiMethodCallExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
+import il.org.spartan.leonidas.plugin.leonidas.GenericPsiElementStub;
+import il.org.spartan.leonidas.plugin.leonidas.Leonidas;
 
 import java.util.Arrays;
 import java.util.List;

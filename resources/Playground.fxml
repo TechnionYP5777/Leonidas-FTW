@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroundServicesController">
+            fx:controller="il.org.spartan.leonidas.plugin.GUI.PlaygroundController.PlaygroundServicesController">
     <TextArea fx:id="inputCode" layoutX="20.0" layoutY="15.0" prefHeight="275.0" prefWidth="410.0"
               promptText="Insert code"/>
     <ScrollPane layoutX="20.0" layoutY="310.0" prefHeight="275.0" prefViewportHeight="15.310546875"

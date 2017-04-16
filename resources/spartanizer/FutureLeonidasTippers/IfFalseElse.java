@@ -2,8 +2,8 @@ package spartanizer.FutureLeonidasTippers;
 
 import com.intellij.psi.PsiExpressionStatement;
 import com.intellij.psi.PsiIfStatement;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
+import il.org.spartan.leonidas.plugin.leonidas.GenericPsiElementStub;
+import il.org.spartan.leonidas.plugin.leonidas.Leonidas;
 
 /**
  * Replace if(false){s1}else{s2} with s2
