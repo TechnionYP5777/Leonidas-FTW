@@ -21,29 +21,29 @@
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
-    <!-- uncomment to enail.org.sparleonidasidas.plugin in all products
+    <!-- uncomment to enail.org.spartan.Leonidas.plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <annotator language="JAVA" implementationClass="il.org.spartan.leonidas.plugin.SpartanizerAnnotator"/>
+        <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
     </extensions>
 
     <actions>
-        <action class="il.org.spartan.leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
+        <action class="il.org.spartan.Leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
                 text="Disable Spartanization">
             <add-to-group group-id="RefactoringMenu" anchor="last"/>
         </action>
-        <action class="il.org.spartan.leonidas.plugin.SpartanizerAction" id="myPlugin3"
+        <action class="il.org.spartan.Leonidas.plugin.SpartanizerAction" id="myPlugin3"
                 text="Spartanize">
             <add-to-group group-id="RefactoringMenu" anchor="last"/>
         </action>
-        <action class="il.org.spartan.leonidas.plugin.GUI.TipperCreatorOld.TipperCreatorAction" id="myPlugin4"
+        <action class="il.org.spartan.Leonidas.plugin.GUI.TipperCreatorOld.TipperCreatorAction" id="myPlugin4"
                 text="Create new tipper">
             <keyboard-shortcut first-keystroke="ctrl m" keymap="$default"/>
             <add-to-group group-id="RefactoringMenu" anchor="last"/>
         </action>
-        <action class="il.org.spartan.leonidas.plugin.GUI.PlaygroundController.PlaygroundAction" id="myPlugin5"
+        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroundAction" id="myPlugin5"
                 text="Playground">
             <add-to-group group-id="RefactoringMenu" anchor="last"/>
         </action>
