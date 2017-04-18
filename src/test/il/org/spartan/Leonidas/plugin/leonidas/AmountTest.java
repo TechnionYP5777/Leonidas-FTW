@@ -10,44 +10,44 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
 public class AmountTest extends PsiTypeHelper {
     public void testAny() {
         Amount amount = Amount.ANY;
-        assertTrue(amount.conforms(1));
-        assertTrue(amount.conforms(10));
+        assert amount.conforms(1);
+        assert amount.conforms(10);
 
-        assertFalse(amount.notConforms(5));
-        assertFalse(amount.notConforms(32));
+        assert !amount.notConforms(5);
+        assert !amount.notConforms(32);
     }
 
     public void testEmpty() {
         Amount amount = Amount.EMPTY;
-        assertTrue(amount.conforms(0));
-        assertFalse(amount.conforms(1));
-        assertFalse(amount.conforms(10));
+        assert amount.conforms(0);
+        assert !amount.conforms(1);
+        assert !amount.conforms(10);
 
-        assertFalse(amount.notConforms(0));
-        assertTrue(amount.notConforms(1));
-        assertTrue(amount.notConforms(10));
+        assert !amount.notConforms(0);
+        assert amount.notConforms(1);
+        assert amount.notConforms(10);
     }
 
     public void testExactlyOne() {
         Amount amount = Amount.EXACTLY_ONE;
-        assertTrue(amount.conforms(1));
-        assertFalse(amount.conforms(0));
-        assertFalse(amount.conforms(10));
+        assert amount.conforms(1);
+        assert !amount.conforms(0);
+        assert !amount.conforms(10);
 
-        assertFalse(amount.notConforms(1));
-        assertTrue(amount.notConforms(0));
-        assertTrue(amount.notConforms(10));
+        assert !amount.notConforms(1);
+        assert amount.notConforms(0);
+        assert amount.notConforms(10);
     }
 
     public void testAtLeastOne() {
         Amount amount = Amount.AT_LEAST_ONE;
-        assertTrue(amount.conforms(1));
-        assertTrue(amount.conforms(50));
-        assertFalse(amount.conforms(0));
+        assert amount.conforms(1);
+        assert amount.conforms(50);
+        assert !amount.conforms(0);
 
-        assertFalse(amount.notConforms(1));
-        assertFalse(amount.notConforms(10));
-        assertTrue(amount.notConforms(0));
+        assert !amount.notConforms(1);
+        assert !amount.notConforms(10);
+        assert amount.notConforms(0);
     }
 
 }

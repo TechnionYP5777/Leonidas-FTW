@@ -50,35 +50,35 @@ public class Matcher extends GenericPsiElementStub {
     }
 
     /**
-     * @param method          the template method
+     * @param m          the template method
      * @param rootElementType the type of the first PsiElement in the wanted tree
      * @return the first PsiElement of the type rootElementType
      */
-    private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
+    private PsiElement getTreeFromRoot(PsiMethod m, Class<? extends PsiElement> rootElementType) {
         Wrapper<PsiElement> result = new Wrapper<>();
         Wrapper<Boolean> stop = new Wrapper<>(false);
-        method.accept(new JavaRecursiveElementVisitor() {
+        m.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                if (!stop.get() && iz.ofType(element, rootElementType)) {
-                    result.set(element);
-                    stop.set(true);
-                }
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                if (stop.get() || !iz.ofType(e, rootElementType))
+					return;
+				result.set(e);
+				stop.set(true);
             }
         });
         return result.get();
     }
 
     //TODO correct
-    public Matcher initialzeSourceCode(PsiFile file) {
-        file.accept(new JavaRecursiveElementVisitor() {
+    public Matcher initialzeSourceCode(PsiFile f) {
+        f.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethod(PsiMethod method) {
-                super.visitMethod(method);
-                if (!method.getName().equals(TEMPLATE)) return;
-                sourceOfConstraints.push(Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(method,
-                        getPsiElementTypeFromAnnotation(method)))));
+            public void visitMethod(PsiMethod m) {
+                super.visitMethod(m);
+                if (m.getName().equals(TEMPLATE))
+					sourceOfConstraints.push(Pruning.prune(EncapsulatingNode
+							.buildTreeFromPsi(getTreeFromRoot(m, getPsiElementTypeFromAnnotation(m)))));
 
             }
         });
@@ -93,12 +93,12 @@ public class Matcher extends GenericPsiElementStub {
 
     /**
      * @param i        the index of the generic type
-     * @param type     the type of the constraint - but not, and also
+     * @param t     the type of the constraint - but not, and also
      * @param template - template
      */
-    private void addConstraint(int i, ConstraintType type, EncapsulatingNode template) {
+    private void addConstraint(int i, ConstraintType t, EncapsulatingNode template) {
         constrains.putIfAbsent(i, new ArrayList<>());
-        constrains.get(i).add(new Constraint(type, template));
+        constrains.get(i).add(new Constraint(t, template));
     }
 
 
@@ -106,10 +106,10 @@ public class Matcher extends GenericPsiElementStub {
      * insert new constraint on the generic element described by but not  m
      *
      * @param i        - the index of the generic element
-     * @param template - template
+     * @param t - template
      * @return the current matcher for fluent code
      */
-    public Matcher butNot(int i, Template template) {
+    public Matcher butNot(int i, Template t) {
         addConstraint(i, ConstraintType.BUT_NOT, sourceOfConstraints.pop());
         return this;
     }
@@ -118,34 +118,21 @@ public class Matcher extends GenericPsiElementStub {
      * insert new constraint on the generic element described by and also m
      *
      * @param i        - the index of the generic element
-     * @param template - Template to match
+     * @param t - Template to match
      * @return the current matcher for fluent code
      */
-    public Matcher andAlso(int i, Template template) {
+    public Matcher andAlso(int i, Template t) {
         addConstraint(i, ConstraintType.AND_ALSO, sourceOfConstraints.pop());
         return this;
     }
 
     /**
-     * @param e The code of the user
+     * @param n The code of the user
      * @return true iff the code of the user matches the constarins in the matcher
      */
-    public boolean match(EncapsulatingNode e, PsiElement r) {
-        if (!PsiTreeMatcher.match(root, e)) return false;
-
-//        return constrains.entrySet().stream().map(entry -> entry.getValue().stream().map(c -> {
-//            switch (c.getType()) {
-//                case BUT_NOT:
-//                    return !c.getMatcher().match(entry.getKey());
-//                case AND_ALSO:
-//                    return c.getMatcher().match(entry.getKey());
-//                default:
-//                    return false;
-//            }
-//        }).reduce((b1, b2) -> b1 && b2).get()).reduce((b1, b2) -> b1 && b2).get();
-
-        return false; // TODO
-    }
+    public boolean match(EncapsulatingNode n, PsiElement r) {
+		return PsiTreeMatcher.match(root, n) && false;
+	}
 
     /**
      * TODO
@@ -154,9 +141,8 @@ public class Matcher extends GenericPsiElementStub {
      */
     public EncapsulatingNode getTemplate() {
         String path = Paths.get("").toAbsolutePath().toString();
-        File sourceFile = new File(String.format("%s\\%s.java", path, getClass().getSimpleName()));
-
-        return null;
+        new File(String.format("%s\\%s.java", path, getClass().getSimpleName()));
+		return null;
     }
 
     private enum ConstraintType {

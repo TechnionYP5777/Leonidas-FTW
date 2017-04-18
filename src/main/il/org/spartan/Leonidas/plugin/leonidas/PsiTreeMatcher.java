@@ -20,32 +20,24 @@ public class PsiTreeMatcher {
      */
     @SuppressWarnings("ConstantConditions")
     public static boolean match(EncapsulatingNode treeTemplate, EncapsulatingNode treeToMatch) {
-        if (!iz.conforms(treeToMatch.getInner(), treeTemplate.getInner())) {
-            return false;
-        }
-        // many more conditions will be added once more constrains are defined
-        if (iz.block(treeToMatch.getInner()) && !iz.genericBlock(treeTemplate.getInner())) {
-            if (treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS) != null &&
-                    treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS)
-                            .notConforms(az.block(treeToMatch.getInner()).getStatements().length)) {
-                return false;
-            }
-        }
-
-        boolean res = true;
-        if (treeTemplate.getAmountOfNoneWhiteSpaceChildren() < treeToMatch.getAmountOfNoneWhiteSpaceChildren() && !iz.generic(treeTemplate.getInner())) {
-            return false;
-        }
-        /*for (int i = 0; i < treeTemplate.getChildren().size(); i++){
-            res = res && match(treeTemplate.getChildren().get(i), treeToMatch.getChildren().get(i));
-        }*/
-        for (EncapsulatingNode.Iterator treeTemplateChild = treeTemplate.iterator(),
-             treeToMatchChild = treeToMatch.iterator();
-             treeTemplateChild.hasNext() && treeToMatchChild.hasNext();
-             treeTemplateChild.next(), treeToMatchChild.next()) {
-            res = res && match(treeTemplateChild.value(), treeToMatchChild.value());
-        }
-        return res;
-    }
+		if (!iz.conforms(treeToMatch.getInner(), treeTemplate.getInner())
+				|| iz.block(treeToMatch.getInner()) && !iz.genericBlock(treeTemplate.getInner())
+						&& treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS) != null
+						&& treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS)
+								.notConforms(az.block(treeToMatch.getInner()).getStatements().length)
+						&& treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS) != null
+						&& treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS)
+								.notConforms(az.block(treeToMatch.getInner()).getStatements().length))
+			return false;
+		boolean res = true;
+		if (treeTemplate.getAmountOfNoneWhiteSpaceChildren() < treeToMatch.getAmountOfNoneWhiteSpaceChildren()
+				&& !iz.generic(treeTemplate.getInner()))
+			return false;
+		for (EncapsulatingNode.Iterator treeTemplateChild = treeTemplate.iterator(), treeToMatchChild = treeToMatch
+				.iterator(); treeTemplateChild.hasNext()
+						&& treeToMatchChild.hasNext(); treeTemplateChild.next(), treeToMatchChild.next())
+			res &= match(treeTemplateChild.value(), treeToMatchChild.value());
+		return res;
+	}
 
 }

@@ -15,12 +15,8 @@ public class IfFalseElse extends GenericPsiElementStub {
 
     @Leonidas(PsiIfStatement.class)
     public void from() {
-        if (false) {
-            statement();
-        } else {
-            statement(1);
-        }
-    }
+		statement(1);
+	}
 
     @Leonidas(PsiExpressionStatement.class)
     public void to() {

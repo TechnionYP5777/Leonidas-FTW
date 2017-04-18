@@ -27,8 +27,7 @@ public class WrapperTest extends PsiTypeHelper {
         Integer x = 2;
         wrapper.set(x);
         assertEquals(x.toString(), wrapper.toString());
-        Wrapper<String> wrapper2 = new Wrapper<>("string");
-        assertEquals("string", wrapper2.toString());
+        assertEquals("string", (new Wrapper<>("string")).toString());
     }
 
     public void testHashCode() {
@@ -39,11 +38,10 @@ public class WrapperTest extends PsiTypeHelper {
         assertEquals(x.hashCode(), wrapper.hashCode());
         wrapper.set(x);
         assertEquals(x.hashCode(), wrapper.hashCode());
-        assertEquals(new Integer(2).hashCode(), wrapper.hashCode());
+        assertEquals(Integer.valueOf(2).hashCode(), wrapper.hashCode());
     }
 
     public void testEquals() {
-        Wrapper<Integer> wrapper = new Wrapper<>();
-        assertTrue(wrapper.equals(new Wrapper<Integer>()));
+        assert (new Wrapper<>()).equals(new Wrapper<Integer>());
     }
 }

@@ -41,7 +41,6 @@ public class UnlessTest extends PsiTypeHelper {
         assert (iz.nullExpression(k.getThenExpression()));
         Unless u = new Unless();
         assert (u.canTip(k));
-        PsiExpression e = createTestExpression("eval(x).unless(x > 0)");
-        assertEqualsByText(u.createReplacement(k), e);
+        assertEqualsByText(u.createReplacement(k), createTestExpression("eval(x).unless(x > 0)"));
     }
 }

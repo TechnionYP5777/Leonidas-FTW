@@ -185,10 +185,7 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     public PsiImportList createTestImportListFromString(String s) {
-        PsiFile file = createTestFileFromString(s +
-                "public class A{}");
-        PsiElement importList = file.getNavigationElement().getFirstChild();
-        return (PsiImportList) importList;
+        return (PsiImportList) createTestFileFromString(s + "public class A{}").getNavigationElement().getFirstChild();
     }
 
     public PsiCodeBlock createTestCodeBlockFromString(String s) {
@@ -208,9 +205,8 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     public PsiDeclarationStatement createTestDeclarationStatement(String name, String type, String initializer) {
-        PsiType t = createTestType(type);
-        PsiExpression i = createTestExpressionFromString(initializer);
-        return getTestFactory().createVariableDeclarationStatement(name, t, i);
+        return getTestFactory().createVariableDeclarationStatement(name, createTestType(type),
+				createTestExpressionFromString(initializer));
     }
 
     public PsiIfStatement createTestIfStatement(String cond, String then) {
@@ -224,12 +220,10 @@ public class PsiTypeHelper extends PsiTestCase {
      * @return if then has only one statement returns PsiIfStatement, otherwise null
      */
     public PsiIfStatement createTestIfStatementNoBraces(String cond, String then) {
-        if (StringUtils.countMatches(then, ";") != 1) {
-            return null;
-        }
-        return (PsiIfStatement) getTestFactory()
-                .createStatementFromText("if (" + cond + ") " + then + " ", getTestFile());
-    }
+		return StringUtils.countMatches(then, ";") != 1 ? null
+				: (PsiIfStatement) getTestFactory().createStatementFromText("if (" + cond + ") " + then + " ",
+						getTestFile());
+	}
 
     public PsiConditionalExpression createTestConditionalExpression(String cond, String then, String else$) {
         return (PsiConditionalExpression) getTestFactory()
@@ -240,11 +234,11 @@ public class PsiTypeHelper extends PsiTestCase {
         Wrapper<Integer> tabs = new Wrapper<>(0);
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
+            public void visitElement(PsiElement e) {
                 IntStream.range(0, tabs.get()).forEach(x -> System.out.print("\t"));
-                System.out.println(element);
+                System.out.println(e);
                 tabs.set(tabs.get() + 1);
-                super.visitElement(element);
+                super.visitElement(e);
             }
         });
     }
@@ -272,12 +266,11 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     public void assertEqualsByText(PsiElement e1, PsiElement e2) {
-        if (e1 == null && e2 == null) {
-            return;
-        }
+        if (e1 == null && e2 == null)
+			return;
 
-        assertNotNull(e1);
-        assertNotNull(e2);
+        assert e1 != null;
+        assert e2 != null;
         assertEquals(removeWhiteSpaces(e1.getText()), removeWhiteSpaces(e2.getText()));
     }
 
@@ -300,10 +293,8 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     public PsiMethodReferenceExpression createTestMethodReferenceEpression(String typeName, String methodName) {
-        String sb = typeName +
-                "::" +
-                methodName;
-        return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(sb, getTestFile());
+        return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(typeName + "::" + methodName,
+				getTestFile());
     }
 
     public PsiRequiresStatement createTestRequiresStatement(String module) {

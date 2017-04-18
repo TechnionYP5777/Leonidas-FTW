@@ -46,13 +46,13 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
     }
 
     @Override
-    public <T> T getUserData(@NotNull Key<T> key) {
-        return inner.getUserData(key);
+    public <T> T getUserData(@NotNull Key<T> k) {
+        return inner.getUserData(k);
     }
 
     @Override
-    public <T> void putUserData(@NotNull Key<T> key, @Nullable T value) {
-        inner.putUserData(key, value);
+    public <T> void putUserData(@NotNull Key<T> k, @Nullable T value) {
+        inner.putUserData(k, value);
     }
 
     /**
@@ -91,8 +91,7 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
 
     @Override
     public PsiElement copy() {
-        ASTNode elementCopy = copyElement();
-        return SourceTreeToPsiMap.treeElementToPsi(elementCopy);
+        return SourceTreeToPsiMap.treeElementToPsi(copyElement());
     }
 
     @Override
@@ -124,17 +123,17 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
     }
 
     public String toString() {
-        return "PsiElement" + "(" + getElementType().toString() + ")";
+        return "PsiElement(" + getElementType().toString() + ")";
     }
 
     @Override
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        visitor.visitElement(this);
+    public void accept(@NotNull PsiElementVisitor v) {
+        v.visitElement(this);
     }
 
     @Override
-    public boolean processDeclarations(@NotNull PsiScopeProcessor processor,
-                                       @NotNull ResolveState state,
+    public boolean processDeclarations(@NotNull PsiScopeProcessor p,
+                                       @NotNull ResolveState s,
                                        PsiElement lastParent,
                                        @NotNull PsiElement place) {
         return true;
@@ -177,9 +176,8 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
     @NotNull
     public Project getProject() {
         Project project = ProjectCoreUtil.theOnlyOpenProject();
-        if (project != null) {
-            return project;
-        }
+        if (project != null)
+			return project;
         final PsiManager manager = getManager();
         assert (manager != null);
         return manager.getProject();
@@ -214,9 +212,8 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
     @Override
     public void navigate(boolean requestFocus) {
         final Navigatable descriptor = PsiNavigationSupport.getInstance().getDescriptor(this);
-        if (descriptor != null) {
-            descriptor.navigate(requestFocus);
-        }
+        if (descriptor != null)
+			descriptor.navigate(requestFocus);
     }
 
     @Override
@@ -231,7 +228,7 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
 
     @Override
     public boolean isEquivalentTo(final PsiElement another) {
-        return this == another;
+        return another == this;
     }
 
 }

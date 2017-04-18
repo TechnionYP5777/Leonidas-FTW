@@ -11,48 +11,47 @@ import com.intellij.psi.util.PsiTreeUtil;
 public enum haz {
     ;
 
-    public static boolean centVariableDefinition(final PsiElement p) {
+    public static boolean centVariableDefinition(final PsiElement e) {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
-        p.accept(new JavaRecursiveElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitIdentifier(PsiIdentifier e) {
-                super.visitIdentifier(e);
-                if (e.getText().contains("¢")) { //TODO there is a problem with cent representation...
-                    b.set(true);
-                }
+            public void visitIdentifier(PsiIdentifier i) {
+                super.visitIdentifier(i);
+                if (i.getText().contains("¢"))
+					b.set(true);
             }
         });
         assert b.inner != null;
         return b.inner;
     }
 
-    public static boolean functionNamed(final PsiElement p, String name) {
+    public static boolean functionNamed(final PsiElement e, String name) {
         final Wrapper<Boolean> b = new Wrapper<>(Boolean.FALSE);
-        p.accept(new JavaRecursiveElementVisitor() {
+        e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethod(PsiMethod method) {
-                super.visitMethod(method);
-                b.inner = method.getName().equals(name) ? Boolean.TRUE : b.inner;
+            public void visitMethod(PsiMethod m) {
+                super.visitMethod(m);
+                b.inner = !m.getName().equals(name) ? b.inner : Boolean.TRUE;
             }
         });
         assert b.inner != null;
         return b.inner;
     }
 
-    public static boolean equalsOperator(PsiBinaryExpression expression) {
-        return expression != null && iz.equalsOperator(step.operator(expression));
+    public static boolean equalsOperator(PsiBinaryExpression x) {
+        return x != null && iz.equalsOperator(step.operator(x));
     }
 
-    public static boolean notEqualsOperator(PsiBinaryExpression expression) {
-        return expression != null && step.operator(expression).equals(JavaTokenType.NE);
+    public static boolean notEqualsOperator(PsiBinaryExpression x) {
+        return x != null && step.operator(x).equals(JavaTokenType.NE);
     }
 
-    public static boolean compilationErrors(PsiFile file){
-        return haz.syntaxErrors(file) || CompilationCenter.hasCompilationErrors(file);
+    public static boolean compilationErrors(PsiFile f){
+        return haz.syntaxErrors(f) || CompilationCenter.hasCompilationErrors(f);
     }
 
-    public static boolean syntaxErrors(PsiElement element) {
-        return (PsiTreeUtil.hasErrorElements(element));
+    public static boolean syntaxErrors(PsiElement e) {
+        return (PsiTreeUtil.hasErrorElements(e));
     }
 
     public static boolean body(PsiMethod m){

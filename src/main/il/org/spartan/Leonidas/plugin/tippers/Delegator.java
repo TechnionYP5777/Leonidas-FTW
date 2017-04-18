@@ -11,72 +11,60 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
  */
 public class Delegator extends JavadocMarkerNanoPattern {
     @Override
-    protected boolean prerequisites(PsiMethod psiMethod) {
-        return delegation(psiMethod);
+    protected boolean prerequisites(PsiMethod m) {
+        return delegation(m);
     }
 
-    private boolean hasOneStatement(PsiCodeBlock codeBlock) {
-        return (codeBlock != null) && codeBlock.getStatements().length == 1;
+    private boolean hasOneStatement(PsiCodeBlock b) {
+        return (b != null) && b.getStatements().length == 1;
     }
 
-    private boolean hasOnlyMethodCall(PsiCodeBlock codeBlock) {
-        return getMethodCallExpression(codeBlock) != null;
+    private boolean hasOnlyMethodCall(PsiCodeBlock b) {
+        return getMethodCallExpression(b) != null;
     }
 
-    private PsiMethodCallExpression getMethodCallExpression(PsiCodeBlock codeBlock) {
-        if (!hasOneStatement(codeBlock)) {
-            return null;
-        }
-        PsiStatement statement = codeBlock.getStatements()[0];
-        if (iz.returnStatement(statement) && iz.methodCallExpression(az.returnStatement(statement).getReturnValue())) {
-            return az.methodCallExpression(az.returnStatement(statement).getReturnValue());
-        }
-        if (iz.expressionStatement(statement) && iz.methodCallExpression(az.expressionStatement(statement).getExpression())) {
-            return az.methodCallExpression(az.expressionStatement(statement).getExpression());
-        }
-        return null;
-    }
+    private PsiMethodCallExpression getMethodCallExpression(PsiCodeBlock b) {
+		if (!hasOneStatement(b))
+			return null;
+		PsiStatement statement = b.getStatements()[0];
+		return iz.returnStatement(statement) && iz.methodCallExpression(az.returnStatement(statement).getReturnValue())
+				? az.methodCallExpression(az.returnStatement(statement).getReturnValue())
+				: iz.expressionStatement(statement)
+						&& iz.methodCallExpression(az.expressionStatement(statement).getExpression())
+								? az.methodCallExpression(az.expressionStatement(statement).getExpression()) : null;
+	}
 
     @SuppressWarnings("ConstantConditions")
-    private boolean argumentsParametersMatch(PsiParameterList parameterList, PsiExpressionList argumentList) {
+    private boolean argumentsParametersMatch(PsiParameterList l, PsiExpressionList argumentList) {
         for (PsiExpression expression : argumentList.getExpressions()) {
-            if (iz.literal(expression)) {
-                continue;
-            }
-            if (!iz.referenceExpression(expression)) {
-                return false;
-            }
+            if (iz.literal(expression))
+				continue;
+            if (!iz.referenceExpression(expression))
+				return false;
             PsiElement c = az.referenceExpression(expression).getLastChild();
-            if (!iz.identifier(c)) {
-                return false;
-            }
+            if (!iz.identifier(c))
+				return false;
             PsiIdentifier identifier = az.identifier(c);
             boolean foundMatchingParameter = false;
-            for (PsiParameter parameter : parameterList.getParameters()) {
-                if (parameter.getNameIdentifier().getText().equals(identifier.getText())) {
-                    foundMatchingParameter = true;
-                    break;
-                }
-            }
-            if (!foundMatchingParameter) {
-                return false;
-            }
+            for (PsiParameter parameter : l.getParameters())
+				if (parameter.getNameIdentifier().getText().equals(identifier.getText())) {
+					foundMatchingParameter = true;
+					break;
+				}
+            if (!foundMatchingParameter)
+				return false;
         }
         return true;
     }
 
-    private boolean delegation(PsiMethod psiMethod) {
-        if (!hasOnlyMethodCall(psiMethod.getBody())) {
-            return false;
-        }
-        PsiMethodCallExpression methodCallExpression = getMethodCallExpression(psiMethod.getBody());
-        assert methodCallExpression != null;
-        if (!argumentsParametersMatch(psiMethod.getParameterList(), methodCallExpression.getArgumentList())) {
-            return false;
-        }
-        PsiReferenceExpression referenceExpression = methodCallExpression.getMethodExpression();
-        return referenceExpression.getQualifierExpression() == null;
-    }
+    private boolean delegation(PsiMethod m) {
+		if (!hasOnlyMethodCall(m.getBody()))
+			return false;
+		PsiMethodCallExpression methodCallExpression = getMethodCallExpression(m.getBody());
+		assert methodCallExpression != null;
+		return argumentsParametersMatch(m.getParameterList(), methodCallExpression.getArgumentList())
+				&& methodCallExpression.getMethodExpression().getQualifierExpression() == null;
+	}
 
     @Override
     protected Tip pattern(PsiMethod ¢) {

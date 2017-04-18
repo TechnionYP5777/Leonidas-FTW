@@ -11,28 +11,24 @@ import com.intellij.psi.PsiFile;
 public enum Spartanizer {
     ;
 
-    static boolean canTip(PsiElement element) {
-        return Toolbox.getInstance().canTip(element);
+    static boolean canTip(PsiElement e) {
+        return Toolbox.getInstance().canTip(e);
     }
 
-    static void spartanizeElement(PsiElement element) {
-        if (element.getContainingFile().getName().equals("SpartanizerUtils.java")) {
-            return;
-        }
-        Toolbox toolbox = Toolbox.getInstance();
-        toolbox.executeAllTippers(element);
+    static void spartanizeElement(PsiElement e) {
+        if (!"SpartanizerUtils.java".equals(e.getContainingFile().getName()))
+			Toolbox.getInstance().executeAllTippers(e);
     }
 
-    public static void spartanizeFileOnePass(PsiFile psiFile) {
-        if (psiFile.getName().equals("SpartanizerUtils.java")) {
-            return;
-        }
+    public static void spartanizeFileOnePass(PsiFile f) {
+        if ("SpartanizerUtils.java".equals(f.getName()))
+			return;
         Toolbox toolbox = Toolbox.getInstance();
-        psiFile.accept(new JavaRecursiveElementVisitor() {
+        f.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                toolbox.executeAllTippers(element);
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                toolbox.executeAllTippers(e);
             }
         });
     }

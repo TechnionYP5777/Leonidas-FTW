@@ -35,16 +35,14 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
     }
 
     public EncapsulatingNode replace(EncapsulatingNode newNode) {
-        if (parent == null) {
-            return this;
-        }
-        if (!iz.generic(newNode.inner)) {
-            inner.replace(newNode.inner);
-            inner = newNode.inner;
-        }
-
-        parent.children.replaceAll(e -> (e == this) ? newNode : e);
-        return this;
+        if (parent == null)
+			return this;
+		if (!iz.generic(newNode.inner)) {
+			inner.replace(newNode.inner);
+			inner = newNode.inner;
+		}
+		parent.children.replaceAll(e -> e != this ? e : newNode);
+		return this;
     }
 
     public List<EncapsulatingNode> getChildren() {
@@ -97,7 +95,7 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
     }
 
     public class Iterator implements java.util.Iterator<EncapsulatingNode> {
-        int location = 0;
+        int location;
         List<EncapsulatingNode> noSpaceChildren;
 
         public Iterator() {
@@ -112,7 +110,7 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         @Override
         public EncapsulatingNode next() {
             EncapsulatingNode e = noSpaceChildren.get(location);
-            location++;
+            ++location;
             return e;
         }
 

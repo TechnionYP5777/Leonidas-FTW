@@ -14,9 +14,8 @@ public class RemoveCurlyBracesFromWhileStatement extends GenericPsiElementStub {
 
     @Leonidas(PsiWhileStatement.class)
     public void from() {
-        while (booleanExpression(0)) {
-            statement(1);
-        }
+        while (booleanExpression(0))
+			statement(1);
     }
 
     @Leonidas(PsiWhileStatement.class)

@@ -12,36 +12,28 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
  */
 public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> {
 
-    private boolean canTip(PsiMethodCallExpression e) {
-        // holds $x
-        PsiReferenceExpression[] outerReference = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiReferenceExpression.class);
-        // holds "get"
-        PsiIdentifier[] outerIdentifier = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiIdentifier.class);
-        //checks the call is to $x.get
-        if (outerReference == null || outerIdentifier == null || outerReference.length != 1 || outerIdentifier.length != 1 || !outerIdentifier[0].getText().equals("get")) {
-            return false;
-        }
-
-        // holds the arguments
-        PsiExpression[] arguments = e.getArgumentList().getExpressions();
-        // checks there is only one argument and it is a binary expression
-        if (arguments.length != 1 || !iz.binaryExpression(arguments[0])) {
-            return false;
-        }
-
-        //holds $x
-        PsiReferenceExpression[] innerReference = PsiTreeUtil.getChildrenOfType(az.methodCallExpression(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiReferenceExpression.class);
-        //holds "size"
-        PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(az.methodCallExpression(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(), PsiIdentifier.class);
-        // checks that the left operand of the binary expression is $x.size
-        if (innerIdentifier == null || innerReference == null || !outerReference[0].getText().equals(innerReference[0].getText()) || !innerIdentifier[0].getText().equals("size")) {
-            return false;
-        }
-        // checks minus 1
-        //noinspection ConstantConditions
-        return az.binaryExpression(arguments[0]).getROperand().getText().equals("1")
-                && az.binaryExpression(arguments[0]).getOperationSign().getText().equals("-");
-    }
+    private boolean canTip(PsiMethodCallExpression x) {
+		PsiReferenceExpression[] outerReference = PsiTreeUtil.getChildrenOfType(x.getMethodExpression(),
+				PsiReferenceExpression.class);
+		PsiIdentifier[] outerIdentifier = PsiTreeUtil.getChildrenOfType(x.getMethodExpression(), PsiIdentifier.class);
+		if (outerReference == null || outerIdentifier == null || outerReference.length != 1
+				|| outerIdentifier.length != 1 || !"get".equals(outerIdentifier[0].getText()))
+			return false;
+		PsiExpression[] arguments = x.getArgumentList().getExpressions();
+		if (arguments.length != 1 || !iz.binaryExpression(arguments[0]))
+			return false;
+		PsiReferenceExpression[] innerReference = PsiTreeUtil.getChildrenOfType(
+				az.methodCallExpression(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(),
+				PsiReferenceExpression.class);
+		PsiIdentifier[] innerIdentifier = PsiTreeUtil.getChildrenOfType(
+				az.methodCallExpression(az.binaryExpression(arguments[0]).getLOperand()).getMethodExpression(),
+				PsiIdentifier.class);
+		return innerIdentifier != null && innerReference != null
+				&& outerReference[0].getText().equals(innerReference[0].getText())
+				&& "size".equals(innerIdentifier[0].getText())
+				&& "1".equals(az.binaryExpression(arguments[0]).getROperand().getText())
+				&& "-".equals(az.binaryExpression(arguments[0]).getOperationSign().getText());
+	}
 
     @Override
     public boolean canTip(PsiElement e) {
@@ -49,14 +41,14 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
     }
 
     @Override
-    public String description(PsiMethodCallExpression psiMethodCallExpression) {
-        return "replace " + psiMethodCallExpression.getText() + " with list last";
+    public String description(PsiMethodCallExpression x) {
+        return "replace " + x.getText() + " with list last";
     }
 
     @Override
-    public PsiElement createReplacement(PsiMethodCallExpression e) {
-        @SuppressWarnings("ConstantConditions") PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(e.getMethodExpression(), PsiReferenceExpression.class)[0];
-        return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("last(" + container.getText() + ")", e);
+    public PsiElement createReplacement(PsiMethodCallExpression x) {
+        @SuppressWarnings("ConstantConditions") PsiReferenceExpression container = PsiTreeUtil.getChildrenOfType(x.getMethodExpression(), PsiReferenceExpression.class)[0];
+        return JavaPsiFacade.getElementFactory(x.getProject()).createExpressionFromText("last(" + container.getText() + ")", x);
     }
 
     @Override

@@ -30,20 +30,19 @@ public class SpartanizerAnnotator implements Annotator {
 
         Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
         annotation.registerFix(new IntentionAction() {
-            @Nls
-            @NotNull
             @Override
-            public String getText() {
-                //noinspection unchecked
-                return Toolbox.getInstance().getTipper(e).description(e);
-            }
+			@Nls
+			@NotNull
+			public String getText() {
+				return Toolbox.getInstance().getTipper(e).description(e);
+			}
 
-            @Nls
-            @NotNull
             @Override
-            public String getFamilyName() {
-                return "SpartanizerAction";
-            }
+			@Nls
+			@NotNull
+			public String getFamilyName() {
+				return "SpartanizerAction";
+			}
 
             @Override
             public boolean isAvailable(@NotNull Project __, Editor e, PsiFile f) {
@@ -62,7 +61,7 @@ public class SpartanizerAnnotator implements Annotator {
 
         TextAttributesKey.createTextAttributesKey("");
         annotation.setEnforcedTextAttributes(
-                (new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0)));
+                new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0));
 
     }
 

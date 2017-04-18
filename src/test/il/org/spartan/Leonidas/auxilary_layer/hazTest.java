@@ -12,45 +12,42 @@ public class hazTest extends PsiTypeHelper {
 
     public void testHazCentVariableDefinition() throws Exception {
         PsiElement e1 = createTestStatementFromString("int ¢ = 5;");
-        assertTrue(haz.centVariableDefinition(e1));
+        assert haz.centVariableDefinition(e1);
         PsiElement e2 = createTestBlockStatementFromString("{int x = 5; int ¢ = 5;}");
-        assertTrue(haz.centVariableDefinition(e2));
+        assert haz.centVariableDefinition(e2);
         PsiElement e3 = createTestStatementFromString("int x = 5;");
-        assertFalse(haz.centVariableDefinition(e3));
+        assert !haz.centVariableDefinition(e3);
         PsiElement e4 = createTestMethodFromString("public static int getSomething(){int ¢ = 5; return ¢;}");
-        assertTrue(haz.centVariableDefinition(e4));
-        PsiElement e5 = createTestClassFromString("","A","private int ¢;","public");
-        assertTrue(haz.centVariableDefinition(e5));
+        assert haz.centVariableDefinition(e4);
+        assert haz.centVariableDefinition(createTestClassFromString("", "A", "private int ¢;", "public"));
     }
 
     public void testHazFunctionNamed() throws Exception{
         PsiElement e1 = createTestMethodFromString("public int getX(){return 1;}");
-        assertTrue(haz.functionNamed(e1,"getX"));
+        assert haz.functionNamed(e1, "getX");
         PsiElement e2 = createTestClassFromString("","A","pubic A(){} private static int getX(){return 1;}","public");
-        assertTrue(haz.functionNamed(e2,"getX"));
+        assert haz.functionNamed(e2, "getX");
         PsiElement e3 = createTestClassFromString("","A","pubic A(){} private static int getY(){return 1;}","public");
-        assertFalse(haz.functionNamed(e3,"getX"));
-        PsiElement e4 = createTestInterfaceFromString("","A","private static int getX();","public");
-        assertTrue(haz.functionNamed(e4,"getX"));
+        assert !haz.functionNamed(e3, "getX");
+        assert haz.functionNamed(createTestInterfaceFromString("", "A", "private static int getX();", "public"),
+				"getX");
 
     }
 
     public void testHazEqualsOperator() throws Exception{
         PsiBinaryExpression e1 = (PsiBinaryExpression) createTestExpression("x == y");
-        assertTrue(haz.equalsOperator(e1));
+        assert haz.equalsOperator(e1);
         PsiBinaryExpression e2 = (PsiBinaryExpression) createTestExpression("x != y");
-        assertFalse(haz.equalsOperator(e2));
-        PsiBinaryExpression e3 = (PsiBinaryExpression) createTestExpression("x > y");
-        assertFalse(haz.equalsOperator(e3));
+        assert !haz.equalsOperator(e2);
+        assert !haz.equalsOperator((PsiBinaryExpression) createTestExpression("x > y"));
     }
 
     public void testHazNotEqualsOperator() throws Exception{
         PsiBinaryExpression e1 = (PsiBinaryExpression) createTestExpression("x == y");
-        assertFalse(haz.notEqualsOperator(e1));
+        assert !haz.notEqualsOperator(e1);
         PsiBinaryExpression e2 = (PsiBinaryExpression) createTestExpression("x != y");
-        assertTrue(haz.notEqualsOperator(e2));
-        PsiBinaryExpression e3 = (PsiBinaryExpression) createTestExpression("x > y");
-        assertFalse(haz.notEqualsOperator(e3));
+        assert haz.notEqualsOperator(e2);
+        assert !haz.notEqualsOperator((PsiBinaryExpression) createTestExpression("x > y"));
     }
 
 //    public void testHazSyntaxErrors() throws Exception{

@@ -22,11 +22,11 @@ import java.io.InputStreamReader;
  */
 public class PluginDescriptorReader {
 
-    private final static String PLUGIN_XML_URI = "META-INF/plugin.xml";
-    private final static String ROOT_ELEMENT_NAME = "idea-plugin";
-    private final static String ID_ELEMENT_NAME = "id";
+    private static final String PLUGIN_XML_URI = "META-INF/plugin.xml";
+    private static final String ROOT_ELEMENT_NAME = "idea-plugin";
+    private static final String ID_ELEMENT_NAME = "id";
 
-    private final static ClassLoader classLoader = PluginDescriptorReader.class.getClassLoader();
+    private static final ClassLoader classLoader = PluginDescriptorReader.class.getClassLoader();
 
     private static Document document;
 
@@ -34,8 +34,8 @@ public class PluginDescriptorReader {
         BufferedReader pluginXmlBuffer =
                 new BufferedReader(new InputStreamReader(classLoader.getResourceAsStream(PLUGIN_XML_URI)));
         try {
-            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            document = builder.parse(new InputSource(pluginXmlBuffer));
+            document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+					.parse(new InputSource(pluginXmlBuffer));
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
@@ -46,11 +46,9 @@ public class PluginDescriptorReader {
         NodeList nodeList = document.getElementsByTagName(ID_ELEMENT_NAME);
         // couldn't figure out how to make a stream out of NodeList. (without making the code unreadable)
         // if you stumble upon this and have an idea, please try!
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            if (ROOT_ELEMENT_NAME.equals(nodeList.item(i).getParentNode().getNodeName())) {
-                return nodeList.item(i).getTextContent();
-            }
-        }
+        for (int i = 0; i < nodeList.getLength(); ++i)
+			if (ROOT_ELEMENT_NAME.equals(nodeList.item(i).getParentNode().getNodeName()))
+				return nodeList.item(i).getTextContent();
         throw new RuntimeException("id element wasn't found in plugin.xml");
     }
 }

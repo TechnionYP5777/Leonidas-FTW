@@ -24,68 +24,55 @@ public class DefaultToTest extends PsiTypeHelper {
     private final String legalReplacement = "defaults(x).to(y)";
 
     public void testCanTipFirstElementIsNotNullSecondIsNEOperator() {
-        assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString(legalCaseString1)));
+        assert new DefaultsTo().canTip(createTestExpressionFromString(legalCaseString1));
     }
 
     public void testCanTipFirstElementIsNotNullSecondIsEQOperator() {
-        assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString(legalCaseString2)));
+        assert new DefaultsTo().canTip(createTestExpressionFromString(legalCaseString2));
     }
 
     public void testCanTipFirstElementIsNullSecondIsNotEQOperator() {
-        assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString(legalCaseString3)));
+        assert new DefaultsTo().canTip(createTestExpressionFromString(legalCaseString3));
     }
 
     public void testCanTipFirstElementIsNullSecondIsNotNEOperator() {
-        assertTrue(new DefaultsTo().canTip(
-                createTestExpressionFromString(legalCaseString4)));
+        assert new DefaultsTo().canTip(createTestExpressionFromString(legalCaseString4));
     }
 
     public void testCannotTipTwoElementsAreNullEQOperator() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("null == null ? x : y")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("null == null ? x : y"));
     }
 
     public void testCannotTipTwoElementsAreNullNEOperator() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("null != null ? x : y")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("null != null ? x : y"));
     }
 
     public void testCannotTipTwoElementsAreNotNullEQOperator() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("x == y ? x : y")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("x == y ? x : y"));
     }
 
     public void testCannotTipTwoElementsAreNotNullNEOperator() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("x != y ? x : y")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("x != y ? x : y"));
     }
 
     public void testCannotTipCondVarsAndThenElseVarsDontMatch() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("x != null ? y : z")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("x != null ? y : z"));
     }
 
     public void testCannotTipOperatorAndOrderMismatch1() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("x != null ? y : x")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("x != null ? y : x"));
     }
 
     public void testCannotTipOperatorAndOrderMismatch2() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("x == null ? x : y")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("x == null ? x : y"));
     }
 
     public void testCannotTipOperatorAndOrderMismatch3() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("null == x ? x : y")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("null == x ? x : y"));
     }
 
     public void testCannotTipOperatorAndOrderMismatch4() {
-        assertFalse(new DefaultsTo().canTip(
-                createTestExpressionFromString("null != x ? y : x")));
+        assert !new DefaultsTo().canTip(createTestExpressionFromString("null != x ? y : x"));
     }
 
     public void testCreateReplacementLegalCases() {
@@ -96,12 +83,10 @@ public class DefaultToTest extends PsiTypeHelper {
     }
 
     private PsiConditionalExpression createConditionalExpressionFromLegalString(String conditionalString) {
-        int indexOfQuestionMark = conditionalString.indexOf('?');
-        int indexOfColon = conditionalString.indexOf(':');
-        String condition = conditionalString.substring(0, indexOfQuestionMark).trim();
-        String then = conditionalString.substring(indexOfQuestionMark + 1, indexOfColon).trim();
-        String else$ = conditionalString.substring(indexOfColon + 1).trim();
-        return createTestConditionalExpression(condition, then, else$);
+        int indexOfQuestionMark = conditionalString.indexOf('?'), indexOfColon = conditionalString.indexOf(':');
+        return createTestConditionalExpression(conditionalString.substring(0, indexOfQuestionMark).trim(),
+				conditionalString.substring(indexOfQuestionMark + 1, indexOfColon).trim(),
+				conditionalString.substring(indexOfColon + 1).trim());
     }
 
 }

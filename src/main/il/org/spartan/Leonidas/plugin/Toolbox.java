@@ -23,16 +23,15 @@ import java.util.*;
 public enum Toolbox {
     INSTANCE;
 
-    static boolean wasInitialize = false;
-    final private Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
+    static boolean wasInitialize;
+    private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
     Set<VirtualFile> excludedFiles = new HashSet<>();
     Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
-    boolean tmp = false;
+    boolean tmp;
 
     public static Toolbox getInstance() {
-        if (!wasInitialize) {
-            initializeInstance();
-        }
+        if (!wasInitialize)
+			initializeInstance();
         return INSTANCE;
     }
 
@@ -51,26 +50,25 @@ public enum Toolbox {
 
     @SuppressWarnings("ConstantConditions")
     private static void createLeonidasTipperBuilders() {
-        List<File> tippers = Arrays.asList(new File(Utils.fixSpacesProblemOnPath(Toolbox.class
-                .getResource("/spartanizer/LeonidasTippers").getPath())).listFiles());
-        tippers.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
+        Arrays.asList(new File(
+				Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
+						.listFiles())
+				.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
 
     //TODO get Leonidas resources
     private static void createLeonidasTipperBuilders2() {
         String x = "";
         x = Utils.pathToClass(LeonidasTipperDefinition.class);
-        Reflections r = new Reflections(LeonidasTipperDefinition.class);
-        r.getSubTypesOf(LeonidasTipperDefinition.class).stream().forEach(
-                c -> {
-                    try {
-                        INSTANCE.add(new LeonidasTipper2(c.getSimpleName(),
-                                Utils.getSourceCode(c)));
-                    } catch (IOException e) {
-                        System.out.print("failed to read file: " + c.getName());
-                        e.printStackTrace();
-                    }
-                });
+        (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
+				.forEach(c -> {
+					try {
+						INSTANCE.add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
+					} catch (IOException e) {
+						System.out.print("failed to read file: " + c.getName());
+						e.printStackTrace();
+					}
+				});
     }
 
     //stub method
@@ -78,50 +76,41 @@ public enum Toolbox {
         return new ArrayList<>();
     }
 
-    private Toolbox add(Tipper<? extends PsiElement> tipper) {
-        tipperMap.putIfAbsent(tipper.getPsiClass(), new LinkedList<>());
-        operableTypes.add(tipper.getPsiClass());
-        tipperMap.get(tipper.getPsiClass()).add(tipper);
+    private Toolbox add(Tipper<? extends PsiElement> t) {
+        tipperMap.putIfAbsent(t.getPsiClass(), new LinkedList<>());
+        operableTypes.add(t.getPsiClass());
+        tipperMap.get(t.getPsiClass()).add(t);
         return this;
     }
 
-    public boolean isElementOfOperableType(PsiElement element) {
-        return operableTypes.stream().anyMatch(t -> t.isAssignableFrom(element.getClass()));
+    public boolean isElementOfOperableType(PsiElement e) {
+        return operableTypes.stream().anyMatch(t -> t.isAssignableFrom(e.getClass()));
     }
 
-    public Toolbox executeAllTippers(PsiElement element) {
-
-        if (checkExcluded(element.getContainingFile())) {
-            return this;
-        }
-        if (!isElementOfOperableType(element)) {
-            return this;
-        }
-        //noinspection unchecked
-        tipperMap.get(type.of(element)).stream() //
-                .filter(tipper -> tipper.canTip(element)) //
-                .findFirst()
-                .ifPresent(t -> t.tip(element).go(new PsiRewrite().psiFile(element.getContainingFile()).project(element.getProject())));
-        return this;
-    }
+    public Toolbox executeAllTippers(PsiElement e) {
+		if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
+			return this;
+		tipperMap.get(type.of(e)).stream().filter(tipper -> tipper.canTip(e)).findFirst()
+				.ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
+		return this;
+	}
 
     /**
      * Can element by spartanized
      *
-     * @param element JD
+     * @param e JD
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
-    public boolean canTip(PsiElement element) {
-        return (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) && tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element)));
+    public boolean canTip(PsiElement e) {
+        return (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e)) && tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e)));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public Tipper getTipper(PsiElement element) {
+    public Tipper getTipper(PsiElement e) {
         try {
-            if (!checkExcluded(element.getContainingFile()) && canTipType(type.of(element)) &&
-                    tipperMap.get(type.of(element)).stream().anyMatch(tip -> tip.canTip(element))) {
-                return tipperMap.get(type.of(element)).stream().filter(tip -> tip.canTip(element)).findFirst().get();
-            }
+            if (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e)) &&
+                    tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e)))
+				return tipperMap.get(type.of(e)).stream().filter(tip -> tip.canTip(e)).findFirst().get();
         } catch (Exception ignore) {
         }
         return new NoTip<>();
@@ -139,7 +128,7 @@ public enum Toolbox {
         excludedFiles.remove(f.getVirtualFile());
     }
 
-    private boolean canTipType(Class<? extends PsiElement> t) {
-        return tipperMap.keySet().stream().anyMatch(x -> x.equals(t));
+    private boolean canTipType(Class<? extends PsiElement> c) {
+        return tipperMap.keySet().stream().anyMatch(x -> x.equals(c));
     }
 }

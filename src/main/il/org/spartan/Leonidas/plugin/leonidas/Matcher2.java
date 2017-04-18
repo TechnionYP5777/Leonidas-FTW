@@ -36,8 +36,8 @@ public class Matcher2 {
         return root;
     }
 
-    public void setRoot(EncapsulatingNode e) {
-        root = e;
+    public void setRoot(EncapsulatingNode n) {
+        root = n;
     }
 
     public void addConstraint(Integer id, Constraint c) {
@@ -46,17 +46,10 @@ public class Matcher2 {
     }
 
     public boolean match(PsiElement e) {
-        if (!PsiTreeMatcher.match(root, EncapsulatingNode.buildTreeFromPsi(e))) {
-            return false;
-        }
-        return extractInfo(root, e).keySet().stream().map(constrains::get)
-                .map(
-                        l -> l.stream()
-                                .map(c -> c.match(e))
-                                .reduce(true, (b1, b2) -> b1 && b2)
-                )
-                .reduce(true, (b1, b2) -> b1 && b2);
-    }
+		return PsiTreeMatcher.match(root, EncapsulatingNode.buildTreeFromPsi(e)) && extractInfo(root, e).keySet().stream()
+				.map(constrains::get).map(l -> l.stream().map(c -> c.match(e)).reduce(true, (b1, b2) -> b1 && b2))
+				.reduce(true, (b1, b2) -> b1 && b2);
+	}
 
     /**
      * @param treeTemplate - The root of a tree already been matched.
@@ -66,13 +59,12 @@ public class Matcher2 {
     public Map<Integer, PsiElement> extractInfo(EncapsulatingNode treeTemplate, PsiElement treeToMatch) {
         Map<Integer, PsiElement> mapping = new HashMap<>();
         EncapsulatingNode.Iterator treeTemplateChile = treeTemplate.iterator();
-        for (PsiElement treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChile.hasNext() && treeToMatchChild != null; treeTemplateChile.next(), treeToMatchChild = step.nextSibling(treeToMatchChild)) {
-            if (treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID) != null) {
-                mapping.put(treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID), treeToMatchChild);
-            } else {
-                mapping.putAll(extractInfo(treeTemplateChile.value(), treeToMatchChild));
-            }
-        }
+        for (PsiElement treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChile.hasNext() && treeToMatchChild != null; treeTemplateChile.next(), treeToMatchChild = step.nextSibling(treeToMatchChild))
+			if (treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID) == null)
+				mapping.putAll(extractInfo(treeTemplateChile.value(), treeToMatchChild));
+			else
+				mapping.put(treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID),
+						treeToMatchChild);
         return mapping;
     }
 
@@ -101,3 +93,4 @@ public class Matcher2 {
 
 
 }
+

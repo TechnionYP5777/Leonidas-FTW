@@ -24,44 +24,39 @@ public class Pruning {
      * Prunes all the stubs of the form "stub();" where "stub()"
      * is a method call for the method defined in GenericPsiElementStub.
      *
-     * @param e - the root from which all such stubs are pruned
+     * @param n - the root from which all such stubs are pruned
      */
-    public static EncapsulatingNode prune(EncapsulatingNode e) {
-        assert (e != null);
-        e.accept(e1 -> {
-            if (!iz.methodCallExpression(e1.getInner())) {
-                return;
-            }
+    public static EncapsulatingNode prune(EncapsulatingNode n) {
+        assert (n != null);
+        n.accept(e1 -> {
+            if (!iz.methodCallExpression(e1.getInner()))
+				return;
             PsiMethodCallExpression exp = az.methodCallExpression(e1.getInner());
 
             Pruning.getStubName(e1).ifPresent(y -> {
                 EncapsulatingNode prev = Pruning.getRealParent(e1, y);
                 GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
-                if (x != null) {
-                    prev.replace(EncapsulatingNode.buildTreeFromPsi(x)); //replace the stub tree with the generic psi type tree
-                }
+                if (x != null)
+					prev.replace(EncapsulatingNode.buildTreeFromPsi(x));
             });
         });
-        return e;
+        return n;
     }
 
-    public static Optional<GenericPsiElementStub.StubName> getStubName(EncapsulatingNode e) {
-        if (!iz.methodCallExpression(e.getInner()))
+    public static Optional<GenericPsiElementStub.StubName> getStubName(EncapsulatingNode n) {
+        if (!iz.methodCallExpression(n.getInner()))
             return Optional.empty();
-        PsiMethodCallExpression exp = az.methodCallExpression(e.getInner());
+        PsiMethodCallExpression exp = az.methodCallExpression(n.getInner());
 
         return Arrays.stream(GenericPsiElementStub.StubName.values())
                 .filter(x -> x.stubName().equals(exp.getMethodExpression().getText()))
                 .findFirst(); //assuming there is only one enum value in StubName that fits the stub kind.
     }
 
-    public static EncapsulatingNode getRealParent(EncapsulatingNode e, GenericPsiElementStub.StubName y) {
-        EncapsulatingNode prev = e;
-        EncapsulatingNode next = e.getParent();
-        while (y.goUpwards(prev, next)) {
-            prev = next;
-            next = next.getParent();
-        }
+    public static EncapsulatingNode getRealParent(EncapsulatingNode n, GenericPsiElementStub.StubName y) {
+        EncapsulatingNode prev = n, next = n.getParent();
+        for (; y.goUpwards(prev, next); next = next.getParent())
+			prev = next;
         return prev;
     }
 }

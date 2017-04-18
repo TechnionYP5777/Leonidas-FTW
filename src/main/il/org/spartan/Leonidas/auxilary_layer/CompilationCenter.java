@@ -20,7 +20,7 @@ public class CompilationCenter {
     private static final String DUMMY_FILE_NAME = "Test.java";
     private static File dummyCompilationTestFile;
     private static JavaCompiler compiler;
-    private static boolean initialized = false;
+    private static boolean initialized;
     private static ByteArrayOutputStream output;
     private static ByteArrayOutputStream errors;
 
@@ -31,9 +31,8 @@ public class CompilationCenter {
      * -output streams
      */
     public static void initialize(){
-        if(initialized){
-            return;
-        }
+        if(initialized)
+			return;
 
         assert(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME) != null);
         String fixedPath = Utils.fixSpacesProblemOnPath(CompilationCenter.class.getResource(DUMMY_DIR_PATH+DUMMY_FILE_NAME).getPath());
@@ -46,23 +45,22 @@ public class CompilationCenter {
 
     /**
      * Checks whether or not the given PsiFile has any compilation errors
-     * @param file - JD
+     * @param f - JD
      * @return has any compilation errors
      */
-    public static boolean hasCompilationErrors(PsiFile file) {
-        compile(file);
+    public static boolean hasCompilationErrors(PsiFile f) {
+        compile(f);
         return errors.toString().length() != 0;
     }
 
     /**
      * Compile the given PsiFile and update the output buffers accordingly
-     * @param file - JD
+     * @param f - JD
      */
-    private static void compile(PsiFile file){
-        if(!initialized){
-            initialize();
-        }
-        String source = file.getText();
+    private static void compile(PsiFile f){
+        if(!initialized)
+			initialize();
+        String source = f.getText();
         try {
             Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
@@ -78,9 +76,8 @@ public class CompilationCenter {
      * @return The compilation errors that result from the latest compile with the compile function
      */
     public static String getLatestCompilationErrors(){
-        if(!initialized){
-            initialize();
-        }
+        if(!initialized)
+			initialize();
         return errors.toString();
     }
 
@@ -89,9 +86,8 @@ public class CompilationCenter {
      * @return The compilation output that result from the latest compile with the compile function
      */
     public static String getLatestCompilationOutput(){
-        if(!initialized){
-            initialize();
-        }
+        if(!initialized)
+			initialize();
         return output.toString();
     }
 

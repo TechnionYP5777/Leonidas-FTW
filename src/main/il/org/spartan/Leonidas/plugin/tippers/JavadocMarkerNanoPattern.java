@@ -20,30 +20,28 @@ import il.org.spartan.Leonidas.auxilary_layer.step;
  */
 public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMethod> {
     @Override
-    public boolean canTip(PsiElement psiElement) {
-        return iz.method(psiElement) && !hasTag(az.method(psiElement)) && prerequisites(az.method(psiElement));
+    public boolean canTip(PsiElement e) {
+        return iz.method(e) && !hasTag(az.method(e)) && prerequisites(az.method(e));
     }
 
     @Override
-    final public PsiElement createReplacement(PsiMethod e) {
-        String docOld = step.docCommentString(e);
-        String docNew = docOld + tag();
-        final Wrapper<String> methodText = new Wrapper<>("");
-        e.acceptChildren(new JavaElementVisitor() {
-            @Override
-            public void visitElement(PsiElement element) {
-                if (!iz.javadoc(element)) {
-                    methodText.set(methodText.get() + element.getText());
-                }
-                super.visitElement(element);
-            }
-        });
-        String methodNewText = "/**" + docNew + "*/" + methodText;
-        return JavaPsiFacade.getElementFactory(e.getProject()).createMethodFromText(methodNewText, e.getContext());
-    }
+	public final PsiElement createReplacement(PsiMethod m) {
+		String docOld = step.docCommentString(m), docNew = docOld + tag();
+		final Wrapper<String> methodText = new Wrapper<>("");
+		m.acceptChildren(new JavaElementVisitor() {
+			@Override
+			public void visitElement(PsiElement e) {
+				if (!iz.javadoc(e))
+					methodText.set(methodText.get() + e.getText());
+				super.visitElement(e);
+			}
+		});
+		return JavaPsiFacade.getElementFactory(m.getProject()).createMethodFromText("/**" + docNew + "*/" + methodText,
+				m.getContext());
+	}
 
     @Override
-    public String description(PsiMethod psiMethod) {
+    public String description(PsiMethod m) {
         return "Add \"Delegator\" javadoc";
     }
 
@@ -53,7 +51,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
         return "[[" + this.getClass().getSimpleName() + "]]";
     }
 
-    private boolean hasTag(PsiMethod psiMethod) {
-        return step.docCommentString(psiMethod).contains(tag());
+    private boolean hasTag(PsiMethod m) {
+        return step.docCommentString(m).contains(tag());
     }
 }

@@ -29,17 +29,17 @@ public class Replacer2 {
      * @param r             - Rewrite object
      * @return the replaced element
      */
-    public EncapsulatingNode replace(PsiElement treeToReplace, Map<Integer, PsiElement> map, PsiRewrite r) {
-        PsiElement n = getReplacingTree(map, r);
+    public EncapsulatingNode replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
+        PsiElement n = getReplacingTree(m, r);
         r.replace(treeToReplace, n);
         return EncapsulatingNode.buildTreeFromPsi(n);
     }
 
-    public PsiElement getReplacingTree(Map<Integer, PsiElement> map, PsiRewrite r) {
-        map.keySet().forEach(d -> root.accept(e -> {
-            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent()) {
-                Pruning.getRealParent(e, Pruning.getStubName(e).get()).replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
-            }
+    public PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
+        m.keySet().forEach(d -> root.accept(e -> {
+            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent())
+				Pruning.getRealParent(e, Pruning.getStubName(e).get())
+						.replace(new EncapsulatingNode(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
         }));
         return root.getInner();
     }

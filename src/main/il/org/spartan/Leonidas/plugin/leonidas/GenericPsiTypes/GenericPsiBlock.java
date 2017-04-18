@@ -22,11 +22,11 @@ public class GenericPsiBlock extends GenericPsi{
         return iz.blockStatement(e) || iz.block(e) || iz.statement(e);
     }
 
-    @NotNull
     @Override
-    public Project getProject() throws PsiInvalidElementAccessException {
-        return inner.getProject();
-    }
+	@NotNull
+	public Project getProject() throws PsiInvalidElementAccessException {
+		return inner.getProject();
+	}
 
     @Override
     public String toString() {

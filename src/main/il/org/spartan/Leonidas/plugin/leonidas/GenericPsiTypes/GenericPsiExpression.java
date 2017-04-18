@@ -17,13 +17,13 @@ import org.jetbrains.annotations.Nullable;
 public class GenericPsiExpression extends GenericPsi {
     PsiType t;
 
-    public GenericPsiExpression(PsiType evalType, PsiElement e) {
+    public GenericPsiExpression(PsiType t, PsiElement e) {
         super(e, "generic expression");
-        this.t = evalType;
+        this.t = t;
     }
 
     @Override
-    public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState state, @Nullable PsiElement lastParent, @NotNull PsiElement place) {
+    public boolean processDeclarations(@NotNull PsiScopeProcessor p, @NotNull ResolveState s, @Nullable PsiElement lastParent, @NotNull PsiElement place) {
         return false;
     }
 

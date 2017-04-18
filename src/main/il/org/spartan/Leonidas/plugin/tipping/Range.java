@@ -13,7 +13,7 @@ public class Range {
     private int stop;
 
     public Range(int start, int stop) {
-        Assert.assertTrue(start <= stop);
+        assert start <= stop;
         this.start = start;
         this.stop = stop;
     }

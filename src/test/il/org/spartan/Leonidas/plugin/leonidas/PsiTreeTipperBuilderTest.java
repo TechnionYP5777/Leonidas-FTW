@@ -8,7 +8,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  */
 public class PsiTreeTipperBuilderTest extends PsiTypeHelper {
 
-    private static final String TEST_FILE_NAME = "RemoveCurlyBracesFromIfStatement" + ".java";
+    private static final String TEST_FILE_NAME = "RemoveCurlyBracesFromIfStatement.java";
 
     private PsiTreeTipperBuilder $;
 

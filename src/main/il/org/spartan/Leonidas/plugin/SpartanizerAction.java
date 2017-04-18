@@ -26,12 +26,12 @@ public class SpartanizerAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         PsiClass psiClass = getPsiClassFromContext(e);
 
-        if (psiClass != null) {
-            logger.info("Spartanization action on\nPSI class '" + psiClass.getQualifiedName() + "'");
-            Spartanizer.spartanizeFileOnePass(psiClass.getContainingFile());
-        } else {
-            logger.warn("Spartanization action retrieved null PSI class");
-        }
+        if (psiClass == null)
+			logger.warn("Spartanization action retrieved null PSI class");
+		else {
+			logger.info("Spartanization action on\nPSI class '" + psiClass.getQualifiedName() + "'");
+			Spartanizer.spartanizeFileOnePass(psiClass.getContainingFile());
+		}
 
     }
 

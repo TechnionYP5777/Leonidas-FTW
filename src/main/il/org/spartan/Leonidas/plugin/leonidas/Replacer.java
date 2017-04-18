@@ -31,9 +31,9 @@ public interface Replacer {
     default PsiElement getReplacer(PsiElement treeToReplace, EncapsulatingNode templateMatchingTree, EncapsulatingNode templateReplacingTree, PsiRewrite r) {
         Map<Integer, PsiElement> map = extractInfo(templateMatchingTree, treeToReplace);
         map.keySet().forEach(d -> templateReplacingTree.accept(e -> {
-            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent()) {
-                Pruning.getRealParent(e, Pruning.getStubName(e).get()).replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
-            }
+            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent())
+				Pruning.getRealParent(e, Pruning.getStubName(e).get())
+						.replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
         }));
 
         return templateReplacingTree.getInner();
@@ -47,13 +47,12 @@ public interface Replacer {
     default Map<Integer, PsiElement> extractInfo(EncapsulatingNode treeTemplate, PsiElement treeToMatch) {
         Map<Integer, PsiElement> mapping = new HashMap<>();
         EncapsulatingNode.Iterator treeTemplateChile = treeTemplate.iterator();
-        for (PsiElement treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChile.hasNext() && treeToMatchChild != null; treeTemplateChile.next(), treeToMatchChild = step.nextSibling(treeToMatchChild)) {
-            if (treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID) != null) {
-                mapping.put(treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID), treeToMatchChild);
-            } else {
-                mapping.putAll(extractInfo(treeTemplateChile.value(), treeToMatchChild));
-            }
-        }
+        for (PsiElement treeToMatchChild = treeToMatch.getFirstChild(); treeTemplateChile.hasNext() && treeToMatchChild != null; treeTemplateChile.next(), treeToMatchChild = step.nextSibling(treeToMatchChild))
+			if (treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID) == null)
+				mapping.putAll(extractInfo(treeTemplateChile.value(), treeToMatchChild));
+			else
+				mapping.put(treeTemplateChile.value().getInner().getUserData(KeyDescriptionParameters.ID),
+						treeToMatchChild);
         return mapping;
     }
 }

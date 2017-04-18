@@ -15,10 +15,10 @@ import java.util.Date;
 public class BasicLogEntry {
 
 
-    static final private String SPACE = "  ";
-    static final private String DATE_FORMAT = "HH:mm:ss  dd/MM";
-    static final private String LOG_ENTRY_TRAILER = "\n";
-    static final private String LOG_MSG_LEADER = ">    ";
+    private static final String SPACE = "  ";
+    private static final String DATE_FORMAT = "HH:mm:ss  dd/MM";
+    private static final String LOG_ENTRY_TRAILER = "\n";
+    private static final String LOG_MSG_LEADER = ">    ";
 
     private Logger.LEVEL logLevel;
     private Class clazz;
@@ -60,7 +60,7 @@ public class BasicLogEntry {
 
     @Override
     public String toString() {
-        return getFormatedDate() + SPACE + logLevel + SPACE + clazz.getName() + SPACE + ":" + "\n"
-                + getFormatedMsg() + LOG_ENTRY_TRAILER;
+        return getFormatedDate() + SPACE + logLevel + SPACE + clazz.getName() + SPACE + ":\n" + getFormatedMsg()
+				+ LOG_ENTRY_TRAILER;
     }
 }

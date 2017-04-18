@@ -36,49 +36,31 @@ public enum Utils {
         return list != null && Arrays.stream(list).anyMatch(elem -> elem.equals(candidate));
     }
 
-    public static PsiManager getPsiManager(Project project) {
-        return PsiManager.getInstance(project);
+    public static PsiManager getPsiManager(Project p) {
+        return PsiManager.getInstance(p);
     }
 
-    public static PsiClass findClass(PsiElement element) {
-
-        if (element == null) {
-            return null;
-        }
-
-        if (element instanceof PsiClass) {
-            return (PsiClass) element;
-        }
-
-        if (element.getParent() != null) {
-            return findClass(element.getParent());
-        }
-
-        return null;
-    }
+    public static PsiClass findClass(PsiElement e) {
+		return e == null ? null
+				: e instanceof PsiClass ? (PsiClass) e : e.getParent() == null ? null : findClass(e.getParent());
+	}
 
     public static PsiMethod findMethodByName(PsiClass clazz, String name) {
-        if (clazz == null) {
-            return null;
-        }
-
-        Arrays.stream(clazz.getMethods());
-        PsiMethod[] methods = clazz.getMethods();
-        // use reverse to find from bottom as the duplicate conflict resolution policy requires this
-        for (int i = methods.length - 1; i >= 0; i--) {
-            PsiMethod method = methods[i];
-            if (name.equals(method.getName()))
-                return method;
-        }
-        return null;
+        if (clazz == null)
+			return null;
+		Arrays.stream(clazz.getMethods());
+		PsiMethod[] methods = clazz.getMethods();
+		for (int i = methods.length - 1; i >= 0; --i)
+			if (name.equals(methods[i].getName()))
+				return methods[i];
+		return null;
     }
 
-    public static PsiClass getCurrentClass(PsiJavaFile javaFile, Editor editor) {
-        if (javaFile == null) {
-            return null;
-        }
-        PsiElement element = javaFile.findElementAt(editor.getCaretModel().getOffset());
-        return element != null ? findClass(element) : null;
+    public static PsiClass getCurrentClass(PsiJavaFile f, Editor e) {
+        if (f == null)
+			return null;
+        PsiElement element = f.findElementAt(e.getCaretModel().getOffset());
+        return element == null ? null : findClass(element);
     }
 
     public static boolean conforms(Class<?> from, Class<?> to) {
@@ -89,20 +71,18 @@ public enum Utils {
 
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier i) {
         List<PsiIdentifier> identifiers = new ArrayList<>();
-        if (root == null || i == null) {
-            return identifiers;
-        }
-        root.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitIdentifier(PsiIdentifier identifier) {
-                super.visitIdentifier(identifier);
-                if (identifier.getText().equals(i.getText())) {
-                    PsiElement context = identifier.getContext();
-                    if (iz.variable(context) || iz.referenceExpression(context))
-                        identifiers.add(identifier);
-                }
-            }
-        });
+        if (root != null && i != null)
+			root.accept(new JavaRecursiveElementVisitor() {
+				@Override
+				public void visitIdentifier(PsiIdentifier i) {
+					super.visitIdentifier(i);
+					if (!i.getText().equals(i.getText()))
+						return;
+					PsiElement context = i.getContext();
+					if (iz.variable(context) || iz.referenceExpression(context))
+						identifiers.add(i);
+				}
+			});
         return identifiers;
     }
 
@@ -129,13 +109,11 @@ public enum Utils {
 
     private static String showPsiTreeAux(PsiElement e, int indent) {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < indent; i++) {
-            s.append("\t");
-        }
+        for (int i = 0; i < indent; ++i)
+			s.append("\t");
         s.append(e.getClass().getName()).append(": ").append(e.getText()).append("\n");
-        for (PsiElement child : e.getChildren()) {
-            s.append(showPsiTreeAux(child, indent + 1));
-        }
+        for (PsiElement child : e.getChildren())
+			s.append(showPsiTreeAux(child, indent + 1));
         return s.toString();
     }
 
@@ -148,12 +126,10 @@ public enum Utils {
         assert e != null;
         e.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                if (aClass.isInstance(element)) {
-                    //noinspection unchecked
-                    w.get().add((T) element);
-                }
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                if (aClass.isInstance(e))
+					w.get().add((T) e);
             }
         });
         return w.get();
@@ -161,8 +137,7 @@ public enum Utils {
 
     public static void main(String[] args) {
         try {
-            String source = getSourceCode(RemoveCurlyBracesFromIfStatement.class);
-            System.out.println(source);
+            System.out.println(getSourceCode(RemoveCurlyBracesFromIfStatement.class));
         } catch (IOException e) {
             logger.error("", e);
         }
@@ -171,8 +146,7 @@ public enum Utils {
     public static String getSourceCode(Class<?> c) throws IOException {
 
         try (InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java")) {
-            BufferedReader pluginXmlBuffer = new BufferedReader(new InputStreamReader(is));
-            return IOUtils.toString(pluginXmlBuffer);
+            return IOUtils.toString(new BufferedReader(new InputStreamReader(is)));
         } catch (IOException e) {
             logger.error("", e);
         }
@@ -190,16 +164,10 @@ public enum Utils {
         String FS = System.getProperty("file.separator");
         ClassLoader loader = Utils.class.getClassLoader();
 
-        //loader.getResource();
         String currDir = loader.getResource(c.getName().replaceAll("\\.", "/") + ".class").toString()
-                .replaceAll("/", Matcher.quoteReplacement(FS))
-                .replaceAll("\\\\", Matcher.quoteReplacement(FS));
-        String redundantPrefix = "file:\\";
-
-        String $ = currDir.startsWith(redundantPrefix) ? currDir.substring(redundantPrefix.length()) : currDir;
-        $ = $.replaceAll("\\.class", ".java");
-
-        return $;
+				.replaceAll("/", Matcher.quoteReplacement(FS)).replaceAll("\\\\", Matcher.quoteReplacement(FS));
+        return (!currDir.startsWith("file:\\") ? currDir : currDir.substring("file:\\".length())).replaceAll("\\.class",
+				".java");
     }
 
     /**

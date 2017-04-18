@@ -38,8 +38,8 @@ public class Constraint {
         return matcher;
     }
 
-    public void setMatcher(Matcher2 matcher) {
-        this.matcher = matcher;
+    public void setMatcher(Matcher2 m) {
+        this.matcher = m;
     }
 
     public boolean match(PsiElement e) {

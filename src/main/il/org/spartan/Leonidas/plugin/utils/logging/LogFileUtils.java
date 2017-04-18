@@ -36,9 +36,8 @@ class LogFileUtils {
     private static String getPath() {
         PluginId ourPluginId = PluginId.getId(PluginDescriptorReader.getPluginId());
         IdeaPluginDescriptor ourPlugin = PluginManager.getPlugin(ourPluginId);
-        if (ourPlugin == null) {
-            throw new RuntimeException("Cannot retrieve plugin descriptor");
-        }
+        if (ourPlugin == null)
+			throw new RuntimeException("Cannot retrieve plugin descriptor");
         return ourPlugin.getPath().getPath() + SLASH + RELATIVE_LOG_PATH + BASE_LOG_NAME + DOT + LOG_EXT;
     }
 
@@ -48,31 +47,25 @@ class LogFileUtils {
      */
     private static void ensureLogExistance() {
         File f = new File(getPath());
-        if (!f.exists()) {
-            try {
-                //noinspection ResultOfMethodCallIgnored
-                f.getParentFile().mkdirs();
-                //noinspection ResultOfMethodCallIgnored
-                f.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        if (!f.exists())
+			try {
+				f.getParentFile().mkdirs();
+				f.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     }
 
     /**
-     * Appends a string to the log file.
-     *
-     * @param str - The string to append to the logfile
-     */
-    synchronized static void appendToLogFile(String str) {
-        try {
-            ensureLogExistance();
-            // Uncomment this if you want to see where (and if) the log is written:
-            // System.out.println("wrote " + str + " to " + getPath());
-            new FileWriter(getPath(), true).append(str).flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	 * Appends a string to the log file.
+	 * @param s  - The string to append to the logfile
+	 */
+	static synchronized void appendToLogFile(String s) {
+		try {
+			ensureLogExistance();
+			new FileWriter(getPath(), true).append(s).flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

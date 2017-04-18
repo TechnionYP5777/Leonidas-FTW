@@ -17,29 +17,15 @@ public class OptimisticTest extends PsiTypeHelper {
     }
 
     public void testDetectsCompilationErrors() throws Exception {
-        assertTrue(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5=!=5);}")));
-        //changing a final variable error:
-        String source1 = "package test; "+
-                "public class Test { "+
-                "public Test() { "+
-                "final int x=3; x=5; System.out.println(\"banana\"); " +
-                "} "+
-                "}";
-
-        assertTrue(haz.compilationErrors(createTestFileFromString(source1)));
+        assert haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5=!=5);}"));
+        assert haz.compilationErrors(createTestFileFromString("package test; public class Test { public Test() { final int x=3; x=5; System.out.println(\"banana\"); } }"));
     }
 
     public void testNoCompilationErrors(){
-        assertFalse(haz.syntaxErrors(createTestExpressionFromString("5 == 5")));
-        assertFalse(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return false;}")));
-        assertFalse(haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5==5);}")));
-        String source2 = "package test; "+
-                "public class Test { "+
-                "public Test() { "+
-                "final int x=3; System.out.println(\"lalala\"); "+
-                "} "+
-                "}";
-        assertFalse(haz.compilationErrors(createTestFileFromString(source2)));
+        assert !haz.syntaxErrors(createTestExpressionFromString("5 == 5"));
+        assert !haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return false;}"));
+        assert !haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5==5);}"));
+        assert !haz.compilationErrors(createTestFileFromString("package test; public class Test { public Test() { final int x=3; System.out.println(\"lalala\"); } }"));
 
     }
 

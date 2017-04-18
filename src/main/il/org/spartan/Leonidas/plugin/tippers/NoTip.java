@@ -16,7 +16,7 @@ public class NoTip<T extends PsiElement> implements Tipper<T> {
     }
 
     @Override
-    public String description(PsiElement element) {
+    public String description(PsiElement e) {
         return "";
     }
 

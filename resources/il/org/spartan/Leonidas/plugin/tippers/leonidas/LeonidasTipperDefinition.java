@@ -7,9 +7,6 @@ import java.util.function.Supplier;
  * @since 26-03-2017.
  */
 public interface LeonidasTipperDefinition {
-    /**
-     * @return
-     */
     Template matcher();
 
     Template replacer();

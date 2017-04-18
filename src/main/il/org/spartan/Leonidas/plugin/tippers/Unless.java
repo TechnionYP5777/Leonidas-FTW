@@ -28,19 +28,20 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
     }
 
     @Override
-    public String description(PsiConditionalExpression psiConditionalExpression) {
-        return "Change " + psiConditionalExpression.getText() + " to fluent eval().unless()";
+    public String description(PsiConditionalExpression x) {
+        return "Change " + x.getText() + " to fluent eval().unless()";
     }
 
     /**
-     * @param e - the element to be replaced
-     * @return a method invocation to unless function.
-     */
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public PsiElement createReplacement(PsiConditionalExpression e) {
-        return JavaPsiFacade.getElementFactory(e.getProject()).createExpressionFromText("eval(" + e.getElseExpression().getText() + ").unless( " + e.getCondition().getText() + ")", e);
-    }
+	 * @param x  - the element to be replaced
+	 * @return  a method invocation to unless function.
+	 */
+	@Override
+	@SuppressWarnings("ConstantConditions")
+	public PsiElement createReplacement(PsiConditionalExpression x) {
+		return JavaPsiFacade.getElementFactory(x.getProject()).createExpressionFromText(
+				"eval(" + x.getElseExpression().getText() + ").unless( " + x.getCondition().getText() + ")", x);
+	}
 
     @Override
     public Class<PsiConditionalExpression> getPsiClass() {

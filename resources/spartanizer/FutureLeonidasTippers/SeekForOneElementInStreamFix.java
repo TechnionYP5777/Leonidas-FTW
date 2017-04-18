@@ -22,7 +22,7 @@ public class SeekForOneElementInStreamFix extends GenericPsiElementStub {
         List<Object> l = Arrays.stream(arrayIdentifier(0))
                 .streamMethodInvocations(1)
                 .collect(Collectors.toList());
-                return !l.isEmpty() ? l.get(0) : null;
+                return l.isEmpty() ? null : l.get(0);
     }
 
     @Leonidas(PsiMethodCallExpression.class)

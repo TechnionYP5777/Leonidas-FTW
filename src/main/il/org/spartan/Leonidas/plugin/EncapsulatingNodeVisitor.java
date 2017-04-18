@@ -6,5 +6,5 @@ package il.org.spartan.Leonidas.plugin;
  */
 public interface EncapsulatingNodeVisitor {
 
-    void visit(EncapsulatingNode e);
+    void visit(EncapsulatingNode n);
 }

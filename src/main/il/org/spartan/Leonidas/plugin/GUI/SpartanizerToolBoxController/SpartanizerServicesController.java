@@ -28,37 +28,24 @@ public class SpartanizerServicesController implements Initializable {
     /**
      * this method is responsible of controlling the gui and defining be
      * @param location
-     * @param resources
+     * @param b
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle b) {
         List<LeonidasTipper> tippers = Toolbox.getAllTippers();
-        Map<String, LeonidasTipper> tippersMap = createMapFromTipperList(tippers);
-
-
-        // creating the checkBox list.
-        for(LeonidasTipper tipper : tippers){
-            tipperList.getChildren().add(new CheckBox(tipper.getClass().getName()));
-        }
+        createMapFromTipperList(tippers);
+		// creating the checkBox list.
+        for(LeonidasTipper tipper : tippers)
+			tipperList.getChildren().add(new CheckBox(tipper.getClass().getName()));
         //TODO: remove when done.
         tipperList.getChildren().add(new CheckBox("tip"));
 
-        SelectAllButton.setOnAction(event -> {
-            tipperList.getChildren().forEach(cb -> ((CheckBox)cb).setSelected(true));
-
-        });
-        CleanAllButton.setOnAction(event -> {
-            tipperList.getChildren().forEach(cb -> ((CheckBox)cb).setSelected(false));
-        });
+        SelectAllButton.setOnAction(event -> tipperList.getChildren().forEach(cb -> ((CheckBox) cb).setSelected(true)));
+        CleanAllButton.setOnAction(event -> tipperList.getChildren().forEach(cb -> ((CheckBox) cb).setSelected(false)));
 
         tipperList.getChildren().forEach(tip ->{
-            tip.setOnMouseEntered(event -> {
-                description.setText("hello!");
-                //description.setText((tippersMap.get(((CheckBox)tip).getText())).description());
-            });
-            tip.setOnMouseExited(event -> {
-                description.setText("");
-            });
+            tip.setOnMouseEntered(event -> description.setText("hello!"));
+            tip.setOnMouseExited(event -> description.setText(""));
         });
 
     }
@@ -66,9 +53,7 @@ public class SpartanizerServicesController implements Initializable {
 
     private Map<String,LeonidasTipper> createMapFromTipperList(List<LeonidasTipper> list){
         Map<String,LeonidasTipper> tipperMap = new HashMap<>();
-        list.forEach(tip -> {
-            tipperMap.put(tip.getClass().getName(),tip);
-        });
+        list.forEach(tip -> tipperMap.put(tip.getClass().getName(), tip));
 
         return tipperMap;
     }

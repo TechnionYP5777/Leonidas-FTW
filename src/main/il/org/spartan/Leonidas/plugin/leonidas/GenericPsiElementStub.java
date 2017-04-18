@@ -107,9 +107,9 @@ public class GenericPsiElementStub {
 
         StubName(String stubName) { this.stubName = stubName; }
 
-        public static StubName valueOfMethodCall(PsiMethodCallExpression expression) {
+        public static StubName valueOfMethodCall(PsiMethodCallExpression x) {
             return Arrays.stream(values())
-                    .filter(stub -> expression.getMethodExpression().getText().equals(stub.stubName()))
+                    .filter(stub -> x.getMethodExpression().getText().equals(stub.stubName()))
                     .findFirst().orElseGet(null);
 
         }
@@ -120,36 +120,36 @@ public class GenericPsiElementStub {
                     .findFirst().orElseGet(null);
         }
 
-        public static StubName getGeneralTye(PsiElement element) {
+        public static StubName getGeneralTye(PsiElement e) {
             Wrapper<StubName> name = new Wrapper<>(null);
-            element.accept(new JavaElementVisitor() {
+            e.accept(new JavaElementVisitor() {
                 @Override
-                public void visitCodeBlock(PsiCodeBlock block) {
-                    super.visitCodeBlock(block);
+                public void visitCodeBlock(PsiCodeBlock b) {
+                    super.visitCodeBlock(b);
                     name.set(ANY_BLOCK);
                 }
 
                 @Override
-                public void visitExpression(PsiExpression expression) {
-                    super.visitExpression(expression);
+                public void visitExpression(PsiExpression x) {
+                    super.visitExpression(x);
                     name.set(BOOLEAN_EXPRESSION);
                 }
 
                 @Override
-                public void visitStatement(PsiStatement statement) {
-                    super.visitStatement(statement);
+                public void visitStatement(PsiStatement s) {
+                    super.visitStatement(s);
                     name.set(STATEMENT);
                 }
 
                 @Override
-                public void visitIdentifier(PsiIdentifier identifier) {
-                    super.visitIdentifier(identifier);
+                public void visitIdentifier(PsiIdentifier i) {
+                    super.visitIdentifier(i);
                     name.set(IDENTIFIER);
                 }
 
                 @Override
-                public void visitArrayAccessExpression(PsiArrayAccessExpression expression) {
-                    super.visitArrayAccessExpression(expression);
+                public void visitArrayAccessExpression(PsiArrayAccessExpression x) {
+                    super.visitArrayAccessExpression(x);
                     name.set(ARRAY_IDENTIFIER);
                 }
             });
@@ -168,8 +168,8 @@ public class GenericPsiElementStub {
             return String.format("%s();", stubName);
         }
 
-        public boolean matchesStubName(PsiMethodCallExpression e) {
-            return e.getMethodExpression().getText().equals(this.stubName);
+        public boolean matchesStubName(PsiMethodCallExpression x) {
+            return x.getMethodExpression().getText().equals(this.stubName);
         }
 
         public GenericPsi getGenericPsiType(PsiElement inner, Integer id) {
@@ -193,19 +193,13 @@ public class GenericPsiElementStub {
 
         public boolean goUpwards(EncapsulatingNode prv, EncapsulatingNode next) {
             switch (this) {
-                case BOOLEAN_EXPRESSION:
-                    return prv.getText().equals(next.getText());
-                case STATEMENT:
-                    return prv.getText().equals(next.getText()) || next.getText().equals(prv.getText() + ";");
-                case ANY_BLOCK:
-                    return !iz.block(prv.getInner());//return prv.getText().equals(next.getText());
-                case ARRAY_IDENTIFIER:
-                    return prv.getText().equals(next.getText());
-                case IDENTIFIER:
-                    return prv.getText().equals(next.getText());
-                default:
-                    return prv.getText().equals(next.getText());
-            }
+			default:
+				return prv.getText().equals(next.getText());
+			case STATEMENT:
+				return prv.getText().equals(next.getText()) || next.getText().equals(prv.getText() + ";");
+			case ANY_BLOCK:
+				return !iz.block(prv.getInner());
+			}
         }
     }
 }

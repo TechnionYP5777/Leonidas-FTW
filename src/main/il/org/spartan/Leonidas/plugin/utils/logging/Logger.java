@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 // its ok for methods to be public and unused.
 public class Logger {
 
-    private final static LEVEL defaultLogLevel = LEVEL.INFO;
+    private static final LEVEL defaultLogLevel = LEVEL.INFO;
     private Class<?> clz;
     private LEVEL logLevel;
 
@@ -112,13 +112,9 @@ public class Logger {
         this.logLevel = logLevel;
     }
 
-    private void log(BasicLogEntry logEntry) {
-        // Check if the log level of the entry is sufficiently high
-        if (!logEntry.getLogLevel().greaterOrEqual(this.getLogLevel())) {
-            return;
-        }
-        // If it is, append log to file
-        LogFileUtils.appendToLogFile(logEntry.toString());
+    private void log(BasicLogEntry e) {
+        if (e.getLogLevel().greaterOrEqual(this.getLogLevel()))
+			LogFileUtils.appendToLogFile(e.toString());
     }
 
     public enum LEVEL {

@@ -40,17 +40,19 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
     @Override
     public Tip tip(PsiMethod ¢) {
         return ¢ == null || !canTip(¢) ? null : new Tip(description(¢), ¢, this.getClass()) {
-            @SuppressWarnings("ConstantConditions")
             @Override
-            public void go(final PsiRewrite r) {
-                PsiIdentifier cent = JavaPsiFacade.getElementFactory(¢.getProject()).createIdentifier("¢");
-                PsiIdentifier i = JavaPsiFacade.getElementFactory(¢.getProject()).createIdentifier(¢.getParameterList().getParameters()[0].getNameIdentifier().getText());
-                r.replace(¢.getParameterList().getParameters()[0].getNameIdentifier(), cent);
-                List<PsiIdentifier> references = Utils.getAllReferences(¢.getBody(), i);
-                Stream<PsiIdentifier> fields = references.stream().filter(q -> iz.javaToken(q.getPrevSibling().getPrevSibling()));
-                references.removeAll(fields.collect(Collectors.toList()));
-                references.stream().forEach(s -> r.replace(s, cent));
-            }
+			@SuppressWarnings("ConstantConditions")
+			public void go(final PsiRewrite r) {
+				PsiIdentifier cent = JavaPsiFacade.getElementFactory(¢.getProject()).createIdentifier("¢"),
+						i = JavaPsiFacade.getElementFactory(¢.getProject()).createIdentifier(
+								¢.getParameterList().getParameters()[0].getNameIdentifier().getText());
+				r.replace(¢.getParameterList().getParameters()[0].getNameIdentifier(), cent);
+				List<PsiIdentifier> references = Utils.getAllReferences(¢.getBody(), i);
+				Stream<PsiIdentifier> fields = references.stream()
+						.filter(q -> iz.javaToken(q.getPrevSibling().getPrevSibling()));
+				references.removeAll(fields.collect(Collectors.toList()));
+				references.stream().forEach(s -> r.replace(s, cent));
+			}
         };
     }
 

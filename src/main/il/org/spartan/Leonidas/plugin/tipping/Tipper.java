@@ -15,9 +15,9 @@ public interface Tipper<T extends PsiElement> {
         return getClass().getSimpleName();
     }
 
-    String description(final T t);
+    String description(T t);
 
-    Tip tip(final T node);
+    Tip tip(T node);
 
     Class<? extends T> getPsiClass();
 
