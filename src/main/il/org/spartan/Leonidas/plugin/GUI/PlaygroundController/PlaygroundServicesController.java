@@ -1,9 +1,7 @@
 package il.org.spartan.Leonidas.plugin.GUI.PlaygroundController;
 
 
-import com.intellij.psi.PsiFile;
 import com.intellij.testFramework.PsiTestCase;
-import il.org.spartan.Leonidas.plugin.Spartanizer;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
@@ -22,6 +20,8 @@ public class PlaygroundServicesController extends PsiTestCase {
     public Button spartanizeButton;
     public Button clearButton;
 
+    int i = 0;
+
     public PlaygroundServicesController() {
         setName(fileName);
         try {
@@ -35,7 +35,7 @@ public class PlaygroundServicesController extends PsiTestCase {
      * Clears all text related fields in the gui
      */
     public void onClearButtonClicked() {
-        inputCode.setText("");
+//        inputCode.setText("");
         outputCode.setText("");
     }
 
@@ -43,9 +43,19 @@ public class PlaygroundServicesController extends PsiTestCase {
      * Applies spartanization on given code
      */
     public void onSpartanizeButtonClicked() {
-        PsiFile file = createDummyFile(fileName, "public class foo{ public void func() {" + inputCode.getText() + "}}");
-
-        Spartanizer.spartanizeFileOnePass(file);
-        outputCode.setText(file.getText().replace("class foo { public void func(){", "").replace("}}", ""));
+        outputCode.setText(inputCode.getText());
+//        outputCode.setText("public class foo{ public void func() {" + inputCode.getText() + "}}");
+//        PsiFile file = createDummyFile(fileName, "public class foo{ public void func() {" + inputCode.getText() + "}}");
+//        if (i % 2 == 0) {
+//            outputCode.setText(file.getText());
+//        } else {
+//        System.out.println("before:");
+//        System.out.println(file.getText());
+//            Spartanizer.spartanizeFileOnePass(file);
+//        System.out.println("after:");
+//        System.out.println(file.getText());
+//            outputCode.setText(file.getText());
+//        }
+//        i++;
     }
 }
