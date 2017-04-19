@@ -1,4 +1,4 @@
-package il.org.spartan.ispartanizer.plugin;
+package il.org.spartan.Leonidas.plugin;
 
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.lang.annotation.Annotation;
@@ -13,7 +13,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.JBColor;
 import com.intellij.util.IncorrectOperationException;
-import il.org.spartan.ispartanizer.plugin.utils.logging.Logger;
+import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 

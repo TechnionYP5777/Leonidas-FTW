@@ -1,25 +1,29 @@
-package il.org.spartan.ispartanizer.plugin.tippers;
+package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.google.common.io.Files;
+import com.intellij.lang.Language;
+import com.intellij.lang.LanguageParserDefinitions;
+import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
-import il.org.spartan.ispartanizer.auxilary_layer.*;
-import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
-import il.org.spartan.ispartanizer.plugin.leonidas.Constraint;
-import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.Replacer2;
-import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
-import il.org.spartan.ispartanizer.plugin.leonidas.Matcher2;
-import il.org.spartan.ispartanizer.plugin.leonidas.Pruning;
-import il.org.spartan.ispartanizer.plugin.tipping.Tip;
-import il.org.spartan.ispartanizer.plugin.tipping.Tipper;
+import com.intellij.testFramework.LightVirtualFile;
+import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
+import il.org.spartan.Leonidas.plugin.leonidas.Constraint;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.Replacer2;
+import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher2;
+import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
+import il.org.spartan.Leonidas.plugin.tipping.Tip;
+import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
+import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
 
 /**
  * This class represents a tipper created by the leonidas language.
@@ -304,8 +308,25 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
                         String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
     }
 
-    private PsiFile getPsiTreeFromString(String psiFileName, String s) {
+    /*private PsiFile getPsiTreeFromString(String psiFileName, String s) {
         return PsiFileFactory.getInstance(Utils.getProject())
                 .createFileFromText(JavaLanguage.INSTANCE, s);
+    }*/
+
+    private PsiFile getPsiTreeFromString(String name, String s) {
+        Language language = JavaLanguage.INSTANCE;
+        LightVirtualFile virtualFile = new LightVirtualFile(name, language, s);
+        SingleRootFileViewProvider.doNotCheckFileSizeLimit(virtualFile);
+        final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage(language);
+        FileViewProvider viewProvider = factory != null ? factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true) : null;
+        if (viewProvider == null)
+            viewProvider = new SingleRootFileViewProvider(Utils.getPsiManager(Utils.getProject()), virtualFile, true);
+
+        language = viewProvider.getBaseLanguage();
+        final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
+        if (parserDefinition != null) {
+            return viewProvider.getPsi(language);
+        }
+        return null;
     }
 }

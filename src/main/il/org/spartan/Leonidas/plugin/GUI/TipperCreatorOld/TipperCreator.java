@@ -49,9 +49,9 @@ public class TipperCreator extends JFrame {
                 super.mouseClicked(e);
                 JTextArea focused = fromCode;
                 if (toCode.getSelectedText() != null)
-					focused = toCode;
-				else if (fromCode.getSelectedText() == null)
-					return;
+                    focused = toCode;
+                else if (fromCode.getSelectedText() == null)
+                    return;
                 PsiElement p = step.getHighestParent(element.findElementAt(focused.getSelectionStart()));
                 StubName givenType = StubName.getGeneralTye(p);
                 focused.replaceSelection(givenType.stubMethodCallExpressionStatement());
@@ -62,7 +62,7 @@ public class TipperCreator extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (fromCode.getSelectedText() == null || StubName.valueOfStringExpression(fromCode.getSelectedText()) == null)
-					return;
+                    return;
                 startOfMatchedFrom = fromCode.getSelectionStart();
                 endOfMatchedFrom = fromCode.getSelectionEnd();
                 toCode.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -73,17 +73,17 @@ public class TipperCreator extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (toCode.getCursor().getType() != Cursor.HAND_CURSOR)
-					return;
+                    return;
                 toCode.setCursor(new Cursor(Cursor.TEXT_CURSOR));
                 if (StubName.valueOfStringExpression(toCode.getSelectedText()) == null)
-					return;
+                    return;
                 StubName stub1 = StubName
-						.valueOfStringExpression(fromCode.getText().substring(startOfMatchedFrom, endOfMatchedFrom)),
-						stub2 = StubName.valueOfStringExpression(toCode.getSelectedText());
+                        .valueOfStringExpression(fromCode.getText().substring(startOfMatchedFrom, endOfMatchedFrom)),
+                        stub2 = StubName.valueOfStringExpression(toCode.getSelectedText());
                 if (!stub1.equals(stub2))
-					return;
+                    return;
                 String toSelected = toCode.getSelectedText(),
-						replaceString = toSelected.substring(0, toSelected.length() - 1) + genericElementIndex + ")";
+                        replaceString = toSelected.substring(0, toSelected.length() - 1) + genericElementIndex + ")";
                 toCode.replaceSelection(replaceString);
                 fromCode.replaceRange(replaceString, startOfMatchedFrom, endOfMatchedFrom);
                 ++genericElementIndex;
@@ -112,14 +112,14 @@ public class TipperCreator extends JFrame {
         panel1.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(5, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel2, new GridConstraints(0, 0, 5, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, new Dimension(400, 600), null, null, 0, false));
+        panel1.add(panel2, new GridConstraints(0, 0, 5, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(400, 600), null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel2.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, null, null, 0, false));
+        panel2.add(scrollPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         fromCode = new JTextArea();
         fromCode.setText("Insert template code here");
         scrollPane1.setViewportView(fromCode);
         final JScrollPane scrollPane2 = new JScrollPane();
-        panel2.add(scrollPane2, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_WANT_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, null, null, 0, false));
+        panel2.add(scrollPane2, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         toCode = new JTextArea();
         toCode.setText("Insert template code here");
         scrollPane2.setViewportView(toCode);
@@ -135,15 +135,15 @@ public class TipperCreator extends JFrame {
         selectGenerics.setText("Select Generic Components");
         selectGenerics.setMnemonic('S');
         selectGenerics.setDisplayedMnemonicIndex(0);
-        panel1.add(selectGenerics, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(selectGenerics, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         matchGeneric = new JButton();
         matchGeneric.setText("Match Generic Components");
         matchGeneric.setMnemonic('M');
         matchGeneric.setDisplayedMnemonicIndex(0);
-        panel1.add(matchGeneric, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(matchGeneric, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(panel3, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, null, null, null, 0, false));
+        panel1.add(panel3, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         panel3.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         IgnoreContent = new JButton();
@@ -151,7 +151,7 @@ public class TipperCreator extends JFrame {
         IgnoreContent.setMnemonic('G');
         IgnoreContent.setDisplayedMnemonicIndex(0);
         IgnoreContent.setToolTipText("make a specific code represent a more generalized contents such as expressions, statements, blocks and many more.");
-        panel1.add(IgnoreContent, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_CAN_SHRINK, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(IgnoreContent, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
