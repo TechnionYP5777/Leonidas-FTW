@@ -41,7 +41,7 @@ task copyTippers(type: Copy) {
     // The first source directory seems to be src.main.java by default.
     def sourcePath = sourceSets.main.java.srcDirs.last().getPath()
     def resourcesPath = sourceSets.main.resources.srcDirs.last().getPath()
-    def tippersRelativePath = "/il/org/spartan/ispartanizer/plugin/tippers/leonidas"
+    def tippersRelativePath = "/il/org/spartan/Leonidas/plugin/tippers/leonidas"
     def tippersSourcePath = sourcePath + tippersRelativePath
     def tippersResourcesPath = resourcesPath + tippersRelativePath
 

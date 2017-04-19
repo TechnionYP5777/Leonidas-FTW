@@ -2,10 +2,8 @@ package spartanizer.FutureLeonidasTippers;
 
 import com.intellij.psi.PsiExpressionStatement;
 import com.intellij.psi.PsiIfStatement;
-import com.intellij.psi.PsiMethodCallExpression;
-import com.intellij.psi.PsiStatement;
-import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub;
-import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub;
+import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 /**
  * Replace if(false){s1}else{s2} with s2
@@ -17,12 +15,8 @@ public class IfFalseElse extends GenericPsiElementStub {
 
     @Leonidas(PsiIfStatement.class)
     public void from() {
-        if (false) {
-            statement();
-        } else {
-            statement(1);
-        }
-    }
+		statement(1);
+	}
 
     @Leonidas(PsiExpressionStatement.class)
     public void to() {

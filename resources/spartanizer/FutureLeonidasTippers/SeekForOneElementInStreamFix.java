@@ -1,13 +1,11 @@
 package spartanizer.FutureLeonidasTippers;
 
-import com.intellij.psi.PsiArrayAccessExpression;
 import com.intellij.psi.PsiMethodCallExpression;
-import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub;
-import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub;
+import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +22,7 @@ public class SeekForOneElementInStreamFix extends GenericPsiElementStub {
         List<Object> l = Arrays.stream(arrayIdentifier(0))
                 .streamMethodInvocations(1)
                 .collect(Collectors.toList());
-                return !l.isEmpty() ? l.get(0) : null;
+                return l.isEmpty() ? null : l.get(0);
     }
 
     @Leonidas(PsiMethodCallExpression.class)

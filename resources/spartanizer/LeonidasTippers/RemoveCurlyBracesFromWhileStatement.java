@@ -1,9 +1,8 @@
 package spartanizer.LeonidasTippers;
 
-import com.intellij.psi.PsiIfStatement;
 import com.intellij.psi.PsiWhileStatement;
-import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiElementStub;
-import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub;
+import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 /**
  * Remove redundent curly braces
@@ -15,9 +14,8 @@ public class RemoveCurlyBracesFromWhileStatement extends GenericPsiElementStub {
 
     @Leonidas(PsiWhileStatement.class)
     public void from() {
-        while (booleanExpression(0)) {
-            statement(1);
-        }
+        while (booleanExpression(0))
+			statement(1);
     }
 
     @Leonidas(PsiWhileStatement.class)
