@@ -13,6 +13,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.JBColor;
 import com.intellij.util.IncorrectOperationException;
+import il.org.spartan.ispartanizer.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,46 +25,51 @@ public class SpartanizerAnnotator implements Annotator {
 
     @Override
     public void annotate(@NotNull final PsiElement e, @NotNull AnnotationHolder h) {
+        try {
+            if (!Spartanizer.canTip(e) || e.getContainingFile().getName().contains("Spartanizer"))
+                return;
 
-        if (!Spartanizer.canTip(e) || e.getContainingFile().getName().contains("Spartanizer"))
-            return;
+            Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
+            annotation.registerFix(new IntentionAction() {
+                @Nls
+                @NotNull
+                @Override
+                public String getText() {
+                    //noinspection unchecked
+                    return Toolbox.getInstance().getTipper(e).description(e);
+                }
 
-        Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
-        annotation.registerFix(new IntentionAction() {
-            @Nls
-            @NotNull
-            @Override
-            public String getText() {
-                //noinspection unchecked
-                return Toolbox.getInstance().getTipper(e).description(e);
-            }
+                @Nls
+                @NotNull
+                @Override
+                public String getFamilyName() {
+                    return "SpartanizerAction";
+                }
 
-            @Nls
-            @NotNull
-            @Override
-            public String getFamilyName() {
-                return "SpartanizerAction";
-            }
+                @Override
+                public boolean isAvailable(@NotNull Project __, Editor e, PsiFile f) {
+                    return true;
+                }
 
-            @Override
-            public boolean isAvailable(@NotNull Project __, Editor e, PsiFile f) {
-                return true;
-            }
-            @Override
-            public void invoke(@NotNull Project p, Editor ed, PsiFile f) throws IncorrectOperationException {
-                Spartanizer.spartanizeElement(e);
-            }
+                @Override
+                public void invoke(@NotNull Project p, Editor ed, PsiFile f) throws IncorrectOperationException {
+                    Spartanizer.spartanizeElement(e);
+                }
 
-            @Override
-            public boolean startInWriteAction() {
-                return false;
-            }
-        });
+                @Override
+                public boolean startInWriteAction() {
+                    return false;
+                }
+            });
 
-        TextAttributesKey.createTextAttributesKey("");
-        annotation.setEnforcedTextAttributes(
-                (new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0)));
+            TextAttributesKey.createTextAttributesKey("");
+            annotation.setEnforcedTextAttributes(
+                    (new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0)));
+
+        } catch (Throwable t) {
+            Logger l = new Logger(this.getClass());
+            l.error("", t);
+        }
 
     }
-
 }

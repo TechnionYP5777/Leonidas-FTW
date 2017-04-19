@@ -6,10 +6,7 @@ import il.org.spartan.ispartanizer.auxilary_layer.step;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNodeValueVisitor;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -96,7 +93,13 @@ public class Matcher2 {
             List<Integer> tmp = new LinkedList<>();
             tmp.add(-2);
             return tmp;
-        }, (l1, l2) -> Stream.concat(l1.stream(), l2.stream()).collect(Collectors.toList()));
+        }, (l1, l2) -> {
+            if(l1 != null && l2 != null){
+                return Stream.concat(l1.stream(), l2.stream()).collect(Collectors.toList());
+            }else{
+                return new ArrayList<>();
+            }
+        });
         return s.stream().filter(x -> x != -2).collect(Collectors.toList());
     }
 

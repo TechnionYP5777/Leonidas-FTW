@@ -21,7 +21,7 @@ class LogFileUtils {
     private static final String RELATIVE_LOG_PATH = "log/";
     private static final String BASE_LOG_NAME = "log";
     private static final String LOG_EXT = "txt";
-    private static final String SLASH = "/";
+    private static final String SLASH = System.getProperty("file.separator");
     private static final String DOT = ".";
 
     /**

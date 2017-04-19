@@ -62,7 +62,8 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public <T> T accept(EncapsulatingNodeValueVisitor v, BinaryOperator<T> accumulator) {
-        return children.stream().map(child -> child.accept(v, accumulator)).reduce(accumulator).orElse(null);
+        return children.stream().map(child -> child != null ? child.accept(v, accumulator) : null)
+                .reduce(accumulator).orElse(null);
     }
 
     public PsiElement getInner() {

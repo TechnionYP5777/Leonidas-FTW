@@ -1,7 +1,6 @@
 package il.org.spartan.ispartanizer.plugin.tippers;
 
 import com.google.common.io.Files;
-import com.intellij.lang.Language;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
@@ -9,6 +8,7 @@ import il.org.spartan.ispartanizer.auxilary_layer.*;
 import il.org.spartan.ispartanizer.plugin.EncapsulatingNode;
 import il.org.spartan.ispartanizer.plugin.leonidas.Constraint;
 import il.org.spartan.ispartanizer.plugin.leonidas.GenericPsiTypes.Replacer2;
+import il.org.spartan.ispartanizer.plugin.leonidas.Leonidas;
 import il.org.spartan.ispartanizer.plugin.leonidas.Matcher2;
 import il.org.spartan.ispartanizer.plugin.leonidas.Pruning;
 import il.org.spartan.ispartanizer.plugin.tipping.Tip;
@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import static il.org.spartan.ispartanizer.plugin.leonidas.KeyDescriptionParameters.ID;
+
 /**
  * This class represents a tipper created by the leonidas language.
  *
@@ -27,8 +29,9 @@ import java.util.*;
  */
 public class LeonidasTipper2 implements Tipper<PsiElement> {
 
-    private static final String LEONIDAS_ANNOTATION_NAME = "il.org.spartan.ispartanizer.plugin.leonidas.Leonidas";
-    private static final String SHORT_LEONIDAS_ANNOTATION_NAME = "Leonidas";
+    private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getTypeName();
+    /*"il.org.spartan.ispartanizer.plugin.leonidas.Leonidas";*/
+    private static final String SHORT_LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
 
 
@@ -45,12 +48,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     @SuppressWarnings("ConstantConditions")
     public LeonidasTipper2(String tipperName, String fileContent) throws IOException {
         //file = getPsiTreeFromFile(f);
-          file = getPsiTreeFromString("roei_oren" + tipperName, fileContent);
+        file = getPsiTreeFromString("roei_oren32424242432432hgjyetrc42343243242" + tipperName, fileContent);
         description = /*Utils.getClassFromFile(file).getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();*/ "";
-        matcher = new Matcher2();
-        matcher.setRoot(getMatcherRootTree());
+        matcher = new Matcher2(getMatcherRootTree());
         map = getConstraints();
         buildMatcherTree(matcher);
         replacer = new Replacer2(matcher, getReplacerRootTree());
@@ -117,7 +119,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     private Map<Integer, List<Constraint>> getConstraints() {
         Map<Integer, List<Constraint>> map = new HashMap<>();
         PsiMethod constrainsMethod = getInterfaceMethod("constraints");
-        if(!haz.body(constrainsMethod)){
+        if (!haz.body(constrainsMethod)) {
             return map;
         }
 
@@ -207,9 +209,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
      * @return extract the first PsiElement of the type described in the Leonidas annotation
      */
     private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod x) {
-        return Arrays.stream(x.getModifierList().getAnnotations())
-                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()) || SHORT_LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()))
-                .map(a -> getAnnotationClass(a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE).getText().replace(".class", "")))
+        return Arrays.stream(x.getModifierList().getAnnotations()) //
+                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()) //
+                        || SHORT_LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName())) //
+                .map(a -> getAnnotationClass(a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE) //
+                        .getText().replace(".class", ""))) //
                 .findFirst().get();
     }
 
@@ -234,20 +238,41 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return result.get();
     }
 
+    private void handleStubMethodCalls(PsiElement innerTree) {
+        innerTree.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+                if (!iz.stubMethodCall(expression)) {
+                    return;
+                }
+                expression.putUserData(ID, az.integer(step.firstParamterExpression(expression)));
+            }
+        });
+    }
+
     /**
      * @return the generic tree representing the "from" template
      */
     private EncapsulatingNode getMatcherRootTree() {
-        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(getInterfaceMethod("matcher"),
-                getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher")))));
+
+        PsiMethod method = getInterfaceMethod("matcher");
+        handleStubMethodCalls(method);
+
+        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(method,
+                getPsiElementTypeFromAnnotation(method))));
     }
 
     /**
      * @return the generic tree representing the "from" template
      */
     private EncapsulatingNode getReplacerRootTree() {
-        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(getInterfaceMethod("matcher"),
-                getPsiElementTypeFromAnnotation(getInterfaceMethod("replacer")))));
+
+        PsiMethod matcher = getInterfaceMethod("matcher");
+        PsiMethod replacer = getInterfaceMethod("replacer");
+        handleStubMethodCalls(matcher);
+        handleStubMethodCalls(replacer);
+        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(matcher,
+                getPsiElementTypeFromAnnotation(replacer))));
     }
 
     @Override
@@ -273,13 +298,13 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
      * @return PsiFile element representing the given file
      * @throws IOException - if the file could not be opened or read.
      */
-    private PsiFile getPsiTreeFromFile(File file)  throws IOException {
+    private PsiFile getPsiTreeFromFile(File file) throws IOException {
         return PsiFileFactory.getInstance(Utils.getProject())
                 .createFileFromText(file.getName(), FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
                         String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
     }
 
-    private PsiFile getPsiTreeFromString(String psiFileName, String s){
+    private PsiFile getPsiTreeFromString(String psiFileName, String s) {
         return PsiFileFactory.getInstance(Utils.getProject())
                 .createFileFromText(JavaLanguage.INSTANCE, s);
     }
