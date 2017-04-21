@@ -4,6 +4,8 @@ import com.intellij.lang.Language;
 import com.intellij.lang.LanguageParserDefinitions;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.java.JavaLanguage;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
@@ -18,6 +20,7 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -44,9 +47,8 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     @SuppressWarnings("ConstantConditions")
     public LeonidasTipper2(String tipperName, String fileContent) throws IOException {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
-        file.getViewProvider().getManager().startBatchFilesProcessingMode();
+        fixTheFuckupsOfIntellij_IamNotFrikingDeamon();
         PsiClass c = Utils.getClassFromFile(file);
-        //JOptionPane.showMessageDialog(null, c.getDocComment().getText().split("\n").length, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
         description = c.getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
@@ -57,6 +59,16 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         buildMatcherTree(matcher);
         replacer = new Replacer2(matcher, getReplacerRootTree());
         rootType = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
+    }
+
+    public static List<Field> getAllFields(Class<?> type) {
+        List<Field> fields = new LinkedList<>();
+        fields.addAll(Arrays.asList(type.getDeclaredFields()));
+
+        if (type.getSuperclass() != null) {
+            fields.addAll(getAllFields(type.getSuperclass()));
+        }
+        return fields;
     }
 
     private Integer extractId(PsiStatement s) {
@@ -312,5 +324,18 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
             return (PsiJavaFile) viewProvider.getPsi(language);
         }
         return null;
+    }
+
+    public void fixTheFuckupsOfIntellij_IamNotFrikingDeamon() {
+        ProgressIndicator obj = ProgressManager.getInstance().getProgressIndicator();
+        List<Field> fields = getAllFields(obj.getClass());
+        Field field = fields.stream().filter(f -> f.getName().equals("myCanceled")).findFirst().get();
+        field.setAccessible(true);
+        try {
+            field.set(obj, false);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        //Boolean b = ProgressIndicatorProvider.getInstance().getProgressIndicator().isCanceled();
     }
 }
