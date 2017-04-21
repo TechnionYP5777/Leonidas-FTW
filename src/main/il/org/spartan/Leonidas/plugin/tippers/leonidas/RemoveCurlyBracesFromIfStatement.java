@@ -7,7 +7,9 @@ import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.bool
 import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.statement;
 
 /**
- * @author :O
+ * Remove redundant curly braces
+ * author Oren Afek, Shron Kuninin, Michal Cohen
+ * since 06/01/17
  */
 public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinition {
 

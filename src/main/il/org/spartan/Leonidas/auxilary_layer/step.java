@@ -69,7 +69,6 @@ public enum step {
         return Arrays.asList(clazz.getFields());
     }
 
-
     public static PsiExpression conditionExpression(PsiConditionalExpression x) {
         return x == null ? null : x.getCondition();
     }

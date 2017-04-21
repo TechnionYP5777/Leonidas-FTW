@@ -1,11 +1,9 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
-import com.google.common.io.Files;
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguageParserDefinitions;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.java.JavaLanguage;
-import com.intellij.openapi.fileTypes.FileTypeRegistry;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
@@ -18,9 +16,8 @@ import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
-import java.io.File;
+import javax.swing.*;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -34,28 +31,27 @@ import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.I
 public class LeonidasTipper2 implements Tipper<PsiElement> {
 
     private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getTypeName();
-    /*"il.org.spartan.ispartanizer.plugin.leonidas.Leonidas";*/
     private static final String SHORT_LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
 
-
     String description;
-
-
     Matcher2 matcher;
-
     Replacer2 replacer;
     Class<? extends PsiElement> rootType;
-    PsiFile file;
+    PsiJavaFile file;
     Map<Integer, List<Constraint>> map;
 
     @SuppressWarnings("ConstantConditions")
     public LeonidasTipper2(String tipperName, String fileContent) throws IOException {
-        //file = getPsiTreeFromFile(f);
-        file = getPsiTreeFromString("roei_oren32424242432432hgjyetrc42343243242" + tipperName, fileContent);
-        description = /*Utils.getClassFromFile(file).getDocComment().getText()
+        file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
+        file.getViewProvider().getManager().startBatchFilesProcessingMode();
+        PsiClass c = Utils.getClassFromFile(file);
+        //JOptionPane.showMessageDialog(null, c.getDocComment().getText().split("\n").length, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
+        description = c.getDocComment().getText()
                 .split("\\n")[1].trim()
-                .split("\\*")[1].trim();*/ "";
+                .split("\\*")[1].trim();
+        JOptionPane.showMessageDialog(null, description, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
+
         matcher = new Matcher2(getMatcherRootTree());
         map = getConstraints();
         buildMatcherTree(matcher);
@@ -298,34 +294,22 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     }
 
     /**
-     * @param file the LeonidasTipperDefinition file.
-     * @return PsiFile element representing the given file
-     * @throws IOException - if the file could not be opened or read.
+     * @param name the name of the tipper
+     * @param content the definition file of the tipper
+     * @return PsiFile representing the file of the tipper
      */
-    private PsiFile getPsiTreeFromFile(File file) throws IOException {
-        return PsiFileFactory.getInstance(Utils.getProject())
-                .createFileFromText(file.getName(), FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
-                        String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
-    }
-
-    /*private PsiFile getPsiTreeFromString(String psiFileName, String s) {
-        return PsiFileFactory.getInstance(Utils.getProject())
-                .createFileFromText(JavaLanguage.INSTANCE, s);
-    }*/
-
-    private PsiFile getPsiTreeFromString(String name, String s) {
+    private PsiJavaFile getPsiTreeFromString(String name, String content) {
         Language language = JavaLanguage.INSTANCE;
-        LightVirtualFile virtualFile = new LightVirtualFile(name, language, s);
+        LightVirtualFile virtualFile = new LightVirtualFile(name, language, content);
         SingleRootFileViewProvider.doNotCheckFileSizeLimit(virtualFile);
         final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage(language);
         FileViewProvider viewProvider = factory != null ? factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true) : null;
         if (viewProvider == null)
             viewProvider = new SingleRootFileViewProvider(Utils.getPsiManager(Utils.getProject()), virtualFile, true);
-
         language = viewProvider.getBaseLanguage();
         final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
         if (parserDefinition != null) {
-            return viewProvider.getPsi(language);
+            return (PsiJavaFile) viewProvider.getPsi(language);
         }
         return null;
     }

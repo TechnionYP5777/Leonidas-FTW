@@ -30,7 +30,6 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     private static final String PSI_PACKAGE_PREFIX = "com.intellij.psi.";
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
 
-    static boolean tmp1;
     private boolean built;
     private EncapsulatingNode fromTree;
     private EncapsulatingNode toTree;
@@ -49,7 +48,7 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
     @SuppressWarnings("ConstantConditions")
     public PsiTreeTipperBuilderImpl buildTipperPsiTree(String fileName) throws IOException {
         assert (!built);
-        PsiFile root = getPsiTreeFromFile(fileName);
+        PsiJavaFile root = getPsiTreeFromFile(fileName);
         description = Utils.getClassFromFile(root).getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
@@ -95,9 +94,9 @@ public class PsiTreeTipperBuilderImpl implements PsiTreeTipperBuilder {
         return toTree.clone();
     }
 
-    private PsiFile getPsiTreeFromFile(String fileName) throws IOException {
+    private PsiJavaFile getPsiTreeFromFile(String fileName) throws IOException {
         File file = new File(Utils.fixSpacesProblemOnPath(this.getClass().getResource(FILE_PATH + fileName).getPath()));
-        return PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(fileName,
+        return (PsiJavaFile) PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(fileName,
                 FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName()),
                 String.join("\n", Files.readLines(file, StandardCharsets.UTF_8)));
     }

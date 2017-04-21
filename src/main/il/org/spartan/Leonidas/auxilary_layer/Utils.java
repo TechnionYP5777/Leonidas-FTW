@@ -27,9 +27,8 @@ import java.util.regex.Matcher;
  */
 public enum Utils {
     ;
-    static Logger logger = new Logger(Utils.class);
-
     public static final String SUFFIX = ".java";
+    static Logger logger = new Logger(Utils.class);
 
     @SafeVarargs
     public static <T> boolean in(T candidate, T... list) {
@@ -94,8 +93,8 @@ public enum Utils {
         return az.importList(PsiTreeUtil.getChildOfType(f, PsiImportList.class));
     }
 
-    public static PsiClass getClassFromFile(PsiFile f) {
-        return az.classDeclaration(f.getChildren()[4]);
+    public static PsiClass getClassFromFile(PsiJavaFile f) {
+        return f.getClasses()[0];
     }
 
     public static Document getDocumentFromPsiElement(PsiElement e) {
@@ -184,5 +183,17 @@ public enum Utils {
         } catch (UnsupportedEncodingException ignore) {
         }
         return fixedPath;
+    }
+
+    public static <T> String getListText(List<T> l) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        l.stream().forEach(a -> sb.append(a.toString() + ", "));
+        sb.append("}");
+        return sb.toString();
+    }
+
+    public static <T> String getArrayText(T[] l) {
+        return getListText(Arrays.asList(l));
     }
 }
