@@ -7,8 +7,7 @@ import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.Spartanizer;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
 /**
  * @author Anna Belozovsky
@@ -20,35 +19,36 @@ public class Playground extends JFrame {
     private JButton spartanizeButton;
     private JTextArea inputArea;
     private JTextArea outputArea;
+    private JLabel input;
+    private JLabel output;
+    private JPanel textPanel;
+    private JPanel buttonPanel;
+    private JScrollPane inputScroll;
+    private JScrollPane outputScroll;
+    private String before = "public class foo{ public void main(){\n";
+    private String after = "\n}}";
 
     public Playground() {
         super("Spartanizer Playground");
         setContentPane(mainPanel);
+        setPreferredSize(new Dimension(600, 600));
+        setResizable(false);
         pack();
         setVisible(true);
         outputArea.setEditable(false);
-        spartanizeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                spartanizeButtonClicked(e);
-            }
-        });
-        clearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clearButtonClicked(e);
-            }
-        });
+        spartanizeButton.addActionListener(e -> spartanizeButtonClicked());
+        clearButton.addActionListener(e -> clearButtonClicked());
     }
 
-    private void spartanizeButtonClicked(ActionEvent e) {
-        PsiFile file = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(JavaLanguage.INSTANCE, inputArea.getText());
+    private void spartanizeButtonClicked() {
+        PsiFile file = PsiFileFactory.getInstance(Utils.getProject())
+                .createFileFromText(JavaLanguage.INSTANCE, before + inputArea.getText() + after);
         Spartanizer.spartanizeFileOnePass(file);
-        outputArea.setText(file.getText());
-//        outputArea.setText(inputArea.getText());
+        String temp = file.getText().substring(before.length());
+        outputArea.setText(temp.substring(0, temp.length() - after.length()));
     }
 
-    private void clearButtonClicked(ActionEvent e) {
+    private void clearButtonClicked() {
         outputArea.setText("");
     }
 }
