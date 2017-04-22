@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 /**
  * @author Anna Belozovsky
  * @since 05/04/2017
+ *
+ * this is not used for now
+ *
  */
 public class PlaygroundMain extends Application {
 
