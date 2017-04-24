@@ -24,7 +24,8 @@ import java.util.List;
 
 /**
  * Represents a tipper that changes the code of the user to a code that need the creation of
- *  a special environment.
+ * a special environment.
+ *
  * @author Roey Maor, michalcohen
  * @since 26-12-2016
  */
@@ -51,20 +52,22 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      * @return an element tip to apply on e.
      */
     public Tip tip(final N e) {
-		return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
-			@Override
-			public void go(PsiRewrite r) {
-				PsiElement e_tag = createReplacement(e);
-				new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
-					@Override
-					protected void run() throws Throwable {
-						createEnvironment(e);
-						e.replace(e_tag);
-					}
-				}.execute();
-			}
-		};
-	}
+        return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
+            @Override
+            public void go(PsiRewrite r) {
+                PsiElement e_tag = createReplacement(e);
+                new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
+                    @Override
+                    protected void run() throws Throwable {
+                        if (!Toolbox.getInstance().playground) {
+                            createEnvironment(e);
+                        }
+                        e.replace(e_tag);
+                    }
+                }.execute();
+            }
+        };
+    }
 
     /**
      * This method should be override in order to create the psi element that will
@@ -104,9 +107,9 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         } catch (IncorrectOperationException x) {
             PsiDirectory pd = Arrays.stream(srcDir.getSubdirectories()).filter(d -> "spartanizer".equals(d.getName())).findAny().get();
             pf = Arrays.stream(pd.getFiles()).noneMatch(f -> "SpartanizerUtils.java".equals(f.getName()))
-					? createUtilsFile(e, pd)
-					: Arrays.stream(pd.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst()
-							.get();
+                    ? createUtilsFile(e, pd)
+                    : Arrays.stream(pd.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst()
+                    .get();
         }
         return pf;
     }
@@ -114,7 +117,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
     /**
      * Inserts "import static spartanizer/SpartanizerUtils/*;" to the users code.
      *
-     * @param e  - the PsiElement on which the tip is applied.
+     * @param e - the PsiElement on which the tip is applied.
      * @param f - the psi file in which e is contained.
      */
     @SuppressWarnings("ConstantConditions")
@@ -122,7 +125,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(f, PsiClass.class), "*");
         PsiImportList pil = Utils.getImportList(e.getContainingFile());
         if (!Arrays.stream(pil.getImportStaticStatements()).anyMatch(x -> x.getText().contains("spartanizer")))
-			pil.add(piss);
+            pil.add(piss);
 
     }
 

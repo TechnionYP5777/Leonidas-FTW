@@ -22,16 +22,16 @@ import java.util.*;
  */
 public enum Toolbox {
     INSTANCE;
-
     static boolean wasInitialize;
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
+    public boolean playground = false;
     Set<VirtualFile> excludedFiles = new HashSet<>();
     Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
     boolean tmp;
 
     public static Toolbox getInstance() {
         if (!wasInitialize)
-			initializeInstance();
+            initializeInstance();
         return INSTANCE;
     }
 
@@ -51,9 +51,9 @@ public enum Toolbox {
     @SuppressWarnings("ConstantConditions")
     private static void createLeonidasTipperBuilders() {
         Arrays.asList(new File(
-				Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
-						.listFiles())
-				.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
+                Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
+                .listFiles())
+                .forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
     }
 
     //TODO get Leonidas resources
@@ -61,14 +61,14 @@ public enum Toolbox {
         String x = "";
         x = Utils.pathToClass(LeonidasTipperDefinition.class);
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
-				.forEach(c -> {
-					try {
-						INSTANCE.add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
-					} catch (IOException e) {
-						System.out.print("failed to read file: " + c.getName());
-						e.printStackTrace();
-					}
-				});
+                .forEach(c -> {
+                    try {
+                        INSTANCE.add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
+                    } catch (IOException e) {
+                        System.out.print("failed to read file: " + c.getName());
+                        e.printStackTrace();
+                    }
+                });
     }
 
     //stub method
@@ -88,12 +88,12 @@ public enum Toolbox {
     }
 
     public Toolbox executeAllTippers(PsiElement e) {
-		if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-			return this;
-		tipperMap.get(type.of(e)).stream().filter(tipper -> tipper.canTip(e)).findFirst()
-				.ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
-		return this;
-	}
+        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
+            return this;
+        tipperMap.get(type.of(e)).stream().filter(tipper -> tipper.canTip(e)).findFirst()
+                .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
+        return this;
+    }
 
     /**
      * Can element by spartanized
@@ -110,7 +110,7 @@ public enum Toolbox {
         try {
             if (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e)) &&
                     tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e)))
-				return tipperMap.get(type.of(e)).stream().filter(tip -> tip.canTip(e)).findFirst().get();
+                return tipperMap.get(type.of(e)).stream().filter(tip -> tip.canTip(e)).findFirst().get();
         } catch (Exception ignore) {
         }
         return new NoTip<>();

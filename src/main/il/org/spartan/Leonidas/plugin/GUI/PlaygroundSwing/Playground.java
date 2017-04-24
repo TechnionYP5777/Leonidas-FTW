@@ -5,6 +5,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.Spartanizer;
+import il.org.spartan.Leonidas.plugin.Toolbox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +44,9 @@ public class Playground extends JFrame {
     private void spartanizeButtonClicked() {
         PsiFile file = PsiFileFactory.getInstance(Utils.getProject())
                 .createFileFromText(JavaLanguage.INSTANCE, before + inputArea.getText() + after);
+        Toolbox.getInstance().playground = true;
         Spartanizer.spartanizeFileOnePass(file);
+        Toolbox.getInstance().playground = false;
         String temp = file.getText().substring(before.length());
         outputArea.setText(temp.substring(0, temp.length() - after.length()));
     }
