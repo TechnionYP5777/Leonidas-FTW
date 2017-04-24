@@ -38,13 +38,20 @@ public class SpartanizerServicesController implements Initializable {
         for(LeonidasTipper tipper : tippers)
 			tipperList.getChildren().add(new CheckBox(tipper.getClass().getName()));
         //TODO: remove when done.
-        tipperList.getChildren().add(new CheckBox("tip"));
+        tipperList.getChildren().add(new CheckBox("IfRemoveCurlyBraces"));
+        tipperList.getChildren().add(new CheckBox("ForRemoveCurlyBraces"));
+        tipperList.getChildren().add(new CheckBox("ChangeSingleParamToCent"));
+        tipperList.getChildren().add(new CheckBox("WhileRemoveCurlyBraces"));
+        tipperList.getChildren().add(new CheckBox("SafeReference"));
+        tipperList.getChildren().add(new CheckBox("DoubleNot"));
+        tipperList.getChildren().add(new CheckBox("RemoveRedundantBracesFromLambda"));
+        tipperList.getChildren().add(new CheckBox("Unless"));
 
         SelectAllButton.setOnAction(event -> tipperList.getChildren().forEach(cb -> ((CheckBox) cb).setSelected(true)));
         CleanAllButton.setOnAction(event -> tipperList.getChildren().forEach(cb -> ((CheckBox) cb).setSelected(false)));
 
         tipperList.getChildren().forEach(tip ->{
-            tip.setOnMouseEntered(event -> description.setText("hello!"));
+            tip.setOnMouseEntered(event -> description.setText("info!"));
             tip.setOnMouseExited(event -> description.setText(""));
         });
 
