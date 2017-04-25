@@ -66,16 +66,12 @@ public class ToolBoxController extends JFrame{
 
     }
 
-    private void checkBoxListener(JCheckBox cb) {
-        infoPanel.add(new JLabel("poop"));
-    }
-
     private void clearAllListener() {
-        list.setAllClear();
+        list.setAllCheckBoxes(false);
     }
 
     private void selectAllListener() {
-        list.setAllSelected();
+        list.setAllCheckBoxes(true);
     }
 
 

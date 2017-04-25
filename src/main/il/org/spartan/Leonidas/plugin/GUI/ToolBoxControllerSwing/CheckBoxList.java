@@ -80,23 +80,14 @@ public class CheckBoxList extends JList
         setListData(newList);
     }
 
-    public void setAllSelected(){
+    public void setAllCheckBoxes(boolean flag){
         ListModel currentList = this.getModel();
         JCheckBox[] newList = new JCheckBox[currentList.getSize()];
         for (int i = 0; i < currentList.getSize(); i++) {
             newList[i] = (JCheckBox) currentList.getElementAt(i);
-            newList[i].setSelected(true);
+            newList[i].setSelected(flag);
         }
         setListData(newList);
     }
 
-    public void setAllClear() {
-        ListModel currentList = this.getModel();
-        JCheckBox[] newList = new JCheckBox[currentList.getSize()];
-        for (int i = 0; i < currentList.getSize(); i++) {
-            newList[i] = (JCheckBox) currentList.getElementAt(i);
-            newList[i].setSelected(false);
-        }
-        setListData(newList);
-    }
 }
