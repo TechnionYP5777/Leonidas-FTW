@@ -7,17 +7,23 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Created by Amir on 24-04-2017.
+ * @author Amir Sagiv
+ * @since 24/04/2017
  */
 public class CheckBoxList extends JList
 {
     protected static Border noFocusBorder =
             new EmptyBorder(1, 1, 1, 1);
+    private int numOfElements;
+
+    public int getNumOfElements() {
+        return numOfElements;
+    }
 
     public CheckBoxList()
     {
+        numOfElements = 0;
         setCellRenderer(new CellRenderer());
-
         addMouseListener(new MouseAdapter()
                          {
                              public void mousePressed(MouseEvent e)
@@ -35,8 +41,11 @@ public class CheckBoxList extends JList
                          }
         );
 
+
+
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
+
 
     protected class CellRenderer implements ListCellRenderer
     {
@@ -61,12 +70,33 @@ public class CheckBoxList extends JList
     }
 
     public void addCheckbox(JCheckBox checkBox) {
+        numOfElements++;
         ListModel currentList = this.getModel();
         JCheckBox[] newList = new JCheckBox[currentList.getSize() + 1];
         for (int i = 0; i < currentList.getSize(); i++) {
             newList[i] = (JCheckBox) currentList.getElementAt(i);
         }
         newList[newList.length - 1] = checkBox;
+        setListData(newList);
+    }
+
+    public void setAllSelected(){
+        ListModel currentList = this.getModel();
+        JCheckBox[] newList = new JCheckBox[currentList.getSize()];
+        for (int i = 0; i < currentList.getSize(); i++) {
+            newList[i] = (JCheckBox) currentList.getElementAt(i);
+            newList[i].setSelected(true);
+        }
+        setListData(newList);
+    }
+
+    public void setAllClear() {
+        ListModel currentList = this.getModel();
+        JCheckBox[] newList = new JCheckBox[currentList.getSize()];
+        for (int i = 0; i < currentList.getSize(); i++) {
+            newList[i] = (JCheckBox) currentList.getElementAt(i);
+            newList[i].setSelected(false);
+        }
         setListData(newList);
     }
 }
