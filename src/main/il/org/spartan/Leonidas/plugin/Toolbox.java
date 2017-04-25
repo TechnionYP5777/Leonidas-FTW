@@ -37,6 +37,11 @@ public enum Toolbox {
 
     private static void initializeInstance() {
         wasInitialize = true;
+        //Will be replaced after debbuging of LEONIDAS
+//        List<Tipper> regularTippersList = getAllTippers();
+//        regularTippersList.forEach(tip ->{
+//            INSTANCE.add(tip);
+//        });
         INSTANCE //
                 .add(new SafeReference())
                 .add(new Unless())
@@ -71,9 +76,17 @@ public enum Toolbox {
                 });
     }
 
-    //stub method
-    public static List<LeonidasTipper> getAllTippers() {
-        return new ArrayList<>();
+
+    public static List<Tipper> getAllTippers() {
+        List<Tipper> list =  new ArrayList<>();
+        list.add(new SafeReference());
+        list.add(new Unless());
+        list.add(new LambdaExpressionRemoveRedundantCurlyBraces());
+        list.add(new LispLastElement());
+        list.add(new DefaultsTo());
+        list.add(new MethodDeclarationRenameSingleParameterToCent());
+        list.add(new Delegator());
+        return list;
     }
 
     private Toolbox add(Tipper<? extends PsiElement> t) {

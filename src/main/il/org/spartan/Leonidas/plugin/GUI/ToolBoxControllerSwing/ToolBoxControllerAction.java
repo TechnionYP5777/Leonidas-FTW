@@ -13,7 +13,7 @@ public class ToolBoxControllerAction extends AnAction {
         new ToolBoxController();
     }
 
-//    public static void main(String[] args) {
-//        new ToolBoxController();
-//    }
+    public static void main(String[] args) {
+        new ToolBoxController();
+    }
 }

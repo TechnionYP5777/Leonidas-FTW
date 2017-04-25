@@ -3,10 +3,15 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxControllerSwing;
 
 
 
+import il.org.spartan.Leonidas.plugin.Toolbox;
+import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.*;
+import java.util.List;
 
 
 /**
@@ -30,12 +35,16 @@ public class ToolBoxController extends JFrame{
 
     public ToolBoxController() {
         super("Spartanizer ToolBox Controller");
+        setContentPane(mainPanel);
+        setPreferredSize(new Dimension(800, 600));
+        setResizable(false);
+        pack();
+        setVisible(true);
         list = new CheckBoxList();
-        JCheckBox cb = new JCheckBox("hei");
-        list.addCheckbox(new JCheckBox("tip1!"));
-        list.addCheckbox(new JCheckBox("tip2!"));
-        list.addCheckbox(new JCheckBox("tip3!"));
-
+        List<Tipper> tipsList = Toolbox.getAllTippers();
+        tipsList.forEach(tip -> {
+            list.addCheckbox(new JCheckBox(tip.description()));
+        });
         list.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -49,18 +58,12 @@ public class ToolBoxController extends JFrame{
                 if (index > -1 && index < list.getNumOfElements()) {
                     JCheckBox checkbox = (JCheckBox)
                             list.getModel().getElementAt(index);
-                    textArea1.setText("info of "+checkbox.getText());
+                    textArea1.setText(checkbox.getText());
                 }
             }
         });
-
-
+        textArea1.setEditable(false);
         tippersPane.setViewportView(list);
-        setContentPane(mainPanel);
-        setPreferredSize(new Dimension(600, 600));
-        setResizable(false);
-        pack();
-        setVisible(true);
         selectAllButton.addActionListener(e->selectAllListener());
         clearAllButton.addActionListener(e -> clearAllListener());
 

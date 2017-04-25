@@ -15,7 +15,7 @@
           </grid>
         </constraints>
         <properties>
-          <dividerLocation value="200"/>
+          <dividerLocation value="400"/>
           <dividerSize value="10"/>
           <enabled value="false"/>
         </properties>
