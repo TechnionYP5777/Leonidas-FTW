@@ -14,12 +14,6 @@ public class Constraint {
     private ConstraintType type;
     private Matcher2 matcher;
 
-    public Constraint(String t, EncapsulatingNode e) {
-        type = ConstraintType.valueOf(t);
-        matcher = new Matcher2();
-        matcher.setRoot(e);
-    }
-
     public Constraint(ConstraintType t, EncapsulatingNode e) {
         type = t;
         matcher = new Matcher2();

@@ -29,6 +29,14 @@
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
     </extensions>
 
+    <application-components>
+        <component>
+            <implementation-class>
+                il.org.spartan.Leonidas.plugin.Toolbox
+            </implementation-class>
+        </component>
+    </application-components>
+
     <actions>
         <group  id="LeonidasGroup" text="Leonidas" description="Group For Leonidas Services" >
             <add-to-group group-id="MainMenu" relative-to-action="RefactoringMenu" anchor="after"/>

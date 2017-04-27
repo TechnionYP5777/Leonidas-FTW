@@ -21,21 +21,21 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
             if(booleanExpression(3)){
                 statement(5);
             }
-        });
+        }).ofType(PsiIfStatement.class);
     }
 
     @Override
     @Leonidas(PsiIfStatement.class)
-    public Template matcher() {
-        return new Template(() -> {
+    public void matcher() {
+        new Template(() -> {
             if (booleanExpression(0))
 				statement(1);
         });
     }
 
     @Override
-    public Template replacer() {
-        return new Template(() -> {
+    public void replacer() {
+        new Template(() -> {
             if (booleanExpression(0))
                 statement(1);
         });

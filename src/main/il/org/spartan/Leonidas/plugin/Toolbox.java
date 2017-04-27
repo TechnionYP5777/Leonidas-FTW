@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -9,9 +11,10 @@ import il.org.spartan.Leonidas.auxilary_layer.type;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -20,9 +23,8 @@ import java.util.*;
  * @author Michal Cohen
  * @since 01-12-2016
  */
-public enum Toolbox {
-    INSTANCE;
-    static boolean wasInitialize;
+public class Toolbox implements ApplicationComponent {
+    private static final Logger logger = new Logger(Toolbox.class);
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
     public boolean playground = false;
     Set<VirtualFile> excludedFiles = new HashSet<>();
@@ -30,19 +32,27 @@ public enum Toolbox {
     boolean tmp;
 
     public static Toolbox getInstance() {
-        if (!wasInitialize)
-            initializeInstance();
-        return INSTANCE;
+        return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
     }
 
-    private static void initializeInstance() {
-        wasInitialize = true;
-        //Will be replaced after debbuging of LEONIDAS
-//        List<Tipper> regularTippersList = getAllTippers();
-//        regularTippersList.forEach(tip ->{
-//            INSTANCE.add(tip);
-//        });
-        INSTANCE //
+    public static List<Tipper> getAllTippers() {
+        List<Tipper> list = new ArrayList<>();
+        list.add(new SafeReference());
+        list.add(new Unless());
+        list.add(new LambdaExpressionRemoveRedundantCurlyBraces());
+        list.add(new LispLastElement());
+        list.add(new DefaultsTo());
+        list.add(new MethodDeclarationRenameSingleParameterToCent());
+        list.add(new Delegator());
+        return list;
+    }
+
+    private static String auxGetComponentName() {
+        return Toolbox.class.getSimpleName();
+    }
+
+    private void initializeInstance() {
+        this
                 .add(new SafeReference())
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
@@ -54,39 +64,23 @@ public enum Toolbox {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private static void createLeonidasTipperBuilders() {
-        Arrays.asList(new File(
-                Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
-                .listFiles())
-                .forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
-    }
+//    private static void createLeonidasTipperBuilders() {
+//        Arrays.asList(new File(
+//                Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
+//                .listFiles())
+//                .forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
+//    }
 
-    //TODO get Leonidas resources
-    private static void createLeonidasTipperBuilders2() {
-        String x = "";
-        x = Utils.pathToClass(LeonidasTipperDefinition.class);
+    private void createLeonidasTipperBuilders2() {
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
                 .forEach(c -> {
                     try {
-                        INSTANCE.add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
+                        add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
                     } catch (IOException e) {
                         System.out.print("failed to read file: " + c.getName());
                         e.printStackTrace();
                     }
                 });
-    }
-
-
-    public static List<Tipper> getAllTippers() {
-        List<Tipper> list =  new ArrayList<>();
-        list.add(new SafeReference());
-        list.add(new Unless());
-        list.add(new LambdaExpressionRemoveRedundantCurlyBraces());
-        list.add(new LispLastElement());
-        list.add(new DefaultsTo());
-        list.add(new MethodDeclarationRenameSingleParameterToCent());
-        list.add(new Delegator());
-        return list;
     }
 
     private Toolbox add(Tipper<? extends PsiElement> t) {
@@ -143,5 +137,28 @@ public enum Toolbox {
 
     private boolean canTipType(Class<? extends PsiElement> c) {
         return tipperMap.keySet().stream().anyMatch(x -> x.equals(c));
+    }
+
+    /**
+     * Called on INTELLIJ initialization
+     */
+    @Override
+    public void initComponent() {
+        initializeInstance();
+        logger.info("Initialized toolbox component");
+    }
+
+    /**
+     * I hope it works!
+     */
+    @Override
+    public void disposeComponent() {
+        logger.info("Disposed toolbox component");
+    }
+
+    @NotNull
+    @Override
+    public String getComponentName() {
+        return auxGetComponentName();
     }
 }

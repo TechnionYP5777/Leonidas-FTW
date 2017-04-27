@@ -6,7 +6,6 @@ import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -42,6 +41,12 @@ public class Matcher2 {
         constrains.get(id).add(c);
     }
 
+    //!!!!
+    public List<Matcher2> getConstraintsMatchers() {
+        constrains.values().stream().map(List::stream).reduce(Stream::concat);
+        return null;
+    }
+
     public boolean match(PsiElement e) {
 		return PsiTreeMatcher.match(root, EncapsulatingNode.buildTreeFromPsi(e)) && extractInfo(root, e).keySet().stream()
 				.map(constrains::get).map(l -> l.stream().map(c -> c.match(e)).reduce(true, (b1, b2) -> b1 && b2))
@@ -74,24 +79,17 @@ public class Matcher2 {
     }
 
 
-    public List<Integer> getGenericElements() {
-        List<Integer> s = root.accept(e -> {
+    /**
+     * @return list of Ids of all the generic elements in the tipper.
+     */
+    public Set<Integer> getGenericElements() {
+        final Set<Integer> tmp = new HashSet<>();
+        root.accept(e -> {
             if (iz.generic(e.getInner())) {
-                List<Integer> tmp = new LinkedList<>();
                 tmp.add(e.getInner().getUserData(KeyDescriptionParameters.ID));
-                return tmp;
-            }
-            List<Integer> tmp = new LinkedList<>();
-            tmp.add(-2);
-            return tmp;
-        }, (l1, l2) -> {
-            if(l1 != null && l2 != null){
-                return Stream.concat(l1.stream(), l2.stream()).collect(Collectors.toList());
-            }else{
-                return new ArrayList<>();
             }
         });
-        return s.stream().filter(x -> x != -2).collect(Collectors.toList());
+        return tmp;
     }
 
 

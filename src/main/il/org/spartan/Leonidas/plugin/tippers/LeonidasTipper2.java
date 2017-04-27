@@ -6,6 +6,7 @@ import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
@@ -18,7 +19,6 @@ import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -47,12 +47,10 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     @SuppressWarnings("ConstantConditions")
     public LeonidasTipper2(String tipperName, String fileContent) throws IOException {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
-        fixTheFuckupsOfIntellij_IamNotFrikingDeamon();
         PsiClass c = Utils.getClassFromFile(file);
         description = c.getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
-        JOptionPane.showMessageDialog(null, description, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
 
         matcher = new Matcher2(getMatcherRootTree());
         map = getConstraints();
@@ -87,7 +85,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
 
     }
 
-    private String extractConstraintType(PsiStatement s) {
+    /**
+     * @param s constraint statement.
+     * @return "is" if the(index).is(constraint) and "isNot" if the(index).isNot(constraint).
+     */
+    private Constraint.ConstraintType extractConstraintType(PsiStatement s) {
         Wrapper<Boolean> r = new Wrapper<>(Boolean.TRUE);
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
@@ -98,7 +100,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
                 }
             }
         });
-        return r.get() ? "is" : "isNot";
+        return r.get() ? Constraint.ConstraintType.IS : Constraint.ConstraintType.IS_NOT;
     }
 
     private PsiElement getLambdaExpressionBody(PsiStatement s) {
@@ -114,18 +116,19 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return l.get().getBody();
     }
 
+    // Example of code that documents itself. In this case, it documents "DON'T TOUCH ME".
     private Optional<Class<? extends PsiElement>> getTypeOf(PsiStatement s) {
-        Wrapper<Class<? extends PsiElement>> q = new Wrapper<>();
+        Wrapper<Optional<Class<? extends PsiElement>>> wq = new Wrapper<>(Optional.empty());
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
-                if (expression.getMethodExpression().getText().equals("ofType")) {
-                    q.set(getPsiClass(expression.getArgumentList().getExpressions()[0].getText().replace(".class", "")));
+                if (expression.getMethodExpression().getText().endsWith("ofType")) {
+                    wq.set(Optional.of(getPsiClass(expression.getArgumentList().getExpressions()[0].getText().replace(".class", ""))));
                 }
             }
         });
-        return Optional.of(q.get());
+        return wq.get();
     }
 
     private Map<Integer, List<Constraint>> getConstraints() {
@@ -173,7 +176,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     }
 
     private void buildMatcherTree(Matcher2 m) {
-        List<Integer> l = m.getGenericElements();
+        Set<Integer> l = m.getGenericElements();
         l.stream().forEach(i -> map.get(i).stream().forEach(j ->
                 m.addConstraint(i, j)));
         l.stream().forEach(i ->
@@ -250,7 +253,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return result.get();
     }
 
-    private void handleStubMethodCalls(PsiElement innerTree) {
+    private void giveIdToStubMethodCalls(PsiElement innerTree) {
         innerTree.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
@@ -268,7 +271,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     private EncapsulatingNode getMatcherRootTree() {
 
         PsiMethod method = getInterfaceMethod("matcher");
-        handleStubMethodCalls(method);
+        giveIdToStubMethodCalls(method);
 
         return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(method,
                 getPsiElementTypeFromAnnotation(method))));
@@ -281,8 +284,8 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
 
         PsiMethod matcher = getInterfaceMethod("matcher");
         PsiMethod replacer = getInterfaceMethod("replacer");
-        handleStubMethodCalls(matcher);
-        handleStubMethodCalls(replacer);
+        giveIdToStubMethodCalls(matcher);
+        giveIdToStubMethodCalls(replacer);
         return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(matcher,
                 getPsiElementTypeFromAnnotation(replacer))));
     }
@@ -306,7 +309,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     }
 
     /**
-     * @param name the name of the tipper
+     * @param name    the name of the tipper
      * @param content the definition file of the tipper
      * @return PsiFile representing the file of the tipper
      */
@@ -317,7 +320,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         final FileViewProviderFactory factory = LanguageFileViewProviders.INSTANCE.forLanguage(language);
         FileViewProvider viewProvider = factory != null ? factory.createFileViewProvider(virtualFile, language, Utils.getPsiManager(Utils.getProject()), true) : null;
         if (viewProvider == null)
-            viewProvider = new SingleRootFileViewProvider(Utils.getPsiManager(Utils.getProject()), virtualFile, true);
+            viewProvider = new SingleRootFileViewProvider(
+                    Utils.getPsiManager(ProjectManager.getInstance().getDefaultProject()),
+                    virtualFile,
+                    true
+            );
         language = viewProvider.getBaseLanguage();
         final ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
         if (parserDefinition != null) {
@@ -327,14 +334,23 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     }
 
     public void fixTheFuckupsOfIntellij_IamNotFrikingDeamon() {
-        ProgressIndicator obj = ProgressManager.getInstance().getProgressIndicator();
-        List<Field> fields = getAllFields(obj.getClass());
-        Field field = fields.stream().filter(f -> f.getName().equals("myCanceled")).findFirst().get();
-        field.setAccessible(true);
         try {
-            field.set(obj, false);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            ProgressIndicator obj = ProgressManager.getInstance().getProgressIndicator();
+            ProgressManager man = ProgressManager.getInstance();
+            List<Field> fields = getAllFields(obj.getClass());
+            List<Field> fields2 = getAllFields(man.getClass());
+            Field myCanceled = fields.stream().filter(f -> f.getName().equals("myCanceled")).findFirst().get();
+            Field shouldCancel = fields2.stream().filter(f -> f.getName().equals("shouldCheckCanceled")).findFirst().get();
+            myCanceled.setAccessible(true);
+            shouldCancel.setAccessible(true);
+            try {
+                myCanceled.set(obj, false);
+                shouldCancel.set(obj, false);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception ignore) {
+
         }
         //Boolean b = ProgressIndicatorProvider.getInstance().getProgressIndicator().isCanceled();
     }

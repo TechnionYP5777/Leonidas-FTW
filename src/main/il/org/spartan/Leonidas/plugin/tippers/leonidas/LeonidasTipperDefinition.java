@@ -7,11 +7,12 @@ import java.util.function.Supplier;
  * @since 26-03-2017.
  */
 public interface LeonidasTipperDefinition {
-    Template matcher();
+    void matcher();
 
-    Template replacer();
+    void replacer();
 
-    default void constraints(){};
+    default void constraints() {
+    }
 
     class Template {
         public Template(Runnable __) {/**/}
