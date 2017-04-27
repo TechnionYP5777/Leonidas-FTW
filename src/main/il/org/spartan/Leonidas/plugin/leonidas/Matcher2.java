@@ -7,7 +7,6 @@ import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by  on 3/31/2017.
@@ -43,7 +42,12 @@ public class Matcher2 {
     }
 
     public List<Matcher2> getConstraintsMatchers() {
-        return constrains.values().stream().map(List::stream).reduce(Stream::concat).get().map(c -> c.getMatcher()).collect(Collectors.toList());
+        return constrains.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList())
+                .stream()
+                .map(t -> t.getMatcher())
+                .collect(Collectors.toList());
     }
 
     public boolean match(PsiElement e) {

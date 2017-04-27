@@ -141,7 +141,8 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
             y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
             // y - root, key ID
             map.putIfAbsent(key, new LinkedList<>());
-            map.get(key).add(new Constraint(extractConstraintType(s), EncapsulatingNode.buildTreeFromPsi(y)));
+            giveIdToStubMethodCalls(y);
+            map.get(key).add(new Constraint(extractConstraintType(s), Pruning.prune(EncapsulatingNode.buildTreeFromPsi(y))));
         });
         return map;
     }
@@ -173,8 +174,8 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
 
     private void buildMatcherTree(Matcher2 m) {
         Set<Integer> l = m.getGenericElements();
-        l.stream().forEach(i -> map.get(i).stream().forEach(j ->
-                m.addConstraint(i, j)));
+        l.stream().forEach(i -> Optional.ofNullable(map.get(i)).ifPresent(z -> z.stream().forEach(j ->
+                m.addConstraint(i, j))));
         m.getConstraintsMatchers().stream().forEach(this::buildMatcherTree);
     }
 

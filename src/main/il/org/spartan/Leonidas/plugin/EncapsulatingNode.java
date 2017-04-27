@@ -35,15 +35,16 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         return new EncapsulatingNode(e);
     }
 
+    //!!!
     public EncapsulatingNode replace(EncapsulatingNode newNode) {
         if (parent == null)
-			return this;
+            return this;
         if (!iz.generic(newNode.getInner())) {
             inner.replace(newNode.inner);
-			inner = newNode.inner;
-		}
-		parent.children.replaceAll(e -> e != this ? e : newNode);
-		return this;
+            inner = newNode.inner;
+        }
+        parent.children.replaceAll(e -> e != this ? e : newNode);
+        return this;
     }
 
     public List<EncapsulatingNode> getChildren() {
@@ -71,6 +72,7 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
 
     public void setInner(GenericPsi inner) {
         this.inner = inner;
+        children = new LinkedList<>();
     }
 
     public int getAmountOfNoneWhiteSpaceChildren() {
