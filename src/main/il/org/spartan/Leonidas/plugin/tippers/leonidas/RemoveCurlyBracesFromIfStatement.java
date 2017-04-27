@@ -28,8 +28,9 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     @Leonidas(PsiIfStatement.class)
     public void matcher() {
         new Template(() -> {
-            if (booleanExpression(0))
-				statement(1);
+            if (booleanExpression(0)) {
+                statement(1);
+            }
         });
     }
 

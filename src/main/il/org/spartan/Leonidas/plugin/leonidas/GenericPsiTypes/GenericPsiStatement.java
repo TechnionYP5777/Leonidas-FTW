@@ -12,12 +12,12 @@ import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 public class GenericPsiStatement extends GenericPsi implements PsiStatement {
 
     public GenericPsiStatement(PsiElement inner) {
-        super(inner, "generic statement");
+        super(inner, "GenericStatement");
     }
 
     @Override
     public String toString() {
-        return "Generic statement" + inner.getUserData(KeyDescriptionParameters.ID);
+        return "GenericStatement" + inner.getUserData(KeyDescriptionParameters.ID);
     }
 
     @Override

@@ -1,11 +1,8 @@
-package il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes;
+package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
-import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
-import il.org.spartan.Leonidas.plugin.leonidas.Matcher2;
-import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 
 import java.util.Map;
 

@@ -11,11 +11,7 @@ import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
-import il.org.spartan.Leonidas.plugin.leonidas.Constraint;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.Replacer2;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
-import il.org.spartan.Leonidas.plugin.leonidas.Matcher2;
-import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
+import il.org.spartan.Leonidas.plugin.leonidas.*;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 

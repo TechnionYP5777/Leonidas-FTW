@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -37,8 +38,8 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
     public EncapsulatingNode replace(EncapsulatingNode newNode) {
         if (parent == null)
 			return this;
-		if (!iz.generic(newNode.inner)) {
-			inner.replace(newNode.inner);
+        if (!iz.generic(newNode.getInner())) {
+            inner.replace(newNode.inner);
 			inner = newNode.inner;
 		}
 		parent.children.replaceAll(e -> e != this ? e : newNode);
@@ -54,8 +55,8 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
     }
 
     public void accept(EncapsulatingNodeVisitor v) {
-        children.forEach(child -> child.accept(v));
         v.visit(this);
+        children.forEach(child -> child.accept(v));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -66,6 +67,10 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
 
     public PsiElement getInner() {
         return inner;
+    }
+
+    public void setInner(GenericPsi inner) {
+        this.inner = inner;
     }
 
     public int getAmountOfNoneWhiteSpaceChildren() {

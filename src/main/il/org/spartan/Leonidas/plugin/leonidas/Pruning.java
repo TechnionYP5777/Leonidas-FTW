@@ -37,7 +37,8 @@ public class Pruning {
                 EncapsulatingNode prev = Pruning.getRealParent(e1, y);
                 GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
                 if (x != null)
-					prev.replace(EncapsulatingNode.buildTreeFromPsi(x));
+                    prev.setInner(x);
+                //prev.replace(EncapsulatingNode.buildTreeFromPsi(x));
             });
         });
         return n;
