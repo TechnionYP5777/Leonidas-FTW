@@ -26,10 +26,8 @@ public class SpartanizerAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull final PsiElement e, @NotNull AnnotationHolder h) {
         try {
-
             if (!Spartanizer.canTip(e) || e.getContainingFile().getName().contains("Spartanizer"))
                 return;
-
             Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
             annotation.registerFix(new IntentionAction() {
                 @Nls
@@ -62,7 +60,6 @@ public class SpartanizerAnnotator implements Annotator {
                     return false;
                 }
             });
-
             TextAttributesKey.createTextAttributesKey("");
             annotation.setEnforcedTextAttributes(
                     (new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0)));

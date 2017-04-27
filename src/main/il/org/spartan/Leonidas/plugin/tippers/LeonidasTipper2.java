@@ -4,8 +4,6 @@ import com.intellij.lang.Language;
 import com.intellij.lang.LanguageParserDefinitions;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.java.JavaLanguage;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
@@ -43,11 +41,9 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
     @SuppressWarnings("ConstantConditions")
     public LeonidasTipper2(String tipperName, String fileContent) throws IOException {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
-        PsiClass c = Utils.getClassFromFile(file);
-        description = c.getDocComment().getText()
+        description = Utils.getClassFromFile(file).getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
-
         matcher = new Matcher2(getMatcherRootTree());
         map = getConstraints();
         buildMatcherTree(matcher);
@@ -179,6 +175,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         m.getConstraintsMatchers().stream().forEach(this::buildMatcherTree);
     }
 
+
     private PsiMethod getInterfaceMethod(String name) {
         Wrapper<PsiMethod> x = new Wrapper<>();
         file.accept(new JavaRecursiveElementVisitor() {
@@ -208,8 +205,8 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return new Tip(description(node), node, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
-                if (!canTip(node)) return;
-                replacer.replace(node, matcher.extractInfo(node), r);
+                if (canTip(node))
+                    replacer.replace(node, matcher.extractInfo(node), r);
             }
         };
     }
@@ -276,12 +273,9 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
      * @return the generic tree representing the "from" template
      */
     private EncapsulatingNode getReplacerRootTree() {
-
-        PsiMethod matcher = getInterfaceMethod("matcher");
         PsiMethod replacer = getInterfaceMethod("replacer");
-        giveIdToStubMethodCalls(matcher);
         giveIdToStubMethodCalls(replacer);
-        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(matcher,
+        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(replacer,
                 getPsiElementTypeFromAnnotation(replacer))));
     }
 
@@ -328,25 +322,4 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return null;
     }
 
-    public void fixTheFuckupsOfIntellij_IamNotFrikingDeamon() {
-        try {
-            ProgressIndicator obj = ProgressManager.getInstance().getProgressIndicator();
-            ProgressManager man = ProgressManager.getInstance();
-            List<Field> fields = getAllFields(obj.getClass());
-            List<Field> fields2 = getAllFields(man.getClass());
-            Field myCanceled = fields.stream().filter(f -> f.getName().equals("myCanceled")).findFirst().get();
-            Field shouldCancel = fields2.stream().filter(f -> f.getName().equals("shouldCheckCanceled")).findFirst().get();
-            myCanceled.setAccessible(true);
-            shouldCancel.setAccessible(true);
-            try {
-                myCanceled.set(obj, false);
-                shouldCancel.set(obj, false);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception ignore) {
-
-        }
-        //Boolean b = ProgressIndicatorProvider.getInstance().getProgressIndicator().isCanceled();
-    }
 }

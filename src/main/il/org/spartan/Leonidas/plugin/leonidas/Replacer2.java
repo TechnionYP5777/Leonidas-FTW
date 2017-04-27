@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
 import java.util.Map;
@@ -34,9 +35,8 @@ public class Replacer2 {
 
     public PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
         m.keySet().forEach(d -> root.accept(e -> {
-            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent())
-				Pruning.getRealParent(e, Pruning.getStubName(e).get())
-						.replace(new EncapsulatingNode(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
+            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e.getInner()))
+                e.replace(new EncapsulatingNode(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
         }));
         return root.getInner();
     }

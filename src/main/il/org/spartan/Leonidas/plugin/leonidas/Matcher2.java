@@ -53,10 +53,7 @@ public class Matcher2 {
     public boolean match(PsiElement e) {
         Map<Integer, PsiElement> info = extractInfo(root, e);
         return PsiTreeMatcher.match(root, EncapsulatingNode.buildTreeFromPsi(e)) && info.keySet().stream()
-                .map(id -> constrains.get(id).stream()
-                        .map(c -> c.match(info.get(id)))
-                        .reduce(true, (b1, b2) -> b1 && b2))
-                .reduce(true, (b1, b2) -> b1 && b2);
+                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> c.match(info.get(id))));
     }
 
     /**

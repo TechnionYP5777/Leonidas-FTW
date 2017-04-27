@@ -231,4 +231,7 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
         return another == this;
     }
 
+    public PsiElement getInner() {
+        return inner;
+    }
 }

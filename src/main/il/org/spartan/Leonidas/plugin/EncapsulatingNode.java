@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin;
 
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
@@ -35,12 +36,11 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         return new EncapsulatingNode(e);
     }
 
-    //!!!
-    public EncapsulatingNode replace(EncapsulatingNode newNode) {
+    public EncapsulatingNode replace(EncapsulatingNode newNode, PsiRewrite r) {
         if (parent == null)
             return this;
         if (!iz.generic(newNode.getInner())) {
-            inner.replace(newNode.inner);
+            r.replace(((GenericPsi) inner).getInner(), newNode.inner);
             inner = newNode.inner;
         }
         parent.children.replaceAll(e -> e != this ? e : newNode);

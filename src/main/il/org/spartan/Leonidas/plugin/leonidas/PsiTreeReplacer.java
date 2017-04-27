@@ -39,7 +39,7 @@ public class PsiTreeReplacer {
         map.keySet().forEach(d -> templateReplacingTree.accept(e -> {
             if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && Pruning.getStubName(e).isPresent())
 				Pruning.getRealParent(e, Pruning.getStubName(e).get())
-						.replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))));
+                        .replace(new EncapsulatingNode(map.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
         }));
 
         return templateReplacingTree.getInner();
