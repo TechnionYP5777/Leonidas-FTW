@@ -26,6 +26,7 @@ public class SpartanizerAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull final PsiElement e, @NotNull AnnotationHolder h) {
         try {
+
             if (!Spartanizer.canTip(e) || e.getContainingFile().getName().contains("Spartanizer"))
                 return;
 
