@@ -51,10 +51,13 @@ public class Matcher2 {
     }
 
     public boolean match(PsiElement e) {
-		return PsiTreeMatcher.match(root, EncapsulatingNode.buildTreeFromPsi(e)) && extractInfo(root, e).keySet().stream()
-				.map(constrains::get).map(l -> l.stream().map(c -> c.match(e)).reduce(true, (b1, b2) -> b1 && b2))
-				.reduce(true, (b1, b2) -> b1 && b2);
-	}
+        Map<Integer, PsiElement> info = extractInfo(root, e);
+        return PsiTreeMatcher.match(root, EncapsulatingNode.buildTreeFromPsi(e)) && info.keySet().stream()
+                .map(id -> constrains.get(id).stream()
+                        .map(c -> c.match(info.get(id)))
+                        .reduce(true, (b1, b2) -> b1 && b2))
+                .reduce(true, (b1, b2) -> b1 && b2);
+    }
 
     /**
      * @param treeTemplate - The root of a tree already been matched.
