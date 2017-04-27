@@ -6,6 +6,7 @@ import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -41,10 +42,8 @@ public class Matcher2 {
         constrains.get(id).add(c);
     }
 
-    //!!!!
     public List<Matcher2> getConstraintsMatchers() {
-        constrains.values().stream().map(List::stream).reduce(Stream::concat);
-        return null;
+        return constrains.values().stream().map(List::stream).reduce(Stream::concat).get().map(c -> c.getMatcher()).collect(Collectors.toList());
     }
 
     public boolean match(PsiElement e) {

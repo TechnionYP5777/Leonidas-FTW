@@ -179,9 +179,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         Set<Integer> l = m.getGenericElements();
         l.stream().forEach(i -> map.get(i).stream().forEach(j ->
                 m.addConstraint(i, j)));
-        l.stream().forEach(i ->
-                m.getMap().get(i).stream().map(Constraint::getMatcher)
-                        .forEach(this::buildMatcherTree));
+        m.getConstraintsMatchers().stream().forEach(this::buildMatcherTree);
     }
 
     private PsiMethod getInterfaceMethod(String name) {
