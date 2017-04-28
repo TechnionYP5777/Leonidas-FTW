@@ -29,7 +29,6 @@ public class Toolbox implements ApplicationComponent {
     public boolean playground = false;
     Set<VirtualFile> excludedFiles = new HashSet<>();
     Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
-    boolean tmp;
 
     public static Toolbox getInstance() {
         return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
@@ -63,22 +62,13 @@ public class Toolbox implements ApplicationComponent {
         createLeonidasTipperBuilders2();
     }
 
-    @SuppressWarnings("ConstantConditions")
-//    private static void createLeonidasTipperBuilders() {
-//        Arrays.asList(new File(
-//                Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
-//                .listFiles())
-//                .forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
-//    }
-
     private void createLeonidasTipperBuilders2() {
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
                 .forEach(c -> {
                     try {
                         add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
                     } catch (IOException e) {
-                        System.out.print("failed to read file: " + c.getName());
-                        e.printStackTrace();
+                        logger.info("Failed to read file: " + c.getName() + "\n" + Arrays.stream(e.getStackTrace()).map(x -> x.toString()).reduce((e1, e2) -> e1 + "\n" + e2));
                     }
                 });
     }
@@ -148,9 +138,6 @@ public class Toolbox implements ApplicationComponent {
         logger.info("Initialized toolbox component");
     }
 
-    /**
-     * I hope it works!
-     */
     @Override
     public void disposeComponent() {
         logger.info("Disposed toolbox component");

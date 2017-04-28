@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
+ * Generalizes any kind of expression. For example: "x >= 4", "id--", "5 + 3".
  * @author michalcohen
  * @since 11-01-2017
  */

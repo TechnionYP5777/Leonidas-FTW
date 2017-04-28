@@ -1,16 +1,13 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
-import com.intellij.psi.PsiCodeBlock;
-import com.intellij.psi.PsiExpression;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
 /**
  * @author michalcohen
  * @since 07-01-2017.
  */
 public class PsiTreeMatcherTest extends PsiTypeHelper {
-
+/*
     public void testMatch1() {
         PsiExpression x = createTestExpressionFromString("x + 1"), y = createTestExpressionFromString("x + 1");
         assert PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(x), EncapsulatingNode.buildTreeFromPsi(y));
@@ -24,7 +21,7 @@ public class PsiTreeMatcherTest extends PsiTypeHelper {
         assert !PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(b),
 				EncapsulatingNode.buildTreeFromPsi(createTestCodeBlockFromString("{ int y = 10; }")));
     }
-    /*
+
     public void testMatch3() {
         PsiIfStatement b = createTestIfStatement("booleanExpression(0)", "statement(1);");
         b.accept(new JavaRecursiveElementVisitor() {
@@ -45,9 +42,9 @@ public class PsiTreeMatcherTest extends PsiTypeHelper {
 
         assert PsiTreeMatcher.match(encapsulatingNode, EncapsulatingNode
 				.buildTreeFromPsi(createTestIfStatement("true && false", " if (true) { int y = 5; } ")));
-    }*/
+    }
 
-    /*
+
     public void testMatch4() {
         PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
         b.accept(new JavaRecursiveElementVisitor() {

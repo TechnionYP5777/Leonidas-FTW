@@ -7,7 +7,9 @@ import static il.org.spartan.Leonidas.plugin.leonidas.Constraint.ConstraintType.
 import static il.org.spartan.Leonidas.plugin.leonidas.Constraint.ConstraintType.IS_NOT;
 
 /**
- * Created by  on 4/1/2017.
+ * Represents a constraint on a generalized variable of the leonidas language.
+ * @author michalcohen
+ * @since 01-04-2017.
  */
 public class Constraint {
 
@@ -20,10 +22,6 @@ public class Constraint {
         matcher.setRoot(e);
     }
 
-    public Constraint(ConstraintType type) {
-        this.type = type;
-    }
-
     public ConstraintType getType() {
         return type;
     }
@@ -32,10 +30,10 @@ public class Constraint {
         return matcher;
     }
 
-    public void setMatcher(Matcher2 m) {
-        this.matcher = m;
-    }
-
+    /**
+     * @param e the users tree to match.
+     * @return indication of e being matched recursively to the matcher, when taking in consideration the type of the constraint.
+     */
     public boolean match(PsiElement e) {
         return (type == IS && matcher.match(e)) || (type == IS_NOT && !matcher.match(e));
     }

@@ -8,7 +8,8 @@ import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 import java.util.Map;
 
 /**
- * Created by  on 4/1/2017.
+ * @author michalcohen
+ * @since 01-04-2017.
  */
 public class Replacer2 {
 
@@ -22,7 +23,7 @@ public class Replacer2 {
 
     /**
      * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder
-     *
+     * @oaram m a mapping between the id of a generic element to its value in the code of the user.
      * @param treeToReplace - the given tree that matched the "from" tree.
      * @param r             - Rewrite object
      * @return the replaced element
@@ -33,6 +34,11 @@ public class Replacer2 {
         return EncapsulatingNode.buildTreeFromPsi(n);
     }
 
+    /**
+     * @param r - Rewrite object
+     * @return the tree that will replace the code of the user.
+     * @oaram m a mapping between the id of a generic element to its value in the code of the user.
+     */
     public PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
         EncapsulatingNode rootCopy = root.clone();
         m.keySet().forEach(d -> rootCopy.accept(e -> {

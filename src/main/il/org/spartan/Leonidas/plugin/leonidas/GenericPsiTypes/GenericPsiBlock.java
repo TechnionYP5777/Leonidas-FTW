@@ -8,6 +8,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Generalizes code block as these inside a method of an if statement - Anything enclosed by "{" and "}".
  * @author Roey Maor, Amir sagiv
  * @since 20-01-2017
  */

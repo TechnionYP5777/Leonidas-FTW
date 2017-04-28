@@ -30,15 +30,12 @@ import org.jetbrains.annotations.Nullable;
 public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken {
 
     PsiElement inner;
-    @SuppressWarnings("FieldCanBeLocal")
-    private PsiFile containingFile;
 
     protected GenericPsi(PsiElement inner, String text) {
         super(JavaElementType.DUMMY_ELEMENT, text);
         this.inner = inner;
-        this.containingFile = inner.getContainingFile();
-
     }
+
     @Override
     public IElementType getTokenType() {
         return getElementType();
@@ -55,7 +52,7 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
     }
 
     /**
-     * checks if a different element conforms with the represented generic type.
+     * Checks if an element conforms with the represented generic type.
      *
      * @param e - the element to be checked
      * @return true iff e is of the generic type
@@ -66,22 +63,6 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
     public boolean isValid() {
         return true;
     }
-
-
-    @Override
-    public PsiElement getParent() {
-        return inner.getParent();
-    }
-
-    @Override
-    public PsiElement getNextSibling() {
-        return inner.getNextSibling();
-    }//buggy
-
-    @Override
-    public PsiElement getPrevSibling() {
-        return inner.getPrevSibling();
-    }//buggy
 
     @Override
     public PsiFile getContainingFile() {
@@ -95,7 +76,6 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
 
     @Override
     public void delete() throws IncorrectOperationException {
-        //LOG.assertTrue(getTreeParent() != null);
         CheckUtil.checkWritable(this);
         getTreeParent().deleteChildInternal(this);
         invalidate();

@@ -6,6 +6,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 
 /**
+ * Generalizes any kind of statement. For example: "System.out.print(...);", "id--;", "foo();", "if(true) x++;".
  * @author michalcohen
  * @since 11-01-17
  */

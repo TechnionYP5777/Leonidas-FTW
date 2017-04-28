@@ -1,22 +1,13 @@
 package il.org.spartan.Leonidas.tippers;
 
-import com.intellij.psi.PsiConditionalExpression;
-import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
-import il.org.spartan.Leonidas.plugin.leonidas.PsiTreeTipperBuilder;
-import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
-import org.mockito.Mockito;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Oren Afek
  * @since 20/01/17
  */
 public class LeonidasTipperTest extends PsiTypeHelper {
-
+/*
     private LeonidasTipper $;
     private PsiTreeTipperBuilder builderMock = Mockito.mock(PsiTreeTipperBuilder.class);
     private File fileMock = Mockito.mock(File.class);
@@ -82,6 +73,6 @@ public class LeonidasTipperTest extends PsiTypeHelper {
         Mockito.when(builderMock.getDescription()).thenReturn(mockDescription);
         assertEquals(mockDescription, $.description(createTestExpressionFromString(expression)));
     }
-
+*/
 
 }

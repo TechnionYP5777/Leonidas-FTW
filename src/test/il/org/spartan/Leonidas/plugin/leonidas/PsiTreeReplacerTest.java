@@ -8,7 +8,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  */
 public class PsiTreeReplacerTest extends PsiTypeHelper {
 
-    private static final String TIPPER_FILE_NAME_1 = "RemoveCurlyBracesFromIfStatement.java";
+    /*private static final String TIPPER_FILE_NAME_1 = "RemoveCurlyBracesFromIfStatement.java";
     private static final String TIPPER_FILE_NAME_2 = "RemoveCurlyBracesFromWhileStatement.java";
     private static final String TIPPER_FILE_NAME_3 = "IfDoubleNot.java";
     private static final String COND = "x==0";
@@ -16,7 +16,7 @@ public class PsiTreeReplacerTest extends PsiTypeHelper {
     private static final PsiTreeReplacer PSI_TREE_REPLACER = new PsiTreeReplacer();
 
     // TODO: uncomment test and fix/replace if needed
-    /*public void testGetReplacer1() {
+    public void testGetReplacer1() {
         PsiIfStatement ifStatement = createTestIfStatement(COND, THEN);
         PsiTreeTipperBuilder tipperBuilder = null;
         try {
@@ -66,7 +66,7 @@ public class PsiTreeReplacerTest extends PsiTypeHelper {
 //    }
 
     // TODO: uncomment test and fix/replace if needed
-    public void testReplace() {
+    /*   public void testReplace() {
         /*PsiIfStatement ifStatement = createTestIfStatement(COND, THEN);
         PsiElement parent = ifStatement.getParent();
         PsiTreeTipperBuilder tipperBuilder = null;
@@ -79,10 +79,10 @@ public class PsiTreeReplacerTest extends PsiTypeHelper {
         EncapsulatingNode x = PsiTreeReplacer.replace(ifStatement, tipperBuilder, rewrite);
         EncapsulatingNode y = EncapsulatingNode.buildTreeFromPsi(newIfStatement);
         assertTrue(PsiTreeMatcher.match(x, y));
-        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(PsiTreeUtil.findChildOfType(parent, PsiIfStatement.class)), EncapsulatingNode.buildTreeFromPsi(newIfStatement)));*/
+        assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(PsiTreeUtil.findChildOfType(parent, PsiIfStatement.class)), EncapsulatingNode.buildTreeFromPsi(newIfStatement)));
     }
 
-    /*
+
     public void testExtractInfo1() {
         PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
         Wrapper<Integer> count = new Wrapper<>(0);

@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
+import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
@@ -27,7 +28,6 @@ public class GenericPsiElementStub {
      * @param id the serial no to distinct between several boolean expressions in the same tipper
      * @return true
      */
-
     public static boolean booleanExpression(int id) {
         return booleanExpression();
     }
@@ -96,6 +96,9 @@ public class GenericPsiElementStub {
         return Stream.of();
     }
 
+    /**
+     * An enum representing the different coding blocks.
+     */
     public enum StubName {
         BOOLEAN_EXPRESSION("booleanExpression"),
         STATEMENT("statement"),
@@ -107,19 +110,39 @@ public class GenericPsiElementStub {
 
         StubName(String stubName) { this.stubName = stubName; }
 
+        /**
+         * @param x method call such as: booleanExpression(3), statement(2)...
+         * @return the name of the generic type represented in the method call.
+         */
         public static StubName valueOfMethodCall(PsiMethodCallExpression x) {
+            if (x == null) return null;
             return Arrays.stream(values())
                     .filter(stub -> x.getMethodExpression().getText().equals(stub.stubName()))
                     .findFirst().orElseGet(null);
-
         }
 
+        /**
+         * @param e psi element
+         * @return true iff it is a method call representing generic element.
+         */
+        public static boolean isGeneric(PsiElement e) {
+            return GenericPsiElementStub.StubName.valueOfMethodCall(az.methodCallExpression(e)) != null;
+        }
+
+        /**
+         * @param s string representing generic type: "booleanExpression(3)", "statement(2)"...
+         * @return the name of the generic type represented in the method call.
+         */
         public static StubName valueOfStringExpression(String s) {
             return Arrays.stream(values())
                     .filter(stub -> s.equals(stub.stubMethodCallExpression()))
                     .findFirst().orElseGet(null);
         }
 
+        /**
+         * @param e psi element
+         * @return the StubName of the genericType most qualified to the element.
+         */
         public static StubName getGeneralTye(PsiElement e) {
             Wrapper<StubName> name = new Wrapper<>(null);
             e.accept(new JavaElementVisitor() {
@@ -160,18 +183,33 @@ public class GenericPsiElementStub {
             return stubName;
         }
 
+        /**
+         * @return an example of method call expression with the current generic type.
+         */
         public String stubMethodCallExpression() {
             return String.format("%s()", stubName);
         }
 
+        /**
+         * @return an example of method call statement (followed by ";") with the current generic type.
+         */
         public String stubMethodCallExpressionStatement() {
             return String.format("%s();", stubName);
         }
 
+        /**
+         * @param x method call such as: booleanExpression(3), statement(2)...
+         * @return true iff the method call expresion represents the current generic type.
+         */
         public boolean matchesStubName(PsiMethodCallExpression x) {
             return x.getMethodExpression().getText().equals(this.stubName);
         }
 
+        /**
+         * @param inner the psi element that the generic type generalizes (usually a method call)
+         * @param id the ID inside the replaced element (if it isn't the direct method call, then we won't be able to retrieve it from "inner").
+         * @return
+         */
         public GenericPsi getGenericPsiType(PsiElement inner, Integer id) {
             GenericPsi x;
             switch (this) {
@@ -191,15 +229,20 @@ public class GenericPsiElementStub {
             return x;
         }
 
+        /**
+         * @param prv the method call expression representing the generic element.
+         * @param next one step upwards in the psi tree of the code.
+         * @return the true iff by the type of the generic element there is a need to go one step upwards.
+         */
         public boolean goUpwards(EncapsulatingNode prv, EncapsulatingNode next) {
             switch (this) {
-			default:
-				return prv.getText().equals(next.getText());
-			case STATEMENT:
-				return prv.getText().equals(next.getText()) || next.getText().equals(prv.getText() + ";");
-			case ANY_BLOCK:
-				return !iz.block(prv.getInner());
-			}
+                default:
+                    return prv.getText().equals(next.getText());
+                case STATEMENT:
+                    return prv.getText().equals(next.getText()) || next.getText().equals(prv.getText() + ";");
+                case ANY_BLOCK:
+                    return !iz.block(prv.getInner());
+            }
         }
     }
 }

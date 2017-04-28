@@ -174,7 +174,6 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         m.getConstraintsMatchers().stream().forEach(this::buildMatcherTree);
     }
 
-
     private PsiMethod getInterfaceMethod(String name) {
         Wrapper<PsiMethod> x = new Wrapper<>();
         file.accept(new JavaRecursiveElementVisitor() {
