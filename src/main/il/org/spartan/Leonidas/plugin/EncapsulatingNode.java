@@ -32,6 +32,16 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         this.parent = parent;
     }
 
+    public EncapsulatingNode(EncapsulatingNode n) {
+        this(n, null);
+    }
+
+    private EncapsulatingNode(EncapsulatingNode n, EncapsulatingNode parent) {
+        this.parent = parent;
+        inner = n.inner;
+        children = n.getChildren().stream().map(c -> new EncapsulatingNode(c, this)).collect(Collectors.toList());
+    }
+
     public static EncapsulatingNode buildTreeFromPsi(PsiElement e) {
         return new EncapsulatingNode(e);
     }
@@ -91,7 +101,7 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
     // TODO @michalcohen this doesn't work after pruning & 'genericalization' of elements.
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     public EncapsulatingNode clone() {
-        return buildTreeFromPsi(inner);
+        return new EncapsulatingNode(this);
     }
 
     @Override
