@@ -34,10 +34,11 @@ public class Replacer2 {
     }
 
     public PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
-        m.keySet().forEach(d -> root.accept(e -> {
+        EncapsulatingNode rootCopy = root.clone(); // We don't want to overwrite root! bad idea!
+        m.keySet().forEach(d -> rootCopy.accept(e -> {
             if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e.getInner()))
                 e.replace(new EncapsulatingNode(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
         }));
-        return root.getInner();
+        return rootCopy.getInner();
     }
 }
