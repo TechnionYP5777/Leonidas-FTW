@@ -25,9 +25,11 @@ public class GenericPsiStatement extends GenericPsi implements PsiStatement {
         return iz.statement(e) && !iz.blockStatement(e);
     }
 
-    /*@Override
+    @Override
     public GenericPsiStatement copy() {
-        return new GenericPsiStatement(inner.copy());
+        PsiElement psiCopy = inner.copy();
+        psiCopy.putUserData(KeyDescriptionParameters.ID, inner.getUserData(KeyDescriptionParameters.ID));
+        return new GenericPsiStatement(psiCopy);
     }
-    */
+
 }

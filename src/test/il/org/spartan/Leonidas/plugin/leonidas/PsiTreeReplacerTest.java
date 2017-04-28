@@ -1,13 +1,6 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
-import com.intellij.psi.*;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
-import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
-
-import java.util.Map;
 
 /**
  * @author AnnaBel7
@@ -89,6 +82,7 @@ public class PsiTreeReplacerTest extends PsiTypeHelper {
         assertTrue(PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(PsiTreeUtil.findChildOfType(parent, PsiIfStatement.class)), EncapsulatingNode.buildTreeFromPsi(newIfStatement)));*/
     }
 
+    /*
     public void testExtractInfo1() {
         PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
         Wrapper<Integer> count = new Wrapper<>(0);
@@ -116,6 +110,6 @@ public class PsiTreeReplacerTest extends PsiTypeHelper {
         Map<Integer, PsiElement> m = PsiTreeReplacer.extractInfo(n, y);
         assert iz.expression(m.get(0));
         assert iz.statement(m.get(1));
-    }
+    }*/
 
 }

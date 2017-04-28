@@ -38,7 +38,7 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
 
     private EncapsulatingNode(EncapsulatingNode n, EncapsulatingNode parent) {
         this.parent = parent;
-        inner = n.inner;
+        inner = n.inner.copy();
         children = n.getChildren().stream().map(c -> new EncapsulatingNode(c, this)).collect(Collectors.toList());
     }
 
@@ -46,15 +46,10 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         return new EncapsulatingNode(e);
     }
 
-    // TODO @michalcohen please document stuff like that. it looks very non-intuitive.
     public EncapsulatingNode replace(EncapsulatingNode newNode, PsiRewrite r) {
         if (parent == null)
             return this;
-        if (!iz.generic(newNode.getInner())) {
-            r.replace(((GenericPsi) inner).getInner(), newNode.inner);
-            inner = newNode.inner;
-        }
-        parent.children.replaceAll(e -> e != this ? e : newNode);
+        inner = r.replace(((GenericPsi) inner).getInner(), newNode.inner);
         return this;
     }
 
@@ -98,8 +93,6 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         return inner.getText();
     }
 
-    // TODO @michalcohen this doesn't work after pruning & 'genericalization' of elements.
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public EncapsulatingNode clone() {
         return new EncapsulatingNode(this);
     }

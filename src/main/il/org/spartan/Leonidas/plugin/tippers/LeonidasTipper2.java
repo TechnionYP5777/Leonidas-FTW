@@ -108,7 +108,6 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return l.get().getBody();
     }
 
-    // Example of code that documents itself. In this case, it documents "DON'T TOUCH ME".
     private Optional<Class<? extends PsiElement>> getTypeOf(PsiStatement s) {
         Wrapper<Optional<Class<? extends PsiElement>>> wq = new Wrapper<>(Optional.empty());
         s.accept(new JavaRecursiveElementVisitor() {
@@ -205,10 +204,33 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return new Tip(description(node), node, this.getClass()) {
             @Override
             public void go(PsiRewrite r) {
-                if (canTip(node))
-                    replacer.replace(node, matcher.extractInfo(node), r);
+                if (canTip(node)) {
+                    replace(node, matcher.extractInfo(node), r);
+                }
             }
         };
+    }
+
+    /**
+     * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder
+     *
+     * @param treeToReplace - the given tree that matched the "from" tree.
+     * @param r             - Rewrite object
+     * @return the replaced element
+     */
+    public EncapsulatingNode replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
+        PsiElement n = getReplacingTree(m, r);
+        r.replace(treeToReplace, n);
+        return EncapsulatingNode.buildTreeFromPsi(n);
+    }
+
+    private PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
+        EncapsulatingNode rootCopy = getReplacerRootTree();
+        m.keySet().forEach(d -> rootCopy.accept(e -> {
+            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e.getInner()))
+                e.replace(new EncapsulatingNode(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
+        }));
+        return rootCopy.getInner();
     }
 
     /**
@@ -273,7 +295,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
      * @return the generic tree representing the "from" template
      */
     private EncapsulatingNode getReplacerRootTree() {
-        PsiMethod replacer = getInterfaceMethod("replacer");
+        PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
         giveIdToStubMethodCalls(replacer);
         return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(replacer,
                 getPsiElementTypeFromAnnotation(replacer))));

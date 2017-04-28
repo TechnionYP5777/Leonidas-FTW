@@ -12,7 +12,6 @@ import com.intellij.pom.Navigatable;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.CheckUtil;
 import com.intellij.psi.impl.ResolveScopeManager;
-import com.intellij.psi.impl.source.SourceTreeToPsiMap;
 import com.intellij.psi.impl.source.tree.JavaElementType;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.psi.scope.PsiScopeProcessor;
@@ -87,11 +86,6 @@ public abstract class GenericPsi extends LeafPsiElement implements PsiJavaToken 
     @Override
     public PsiFile getContainingFile() {
         return inner.getContainingFile();
-    }
-
-    @Override
-    public PsiElement copy() {
-        return SourceTreeToPsiMap.treeElementToPsi(copyElement());
     }
 
     @Override

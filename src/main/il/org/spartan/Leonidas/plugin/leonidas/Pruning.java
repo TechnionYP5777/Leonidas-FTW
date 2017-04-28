@@ -33,10 +33,9 @@ public class Pruning {
 				return;
             PsiMethodCallExpression exp = az.methodCallExpression(e1.getInner());
 
-            // TODO @michalcohen why is this part of 'pruning' method? its a completely different task..
             Pruning.getStubName(e1).ifPresent(y -> {
                 EncapsulatingNode prev = Pruning.getRealParent(e1, y);
-                GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
+                GenericPsi x = y.getGenericPsiType(prev.getInner(), exp.getUserData(ID));
                 if (x != null)
                     prev.setInner(x);
             });

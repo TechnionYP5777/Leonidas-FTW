@@ -19,5 +19,4 @@ public class KeyDescriptionParameters {
      * ID of a generic element.
      */
     public static Key<Integer> ID = new Key<>(PsiDescriptionParameters.ID.name());
-    public static Key<String> GENERIC_NAME = new Key<>(PsiDescriptionParameters.GENERIC_NAME.name());
 }

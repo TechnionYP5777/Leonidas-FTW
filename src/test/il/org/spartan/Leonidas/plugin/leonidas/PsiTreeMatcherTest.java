@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
-import com.intellij.psi.*;
+import com.intellij.psi.PsiCodeBlock;
+import com.intellij.psi.PsiExpression;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
@@ -23,7 +24,7 @@ public class PsiTreeMatcherTest extends PsiTypeHelper {
         assert !PsiTreeMatcher.match(EncapsulatingNode.buildTreeFromPsi(b),
 				EncapsulatingNode.buildTreeFromPsi(createTestCodeBlockFromString("{ int y = 10; }")));
     }
-
+    /*
     public void testMatch3() {
         PsiIfStatement b = createTestIfStatement("booleanExpression(0)", "statement(1);");
         b.accept(new JavaRecursiveElementVisitor() {
@@ -44,8 +45,9 @@ public class PsiTreeMatcherTest extends PsiTypeHelper {
 
         assert PsiTreeMatcher.match(encapsulatingNode, EncapsulatingNode
 				.buildTreeFromPsi(createTestIfStatement("true && false", " if (true) { int y = 5; } ")));
-    }
+    }*/
 
+    /*
     public void testMatch4() {
         PsiIfStatement b = createTestIfStatement("booleanExpression()", "statement();");
         b.accept(new JavaRecursiveElementVisitor() {
@@ -66,5 +68,5 @@ public class PsiTreeMatcherTest extends PsiTypeHelper {
 
         assert PsiTreeMatcher.match(n,
 				EncapsulatingNode.buildTreeFromPsi(createTestIfStatement("true", " int y = 5; ")));
-    }
+    }*/
 }
