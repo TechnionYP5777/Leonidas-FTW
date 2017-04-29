@@ -9,7 +9,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.the;
 
 /**
  * Remove redundant curly braces
- * author Oren Afek, Shron Kuninin, Michal Cohen
+ * author Oren Afek, Shron Kuninin, michalcohen
  * since 06/01/17
  */
 public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinition {
@@ -41,6 +41,4 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
                 statement(1);
         });
     }
-
-
 }

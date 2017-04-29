@@ -11,12 +11,12 @@ import java.util.Map;
  * @author michalcohen
  * @since 01-04-2017.
  */
-public class Replacer2 {
+public class Replacer {
 
-    Matcher2 matcher;
+    Matcher matcher;
     EncapsulatingNode root;
 
-    public Replacer2(Matcher2 m, EncapsulatingNode r) {
+    public Replacer(Matcher m, EncapsulatingNode r) {
         matcher = m;
         root = r;
     }

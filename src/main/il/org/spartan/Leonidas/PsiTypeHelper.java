@@ -8,11 +8,11 @@ import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 /**
+ * Tests are extending this class to use a convenient API for handling Psi types and elements.
  * @author Oren Afek, Roey Maor, michalcohen
- * @since 26/12/16
+ * @since 26-12-2016
  */
 public class PsiTypeHelper extends PsiTestCase {
 
@@ -230,19 +230,6 @@ public class PsiTypeHelper extends PsiTestCase {
                 .createExpressionFromText(cond + " ? " + then + " : " + else$, getTestFile());
     }
 
-    public void printPsi(PsiElement e) {
-        Wrapper<Integer> tabs = new Wrapper<>(0);
-        e.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitElement(PsiElement e) {
-                IntStream.range(0, tabs.get()).forEach(x -> System.out.print("\t"));
-                System.out.println(e);
-                tabs.set(tabs.get() + 1);
-                super.visitElement(e);
-            }
-        });
-    }
-
     public PsiMethodCallExpression createTestMethodCallExpression(String methodName, String... args) {
         StringBuilder sb = new StringBuilder();
         sb.append(methodName).append("(");
@@ -300,9 +287,4 @@ public class PsiTypeHelper extends PsiTestCase {
     public PsiRequiresStatement createTestRequiresStatement(String module) {
         return (PsiRequiresStatement) getTestFactory().createStatementFromText("requires " + module + ";", getTestFile());
     }
-
-    /*public PsiElement createPsiElementFromText(String s, Project p){
-        return JavaPsiFacade.getElementFactory(p).createDummyHolder(s, IElementType.)
-    }*/
-
 }

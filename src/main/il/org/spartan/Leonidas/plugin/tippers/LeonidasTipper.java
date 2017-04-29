@@ -14,7 +14,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.*;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -25,43 +24,35 @@ import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.I
  * @author Amir Sagiv, Sharon Kuninin, michalcohen
  * @since 26-03-2017.
  */
-public class LeonidasTipper2 implements Tipper<PsiElement> {
+public class LeonidasTipper implements Tipper<PsiElement> {
 
     private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getTypeName();
     private static final String SHORT_LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
 
     String description;
-    Matcher2 matcher;
-    Replacer2 replacer;
+    Matcher matcher;
+    Replacer replacer;
     Class<? extends PsiElement> rootType;
     PsiJavaFile file;
-    Map<Integer, List<Constraint>> map;
+    Map<Integer, List<Matcher.Constraint>> map;
 
-    @SuppressWarnings("ConstantConditions")
-    public LeonidasTipper2(String tipperName, String fileContent) throws IOException {
+    public LeonidasTipper(String tipperName, String fileContent) throws IOException {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
         description = Utils.getClassFromFile(file).getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
-        matcher = new Matcher2(getMatcherRootTree());
         map = getConstraints();
-        buildMatcherTree(matcher);
-        replacer = new Replacer2(matcher, getReplacerRootTree());
+        matcher = new Matcher(getMatcherRootTree(), map);
+        replacer = new Replacer(matcher, getReplacerRootTree());
         rootType = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
     }
 
-    public static List<Field> getAllFields(Class<?> type) {
-        List<Field> fields = new LinkedList<>();
-        fields.addAll(Arrays.asList(type.getDeclaredFields()));
-
-        if (type.getSuperclass() != null) {
-            fields.addAll(getAllFields(type.getSuperclass()));
-        }
-        return fields;
-    }
-
-    private Integer extractId(PsiStatement s) {
+    /**
+     * @param s the statement of the constraint. For example: the(booleanExpression(3)).isNot(!booleanExpression(4))
+     * @return the ID on which the constraint applies. The previous example will return 3.
+     */
+    private Integer extractIdFromConstraint(PsiStatement s) {
         Wrapper<PsiMethodCallExpression> x = new Wrapper<>();
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
@@ -81,7 +72,7 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
      * @param s constraint statement.
      * @return "is" if the(index).is(constraint) and "isNot" if the(index).isNot(constraint).
      */
-    private Constraint.ConstraintType extractConstraintType(PsiStatement s) {
+    private Matcher.Constraint.ConstraintType extractConstraintType(PsiStatement s) {
         Wrapper<Boolean> r = new Wrapper<>(Boolean.TRUE);
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
@@ -92,9 +83,13 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
                 }
             }
         });
-        return r.get() ? Constraint.ConstraintType.IS : Constraint.ConstraintType.IS_NOT;
+        return r.get() ? Matcher.Constraint.ConstraintType.IS : Matcher.Constraint.ConstraintType.IS_NOT;
     }
 
+    /**
+     * @param s the statement of the constraint. For example: the(booleanExpression(3)).isNot(!booleanExpression(4))
+     * @return the body of the lambda expression that defines the constraint. The previous example will return !booleanExpression(4).
+     */
     private PsiElement getLambdaExpressionBody(PsiStatement s) {
         Wrapper<PsiLambdaExpression> l = new Wrapper<>();
         s.accept(new JavaRecursiveElementVisitor() {
@@ -108,6 +103,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return l.get().getBody();
     }
 
+    /**
+     * @param s the statement of the constraint. For example: the(booleanExpression(3)).isNot(!booleanExpression(4)).ofType(PsiExpression.class)
+     * @return the type inside "ofType" expression. The previous example will return Optional(PsiExpression.class).
+     * if no "ofType" expression is found, Optional.empty() is returned.
+     */
     private Optional<Class<? extends PsiElement>> getTypeOf(PsiStatement s) {
         Wrapper<Optional<Class<? extends PsiElement>>> wq = new Wrapper<>(Optional.empty());
         s.accept(new JavaRecursiveElementVisitor() {
@@ -122,26 +122,33 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return wq.get();
     }
 
-    private Map<Integer, List<Constraint>> getConstraints() {
-        Map<Integer, List<Constraint>> map = new HashMap<>();
+    /**
+     * @return a mapping between the ID of a generic element to a list of all the constraint that apply on it.
+     */
+    private Map<Integer, List<Matcher.Constraint>> getConstraints() {
+        Map<Integer, List<Matcher.Constraint>> map = new HashMap<>();
         PsiMethod constrainsMethod = getInterfaceMethod("constraints");
         if (!haz.body(constrainsMethod)) {
             return map;
         }
 
         Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
-            Integer key = extractId(s);
+            Integer key = extractIdFromConstraint(s);
             PsiElement y = getLambdaExpressionBody(s);
             Optional<Class<? extends PsiElement>> q = getTypeOf(s);
             y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
             // y - root, key ID
             map.putIfAbsent(key, new LinkedList<>());
             giveIdToStubMethodCalls(y);
-            map.get(key).add(new Constraint(extractConstraintType(s), Pruning.prune(EncapsulatingNode.buildTreeFromPsi(y))));
+            map.get(key).add(new Matcher.Constraint(extractConstraintType(s), Pruning.prune(EncapsulatingNode.buildTreeFromPsi(y))));
         });
         return map;
     }
 
+    /**
+     * @param s a string representing Psi element class. For example "PsiIfStatement".
+     * @return a class object of the received class.
+     */
     private Class<? extends PsiElement> getPsiClass(String s) {
         try {
             //noinspection unchecked
@@ -151,6 +158,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return PsiElement.class;
     }
 
+    /**
+     * @param element the root of the template.
+     * @param rootElementType the type of the inner element to extract
+     * @return the inner element derived by its type
+     */
     private PsiElement getRealRootByType(PsiElement element, Class<? extends PsiElement> rootElementType) {
         Wrapper<PsiElement> result = new Wrapper<>();
         Wrapper<Boolean> stop = new Wrapper<>(false);
@@ -167,13 +179,10 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return result.get();
     }
 
-    private void buildMatcherTree(Matcher2 m) {
-        Set<Integer> l = m.getGenericElements();
-        l.stream().forEach(i -> Optional.ofNullable(map.get(i)).ifPresent(z -> z.stream().forEach(j ->
-                m.addConstraint(i, j))));
-        m.getConstraintsMatchers().stream().forEach(this::buildMatcherTree);
-    }
-
+    /**
+     * @param name the name of the method of the interface LeonidasTipperDefinition.
+     * @return the body of the method
+     */
     private PsiMethod getInterfaceMethod(String name) {
         Wrapper<PsiMethod> x = new Wrapper<>();
         file.accept(new JavaRecursiveElementVisitor() {
@@ -223,6 +232,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return EncapsulatingNode.buildTreeFromPsi(n);
     }
 
+    /**
+     * @param m the mapping between generic element index to concrete elements of the user.
+     * @param r rewrite object
+     * @return the template of the replacer with the concrete elements inside it.
+     */
     private PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
         EncapsulatingNode rootCopy = getReplacerRootTree();
         m.keySet().forEach(d -> rootCopy.accept(e -> {
@@ -266,6 +280,11 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         return result.get();
     }
 
+    /**
+     * Inserts the ID numbers into the user data of the generic method call expressions.
+     * For example 5 will be inserted to booleanExpression(5).
+     * @param innerTree the root of the tree for which we insert IDs.
+     */
     private void giveIdToStubMethodCalls(PsiElement innerTree) {
         innerTree.accept(new JavaRecursiveElementVisitor() {
             @Override
@@ -342,5 +361,4 @@ public class LeonidasTipper2 implements Tipper<PsiElement> {
         }
         return null;
     }
-
 }

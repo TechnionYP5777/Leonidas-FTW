@@ -34,7 +34,6 @@ public class SpartanizerAnnotator implements Annotator {
                 @NotNull
                 @Override
                 public String getText() {
-                    //noinspection unchecked
                     return Toolbox.getInstance().getTipper(e).description(e);
                 }
 
@@ -68,6 +67,5 @@ public class SpartanizerAnnotator implements Annotator {
             Logger l = new Logger(this.getClass());
             l.error("", t);
         }
-
     }
 }

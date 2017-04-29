@@ -19,11 +19,11 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * @author Oren Afek
- * @author Michal Cohen
+ * @author Oren Afek, michalcohen
  * @since 01-12-2016
  */
 public class Toolbox implements ApplicationComponent {
+
     private static final Logger logger = new Logger(Toolbox.class);
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
     public boolean playground = false;
@@ -59,14 +59,14 @@ public class Toolbox implements ApplicationComponent {
                 .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new Delegator());
-        createLeonidasTipperBuilders2();
+        createLeonidasTippers();
     }
 
-    private void createLeonidasTipperBuilders2() {
+    private void createLeonidasTippers() {
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
                 .forEach(c -> {
                     try {
-                        add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
+                        add(new LeonidasTipper(c.getSimpleName(), Utils.getSourceCode(c)));
                     } catch (IOException e) {
                         logger.info("Failed to read file: " + c.getName() + "\n" + Arrays.stream(e.getStackTrace()).map(x -> x.toString()).reduce((e1, e2) -> e1 + "\n" + e2));
                     }
