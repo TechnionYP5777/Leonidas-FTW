@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
-import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
@@ -11,7 +10,6 @@ import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiExpress
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * This class defines methods that will represent generic structures of code
@@ -83,20 +81,6 @@ public class GenericPsiElementStub {
     }
 
     /**
-     * method stub representing an array identifier for leonidas tippers
-     *
-     * @param id the serial no to distinct between several array identifiers in the same tipper
-     * @return stub array
-     */
-    public static <T> Stream<T> streamMethodInvocations(int id) {
-        return streamMethodInvocations();
-    }
-
-    public static <T> Stream<T> streamMethodInvocations() {
-        return Stream.of();
-    }
-
-    /**
      * An enum representing the different coding blocks.
      */
     public enum StubName {
@@ -119,14 +103,6 @@ public class GenericPsiElementStub {
             return Arrays.stream(values())
                     .filter(stub -> x.getMethodExpression().getText().equals(stub.stubName()))
                     .findFirst().orElseGet(null);
-        }
-
-        /**
-         * @param e psi element
-         * @return true iff it is a method call representing generic element.
-         */
-        public static boolean isGeneric(PsiElement e) {
-            return GenericPsiElementStub.StubName.valueOfMethodCall(az.methodCallExpression(e)) != null;
         }
 
         /**
@@ -195,14 +171,6 @@ public class GenericPsiElementStub {
          */
         public String stubMethodCallExpressionStatement() {
             return String.format("%s();", stubName);
-        }
-
-        /**
-         * @param x method call such as: booleanExpression(3), statement(2)...
-         * @return true iff the method call expresion represents the current generic type.
-         */
-        public boolean matchesStubName(PsiMethodCallExpression x) {
-            return x.getMethodExpression().getText().equals(this.stubName);
         }
 
         /**
