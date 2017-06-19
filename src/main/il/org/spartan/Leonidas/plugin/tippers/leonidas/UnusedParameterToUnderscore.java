@@ -6,33 +6,29 @@ import java.util.Map;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.UNTESTED;
 
 /**
- * change parameter to ¢
+ * change unused parameter to __
  *
- * @author melanyc
- * @since 10-06-2017
+ * @author Anna Belozovsky
+ * @since 15/06/2017
  */
-//@TipperUnderConstruction(INCOMPLETE)
-public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTipperDefinition {
-
-    Class2 identifier3;
+@TipperUnderConstruction(UNTESTED)
+public class UnusedParameterToUnderscore implements LeonidasTipperDefinition {
 
     /**
      * Write here additional constraints on the matcher tree.
-     * The structural constraint are of the form:
-     * element(<id>).{is/isNot}(() - > <template>)[.ofType(Psi class)];
-     * There are non structural that you can apply, for example
-     * element(<id>).asMethod.startsWith("set);
+     * The constraint are of the form:
+     * the(<generic element>(<id>)).{is/isNot}(() - > <template>)[.ofType(Psi class)];
      */
     @Override
     public void constraints() {
-        element(4).asStatement.mustNotRefer("cent");
-        element(3).asIdentifier.notContains("cent");
+        element(4).asStatement.mustNotRefer(3);
         element(3).asIdentifier.notContains("__");
     }
 
-    // The enter under /* start */ is crucial.
     @Override
     public void matcher() {
         new Template(() -> {
@@ -54,7 +50,7 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
             class wrapping {
                 /* start */
 
-                Class0 method1(Class2 identifier3) {
+                Class0 method1(Class2 __) {
                     anyNumberOf(statement(4));
                     return null; // ignore
                 }
@@ -64,27 +60,18 @@ public class MethodDeclarationRenameSingleParameterToCent implements LeonidasTip
     }
 
     @Override
-    public void replacingRules() {
-        element(4).asStatement.replaceIdentifiers(3, "cent");
-        element(3).asIdentifier.changeName("cent");
-    }
-
-    /**
-     * Defines code examples and results after applying the tipper.
-     * This is used to test the tipper.
-     * example:
-     * examples.put("!(!(x > 4))", "x > 4");
-     */
-    @Override
     public Map<String, String> getExamples() {
         Map<String, String> examples = new HashMap<>();
-        // <enter examples>
+        examples.put("int foo(int x){\n\treturn 2;\n}", "int foo(int __){\n\treturn 2;\n}");
         return examples;
     }
 
-    class Class0 {
+    private class Class0 {
+
     }
 
-    class Class2 {
+    private class Class2 {
+
     }
+
 }

@@ -8,14 +8,13 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
 
 /**
- * Switch to Ternary (? :)
+ * Change: if(x) return e; return f => return x ? e : f;
  *
  * @author Oren Afek
- * @since 30-05-2017
+ * @since 14/06/17
  */
-public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
+public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
 
-    Object identifier0;
 
     @Override
     public void constraints() {
@@ -25,10 +24,9 @@ public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
     public void matcher() {
         new Template(() -> {
             /* start */
-            if (booleanExpression(1))
-                identifier0 = expression(2);
-            else
-                identifier0 = expression(3);
+            if (booleanExpression(0))
+                return expression(1);
+            return expression(2);
             /* end */
         });
     }
@@ -37,17 +35,16 @@ public class IfAssignToFooElseAssignToFoo implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /* start */
-            identifier0 = booleanExpression(1) ? expression(2) : expression(3);
+            return booleanExpression(0) ? expression(1) : expression(2);
             /* end */
-        }
-        );
+        });
     }
 
 
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("if (x > 0)\n\tsign = 1;\n else\n\tsign = -1;", "sign = x > 0 ? 1 : -1")
+                .put("if(l.size() > 0)\nreturn l.get(0);\nreturn null;", "return l.size() > 0 ? l.get(0) : null")
                 .map();
     }
 }
