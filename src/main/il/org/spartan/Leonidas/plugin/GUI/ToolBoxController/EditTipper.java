@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import fluent.ly.note;
 import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.plugin.*;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
@@ -173,7 +172,6 @@ public class EditTipper extends JFrame {
                     }
 
                 } catch (Exception e) {
-                    note.bug(e);
                 }
             }
         }
@@ -233,7 +231,7 @@ public class EditTipper extends JFrame {
                     }
 
                 } catch (Exception e) {
-                    note.bug(e);
+
                 }
             }
         }

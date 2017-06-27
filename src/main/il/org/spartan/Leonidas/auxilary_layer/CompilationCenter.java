@@ -1,7 +1,7 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.PsiFile;
-import fluent.ly.note;
+
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -70,7 +70,6 @@ public class CompilationCenter {
 		try {
 			Files.write(dummyCompilationTestFile.toPath(), source.getBytes(StandardCharsets.UTF_8));
 		} catch (IOException e) {
-			note.bug(e);
 		}
 		output.reset();
 		errors.reset();

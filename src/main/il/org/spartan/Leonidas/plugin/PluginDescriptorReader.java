@@ -1,6 +1,5 @@
 package il.org.spartan.Leonidas.plugin;
 
-import fluent.ly.note;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -37,7 +36,6 @@ public class PluginDescriptorReader {
             document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 					.parse(new InputSource(pluginXmlBuffer));
         } catch (ParserConfigurationException | SAXException | IOException e) {
-note.bug(e);
         }
     }
 
