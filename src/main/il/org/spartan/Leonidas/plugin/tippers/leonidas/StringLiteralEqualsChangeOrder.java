@@ -22,22 +22,12 @@ public class StringLiteralEqualsChangeOrder implements LeonidasTipperDefinition 
 
     @Override
     public void matcher() {
-        new Template(() -> {
-            /* start */
-            identifier0.equals(stringLiteral(1));
-            /* end */
-
-        });
+        new Template(() -> /* start */ identifier0.equals(stringLiteral(1)) /* end */);
     }
 
     @Override
     public void replacer() {
-        new Template(() -> {
-            /* start */
-            stringLiteral(1).equals(identifier0);
-            /* end */
-
-        });
+        new Template(() -> /* start */ stringLiteral(1).equals(identifier0) /* end */);
     }
 
     @Override
