@@ -33,11 +33,11 @@ public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition 
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("x+=1", "x++")
+                .put("x+=1;", "x++;")
                 .put("well += 1;", "well++;")
-                .put("x+=i", null)
-                .put("x+=2", null)
-                .put("/*incrementing*/\nx+=1", "/*incrementing*/\nx++")
+                .put("x+=i;", null)
+                .put("x+=2;", null)
+                .put("/*incrementing*/\nx+=1;", "/*incrementing*/\nx++;")
                 .map();
     }
 }
