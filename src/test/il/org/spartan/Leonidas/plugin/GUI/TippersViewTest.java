@@ -1,18 +1,18 @@
 package il.org.spartan.Leonidas.plugin.GUI;
 
-import il.org.spartan.Leonidas.plugin.GUI.ViewAvailableTippersInFile.TippersView;
-import junit.framework.TestCase;
+import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
 
 /**
  * @author Anna Belozovsky
  * @since 28/06/2017
  */
-public class TippersViewTest extends TestCase {
+public class TippersViewTest extends LightPlatformCodeInsightFixtureTestCase {
+    String fileContent = "void func(int x){\nif(x==0){x=1;}\nwhile(x==0){x=1;}\n}";
 
-    TippersView tippersView;
-
-    public void setUp() throws Exception {
-        super.setUp();
+    public void testView() {
+//        PsiFile psiFile = PsiFileFactory.getInstance(Utils.getProject()).createFileFromText(JavaLanguage.INSTANCE, fileContent);
+//        TippersView tippersView = new TippersView(psiFile);
+//        tippersView.dispose();
     }
 
 }
