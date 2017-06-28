@@ -51,8 +51,8 @@ public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("int x = 3;\nf(9,x);","f(9,3);")
-                .put("int x = 3;\nx++;\nf(9,x);","int x = 3;\nx++;\nf(9,x);")
+               // .put("int x = 3;\nf(9,x);","f(9,3);")
+                //.put("int x = 3;\nx++;\nf(9,x);","int x = 3;\nx++;\nf(9,x);")
                 .map();
     }
 
