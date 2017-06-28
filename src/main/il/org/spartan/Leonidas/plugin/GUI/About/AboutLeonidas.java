@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.GUI.About;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import il.org.spartan.Leonidas.plugin.GUI.JPanelWithBackground;
 import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 
 import javax.imageio.ImageIO;
@@ -23,13 +24,32 @@ class AboutLeonidas extends JFrame {
     private JPanel panel1;
     private JTextPane textPane1;
     private JButton closeButton;
+    private JScrollPane scrollPane1;
+    private JPanel closepanel;
+    private static String backgroundImagePath = "/aboutBG.jpg";
 
     public AboutLeonidas() {
         super("About Leonidas Plugin");
         if(active){return;}
         active = true;
         LeonidasIcon.apply(this);
-        setContentPane(panel1);
+        panel1.setOpaque(false);
+        closepanel.setOpaque(false);
+        scrollPane1.setOpaque(false);
+        textPane1.setOpaque(false);
+
+        /*
+        try {
+            backgroundJpanel = new JPanelWithBackground(backgroundImagePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        JLabel background = new JLabel(new ImageIcon(getClass().getResource(backgroundImagePath)));
+        setContentPane(background);
+        this.setLayout(new BorderLayout());
+        this.add(panel1);
+
+
         setPreferredSize(new Dimension(1000, 600));
         setResizable(false);
         pack();
