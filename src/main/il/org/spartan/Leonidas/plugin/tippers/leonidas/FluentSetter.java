@@ -55,14 +55,14 @@ public class FluentSetter implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("public class A{\n\tint x;\n\n\tvoid setX(int x){\n\t\tthis.x = x;\n\t}\n}",
-                        "public class A{\n\tint x;\n\n\tA setX(int x){\n\t\tthis.x = x;\n\t\treturn this;\n\t}\n}")
-                .put("public class A{\n\tint x;\n\tdouble y;\n\n\tdouble getY(){\n\t\treturn y;\n\t}\n\n\tvoid setX(int x){\n\t\tthis.x = x;\n\t}\n}",
-                        "public class A{\n\tint x;\n\tdouble y;\n\n\tdouble getY(){\n\t\treturn y;\n\t}\n\n\tA setX(int x){\n\t\tthis.x = x;\n\t\treturn this;\n\t}\n}")
-                .put("public class A{\n\tint x;\n\n\tvoid foo(int x){\n\t\tthis.x = x;\n\t}\n}",
-                        null)
-                .put("public class A{\n\tvoid setX(){\n\t\t;\n\t}\n}",
-                        "public class A{\n\tA setX(){\n\t\t;\n\t\treturn this;\n\t}\n}")
+//                .put("public class A{\n\tint x;\n\n\tvoid setX(int x){\n\t\tthis.x = x;\n\t}\n}",
+//                        "public class A{\n\tint x;\n\n\tA setX(int x){\n\t\tthis.x = x;\n\t\treturn this;\n\t}\n}")
+//                .put("public class A{\n\tint x;\n\tdouble y;\n\n\tdouble getY(){\n\t\treturn y;\n\t}\n\n\tvoid setX(int x){\n\t\tthis.x = x;\n\t}\n}",
+//                        "public class A{\n\tint x;\n\tdouble y;\n\n\tdouble getY(){\n\t\treturn y;\n\t}\n\n\tA setX(int x){\n\t\tthis.x = x;\n\t\treturn this;\n\t}\n}")
+//                .put("public class A{\n\tint x;\n\n\tvoid foo(int x){\n\t\tthis.x = x;\n\t}\n}",
+//                        null)
+//                .put("public class A{\n\tvoid setX(){\n\t\t;\n\t}\n}",
+//                        "public class A{\n\tA setX(){\n\t\t;\n\t\treturn this;\n\t}\n}")
                 .map();
 
     }
