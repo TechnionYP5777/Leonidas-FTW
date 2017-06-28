@@ -13,8 +13,6 @@ public class AboutTest extends LightPlatformCodeInsightFixtureTestCase {
     }
 
     public void testAppearence() {
-//        AboutAction aa = new AboutAction();
-//        aa.actionPerformed(null);
         AboutLeonidas aboutLeonidas = new AboutLeonidas();
         aboutLeonidas.dispose();
     }
