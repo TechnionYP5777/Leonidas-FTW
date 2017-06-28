@@ -25,9 +25,8 @@ public class ToolboxTest extends PsiTypeHelper {
 
     @Override
     protected void tearDown() throws Exception {
-//        tb.disposeComponent();
+        clearFields(this);
         super.tearDown();
-        tb = null;
     }
 
 
