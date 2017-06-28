@@ -32,8 +32,6 @@ class AboutLeonidas extends JFrame {
         LeonidasIcon.apply(this);
         panel1.setOpaque(false);
         closepanel.setOpaque(false);
-        textPane1.setCaretPosition(0);
-        scrollPane1.getViewport().setViewPosition(new Point(0,0));
 
 
 
@@ -50,6 +48,9 @@ class AboutLeonidas extends JFrame {
 
 
         scrollPane1.getVerticalScrollBar().setValue(0); // fix top start issue
+        scrollPane1.getViewport().setViewPosition(new Point(0,0));
+        textPane1.setCaretPosition(0);
+
         closeButton.addActionListener(e -> closeButtonListener());
         this.addWindowListener(new WindowAdapter()
         {
