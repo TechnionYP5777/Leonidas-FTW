@@ -14,7 +14,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  */
 public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefinition {
 
-    Object identifier0;
+    Object variable0;
 
     @Override
     public void constraints() {
@@ -24,8 +24,8 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
     public void matcher() {
         new Template(() -> {
             /* start */
-            identifier0 = expression(1);
-            identifier0 = expression(2);
+            variable0 = expression(1);
+            variable0 = expression(2);
             /* end */
         });
     }
@@ -35,7 +35,7 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
         new Template(() ->
         {
             /* start */
-            identifier0 = expression(2);
+            variable0 = expression(2);
             /* end */
         });
     }
