@@ -47,6 +47,9 @@ class AboutLeonidas extends JFrame {
         setResizable(false);
         pack();
         setVisible(true);
+
+
+        scrollPane1.getVerticalScrollBar().setValue(0); // fix top start issue
         closeButton.addActionListener(e -> closeButtonListener());
         this.addWindowListener(new WindowAdapter()
         {
