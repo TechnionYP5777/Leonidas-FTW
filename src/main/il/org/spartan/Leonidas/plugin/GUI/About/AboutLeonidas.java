@@ -15,7 +15,7 @@ import java.awt.event.WindowEvent;
  * @author Amir Sagiv
  * @since 28/04/2017
  */
-class AboutLeonidas extends JFrame {
+public class AboutLeonidas extends JFrame {
     private static boolean active = false;
     private JPanel panel1;
     private JTextPane textPane1;

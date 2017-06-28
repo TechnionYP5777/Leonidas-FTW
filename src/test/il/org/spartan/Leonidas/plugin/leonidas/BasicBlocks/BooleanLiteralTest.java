@@ -25,6 +25,12 @@ public class BooleanLiteralTest extends PsiTypeHelper {
         booleanLiteral = new BooleanLiteral();
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        booleanLiteral = null;
+    }
+
     public void testGeneralizesBooleanLiterals() {
         assert booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true")), new HashMap<>()).matches();
         assert booleanLiteral.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("false")), new HashMap<>()).matches();

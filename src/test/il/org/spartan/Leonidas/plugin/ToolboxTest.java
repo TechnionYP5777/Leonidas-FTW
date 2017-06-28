@@ -14,11 +14,24 @@ import java.util.stream.Collectors;
  */
 public class ToolboxTest extends PsiTypeHelper {
 
-    private Toolbox tb = new Toolbox();
+    private Toolbox tb;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        tb = new Toolbox();
+        tb.initComponent();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+//        tb.disposeComponent();
+        super.tearDown();
+        tb = null;
+    }
 
 
     public void testGetAllTippers() throws Exception {
-        tb.initComponent();
         List<Tipper> list = tb.getAllTippers();
         List<String> names = new ArrayList<>();
         list.forEach(tipper -> names.add(tipper.name()));
@@ -33,12 +46,9 @@ public class ToolboxTest extends PsiTypeHelper {
         assertTrue(names.contains("RemoveCurlyBracesFromWhileStatement"));
         assertTrue(names.contains("LambdaExpressionRemoveRedundantCurlyBraces"));
         assertTrue(names.contains("IfDoubleNot"));
-
-        tb.disposeComponent();
     }
 
     public void testGetCurrentTippers() throws Exception {
-        tb.initComponent();
         List<String> currNames = tb.getAllTippers().stream().map(Tipper::name).collect(Collectors.toList());
 
         assertFalse(currNames.contains("myOpt"));
@@ -53,11 +63,9 @@ public class ToolboxTest extends PsiTypeHelper {
         assertTrue(currNames.contains("LambdaExpressionRemoveRedundantCurlyBraces"));
         assertTrue(currNames.contains("IfDoubleNot"));
 
-        tb.disposeComponent();
     }
 
     public void testUpdateTipperList() throws Exception {
-        tb.initComponent();
         List<Tipper> list = tb.getAllTippers();
         List<String> names = new ArrayList<>();
         list.forEach(tipper -> names.add(tipper.name()));
@@ -88,48 +96,34 @@ public class ToolboxTest extends PsiTypeHelper {
         assertTrue(finalNames.contains("Delegator"));
         assertTrue(finalNames.contains("RemoveCurlyBracesFromIfStatement"));
         assertTrue(finalNames.contains("IfEmptyThen"));
-
-        tb.disposeComponent();
     }
 
     public void testIsElementOfOperableType() throws Exception {
-        tb.initComponent();
         assertTrue(tb.isElementOfOperableType(createTestStatementFromString("if(true == false){}")));
         //Removing because it will fail in the future. but works fine.
         //assertFalse(tb.isElementOfOperableType(createTestStatementFromString("for(;;){}")));
         assertTrue(tb.isElementOfOperableType(createTestStatementFromString("while(true){}")));
-
-        tb.disposeComponent();
     }
 
     public void testCanTip() throws Exception {
-        tb.initComponent();
         assertTrue(tb.canTip(createTestIfStatement("true", "x++;")));
         assertTrue(tb.canTip(createTestWhileStatementFromString("while(true){x++;}")));
         //Removing because it will fail in the future. but works fine.
         //assertFalse(tb.canTip(createTestIfStatement("true", "x++;\ny++;")));
-
-        tb.disposeComponent();
     }
 
     public void testGetTipper() throws Exception {
-        tb.initComponent();
         assertEquals(tb.getTipper(createTestStatementFromString("if(true){x++;}")).name(), "RemoveCurlyBracesFromIfStatement");
         assertEquals(tb.getTipper(createTestStatementFromString("while(true){x++;}")).name(), "RemoveCurlyBracesFromWhileStatement");
         assertEquals(tb.getTipper(createTestStatementFromString("x += 1;")).name(), "ReplaceIdPlusOneWithIdPlusPlus");
-
-        tb.disposeComponent();
     }
 
     public void testCheckExcluded() throws Exception {
-        tb.initComponent();
         PsiFile f = createTestFileFromString("class A{}");
         tb.excludeFile(f);
         assertTrue(tb.checkExcluded(f));
         tb.includeFile(f);
         assertFalse(tb.checkExcluded(f));
-
-        tb.disposeComponent();
     }
 
 
