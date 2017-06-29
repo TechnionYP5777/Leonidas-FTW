@@ -4,6 +4,7 @@ import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import org.junit.Test;
+import org.junit.runner.JUnitCore;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class TestAllTippers extends PsiTypeHelper {
 
+
     @Test
     public void testTippers(){
         Toolbox t = Toolbox.getInstance();
@@ -22,7 +24,7 @@ public class TestAllTippers extends PsiTypeHelper {
         for( LeonidasTipperDefinition lt : leonidasTippers){
             Class<? extends LeonidasTipperDefinition> c = lt.getClass();
             if(!c.isAnnotationPresent(LeonidasTipperDefinition.TipperUnderConstruction.class)){
-                TipperTest ts = new TipperTest(lt, this, false, false);
+                TipperTest ts = new TipperTest(lt, this, true, true);
                 ts.check();
             }
 
