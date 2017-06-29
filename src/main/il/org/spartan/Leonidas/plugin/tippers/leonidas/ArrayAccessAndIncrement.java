@@ -47,6 +47,9 @@ public class ArrayAccessAndIncrement implements LeonidasTipperDefinition {
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("array[i] = 69;\ni++;", "array[i++] = 69;")
+                .put("if(true){\narray[i] = 69;\ni++;\n}", "if(true){\narray[i++] = 69;\n}")
+                .put("array[i] = 69;\nj++;", null)
+                .put("for(int i=0; i<5; array[i] = 69, i++){\n;\n};", null)
                 .map();
     }
 }
