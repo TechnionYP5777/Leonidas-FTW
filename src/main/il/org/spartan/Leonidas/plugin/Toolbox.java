@@ -112,9 +112,8 @@ public class Toolbox implements ApplicationComponent {
             updateTipperList(tipperNames);
         }
 
-        System.out.println("A");
+        // Load data from the tippers data manager
         TipperDataManager.getInstance().load();
-        System.out.println("B");
     }
 
     private void initializeAllTipperClassesInstances() {
