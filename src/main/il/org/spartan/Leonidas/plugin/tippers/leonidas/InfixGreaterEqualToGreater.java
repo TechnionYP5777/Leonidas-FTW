@@ -9,25 +9,27 @@ import java.util.Map;
  *
  * @author Roey Maor
  */
-public class InfixGreaterEqualToGreater implements LeonidasTipperDefinition{
+public class InfixGreaterEqualToGreater implements LeonidasTipperDefinition {
     int identifier0;
     int identifier1;
 
     @Override
     public void matcher() {
-        new Template(() -> /* start */ identifier0-1>=identifier1 /* end */);
+        new Template(() -> /* start */ identifier0 - 1 >= identifier1 /* end */);
     }
 
     @Override
     public void replacer() {
-        new Template(() -> /* start */ identifier0>identifier1 /* end */);
+        new Template(() -> /* start */ identifier0 > identifier1 /* end */);
     }
 
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("X-1>=Y", "X>Y")
-                .put("X-1>Y", null)
+                .put("X-1 >= Y", "X > Y")
+                .put("X-1 > Y", null)
+                .put("X >= Y", null)
+//                .put("if (y - 1 >= z){\n\treturn true;\n}", "if (y > z){\n\treturn true;\n}")
                 .map();
     }
 }
