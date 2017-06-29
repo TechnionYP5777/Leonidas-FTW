@@ -46,6 +46,7 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
     @Nullable
     @Override
     public TipperDataManager getState() {
+        // We don't want to receive the data again before we have injected data from the saved configuration
         if (!recalculateData) {
             return this;
         }
@@ -107,6 +108,9 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
         XmlSerializerUtil.copyBean(state, this);
     }
 
+    /**
+     * Inject tipper specific data from the map to the actual tippers in the plugin.
+     */
     public void load() {
         List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
 
@@ -161,10 +165,18 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
         recalculateData = true;
     }
 
+    /**
+     * @return mapping from field key to its value
+     */
     public Map<String, String> getData() {
         return data;
     }
 
+    /**
+     * Sets a new mapping from fields and their values.
+     *
+     * @param data new data mapping
+     */
     public void setData(Map<String, String> data) {
         this.data = data;
     }
