@@ -39,15 +39,18 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
         tippers.stream()
                 .filter(tipper -> tipper instanceof LeonidasTipper)
                 .map(tipper -> (LeonidasTipper) tipper)
+                .filter(tipper -> state.data.containsKey(tipper.name()))
                 .forEach(tipper -> {
                     // Iterate over all generic blocks in the tipper
                     Stream.concat(tipper.getMatcher().getAllRoots().stream(), tipper.getMatcher().getAllRoots().stream())
                             .map(LeonidasTipper::getGenericElements)
                             .flatMap(Collection::stream)
+                            .filter(encapsulator -> state.data.get(tipper.name()).containsKey(encapsulator.getId()))
                             .forEach(encapsulator -> {
                                 // Iterate over all the fields in the generic block
                                 Stream.of(encapsulator.getClass().getFields())
                                         .filter(field -> field.isAnnotationPresent(UserControlled.class))
+                                        .filter(field -> state.data.get(tipper.name()).get(encapsulator.getId()).containsKey(field.getName()))
                                         .forEach(field -> {
                                             try {
                                                 field.set(encapsulator, state.data.get(tipper.name()).get(encapsulator.getId()).get(field.getName()));
