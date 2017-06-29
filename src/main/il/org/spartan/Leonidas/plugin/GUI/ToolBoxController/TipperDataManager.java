@@ -33,7 +33,30 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
 
     @Override
     public void loadState(TipperDataContainer state) {
-        // TODO
+        List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
+
+        // Iterate over all leonidas tippers
+        tippers.stream()
+                .filter(tipper -> tipper instanceof LeonidasTipper)
+                .map(tipper -> (LeonidasTipper) tipper)
+                .forEach(tipper -> {
+                    // Iterate over all generic blocks in the tipper
+                    Stream.concat(tipper.getMatcher().getAllRoots().stream(), tipper.getMatcher().getAllRoots().stream())
+                            .map(LeonidasTipper::getGenericElements)
+                            .flatMap(Collection::stream)
+                            .forEach(encapsulator -> {
+                                // Iterate over all the fields in the generic block
+                                Stream.of(encapsulator.getClass().getFields())
+                                        .filter(field -> field.isAnnotationPresent(UserControlled.class))
+                                        .forEach(field -> {
+                                            try {
+                                                field.set(encapsulator, state.data.get(tipper.name()).get(encapsulator.getId()).get(field.getName()));
+                                            } catch (IllegalAccessException e) {
+                                                e.printStackTrace();
+                                            }
+                                        });
+                            });
+                });
     }
 
     public class TipperDataContainer {
