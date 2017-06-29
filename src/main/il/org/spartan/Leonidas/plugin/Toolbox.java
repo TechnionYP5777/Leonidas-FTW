@@ -87,8 +87,7 @@ public class Toolbox implements ApplicationComponent {
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
-                .add(new DefaultsTo())
-                .add(new Delegator());
+                .add(new DefaultsTo());
         initBasicBlocks();
         createLeonidasTippers();
         initializeAllTipperClassesInstances();
@@ -112,9 +111,8 @@ public class Toolbox implements ApplicationComponent {
             updateTipperList(tipperNames);
         }
 
-        System.out.println("A");
+        // Load data from the tippers data manager
         TipperDataManager.getInstance().load();
-        System.out.println("B");
     }
 
     private void initializeAllTipperClassesInstances() {
@@ -200,13 +198,12 @@ public class Toolbox implements ApplicationComponent {
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
-                .add(new DefaultsTo())
-                .add(new Delegator());
+                .add(new DefaultsTo());
     }
 
     void excludeNanoPatterns() {
         ArrayList<String> list = new ArrayList<>(Arrays.asList(new String[]{"SafeReference", "Unless",
-                "LambdaExpressionRemoveRedundantCurlyBraces", "LispLastElement", "DefaultsTo", "Delegator",}));
+                "LambdaExpressionRemoveRedundantCurlyBraces", "LispLastElement", "DefaultsTo",}));
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
             if (list.contains(tipper.name())) {
                 element.remove(tipper);

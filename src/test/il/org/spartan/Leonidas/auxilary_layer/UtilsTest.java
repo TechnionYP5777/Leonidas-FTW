@@ -6,8 +6,6 @@ import com.intellij.psi.PsiIfStatement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
-import static il.org.spartan.Leonidas.auxilary_layer.Utils.getDocumentFromPsiElement;
-import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
 
 /**
  * @author michalcohen
@@ -16,12 +14,12 @@ import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
 public class UtilsTest extends PsiTypeHelper {
 
     public void testIn() throws Exception {
-        assertTrue(in(5, 3, 4, 5, 6));
-        assertFalse(in(2, 3, 4, 5, 6));
-        assertTrue(in("banana", "apple", "pear", "avocado", "banana"));
-        assertFalse(in(3));
-        assertFalse(in(new Object()));
-        assertFalse(in(null));
+        assertTrue(Utils.in(5, 3, 4, 5, 6));
+        assertFalse(Utils.in(2, 3, 4, 5, 6));
+        assertTrue(Utils.in("banana", "apple", "pear", "avocado", "banana"));
+        assertFalse(Utils.in(3));
+        assertFalse(Utils.in(new Object()));
+        assertFalse(Utils.in(null));
     }
 
     public void testGetAllReferences() throws Exception {
@@ -46,7 +44,7 @@ public class UtilsTest extends PsiTypeHelper {
 
     public void testGetDocumentFromPsiElement() throws Exception {
         PsiIfStatement i = createTestIfStatement("x > 2", "x++;");
-        assertNull(getDocumentFromPsiElement(i));
+        assertNull(Utils.getDocumentFromPsiElement(i));
     }
 
     public void testGetProject() throws Exception {
