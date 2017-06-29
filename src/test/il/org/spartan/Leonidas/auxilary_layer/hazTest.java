@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.PsiBinaryExpression;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiModifierListOwner;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**
@@ -48,5 +49,55 @@ public class hazTest extends PsiTypeHelper {
         PsiBinaryExpression e2 = (PsiBinaryExpression) createTestExpression("x != y");
         assert haz.notEqualsOperator(e2);
         assert !haz.notEqualsOperator((PsiBinaryExpression) createTestExpression("x > y"));
+    }
+
+    public void testHasPublicModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("public int x =  1;"));
+        assert haz.publicModifier(s1);
+    }
+
+    public void testDoesNotHavePublicModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("private int x =  1;"));
+        assert !haz.publicModifier(s1);
+    }
+
+    public void testHasPrivateModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("private int x =  1;"));
+        assert haz.privateModifier(s1);
+    }
+
+    public void testDoesNotHavePrivateModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("int x =  1;"));
+        assert !haz.privateModifier(s1);
+    }
+
+    public void testHasProtectedModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("protected int x =  1;"));
+        assert haz.protectedModifier(s1);
+    }
+
+    public void testDoesNotHaveProtectedModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("int x =  1;"));
+        assert !haz.protectedModifier(s1);
+    }
+
+    public void testHasStaticModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("static int x =  1;"));
+        assert haz.staticModifier(s1);
+    }
+
+    public void testDoesNotHaveStaticModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("int x =  1;"));
+        assert !haz.staticModifier(s1);
+    }
+
+    public void testHasFinalModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("final int x =  1;"));
+        assert haz.finalModifier(s1);
+    }
+
+    public void testDoesNotHaveFinalModifier() throws Exception {
+        PsiModifierListOwner s1 = az.fieldDeclaration(createTestFieldDeclarationFromString("int x =  1;"));
+        assert !haz.finalModifier(s1);
     }
 }
