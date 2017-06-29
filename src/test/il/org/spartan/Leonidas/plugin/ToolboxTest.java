@@ -110,7 +110,7 @@ public class ToolboxTest extends PsiTypeHelper {
     public void testGetTipper() throws Exception {
         assertEquals(tb.getTipper(createTestStatementFromString("if(true){x++;}")).name(), "RemoveCurlyBracesFromIfStatement");
         assertEquals(tb.getTipper(createTestStatementFromString("while(true){x++;}")).name(), "RemoveCurlyBracesFromWhileStatement");
-        assertEquals(tb.getTipper(createTestStatementFromString("x += 1;")).name(), "ReplaceIdPlusOneWithIdPlusPlus");
+        assertEquals(tb.getTipper(createTestExpressionFromString("x += 1")).name(), "ReplaceIdPlusOneWithIdPlusPlus");
     }
 
     public void testCheckExcluded() throws Exception {
