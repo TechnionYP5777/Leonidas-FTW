@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import il.org.spartan.Leonidas.plugin.Toolbox;
@@ -25,6 +26,13 @@ import java.util.stream.Stream;
         }
 )
 public class TipperDataManager implements PersistentStateComponent<TipperDataManager.TipperDataContainer> {
+    /**
+     * @return instance of the data class
+     */
+    public static TipperDataContainer getInstance() {
+        return ServiceManager.getService(TipperDataContainer.class);
+    }
+
     @Nullable
     @Override
     public TipperDataContainer getState() {
