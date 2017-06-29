@@ -97,6 +97,7 @@ class ToolBoxController extends JFrame {
 
         OKButton.addActionListener(e ->{
             applyListener();
+            active = false;
             this.dispose();
         });
         textArea1.setEditable(false);
