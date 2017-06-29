@@ -43,16 +43,13 @@ public class ForTrueConditionRemove implements LeonidasTipperDefinition {
         });
     }
 
-    /**
-     * Defines code examples and results after applying the tipper.
-     * This is used to test the tipper.
-     * example:
-     * examples.put("!(!(x > 4))", "x > 4");
-     */
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("for(int i = 0; true; ++i){\n\tSystem.out.println(i);\n}", "for(int i = 0;; ++i){\n\tSystem.out.println(i);\n}")
+                .put("for(int i = 0; x == x; ++i){\n\tSystem.out.println(i);\n}", null)
+                .put("for(;true;){\n\t;\n}", null)
+                .put("for(int i = 0; true; ++i)\n\tSystem.out.println(i);\n", null)
                 .map();
     }
 }

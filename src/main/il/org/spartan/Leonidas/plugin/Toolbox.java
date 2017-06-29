@@ -21,6 +21,7 @@ import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.plugin.GUI.AddTipper.CustomLeonidasTippers;
+import il.org.spartan.Leonidas.plugin.GUI.ToolBoxController.TipperDataManager;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -86,8 +87,7 @@ public class Toolbox implements ApplicationComponent {
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
-                .add(new DefaultsTo())
-                .add(new Delegator());
+                .add(new DefaultsTo());
         initBasicBlocks();
         createLeonidasTippers();
         initializeAllTipperClassesInstances();
@@ -110,6 +110,10 @@ public class Toolbox implements ApplicationComponent {
 
             updateTipperList(tipperNames);
         }
+
+        System.out.println("A");
+        TipperDataManager.getInstance().load();
+        System.out.println("B");
     }
 
     private void initializeAllTipperClassesInstances() {
@@ -195,13 +199,12 @@ public class Toolbox implements ApplicationComponent {
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
                 .add(new LispLastElement())
-                .add(new DefaultsTo())
-                .add(new Delegator());
+                .add(new DefaultsTo());
     }
 
     void excludeNanoPatterns() {
         ArrayList<String> list = new ArrayList<>(Arrays.asList(new String[]{"SafeReference", "Unless",
-                "LambdaExpressionRemoveRedundantCurlyBraces", "LispLastElement", "DefaultsTo", "Delegator",}));
+                "LambdaExpressionRemoveRedundantCurlyBraces", "LispLastElement", "DefaultsTo",}));
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
             if (list.contains(tipper.name())) {
                 element.remove(tipper);

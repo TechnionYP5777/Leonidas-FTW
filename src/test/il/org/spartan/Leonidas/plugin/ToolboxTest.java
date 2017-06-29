@@ -37,7 +37,6 @@ public class ToolboxTest extends PsiTypeHelper {
 
         assertTrue(names.contains("SafeReference"));
         assertTrue(names.contains("Unless"));
-        assertTrue(names.contains("Delegator"));
         assertTrue(names.contains("RemoveCurlyBracesFromIfStatement"));
         assertTrue(names.contains("IfEmptyThen"));
         assertTrue(names.contains("LispLastElement"));
@@ -53,7 +52,6 @@ public class ToolboxTest extends PsiTypeHelper {
         assertFalse(currNames.contains("myOpt"));
         assertTrue(currNames.contains("SafeReference"));
         assertTrue(currNames.contains("Unless"));
-        assertTrue(currNames.contains("Delegator"));
         assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
         assertTrue(currNames.contains("IfEmptyThen"));
         assertTrue(currNames.contains("LispLastElement"));
@@ -79,7 +77,6 @@ public class ToolboxTest extends PsiTypeHelper {
 
         assertFalse(currNames.contains("SafeReference"));
         assertFalse(currNames.contains("Unless"));
-        assertTrue(currNames.contains("Delegator"));
         assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
         assertTrue(currNames.contains("IfEmptyThen"));
 
@@ -92,7 +89,6 @@ public class ToolboxTest extends PsiTypeHelper {
 
         assertFalse(finalNames.contains("SafeReference"));
         assertTrue(finalNames.contains("Unless"));
-        assertTrue(finalNames.contains("Delegator"));
         assertTrue(finalNames.contains("RemoveCurlyBracesFromIfStatement"));
         assertTrue(finalNames.contains("IfEmptyThen"));
     }
