@@ -21,6 +21,7 @@ import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.plugin.GUI.AddTipper.CustomLeonidasTippers;
+import il.org.spartan.Leonidas.plugin.GUI.ToolBoxController.TipperDataManager;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -110,6 +111,10 @@ public class Toolbox implements ApplicationComponent {
 
             updateTipperList(tipperNames);
         }
+
+        System.out.println("A");
+        TipperDataManager.getInstance().load();
+        System.out.println("B");
     }
 
     private void initializeAllTipperClassesInstances() {
