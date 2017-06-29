@@ -51,7 +51,10 @@ public class ForRedundantContinue implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\ncontinue;\n}", "for(int i = 0; i < 10; i++){\nSystem.out.println(i);\n}")
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n continue;\n}", "for(int i = 0; i < 10; i++){\nSystem.out.println(i);\n}")
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n continue;\n System.out.println(i);\n}", null)
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n if(true)\n\tcontinue;\n}", null)
+                .put("for(int i = 0; i < 10; i++){\n System.out.println(i);\n System.out.println(i);\n System.out.println(i);\ncontinue;\n}", "for(int i = 0; i < 10; i++){\nSystem.out.println(i);\n System.out.println(i);\n System.out.println(i);\n}")
                 .map();
     }
 }

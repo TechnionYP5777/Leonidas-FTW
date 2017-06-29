@@ -4,6 +4,7 @@
 
 package il.org.spartan.Leonidas.plugin.GUI.AddTipper;
 
+import java.awt.event.*;
 import com.intellij.util.ui.UIUtil;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -14,6 +15,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author Sharon LK
@@ -50,6 +53,16 @@ public class AddTipperUI extends JFrame {
         dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
+    private void labelHelpMouseClicked(MouseEvent e) {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(URI.create("https://www.google.com"));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Sharon KL
@@ -70,48 +83,58 @@ public class AddTipperUI extends JFrame {
         panel3 = new JPanel();
         buttonSave = new JButton();
         buttonClose = new JButton();
+        hSpacer1 = new JPanel(null);
+        labelHelp = new JLabel();
 
         //======== this ========
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         Container contentPane = getContentPane();
         contentPane.setLayout(new GridBagLayout());
         ((GridBagLayout)contentPane.getLayout()).columnWidths = new int[] {0, 0, 0};
-        ((GridBagLayout) contentPane.getLayout()).rowHeights = new int[]{0, 0, 0, 0, 0};
+        ((GridBagLayout)contentPane.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
         ((GridBagLayout)contentPane.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0E-4};
-        ((GridBagLayout) contentPane.getLayout()).rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0E-4};
+        ((GridBagLayout)contentPane.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 0.0, 1.0E-4};
 
         //======== panel4 ========
         {
+
+            // JFormDesigner evaluation mark
+            panel4.setBorder(new javax.swing.border.CompoundBorder(
+                new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                    "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
+                    javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    java.awt.Color.red), panel4.getBorder())); panel4.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
+
             panel4.setLayout(new GridBagLayout());
             ((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {0, 0, 0};
-            ((GridBagLayout) panel4.getLayout()).rowHeights = new int[]{0, 0, 0};
+            ((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0, 0};
             ((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
-            ((GridBagLayout) panel4.getLayout()).rowWeights = new double[]{0.0, 0.0, 1.0E-4};
+            ((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
             //---- label3 ----
             label3.setText("Name:");
             panel4.add(label3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(5, 5, 10, 10), 0, 0));
+                new Insets(5, 5, 10, 10), 0, 0));
             panel4.add(nameTextField, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(5, 5, 10, 5), 0, 0));
+                new Insets(5, 5, 10, 5), 0, 0));
 
             //---- label4 ----
             label4.setText("Description:");
             panel4.add(label4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(5, 5, 5, 10), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(5, 5, 5, 10), 0, 0));
             panel4.add(descriptionTextField, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(5, 5, 5, 5), 0, 0));
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(5, 5, 5, 5), 0, 0));
         }
         contentPane.add(panel4, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
         contentPane.add(separator1, new GridBagConstraints(0, 1, 2, 1, 1.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(0, 0, 0, 0), 0, 0));
 
         //======== panel1 ========
         {
@@ -168,9 +191,9 @@ public class AddTipperUI extends JFrame {
         //======== panel3 ========
         {
             panel3.setLayout(new GridBagLayout());
-            ((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {155, 150, 0};
+            ((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {155, 155, 0, 0, 0};
             ((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 0};
-            ((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+            ((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
             ((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
             //---- buttonSave ----
@@ -184,6 +207,23 @@ public class AddTipperUI extends JFrame {
             buttonClose.setText("Close");
             buttonClose.addActionListener(e -> buttonCloseActionPerformed(e));
             panel3.add(buttonClose, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(2, 2, 2, 7), 0, 0));
+            panel3.add(hSpacer1, new GridBagConstraints(2, 0, 1, 1, 1.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
+
+            //---- labelHelp ----
+            labelHelp.setText("help");
+            labelHelp.setForeground(new Color(0, 204, 255));
+            labelHelp.setFont(labelHelp.getFont().deriveFont(labelHelp.getFont().getStyle() | Font.BOLD));
+            labelHelp.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    labelHelpMouseClicked(e);
+                }
+            });
+            panel3.add(labelHelp, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(2, 2, 2, 2), 0, 0));
         }
@@ -214,5 +254,7 @@ public class AddTipperUI extends JFrame {
     private JPanel panel3;
     private JButton buttonSave;
     private JButton buttonClose;
+    private JPanel hSpacer1;
+    private JLabel labelHelp;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
