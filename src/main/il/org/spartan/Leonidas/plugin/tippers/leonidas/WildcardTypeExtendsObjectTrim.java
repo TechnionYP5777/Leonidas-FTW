@@ -10,10 +10,10 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
 
 
 /**
- * change unused parameter to __
+ * ? extends Object => ?
  *
  * @author Roey Maor
- * @since 15/06/2017
+ * @since 29/06/2017
  */
 @TipperUnderConstruction(LeonidasTipperDefinition.UnderConstructionReason.INCOMPLETE)
 public class WildcardTypeExtendsObjectTrim implements LeonidasTipperDefinition{
