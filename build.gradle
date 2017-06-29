@@ -67,11 +67,24 @@ patchPluginXml {
     sinceBuild '141.0'
 }
 
+
 // Used to generate data regarding test coverage, used by CodeCov
 jacocoTestReport {
     reports {
         xml.enabled true
-        html.enabled false
+        html.enabled true
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['il/org/spartan/Leonidas/plugin/tippers/leonidas/**',
+                              'il/org/spartan/Leonidas/plugin/GUI/**',
+                              'icons',
+                              'test',
+                              'il/org/spartan/Leonidas/plugin/*Action.class',
+                              'il/org/spartan/Leonidas/plugin/tipping/**'])
+        })
     }
 }
 
