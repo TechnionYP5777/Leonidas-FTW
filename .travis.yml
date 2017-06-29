@@ -7,6 +7,15 @@ jdk:
 before_install:
   - chmod +x gradlew
 
+addons:
+  apt:
+    packages:
+      - xvfb
+
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+
 # https://docs.travis-ci.com/user/languages/java/#Projects-Using-Gradle
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
