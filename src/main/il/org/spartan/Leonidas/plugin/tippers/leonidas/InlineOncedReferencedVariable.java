@@ -45,14 +45,17 @@ public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
 
     @Override
     public void replacingRules() {
-        element(4).asStatement.replaceIdentifiers(1,2);
+        element(4).asStatement.replaceIdentifiers(1, 2);
     }
 
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-               // .put("int x = 3;\nf(9,x);","f(9,3);")
-                //.put("int x = 3;\nx++;\nf(9,x);","int x = 3;\nx++;\nf(9,x);")
+//                .put("int x = 3;\nf(9,x);", "f(9,3);")
+//                .put("int x = 3;\nx++;\nf(9,x);", null)
+                .put("int y = 2;\nfor (int i = a; ; ) ;\na = y * 2;", "for (int i = a; ; ) ;\na = 2 * 2;")
+                .put("int y = 2;\nfor (int i = a; ; ) ;\ny = y * 2;", null)
+//                .put("int y = 2;\nfor (int i = a; ; ) ;\ny = a * 2;", null)   // will work when constraints or the template will be fixed
                 .map();
     }
 

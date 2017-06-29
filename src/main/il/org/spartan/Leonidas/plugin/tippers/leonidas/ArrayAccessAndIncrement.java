@@ -7,24 +7,28 @@ import java.util.Map;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.expression;
 
 /**
- * Remove unnecessary variable
+ * Inline Next Increment
  *
  * @author Oren Afek
- * @since 20/06/17
+ * @since 29/6/17
  */
-public class LocalInitializedReturn implements LeonidasTipperDefinition {
+public class ArrayAccessAndIncrement implements LeonidasTipperDefinition {
 
+
+    private int identifier1;
 
     @Override
     public void constraints() {
     }
 
+    Object[] identifier0 = new Object[]{};
+
     @Override
     public void matcher() {
         new Template(() -> {
             /* start */
-            Class0 identifier1 = expression(2);
-            return identifier1;
+            identifier0[identifier1] = expression(2);
+            identifier1++;
             /* end */
         });
     }
@@ -33,7 +37,7 @@ public class LocalInitializedReturn implements LeonidasTipperDefinition {
     public void replacer() {
         new Template(() -> {
             /* start */
-            return expression(2);
+            identifier0[identifier1++] = expression(2);
             /* end */
         });
     }
@@ -42,14 +46,7 @@ public class LocalInitializedReturn implements LeonidasTipperDefinition {
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("int a = 9;\nreturn a;", "return 9;")
-                .put("int a = 9;\na++;\nreturn a;", null)
-                .put("a = 9;\nreturn a;", null)
-                .put("int a = x + 9;\nreturn a;", "return x + 9;")
-                .put("int a = 9;\nx++;\nreturn a;", null)
+                .put("array[i] = 69;\ni++;", "array[i++] = 69;")
                 .map();
-    }
-
-    class Class0 {/**/
     }
 }
