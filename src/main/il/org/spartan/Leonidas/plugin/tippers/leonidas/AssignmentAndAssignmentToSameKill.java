@@ -19,7 +19,7 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
 
     @Override
     public void constraints() {
-        element(2).asExpression.mustNotRefer(0); //doesn't work :(
+        element(2).asExpression.mustNotRefer(0);
     }
 
     @Override
@@ -48,8 +48,7 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
                 .put("x = 1;\nx = 2;", "x = 2;")
                 .put("x.y = 1;\nx.y = 2;", "x.y = 2;")
                 .put("x = 1;\nx1 = 2;", null)
-//                .put("x = 1;\nx = x + 1;", null)          //this should be right
-                .put("x = 1;\nx = x + 2;", "x = x + 2;")    //this should be wrong
+                .put("x = 1;\nx = x + 1;", null)
                 .map();
     }
 
