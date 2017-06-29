@@ -5,7 +5,6 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
-import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.TipperUnderConstruction;
 
 
 /**
@@ -14,7 +13,7 @@ import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefi
  * @author Roey Maor
  * @since 29/06/2017
  */
-public class WhileInfiniteBreakToReturn implements LeonidasTipperDefinition{
+public class WhileInfiniteBreakToReturn implements LeonidasTipperDefinition {
 
     Object identifier3;
 
@@ -22,9 +21,9 @@ public class WhileInfiniteBreakToReturn implements LeonidasTipperDefinition{
     public void matcher() {
         new Template(() -> {
             /*start*/
-            while(true){
+            while (true) {
                 anyNumberOf(statement(0));
-                if(booleanExpression(1)){
+                if (booleanExpression(1)) {
                     break;
                 }
             }
@@ -38,9 +37,9 @@ public class WhileInfiniteBreakToReturn implements LeonidasTipperDefinition{
     public void replacer() {
         new Template(() -> {
             /*start*/
-            while(true){
+            while (true) {
                 anyNumberOf(statement(0));
-                if(booleanExpression(1)){
+                if (booleanExpression(1)) {
                     return expression(2);
                 }
             }
@@ -64,10 +63,39 @@ public class WhileInfiniteBreakToReturn implements LeonidasTipperDefinition{
                                 "                    return x;\n" +
                                 "                }\n" +
                                 "            }")
+
+                .put("while(true){\n" +
+                                "                int x = 5;\n" +
+                                "                int y = 6;\n" +
+                                "                if(x==5){\n" +
+                                "                    break;\n" +
+                                "                }\n" +
+                                "            }\n" +
+                                "            return x;",
+                        "while(true){\n" +
+                                "                int x = 5;\n" +
+                                "                int y = 6;\n" +
+                                "                if(x==5){\n" +
+                                "                    return x;\n" +
+                                "                }\n" +
+                                "            }")
+                .put("while(true){\n" +
+                        "                int x = 5;\n" +
+                        "                if(x==5){\n" +
+                        "                    break;\n" +
+                        "                }\n" +
+                        "            }\n", null)
+                .put("while(true){\n" +
+                        "                int x = 5;\n" +
+                        "                if(x==5){\n" +
+                        "                    continue;\n" +
+                        "                }\n" +
+                        "            }\n" +
+                        "            return x;", null)
                 .map();
     }
 
-    class Class0{
+    class Class0 {
 
     }
 
