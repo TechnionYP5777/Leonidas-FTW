@@ -60,19 +60,25 @@ public class AboutLeonidas extends JFrame {
                 "This Plugin was originally developed by 7 students from the Israeli institute of technology - The Technion.\n" +
                 "The plugin offers you a tool to apply the principles of Spartan Programming to your Java code.\n" +
                 "It applies many different tippers, which are little rules that provide suggestions on how to shorten and simplify your code,e.g, by using fewer variables, factoring out common structures, more efficient use of control flow, etc.\n" +
-                "\nThe plugin will help you make a sequence small, nano-refactorings of your code, to make it shorter, and more conforming to a language of nano-patterns.\n" +
-                "The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code,\n" +
+                "\n\n" +
+                "The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code," +
                 "stripping it to its bare bone.\n\n" +
                 "The plugin is based on the PSI library of IntelliJ-IDEA that allowed us to analyze java code by creating Abstract Syntax Trees from existing code and make changes in these trees.\n" +
                 "Each tipper in this plugin was written in a language that we all designed called - Leonidas.\n" +
                 "Using this language we are able to create code transformations only by writing an example of generic code that represents the 'before' and 'after' states of these transformation" +
                 "\n\n" +
                 "In addition to the tipping mechanism, We offer you to enjoy our user services which can be found under 'Leonidas' section in the menu bar of IntelliJ.\n" +
-                "There are currently 3 services available:\n" +
+                "There are currently 8 services available:\n" +
                 "(1) ToolBox Controller - Decide which tippers you want to be notified about.\n" +
                 "(2) Playground - experience and play with the Spartanizer tippers in an isolated environment without effecting your code.\n" +
-                "(3) Tipper creator - easily create new tippers by code examples without knowing Leonidas language at all!" +
+                "(3) Tipper creator -  create new tippers by code examples written in Leonidas language!\n" +
+                "(4) Disable / Enable Spartanization in current file\n" +
+                "(5) Disable / Enable Nano patterns\n" +
+                "(6) Spartanize a whole file\n" +
+                "(7) Spartanize an entire project\n" +
+                "(8) Analyze file - receive information about available tippers in your current file!" +
                 "\n\nWe encourage you all to join us in developing and enjoying the power of our plugin and the Leonidas language.\n\n" +
+                "Amir Sagiv , Anna Belozovsky , Michal Cohen, Oren Afek, Roei Rosenzweig , Roey Maor and Sharon Levenzon Kuninin\n" +
                 "Leonidas Team.");
 
         scrollPane1.getVerticalScrollBar().setValue(0); // fix top start issue
