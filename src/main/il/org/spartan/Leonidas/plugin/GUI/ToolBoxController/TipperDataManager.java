@@ -4,6 +4,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
+import com.intellij.util.Function;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.UserControlled;
@@ -194,25 +195,5 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
     @Override
     public int hashCode() {
         return data != null ? data.hashCode() : 0;
-    }
-
-    public enum DataConverter {
-        ;
-
-        public static<T> String toString(T obj) {
-            if (obj instanceof String) {
-                return obj.toString();
-            } else if (obj instanceof Integer) {
-                return Integer.toString((Integer) obj);
-            } else if (obj instanceof Boolean) {
-                return Boolean.toString((Boolean) obj);
-            } else if (obj instanceof Double) {
-                return Double.toString((Double) obj);
-            } else if (obj instanceof Float) {
-                return Float.toString((Float) obj);
-            }
-
-            return "";
-        }
     }
 }
