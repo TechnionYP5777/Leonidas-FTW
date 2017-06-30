@@ -40,14 +40,14 @@ public class AddTipperUI extends JFrame {
     }
 
     private void buttonSaveActionPerformed(ActionEvent e) {
-        CustomLeonidasTippers.getInstance().generate(nameTextField.getText(),
+        if (CustomLeonidasTippers.getInstance().generate(nameTextField.getText(),
                 descriptionTextField.getText(),
                 matcherTextArea.getText(),
                 replacerTextArea.getText(),
-                constraintsTextArea.getText());
-
-        // Close window after we add the tipper
-        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                constraintsTextArea.getText())) {
+            // Close window after we add the tipper
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
     }
 
     private void buttonCloseActionPerformed(ActionEvent e) {

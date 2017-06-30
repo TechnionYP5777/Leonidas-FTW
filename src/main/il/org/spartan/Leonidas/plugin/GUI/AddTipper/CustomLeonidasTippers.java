@@ -9,6 +9,7 @@ import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.LeonidasTipper;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,10 +66,24 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
      * @param matcher     matcher function source code
      * @param replacer    replacer function source code
      */
-    public void generate(String name, String description, String matcher, String replacer, String constraints) {
-        tippers.put(name, getTipperString(name, description, matcher, replacer, constraints));
+    public boolean generate(String name, String description, String matcher, String replacer, String constraints) {
+        try {
+            String tipperContent = getTipperString(name, description, matcher, replacer, constraints);
 
-        Toolbox.getInstance().add(new LeonidasTipper(name, tippers.get(name)));
+            Toolbox.getInstance().add(new LeonidasTipper(name, tipperContent));
+            tippers.put(name, tipperContent);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "There was an error while parsing the leonidas file.\n" +
+                            "If you are having trouble finding the problem, visit the following wiki page:\n" +
+                            "\n" +
+                            "https://github.com/TechnionYP5777/Leonidas-FTW/wiki/Leonidas\n",
+                    "Parsing error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 
     private String getTipperString(String name, String description, String matcher, String replacer, String constraints) {
