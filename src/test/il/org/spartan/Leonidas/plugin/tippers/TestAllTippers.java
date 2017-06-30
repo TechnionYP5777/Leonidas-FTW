@@ -25,7 +25,7 @@ public class TestAllTippers extends PsiTypeHelper {
             Class<? extends LeonidasTipperDefinition> c = lt.getClass();
             if(!c.isAnnotationPresent(LeonidasTipperDefinition.TipperUnderConstruction.class)){
                 try {
-                    TipperTest ts = new TipperTest(lt, this, false, true);
+                    TipperTest ts = new TipperTest(lt, this, true, true);
                     ts.check();
                 } catch (Exception e) {
                     System.out.println(lt.getClass().getName() + " throws exception");
