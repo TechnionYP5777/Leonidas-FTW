@@ -4,13 +4,16 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 
 import java.util.Map;
 
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.*;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.*;
+
 /**
  * Inline assignment into subsequent assignment.
  *
- * @author Oren
+ * @author Oren Afek
  * @since 29-06-2017
  */
-@LeonidasTipperDefinition.TipperUnderConstruction(LeonidasTipperDefinition.UnderConstructionReason.BROKEN_MATCHER)
+@TipperUnderConstruction(BROKEN_MATCHER)
 public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition {
 
 
@@ -22,11 +25,11 @@ public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition 
 
     class X {
 
-        public X identifier1() {
+        public X methodInvocation1() {
             return this;
         }
 
-        public X identifier2() {
+        public X methodInvocation2() {
             return this;
         }
     }
@@ -35,8 +38,8 @@ public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition 
     public void matcher() {
         new Template(() -> {
             /* start */
-            identifier0 = identifier0.identifier1();
-            identifier0 = identifier0.identifier2();
+            identifier0 = identifier0.methodInvocation1();
+            identifier0 = identifier0.methodInvocation2();
             /* end */
         });
     }
@@ -46,7 +49,7 @@ public class AssignmentAndAssignmentTheSame implements LeonidasTipperDefinition 
     public void replacer() {
         new Template(() -> {
             /* start */
-            identifier0 = identifier0.identifier1().identifier2();
+            identifier0 = identifier0.methodInvocation1().methodInvocation2();
             /* end */
         });
     }

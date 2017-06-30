@@ -56,7 +56,7 @@ public class AddTipperUI extends JFrame {
     private void labelHelpMouseClicked(MouseEvent e) {
         if (Desktop.isDesktopSupported()) {
             try {
-                Desktop.getDesktop().browse(URI.create("https://www.google.com"));
+                Desktop.getDesktop().browse(URI.create("https://github.com/TechnionYP5777/Leonidas-FTW/wiki/Leonidas"));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

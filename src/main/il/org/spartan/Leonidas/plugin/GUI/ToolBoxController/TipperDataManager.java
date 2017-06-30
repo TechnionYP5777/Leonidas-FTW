@@ -72,7 +72,7 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
                                         .forEach(field -> {
                                             String key = "matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName();
                                             try {
-                                                data.put(key, field.get(encapsulator).toString());
+                                                data.put(key, DataConverter.convert(field.get(encapsulator)));
                                             } catch (IllegalAccessException e) {
                                                 e.printStackTrace();
                                             }
@@ -92,7 +92,7 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
                                         .forEach(field -> {
                                             String key = "replacer_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName();
                                             try {
-                                                data.put(key, field.get(encapsulator).toString());
+                                                data.put(key, DataConverter.convert(field.get(encapsulator)));
                                             } catch (IllegalAccessException e) {
                                                 e.printStackTrace();
                                             }
@@ -130,10 +130,12 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
                                 Stream.of(encapsulator.getClass().getFields())
                                         .filter(field -> field.isAnnotationPresent(UserControlled.class))
                                         .filter(field -> data.containsKey("matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()))
-                                        .filter(field -> field.getType().isAssignableFrom(String.class))
+                                        .filter(field -> field.getType().isAssignableFrom(String.class) || field.getType().isAssignableFrom(List.class))
                                         .forEach(field -> {
                                             try {
-                                                field.set(encapsulator, data.get("matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()));
+                                                field.set(encapsulator,
+                                                        DataConverter.decode(data.get("matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()),
+                                                                field.getType()));
                                             } catch (IllegalAccessException e) {
                                                 e.printStackTrace();
                                             }
@@ -151,10 +153,12 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
                                 Stream.of(encapsulator.getClass().getFields())
                                         .filter(field -> field.isAnnotationPresent(UserControlled.class))
                                         .filter(field -> data.containsKey("replacer_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()))
-                                        .filter(field -> field.getType().isAssignableFrom(String.class))
+                                        .filter(field -> field.getType().isAssignableFrom(String.class) || field.getType().isAssignableFrom(List.class))
                                         .forEach(field -> {
                                             try {
-                                                field.set(encapsulator, data.get("replacer_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()));
+                                                field.set(encapsulator,
+                                                        DataConverter.decode(data.get("matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()),
+                                                                field.getType()));
                                             } catch (IllegalAccessException e) {
                                                 e.printStackTrace();
                                             }
