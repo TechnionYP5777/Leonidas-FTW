@@ -103,6 +103,7 @@ jacocoTestReport {
                     exclude: ['il/org/spartan/Leonidas/plugin/tippers/leonidas/**',
                               'il/org/spartan/Leonidas/plugin/GUI/**',
                               'il/org/spartan/Leonidas/plugin/tipping/**',
+                              'il/org/spartan/Leonidas/plugin/*Action.java',
                               'test/**',
                               'icons/**'])
         })
