@@ -5,6 +5,8 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 import java.util.Map;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.*;
+import static il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition.UnderConstructionReason.*;
 
 
 /**
@@ -13,7 +15,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Roey Maor
  * @since 29/06/2017
  */
-@LeonidasTipperDefinition.TipperUnderConstruction(LeonidasTipperDefinition.UnderConstructionReason.INCOMPLETE)
+@TipperUnderConstruction(INCOMPLETE)
 public class SwitchSingleCaseToIf implements LeonidasTipperDefinition{
 
     int identifier0;
