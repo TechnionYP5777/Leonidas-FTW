@@ -25,8 +25,8 @@ public class PlaygroundTest extends LightPlatformCodeInsightFixtureTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
         playground = null;
+        super.tearDown();
     }
 
     public void testLeonidasTipper1() {

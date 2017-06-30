@@ -19,6 +19,13 @@ public class MethodTest extends PsiTypeHelper {
         method = new Method();
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        method = null;
+        super.tearDown();
+    }
+
     public void testConformsMethods() {
         assertTrue(method.conforms(createTestMethodFromString("void method0(){}")));
         assertTrue(method.conforms(createTestMethodFromString("void method192(){}")));

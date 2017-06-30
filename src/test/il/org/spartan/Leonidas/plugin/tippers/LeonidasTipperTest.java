@@ -1,12 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
-import com.intellij.psi.PsiConditionalExpression;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import org.mockito.Mockito;
-
-import java.io.File;
 
 /**
  * @author Oren Afek
@@ -18,6 +13,13 @@ public class LeonidasTipperTest extends PsiTypeHelper {
 
     public LeonidasTipperTest() {
 
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        $ = null;
+        super.tearDown();
     }
 
     public void testOrenPleaseFixMe(){

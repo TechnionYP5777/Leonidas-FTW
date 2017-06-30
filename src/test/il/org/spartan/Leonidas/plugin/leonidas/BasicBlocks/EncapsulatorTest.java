@@ -30,6 +30,15 @@ public class EncapsulatorTest extends PsiTypeHelper {
 
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        ifStatement1Psi = null;
+        node = null;
+        mockPsiRewrite = null;
+        super.tearDown();
+    }
+
     private boolean matchNodeTreeAndPsiTreeByReference(Encapsulator node, PsiElement e) {
         if (node == null && e == null) return true;
         if (node == null ^ e == null) return false;
