@@ -47,10 +47,6 @@ public class AboutLeonidas extends JFrame {
         setVisible(true);
 
 
-        scrollPane1.getVerticalScrollBar().setValue(0); // fix top start issue
-        scrollPane1.getViewport().setViewPosition(new Point(0,0));
-        textPane1.setCaretPosition(0);
-
         closeButton.addActionListener(e -> closeButtonListener());
         this.addWindowListener(new WindowAdapter()
         {
@@ -78,6 +74,10 @@ public class AboutLeonidas extends JFrame {
                 "(3) Tipper creator - easily create new tippers by code examples without knowing Leonidas language at all!" +
                 "\n\nWe encourage you all to join us in developing and enjoying the power of our plugin and the Leonidas language.\n\n" +
                 "Leonidas Team.");
+
+        scrollPane1.getVerticalScrollBar().setValue(0); // fix top start issue
+        scrollPane1.getViewport().setViewPosition(new Point(0,0));
+        textPane1.setCaretPosition(0);
     }
 
 
