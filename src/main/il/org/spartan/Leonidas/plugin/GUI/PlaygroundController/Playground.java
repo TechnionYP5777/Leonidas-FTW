@@ -13,6 +13,8 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.Theme;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -43,6 +45,7 @@ public class Playground extends JFrame {
     private JScrollPane outputScroll;
     private JButton RecursiveJavaButton = new JButton();
     private JButton step = new JButton();
+    private boolean stepInit = true;
 
     private String[] before = {"public class foo{", "public class foo{ public void main(){\n", "public class foo{ public void main(){\nf("};
     private String[] after = {"\n}", "\n}}", ");\n}}"};
@@ -78,6 +81,7 @@ public class Playground extends JFrame {
         pack();
         setVisible(true);
         outputArea.setEditable(false);
+        inputArea.getDocument().addDocumentListener(new MyDocumentListener());
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked(false));
        clearButton.addActionListener(e -> clearButtonClicked());
         closeButton.addActionListener(e -> closeButtonClicked());
@@ -108,9 +112,11 @@ public class Playground extends JFrame {
     }
 
     private void spartanizationStep() {
+        if(!stepInit){
+            inputArea.setText(outputArea.getText());
+        }
         spartanizeButtonClicked(false);
-        inputArea.setText(outputArea.getText());
-        outputArea.setText("");
+        stepInit = false;
     }
 
     private void spartanizeButtonClicked(boolean recursive) {
@@ -122,15 +128,17 @@ public class Playground extends JFrame {
         PsiFileCenter.PsiFileWrapper pfw = pfc.createFileFromString(inputArea.getText());
         if(pfw.getCodeType()== PsiFileCenter.CodeType.ILLEGAL){
             outputArea.setText("Input didn't contain legal java code!");
+            stepInit = true;
         }
         else{
+            pfw = pfc.createFileFromString(pfw.extractCanonicalSubtreeString());
             if (!recursive) {
                 Spartanizer.spartanizeFileOnePass(pfw.getFile());
             }
             else {
                 Spartanizer.spartanizeFileRecursively(pfw.getFile());
             }
-            outputArea.setText(pfw.extractCanonicalSubtreeString());
+            outputArea.setText(pfw.extractRelevantSubtreeString());
         }
         Toolbox.getInstance().playground = false;
         inputArea.setCaretPosition(0);
@@ -266,5 +274,20 @@ public class Playground extends JFrame {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+    class MyDocumentListener implements DocumentListener {
+        String newline = "\n";
+
+        public void insertUpdate(DocumentEvent e) {
+            stepInit = true;
+        }
+        public void removeUpdate(DocumentEvent e) {
+            stepInit = true;
+        }
+        public void changedUpdate(DocumentEvent e) {
+            stepInit = true;
+        }
+
     }
 }

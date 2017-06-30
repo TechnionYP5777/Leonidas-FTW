@@ -34,6 +34,10 @@ public class StringLiteralEqualsChangeOrder implements LeonidasTipperDefinition 
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
                 .put("String s = \"Hello!\";\nSystem.out.println(s.equals(\"Bye\"));", "String s = \"Hello!\";\n System.out.println(\"Bye\".equals(s));")
+                .put("\"Hello\".equals(\"World\")", null)
+                .put("\"Hello\".equals(x)", null)
+                .put("if(s.equals(\"Bye\")){\nSystem.out.println();\n}", "if(\"Bye\".equals(s)){\nSystem.out.println();\n}")
+//                .put("boolean b = s.equals(\"Bye\");", "boolean b = \"Bye\".equals(s);")
                 .map();
     }
 }

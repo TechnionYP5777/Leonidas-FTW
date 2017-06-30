@@ -14,20 +14,20 @@ public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition 
 
     @Override
     public void matcher() {
-        new Template(() -> {
+        new Template(() ->
             /* start */
-            identifier0 += 1;
+                identifier0 += 1
             /* end */
-        });
+        );
     }
 
     @Override
     public void replacer() {
-        new Template(() -> {
+        new Template(() ->
             /* start */
-            identifier0++;
+                identifier0++
             /* end */
-        });
+        );
     }
 
     @Override
@@ -38,6 +38,8 @@ public class ReplaceIdPlusOneWithIdPlusPlus implements LeonidasTipperDefinition 
                 .put("x+=i;", null)
                 .put("x+=2;", null)
                 .put("/*incrementing*/\nx+=1;", "/*incrementing*/\nx++;")
+                .put("x+=1", "x++")
+//                .put("for(int i=0; i<5; i+=1){;}", "for(int i=0; i<5; i++){;}")
                 .map();
     }
 }
