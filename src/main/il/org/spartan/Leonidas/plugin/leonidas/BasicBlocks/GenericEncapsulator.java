@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author Oren Afek && Michal Cohen
  * @since 03-05-2017
  */
-public abstract class GenericEncapsulator extends Encapsulator {
+public abstract class GenericEncapsulator extends Encapsulator implements Cloneable {
     protected String template;
     protected String description = "";
     private List<BiConstraint> constraints = new ArrayList<>();
@@ -216,6 +216,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
 
     public List<BiConstraint> getConstraints() {
         return constraints;
+    }
+
+    public void copyTo(GenericEncapsulator dst) {
+        dst.replacingRules.addAll(replacingRules);
     }
 
     public interface Constraint {

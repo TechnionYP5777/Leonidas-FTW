@@ -53,4 +53,9 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
         }
         return this;
     }
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        super.copyTo(dst);
+    }
 }
