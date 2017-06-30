@@ -18,7 +18,7 @@ public abstract class The {
     public il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Class asClass;
     public Expression asExpression;
     public FieldDeclaration asFieldDeclaration;
-    public Identifier asIdentifier;
+    public Identifiable asIdentifier;
     public Statement asStatement;
     public StringLiteral asStringLiteral;
     public Throwable asThrowable;
