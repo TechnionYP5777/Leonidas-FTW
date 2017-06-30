@@ -11,14 +11,14 @@ import java.util.function.Function;
  * Created by Sharon on 30-Jun-17.
  */
 public class DataConverter<T> {
-    public static DataConverter<String> STRING = new DataConverter<>(s -> s, s -> s);
-    public static DataConverter<Integer> INTEGER = new DataConverter<>(i -> Integer.toString(i), Integer::parseInt);
-    public static DataConverter<Double> DOUBLE = new DataConverter<>(i -> Double.toString(i), Double::parseDouble);
-    public static DataConverter<Float> FLOAT = new DataConverter<>(i -> Float.toString(i), Float::parseFloat);
-    public static DataConverter<Long> LONG = new DataConverter<>(i -> Long.toString(i), Long::parseLong);
-    public static DataConverter<List<String>> STRING_LIST = new DataConverter<>(list -> String.join(",", list),
+    public static final DataConverter<String> STRING = new DataConverter<>(s -> s, s -> s);
+    public static final DataConverter<Integer> INTEGER = new DataConverter<>(i -> Integer.toString(i), Integer::parseInt);
+    public static final DataConverter<Double> DOUBLE = new DataConverter<>(i -> Double.toString(i), Double::parseDouble);
+    public static final DataConverter<Float> FLOAT = new DataConverter<>(i -> Float.toString(i), Float::parseFloat);
+    public static final DataConverter<Long> LONG = new DataConverter<>(i -> Long.toString(i), Long::parseLong);
+    public static final DataConverter<List<String>> STRING_LIST = new DataConverter<>(list -> String.join(",", list),
             s -> new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*"))));
-    public static DataConverter<Existence> EXISTENCE = new DataConverter<>(Enum::toString, Existence::valueOf);
+    public static final DataConverter<Existence> EXISTENCE = new DataConverter<>(Enum::toString, Existence::valueOf);
 
     private Function<T, String> toString;
     private Function<String, T> fromString;
