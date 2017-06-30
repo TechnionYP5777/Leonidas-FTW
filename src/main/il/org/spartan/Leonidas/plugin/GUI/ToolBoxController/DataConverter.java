@@ -7,6 +7,10 @@ import java.util.function.Function;
  */
 public class DataConverter<T> {
     public static DataConverter<String> STRING = new DataConverter<>(s -> s, s -> s);
+    public static DataConverter<Integer> INTEGER = new DataConverter<>(i -> Integer.toString(i), Integer::parseInt);
+    public static DataConverter<Double> DOUBLE = new DataConverter<>(i -> Double.toString(i), Double::parseDouble);
+    public static DataConverter<Float> FLOAT = new DataConverter<>(i -> Float.toString(i), Float::parseFloat);
+    public static DataConverter<Long> LONG = new DataConverter<>(i -> Long.toString(i), Long::parseLong);
 
     private Function<T, String> toString;
     private Function<String, T> fromString;
@@ -27,6 +31,14 @@ public class DataConverter<T> {
     public static String convert(Object o) {
         if (o.getClass().isAssignableFrom(String.class)) {
             return STRING.toString((String) o);
+        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+            return INTEGER.toString((Integer) o);
+        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+            return DOUBLE.toString((Double) o);
+        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+            return FLOAT.toString((Float) o);
+        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+            return LONG.toString((Long) o);
         }
 
         return "";
@@ -35,6 +47,14 @@ public class DataConverter<T> {
     public static Object decode(String s, Class<?> c) {
         if (c.isAssignableFrom(String.class)) {
             return STRING.fromString(s);
+        } else if (c.isAssignableFrom(Integer.class)) {
+            return INTEGER.fromString(s);
+        } else if (c.isAssignableFrom(Double.class)) {
+            return DOUBLE.fromString(s);
+        } else if (c.isAssignableFrom(Float.class)) {
+            return FLOAT.fromString(s);
+        } else if (c.isAssignableFrom(Long.class)) {
+            return LONG.fromString(s);
         }
 
         return "";
