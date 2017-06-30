@@ -65,17 +65,23 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
      * @param matcher     matcher function source code
      * @param replacer    replacer function source code
      */
-    public void generate(String name, String description, String matcher, String replacer) {
-        tippers.put(name, getTipperString(name, description, matcher, replacer));
+    public void generate(String name, String description, String matcher, String replacer, String constraints) {
+        tippers.put(name, getTipperString(name, description, matcher, replacer, constraints));
 
         Toolbox.getInstance().add(new LeonidasTipper(name, tippers.get(name)));
     }
 
-    private String getTipperString(String name, String description, String matcher, String replacer) {
+    private String getTipperString(String name, String description, String matcher, String replacer, String constraints) {
         return String.format("/**\n" +
                 "* %s\n" +
                 "*/\n" +
-                "public class %s implements LeonidasTipperDefinition {\n" +
+                "public class %s implements LeonidasTipperDefinition {\n\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public void constraints() {\n" +
+                "        %s\n" +
+                "    }\n" +
+                "\n" +
                 "    @Override\n" +
                 "    public void matcher() {\n" +
                 "        new Template(() -> {\n" +
@@ -93,7 +99,7 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
                 "           /* end */\n" +
                 "       });\n" +
                 "    }\n" +
-                "}\n", description, name, matcher, replacer);
+                "}\n", description, name, constraints, matcher, replacer);
     }
 
     @Override
