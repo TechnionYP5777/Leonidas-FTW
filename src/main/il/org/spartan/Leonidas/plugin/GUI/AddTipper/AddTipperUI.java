@@ -26,6 +26,7 @@ public class AddTipperUI extends JFrame {
         initComponents();
 
         setSize(600, 800);
+        setLocationRelativeTo(null);
         matcherTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         replacerTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         constraintsTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
