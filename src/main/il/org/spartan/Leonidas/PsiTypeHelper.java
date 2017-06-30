@@ -4,6 +4,7 @@ import com.intellij.openapi.Disposable;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
+import com.intellij.testFramework.UsefulTestCase;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +25,7 @@ public class PsiTypeHelper extends PsiTestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
+        UsefulTestCase.clearFields(this);
         // fixes issue with the fixture not disposing projects.
         Optional.ofNullable(getProject()).ifPresent(Disposable::dispose);
     }
