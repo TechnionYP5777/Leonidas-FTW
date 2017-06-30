@@ -81,4 +81,14 @@ public class DataConverter<T> {
 
         return "";
     }
+
+    public static boolean isSupported(Class<?> c) {
+        return String.class.isAssignableFrom(c) ||
+                Integer.class.isAssignableFrom(c) ||
+                Double.class.isAssignableFrom(c) ||
+                Float.class.isAssignableFrom(c) ||
+                Long.class.isAssignableFrom(c) ||
+                List.class.isAssignableFrom(c) ||
+                Existence.class.isAssignableFrom(c);
+    }
 }
