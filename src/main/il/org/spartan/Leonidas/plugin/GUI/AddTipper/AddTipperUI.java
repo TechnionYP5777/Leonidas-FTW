@@ -28,11 +28,13 @@ public class AddTipperUI extends JFrame {
         setSize(600, 800);
         matcherTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         replacerTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        constraintsTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         if (UIUtil.isUnderDarcula()) {
             try {
                 Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
                 theme.apply(matcherTextArea);
                 theme.apply(replacerTextArea);
+                theme.apply(constraintsTextArea);
             } catch (IOException e) {
                 e.printStackTrace();
             }
