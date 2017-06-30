@@ -96,18 +96,6 @@ jacocoTestReport {
         xml.enabled true
         html.enabled true
     }
-
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it,
-                    exclude: ['il/org/spartan/Leonidas/plugin/tippers/leonidas/**',
-                              'il/org/spartan/Leonidas/plugin/GUI/**',
-                              'il/org/spartan/Leonidas/plugin/tipping/**',
-                              'il/org/spartan/Leonidas/plugin/*Action.java',
-                              'test/**',
-                              'icons/**'])
-        })
-    }
 }
 
 //noinspection GroovyAssignabilityCheck
