@@ -6,7 +6,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -26,11 +25,10 @@ public class ToolboxTest extends PsiTypeHelper {
 
     @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
         clearFields(this);
-        Optional.ofNullable(tb).ifPresent(Toolbox::disposeComponent);
+        tb = null;
+        super.tearDown();
     }
-
 
     public void testGetAllTippers() throws Exception {
         List<Tipper> list = tb.getAllTippers();

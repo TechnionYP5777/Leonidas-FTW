@@ -16,6 +16,13 @@ public class IdentifiableTest extends PsiTypeHelper {
         id = new Identifier();
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        clearFields(this);
+        id = null;
+        super.tearDown();
+    }
+
     public void testConforms() {
         assertTrue(id.conforms(createTestIdentifierFromString("identifier1")));
         assertTrue(id.conforms(createTestIdentifierFromString("identifier2")));

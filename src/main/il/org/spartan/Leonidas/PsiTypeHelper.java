@@ -1,6 +1,5 @@
 package il.org.spartan.Leonidas;
 
-import com.intellij.openapi.Disposable;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
@@ -10,7 +9,6 @@ import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Tests are extending this class to use a convenient API for handling Psi types and elements.
@@ -24,10 +22,8 @@ public class PsiTypeHelper extends PsiTestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
         UsefulTestCase.clearFields(this);
-        // fixes issue with the fixture not disposing projects.
-        Optional.ofNullable(getProject()).ifPresent(Disposable::dispose);
+        super.tearDown();
     }
 
     /**
