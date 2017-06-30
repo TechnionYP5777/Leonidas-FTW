@@ -4,7 +4,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.UserControlled;
-import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
@@ -123,5 +122,14 @@ public class Method extends ModifiableElement {
     public void notContains(String s) {
         notContainsList.add(s);
         addConstraint((e, m) -> notContainsList.stream().noneMatch(ncs ->az.method(e.inner).getName().contains(ncs)));
+    }
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        if (!(dst instanceof Method)) return;
+        super.copyTo(dst);
+        Method castDst = (Method) dst;
+        castDst.containsList = new LinkedList<>(containsList);
+        castDst.notContainsList = new LinkedList<>(notContainsList);
     }
 }

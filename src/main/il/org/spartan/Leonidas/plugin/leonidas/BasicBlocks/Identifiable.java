@@ -29,13 +29,8 @@ public abstract class Identifiable extends NamedElement {
     public String nameToChange = ""; // present the user string he wishes the identifier will b replaced by to modify.
 
 
-    /**
-     * For reflection use DO NOT REMOVE!
-     */
-
     protected Identifiable(Encapsulator e, String TEMPLATE) {
         super(e, TEMPLATE);
-
     }
 
     protected Identifiable(String TEMPLATE) {
@@ -66,7 +61,15 @@ public abstract class Identifiable extends NamedElement {
     @Override
     public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
 
-
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        if (!(dst instanceof Identifiable)) return;
+        super.copyTo(dst);
+        Identifiable castDst = (Identifiable) dst;
+        castDst.containsList = new LinkedList(containsList);
+        castDst.notContainsList = new LinkedList(notContainsList);
+        castDst.nameToChange = new String(nameToChange);
+    }
 
     /* Constraints Methods */
 

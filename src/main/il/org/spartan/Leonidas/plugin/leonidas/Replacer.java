@@ -41,7 +41,7 @@ public class Replacer {
      * @param dst destination replacer
      */
     private static void putReplacingRulesRecursively(GenericEncapsulator src, GenericEncapsulator dst){
-        dst.getReplacingRules().addAll(src.getReplacingRules());
+        src.copyTo(dst);
         dst.getGenericElements().forEach((id, element) -> putReplacingRulesRecursively(src.getGenericElements().get(id), element));
     }
 

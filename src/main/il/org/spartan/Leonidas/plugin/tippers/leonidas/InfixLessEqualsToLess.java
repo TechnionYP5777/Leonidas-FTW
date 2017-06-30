@@ -30,7 +30,7 @@ public class InfixLessEqualsToLess implements LeonidasTipperDefinition {
                 .put("X <= Y-1", "X < Y")
                 .put("X < Y-1", null)
                 .put("X <= Y", null)
-//                .put("if (X <= Y-1){\n\treturn true;\n}", "if (X <= Y-1){\n\treturn true;\n}")
+                .put("if (X <= Y-1){\n\treturn true;\n}", "if (X <= Y-1){\n\treturn true;\n}")
                 .map();
     }
 }

@@ -80,6 +80,10 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         if (!iz.generic(internal)) return super.replaceByRange(elements, m ,r);
         GenericEncapsulator ge = az.generic(internal);
+        if (elements == null) {
+            r.deleteByRange(inner.getParent(), inner, inner);
+            return null;
+        }
         elements = ge.applyReplacingRules(elements, m);
         if (parent == null) return elements;
         List<PsiElement> l = Lists.reverse(elements);

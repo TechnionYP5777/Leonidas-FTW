@@ -6,7 +6,6 @@ import il.org.spartan.Leonidas.auxilary_layer.Existence;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
 import il.org.spartan.Leonidas.plugin.UserControlled;
-import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 import il.org.spartan.Leonidas.plugin.leonidas.MatchingResult;
 
 import java.util.List;
@@ -63,6 +62,19 @@ public abstract class ModifiableElement extends NamedElement {
                 checkConstraint(isStatic, mlo, haz::staticModifier) &&
                 checkConstraint(isFinal, mlo, haz::finalModifier) &&
                 checkConstraint(isAbstract, mlo, haz::abstractModifier));
+    }
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        if (!(dst instanceof ModifiableElement)) return;
+        super.copyTo(dst);
+        ModifiableElement castDst = (ModifiableElement) dst;
+        castDst.isAbstract = isAbstract;
+        castDst.isFinal = isFinal;
+        castDst.isPrivate = isPrivate;
+        castDst.isProtected = isProtected;
+        castDst.isPublic = isPublic;
+        castDst.isStatic = isStatic;
     }
 
     /* Constraints Methods */

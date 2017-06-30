@@ -125,4 +125,9 @@ public class Class extends NamedElement{
         }));
         return Utils.wrapWithList(inner);
     }
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        super.copyTo(dst);
+    }
 }
