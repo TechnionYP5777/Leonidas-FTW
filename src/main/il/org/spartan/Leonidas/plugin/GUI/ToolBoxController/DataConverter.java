@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
+import il.org.spartan.Leonidas.auxilary_layer.Existence;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +18,7 @@ public class DataConverter<T> {
     public static DataConverter<Long> LONG = new DataConverter<>(i -> Long.toString(i), Long::parseLong);
     public static DataConverter<List<String>> STRING_LIST = new DataConverter<>(list -> String.join(",", list),
             s -> new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*"))));
+    public static DataConverter<Existence> EXISTENCE = new DataConverter<>(Enum::toString, Existence::valueOf);
 
     private Function<T, String> toString;
     private Function<String, T> fromString;
@@ -46,6 +49,8 @@ public class DataConverter<T> {
             return LONG.toString((Long) o);
         } else if (List.class.isAssignableFrom(o.getClass())) {
             return STRING_LIST.toString((List<String>) o);
+        } else if (Existence.class.isAssignableFrom(o.getClass())) {
+            return EXISTENCE.toString((Existence) o);
         }
 
         return "";
@@ -64,6 +69,8 @@ public class DataConverter<T> {
             return LONG.fromString(s);
         } else if (List.class.isAssignableFrom(c)) {
             return STRING_LIST.fromString(s);
+        } else if (Existence.class.isAssignableFrom(c)) {
+            return EXISTENCE.fromString(s);
         }
 
         return "";
