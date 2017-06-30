@@ -19,9 +19,9 @@ public class DataConverter<T> {
     public static final DataConverter<List<String>> STRING_LIST = new DataConverter<>(list -> String.join(",", list),
             s -> {
                 if (s.equals("")) {
-                    return new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*")));
-                } else {
                     return new ArrayList<>();
+                } else {
+                    return new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*")));
                 }
             });
     public static final DataConverter<Existence> EXISTENCE = new DataConverter<>(Enum::toString, Existence::valueOf);
