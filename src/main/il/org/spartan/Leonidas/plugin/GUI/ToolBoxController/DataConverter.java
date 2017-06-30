@@ -17,7 +17,13 @@ public class DataConverter<T> {
     public static final DataConverter<Float> FLOAT = new DataConverter<>(i -> Float.toString(i), Float::parseFloat);
     public static final DataConverter<Long> LONG = new DataConverter<>(i -> Long.toString(i), Long::parseLong);
     public static final DataConverter<List<String>> STRING_LIST = new DataConverter<>(list -> String.join(",", list),
-            s -> new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*"))));
+            s -> {
+                if (s.equals("")) {
+                    return new ArrayList<>();
+                } else {
+                    return new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*")));
+                }
+            });
     public static final DataConverter<Existence> EXISTENCE = new DataConverter<>(Enum::toString, Existence::valueOf);
 
     private Function<T, String> toString;
@@ -74,5 +80,15 @@ public class DataConverter<T> {
         }
 
         return "";
+    }
+
+    public static boolean isSupported(Class<?> c) {
+        return String.class.isAssignableFrom(c) ||
+                Integer.class.isAssignableFrom(c) ||
+                Double.class.isAssignableFrom(c) ||
+                Float.class.isAssignableFrom(c) ||
+                Long.class.isAssignableFrom(c) ||
+                List.class.isAssignableFrom(c) ||
+                Existence.class.isAssignableFrom(c);
     }
 }

@@ -26,13 +26,16 @@ public class AddTipperUI extends JFrame {
         initComponents();
 
         setSize(600, 800);
+        setLocationRelativeTo(null);
         matcherTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         replacerTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        constraintsTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         if (UIUtil.isUnderDarcula()) {
             try {
                 Theme theme = Theme.load(getClass().getResourceAsStream("/ui/dark.xml"));
                 theme.apply(matcherTextArea);
                 theme.apply(replacerTextArea);
+                theme.apply(constraintsTextArea);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -40,13 +43,14 @@ public class AddTipperUI extends JFrame {
     }
 
     private void buttonSaveActionPerformed(ActionEvent e) {
-        CustomLeonidasTippers.getInstance().generate(nameTextField.getText(),
+        if (CustomLeonidasTippers.getInstance().generate(nameTextField.getText(),
                 descriptionTextField.getText(),
                 matcherTextArea.getText(),
-                replacerTextArea.getText());
-
-        // Close window after we add the tipper
-        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                replacerTextArea.getText(),
+                constraintsTextArea.getText())) {
+            // Close window after we add the tipper
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
     }
 
     private void buttonCloseActionPerformed(ActionEvent e) {
@@ -80,6 +84,10 @@ public class AddTipperUI extends JFrame {
         label2 = new JLabel();
         scrollPane2 = new JScrollPane();
         replacerTextArea = new RSyntaxTextArea();
+        panel5 = new JPanel();
+        label5 = new JLabel();
+        scrollPane3 = new JScrollPane();
+        constraintsTextArea = new RSyntaxTextArea();
         panel3 = new JPanel();
         buttonSave = new JButton();
         buttonClose = new JButton();
@@ -91,9 +99,9 @@ public class AddTipperUI extends JFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new GridBagLayout());
         ((GridBagLayout)contentPane.getLayout()).columnWidths = new int[] {0, 0, 0};
-        ((GridBagLayout)contentPane.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
+        ((GridBagLayout)contentPane.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
         ((GridBagLayout)contentPane.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0E-4};
-        ((GridBagLayout)contentPane.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 0.0, 1.0E-4};
+        ((GridBagLayout)contentPane.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 0.0, 0.0, 1.0E-4};
 
         //======== panel4 ========
         {
@@ -188,6 +196,32 @@ public class AddTipperUI extends JFrame {
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(5, 5, 5, 5), 0, 0));
 
+        //======== panel5 ========
+        {
+            panel5.setLayout(new GridBagLayout());
+            ((GridBagLayout)panel5.getLayout()).columnWidths = new int[] {0, 0};
+            ((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 80, 0};
+            ((GridBagLayout)panel5.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
+            ((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+
+            //---- label5 ----
+            label5.setText("Constraints:");
+            panel5.add(label5, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 5, 0), 0, 0));
+
+            //======== scrollPane3 ========
+            {
+                scrollPane3.setViewportView(constraintsTextArea);
+            }
+            panel5.add(scrollPane3, new GridBagConstraints(0, 1, 1, 1, 1.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
+        }
+        contentPane.add(panel5, new GridBagConstraints(0, 3, 2, 1, 1.0, 0.0,
+            GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+            new Insets(5, 5, 5, 5), 0, 0));
+
         //======== panel3 ========
         {
             panel3.setLayout(new GridBagLayout());
@@ -227,7 +261,7 @@ public class AddTipperUI extends JFrame {
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(2, 2, 2, 2), 0, 0));
         }
-        contentPane.add(panel3, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0,
+        contentPane.add(panel3, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0,
             GridBagConstraints.CENTER, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
         pack();
@@ -251,6 +285,10 @@ public class AddTipperUI extends JFrame {
     private JLabel label2;
     private JScrollPane scrollPane2;
     private RSyntaxTextArea replacerTextArea;
+    private JPanel panel5;
+    private JLabel label5;
+    private JScrollPane scrollPane3;
+    private RSyntaxTextArea constraintsTextArea;
     private JPanel panel3;
     private JButton buttonSave;
     private JButton buttonClose;
