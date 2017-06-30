@@ -195,4 +195,24 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
     public int hashCode() {
         return data != null ? data.hashCode() : 0;
     }
+
+    public enum DataConverter {
+        ;
+
+        public static<T> String toString(T obj) {
+            if (obj instanceof String) {
+                return obj.toString();
+            } else if (obj instanceof Integer) {
+                return Integer.toString((Integer) obj);
+            } else if (obj instanceof Boolean) {
+                return Boolean.toString((Boolean) obj);
+            } else if (obj instanceof Double) {
+                return Double.toString((Double) obj);
+            } else if (obj instanceof Float) {
+                return Float.toString((Float) obj);
+            }
+
+            return "";
+        }
+    }
 }
