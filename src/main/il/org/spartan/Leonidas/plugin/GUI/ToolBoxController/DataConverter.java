@@ -17,7 +17,13 @@ public class DataConverter<T> {
     public static final DataConverter<Float> FLOAT = new DataConverter<>(i -> Float.toString(i), Float::parseFloat);
     public static final DataConverter<Long> LONG = new DataConverter<>(i -> Long.toString(i), Long::parseLong);
     public static final DataConverter<List<String>> STRING_LIST = new DataConverter<>(list -> String.join(",", list),
-            s -> new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*"))));
+            s -> {
+                if (s.equals("")) {
+                    return new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*")));
+                } else {
+                    return new ArrayList<>();
+                }
+            });
     public static final DataConverter<Existence> EXISTENCE = new DataConverter<>(Enum::toString, Existence::valueOf);
 
     private Function<T, String> toString;
