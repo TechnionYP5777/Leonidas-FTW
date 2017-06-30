@@ -55,6 +55,10 @@ public class Replacer {
      */
     public void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, Integer numberOfRoots, PsiRewrite r) {
         List<PsiElement> elements = getReplacingForest(roots, m, r);
+        if (elements.size() == 1 && numberOfRoots == 1) {
+            r.replace(treeToReplace, elements.get(0));
+            return;
+        }
         PsiElement prev = treeToReplace.getPrevSibling();
         PsiElement last = treeToReplace;
         for (int i = 1; i < numberOfRoots; i++) {

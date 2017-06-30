@@ -8,7 +8,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 
 /**
- * Replace if(b); else{s;} with if(!b){s;}
+ * Replace if(b); else s; with if(!b) s;
  *
  * @author melanyc
  * @since 30-04-2017
@@ -53,7 +53,7 @@ public class IfEmptyThen implements LeonidasTipperDefinition {
                 .put("int x=5;\nObject a,b;\na=new Object();\nb=new Object(); \nif(a!=b)\n\t;\nelse\n\tx = 8;\n", "int x=5;\nObject a,b;\na=new Object();\nb=new Object();\n if(!(a!=b))\n\tx = 8;\n")
                 .put("if(true)\nreturn false;\nelse\nreturn true;", null)
                 .put("if(true)\n\t;", null)
-               // .put("if(true)\nif(x==0);\nelse\nreturn false;", "if(true)\nif(!(x==0))\nreturn false;")
+                .put("if(true)\nif(x==0);\nelse\nreturn false;", "if(true)\nif(!(x==0))\nreturn false;")
                 .map();
 
     }
