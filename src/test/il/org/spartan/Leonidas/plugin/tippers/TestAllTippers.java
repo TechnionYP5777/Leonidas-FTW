@@ -1,10 +1,10 @@
 package il.org.spartan.Leonidas.plugin.tippers;
+
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
 
 import java.util.List;
 
@@ -24,8 +24,13 @@ public class TestAllTippers extends PsiTypeHelper {
         for( LeonidasTipperDefinition lt : leonidasTippers){
             Class<? extends LeonidasTipperDefinition> c = lt.getClass();
             if(!c.isAnnotationPresent(LeonidasTipperDefinition.TipperUnderConstruction.class)){
-                TipperTest ts = new TipperTest(lt, this, true, true);
-                ts.check();
+                try {
+                    TipperTest ts = new TipperTest(lt, this, false, true);
+                    ts.check();
+                } catch (Exception e) {
+                    System.out.println(lt.getClass().getName() + " throws exception");
+                    e.printStackTrace();
+                }
             }
 
         }

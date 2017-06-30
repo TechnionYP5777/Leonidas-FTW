@@ -43,7 +43,7 @@ public class ToolboxTest extends PsiTypeHelper {
         assertTrue(names.contains("DefaultsTo"));
         assertTrue(names.contains("RemoveCurlyBracesFromWhileStatement"));
         assertTrue(names.contains("LambdaExpressionRemoveRedundantCurlyBraces"));
-        assertTrue(names.contains("IfDoubleNot"));
+        assertTrue(names.contains("DoubleNot"));
     }
 
     public void testGetCurrentTippers() throws Exception {
@@ -58,7 +58,7 @@ public class ToolboxTest extends PsiTypeHelper {
         assertTrue(currNames.contains("DefaultsTo"));
         assertTrue(currNames.contains("RemoveCurlyBracesFromWhileStatement"));
         assertTrue(currNames.contains("LambdaExpressionRemoveRedundantCurlyBraces"));
-        assertTrue(currNames.contains("IfDoubleNot"));
+        assertTrue(currNames.contains("DoubleNot"));
 
     }
 
