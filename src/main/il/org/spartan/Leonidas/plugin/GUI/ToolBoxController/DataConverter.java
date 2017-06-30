@@ -34,17 +34,17 @@ public class DataConverter<T> {
     }
 
     public static String convert(Object o) {
-        if (o.getClass().isAssignableFrom(String.class)) {
+        if (String.class.isAssignableFrom(o.getClass())) {
             return STRING.toString((String) o);
-        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+        } else if (Integer.class.isAssignableFrom(o.getClass())) {
             return INTEGER.toString((Integer) o);
-        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+        } else if (Integer.class.isAssignableFrom(o.getClass())) {
             return DOUBLE.toString((Double) o);
-        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+        } else if (Integer.class.isAssignableFrom(o.getClass())) {
             return FLOAT.toString((Float) o);
-        } else if (o.getClass().isAssignableFrom(Integer.class)) {
+        } else if (Integer.class.isAssignableFrom(o.getClass())) {
             return LONG.toString((Long) o);
-        } else if (o.getClass().isAssignableFrom(List.class)) {
+        } else if (List.class.isAssignableFrom(o.getClass())) {
             return STRING_LIST.toString((List<String>) o);
         }
 
@@ -52,17 +52,17 @@ public class DataConverter<T> {
     }
 
     public static Object decode(String s, Class<?> c) {
-        if (c.isAssignableFrom(String.class)) {
+        if (String.class.isAssignableFrom(c)) {
             return STRING.fromString(s);
-        } else if (c.isAssignableFrom(Integer.class)) {
+        } else if (Integer.class.isAssignableFrom(c)) {
             return INTEGER.fromString(s);
-        } else if (c.isAssignableFrom(Double.class)) {
+        } else if (Double.class.isAssignableFrom(c)) {
             return DOUBLE.fromString(s);
-        } else if (c.isAssignableFrom(Float.class)) {
+        } else if (Float.class.isAssignableFrom(c)) {
             return FLOAT.fromString(s);
-        } else if (c.isAssignableFrom(Long.class)) {
+        } else if (Long.class.isAssignableFrom(c)) {
             return LONG.fromString(s);
-        } else if (c.isAssignableFrom(List.class)) {
+        } else if (List.class.isAssignableFrom(c)) {
             return STRING_LIST.fromString(s);
         }
 
