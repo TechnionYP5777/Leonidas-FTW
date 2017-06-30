@@ -127,8 +127,8 @@ public class PsiFileCenter {
             return raw;
         }
 
-        private String extractRelevantSubtreeString() {
-            return (file.getText().split(PsiFileCenter.markerRegex))[1];
+        public String extractRelevantSubtreeString() {
+            return (file.getText().split(PsiFileCenter.markerRegex))[1].trim();
         }
     }
 }
