@@ -10,14 +10,15 @@ public class LoadingIndicator extends JFrame {
 
     private JLabel loadingMessage;
     private JLabel loadingAnimation;
+    private JPanel contentPane;
 
     public LoadingIndicator(String message){
         super("");
         loadingMessage.setText(message);
+        setContentPane(contentPane);
         setPreferredSize(new Dimension(700, 100));
         setResizable(false);
         pack();
         setVisible(true);
-
     }
 }

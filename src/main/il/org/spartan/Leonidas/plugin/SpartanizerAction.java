@@ -12,6 +12,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import icons.Icons;
+import il.org.spartan.Leonidas.plugin.GUI.LoadingIndicator.LoadingIndicator;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,9 +67,10 @@ public class SpartanizerAction extends AnAction {
                     }.execute();
                 }
             } catch (Exception ex) {}
-
+            LoadingIndicator li = new LoadingIndicator("Spartanizing current file");
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());
+            li.dispose();
 
 		}
     }
