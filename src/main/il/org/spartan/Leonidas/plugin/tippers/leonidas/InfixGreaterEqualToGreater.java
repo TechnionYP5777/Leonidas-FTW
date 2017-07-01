@@ -29,7 +29,7 @@ public class InfixGreaterEqualToGreater implements LeonidasTipperDefinition {
                 .put("X-1 >= Y", "X > Y")
                 .put("X-1 > Y", null)
                 .put("X >= Y", null)
-//                .put("if (y - 1 >= z){\n\treturn true;\n}", "if (y > z){\n\treturn true;\n}")
+                .put("if (y - 1 >= z){\n\treturn true;\n}", "if (y > z){\n\treturn true;\n}")
                 .map();
     }
 }

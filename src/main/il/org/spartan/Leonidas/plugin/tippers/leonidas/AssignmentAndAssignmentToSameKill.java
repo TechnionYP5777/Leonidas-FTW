@@ -51,7 +51,4 @@ public class AssignmentAndAssignmentToSameKill implements LeonidasTipperDefiniti
                 .put("x = 1;\nx = x + 1;", null)
                 .map();
     }
-
-    class Class3 {
-    }
 }

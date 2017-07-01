@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.plugin.UserControlled;
-import il.org.spartan.Leonidas.plugin.UserControlledMatcher;
 
 /**
  * A base class for all basic blocks represented by their name.
@@ -62,5 +61,15 @@ public abstract class NamedElement extends GenericEncapsulator{
     public void startsWith(String s) {
         startsWithString = s;
         addConstraint((e, m) -> getName(e.getInner()).startsWith(startsWithString));
+    }
+
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        if (!(dst instanceof NamedElement)) return;
+        super.copyTo(dst);
+        NamedElement castDst = (NamedElement) dst;
+        castDst.endsWithString = new String(endsWithString);
+        castDst.startsWithString = new String(startsWithString);
     }
 }

@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.testFramework.PsiTestCase;
+import com.intellij.testFramework.UsefulTestCase;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +19,12 @@ public class PsiTypeHelper extends PsiTestCase {
 
     private static final String dummyTestFileName = "test.java";
     private static final String emptyText = "";
+
+    @Override
+    protected void tearDown() throws Exception {
+        UsefulTestCase.clearFields(this);
+        super.tearDown();
+    }
 
     /**
      * @return The dummy file in which the tested elements are created.

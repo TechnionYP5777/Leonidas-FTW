@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public class Expression extends GenericMethodCallBasedBlock {
 
-    //FIXME @michalcohen @orenafek change to expression
     private static final String TEMPLATE = "expression";
     PsiType type;
 

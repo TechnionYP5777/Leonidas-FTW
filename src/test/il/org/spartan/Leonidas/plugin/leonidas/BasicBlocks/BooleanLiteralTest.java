@@ -27,8 +27,9 @@ public class BooleanLiteralTest extends PsiTypeHelper {
 
     @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
+        clearFields(this);
         booleanLiteral = null;
+        super.tearDown();
     }
 
     public void testGeneralizesBooleanLiterals() {
