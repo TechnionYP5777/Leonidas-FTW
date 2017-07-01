@@ -25,6 +25,7 @@ public class izTest extends PsiTypeHelper {
 
     public void testNull$() throws Exception {
         assert iz.null$(createTestNullExpression());
+        assertFalse(iz.null$(null));
     }
 
     public void testNotNull() throws Exception {
@@ -74,6 +75,7 @@ public class izTest extends PsiTypeHelper {
         assert !iz.equalsOperator(t2.getTokenType());
         PsiJavaToken t3 = ((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign();
         assert !iz.equalsOperator(t3.getTokenType());
+        assert !iz.equalsOperator(null);
         assert !iz.equalsOperator(
                 ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
     }
@@ -85,6 +87,7 @@ public class izTest extends PsiTypeHelper {
         assert !iz.notEqualsOperator(t2.getTokenType());
         PsiJavaToken t3 = ((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign();
         assert !iz.notEqualsOperator(t3.getTokenType());
+        assert !iz.notEqualsOperator(null);
         assert !iz.notEqualsOperator(
                 ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
     }
@@ -249,6 +252,7 @@ public class izTest extends PsiTypeHelper {
         assert !iz.public$(m2);
         PsiMethod m3 = createTestMethodFromString("private static boolean method(){return true;}");
         assert !iz.public$(m3);
+        assert !iz.public$(null);
         assert !iz.public$(createTestMethodFromString("void method(){}"));
     }
 
@@ -490,6 +494,7 @@ public class izTest extends PsiTypeHelper {
     public void testFinalMember() throws Exception {
         PsiMember e1 = createTestFieldDeclarationFromString("final private int x");
         assertTrue(iz.final¢(e1));
+        assertFalse(iz.final¢((PsiMember)null));
         PsiMember e2 = createTestFieldDeclarationFromString("private int x");
         assertFalse(iz.final¢(e2));
     }
@@ -497,6 +502,7 @@ public class izTest extends PsiTypeHelper {
     public void testFinalVariable() throws Exception {
         PsiVariable e1 = createTestFieldDeclarationFromString("final private int x");
         assertTrue(iz.final¢(e1));
+        assertFalse(iz.final¢((PsiVariable) null));
         PsiVariable e2 = createTestFieldDeclarationFromString("private int x");
         assertFalse(iz.final¢(e2));
     }
@@ -562,6 +568,7 @@ public class izTest extends PsiTypeHelper {
     public void testBooleanType() throws Exception {
         PsiType e1 = createTestTypeFromString("boolean");
         assert iz.booleanType(e1);
+        assert !iz.booleanType(null);
         assert !iz.booleanType(createTestTypeFromString("int"));
     }
 
@@ -586,12 +593,14 @@ public class izTest extends PsiTypeHelper {
     public void testEnumDeclaration() throws Exception {
         PsiElement e1 = createEnumClassFromString("Day");
         assert iz.enumDeclaration(e1);
+        assert !iz.enumDeclaration(null);
         assert !iz.enumDeclaration(createTestClassFromString("", "Day", "", "public"));
     }
 
     public void testInterface() throws Exception {
         PsiElement e1 = createInterfaceClassFromString("A");
         assert iz.interface¢(e1);
+        assert !iz.interface¢(null);
         assert !iz.interface¢(createEnumClassFromString("A"));
     }
 
@@ -610,11 +619,31 @@ public class izTest extends PsiTypeHelper {
 
     public void testArithmetic() {
         assertTrue(iz.arithmetic(createTestExpression("3")));
+        assertTrue(iz.arithmetic(createTestExpression("3.0")));
         assertTrue(iz.arithmetic(createTestExpression("3 + 5")));
         assertTrue(iz.arithmetic(createTestExpression("3 + 5 * 8")));
 
         assertFalse(iz.arithmetic(createTestExpression("true")));
         assertFalse(iz.arithmetic(createTestExpression("x && y")));
         assertFalse(iz.arithmetic(createTestExpression("3 + i")));
+    }
+
+    public void testThisExpression() {
+        assertTrue(iz.thisExpression(createTestExpression("this")));
+        assertFalse(iz.thisExpression(createTestExpression("true")));
+        assertFalse(iz.thisExpression(null));
+    }
+
+
+    public void testExpressionList() {
+        assertTrue(iz.thisExpression(createTestExpression("this")));
+        assertFalse(iz.thisExpression(createTestExpression("true")));
+        assertFalse(iz.thisExpression(null));
+    }
+
+    public void testReferenceParameterList() {
+        assertTrue(iz.thisExpression(createTestExpression("this")));
+        assertFalse(iz.thisExpression(createTestExpression("true")));
+        assertFalse(iz.thisExpression(null));
     }
 }
