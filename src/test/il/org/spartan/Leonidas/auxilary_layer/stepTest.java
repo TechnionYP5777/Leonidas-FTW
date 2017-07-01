@@ -7,22 +7,25 @@ import org.junit.Assert;
 
 import java.util.List;
 
+import static com.intellij.psi.JavaTokenType.PLUS;
+
 /**
- * @author RoeiRaz
+ * @author Oren Afek, Roei Raz
  * @since 10-01-2017
  */
 public class stepTest extends PsiTypeHelper {
+
     public void testDocCommentA() {
-        Assert.assertEquals(step.docCommentString(createTestClassFromString("", "A", "", "public")), "");
+        assertEquals(step.docCommentString(createTestClassFromString("", "A", "", "public")), "");
     }
 
     public void testDocCommentB() {
-        Assert.assertEquals(step.docCommentString(getClassInFile(createTestFileFromString("/**javadoc*/class A {}"))),
+        assertEquals(step.docCommentString(getClassInFile(createTestFileFromString("/**javadoc*/class A {}"))),
                 "javadoc");
     }
 
     public void testDocCommentC() {
-        Assert.assertEquals(
+        assertEquals(
                 step.docCommentString(createTestClassFromString("", "A", "/** javadoc */void foo(){}", "public")), "");
     }
 
@@ -30,10 +33,11 @@ public class stepTest extends PsiTypeHelper {
         PsiParameter parameter = step.firstParameter(createTestMethodFromString("public void foo(int a, int b, int c) {}").getParameterList());
 
         assertNotNull(parameter);
-        Assert.assertEquals(parameter.getType(), PsiType.INT);
-        Assert.assertEquals(parameter.getName(), "a");
+        assertEquals(parameter.getType(), PsiType.INT);
+        assertEquals(parameter.getName(), "a");
 
-        Assert.assertNull(step.secondParameter(createTestMethodFromString("public void foo() {}").getParameterList()));
+        assertNull(step.firstParameter(createTestMethodFromString("public void foo() {}")));
+        assertNull(step.firstParameter(createTestMethodFromString("public void foo() {}").getParameterList()));
     }
 
     public void testSecondParameter() {
@@ -57,6 +61,8 @@ public class stepTest extends PsiTypeHelper {
     }
 
     public void testParameters() {
+        assertEquals(0, step.parameters((PsiMethod) null).size());
+        assertEquals(0, step.parameters((PsiParameterList) null).size());
         String methodCode = "public void foo(int a, int b, int c) { }";
 
         List<PsiParameter> params = step.parameters(createTestMethodFromString(methodCode));
@@ -92,4 +98,63 @@ public class stepTest extends PsiTypeHelper {
         String blockCode = "void f(int y) { int x = 4; }";
         assertEqualsByText("int y", step.getHighestParent(step.firstParameter(createTestMethodFromString(blockCode))));
     }
+
+    public void testParamterExpression() {
+        assertNull(step.firstParameterExpression(null));
+        assertNull(step.firstParameterExpression(createTestMethodCallExpression("f")));
+        assertNull(step.secondParameterExpression(null));
+        assertNull(step.secondParameterExpression(createTestMethodCallExpression("f")));
+        assertNull(step.secondParameterExpression(createTestMethodCallExpression("f", "oren")));
+    }
+
+    public void testFirstStatement() {
+        assertNull(step.firstStatement(null));
+        assertNull(step.firstStatement(createTestCodeBlockFromString("{}")));
+        assertEqualsByText("int x = 4;", step.firstStatement(createTestCodeBlockFromString("{ int x = 4; }")));
+    }
+
+    public void testName() {
+        assertNull(step.name(null));
+        assertEquals("peko", step.name(createTestFieldDeclarationFromString("private int peko = 0;")));
+    }
+
+    public void testStatements() {
+        assertEquals(0, step.statements(null).size());
+        String methodCode = "{ print(oren); int eli = biham; }";
+        List<PsiStatement> statements = step.statements(createTestCodeBlockFromString(methodCode));
+        assertEquals(2, statements.size());
+        assertEqualsByText("print(oren);", statements.get(0));
+        assertEqualsByText("int eli = biham;", statements.get(1));
+    }
+
+    public void testExpression() {
+        assertNull(step.expression((PsiExpressionStatement) null));
+        assertEqualsByText("x++", step.expression((PsiExpressionStatement) createTestStatementFromString("x++;")));
+    }
+
+    public void testReturnType() {
+        assertNull(step.returnType(null));
+        assertEquals(PsiType.BOOLEAN, step.returnType(createTestMethodFromString("boolean isAlive(){ return false; }")));
+    }
+
+    public void testConditionExpression() {
+        assertNull(step.conditionExpression(null));
+        assertEqualsByText("b", step.conditionExpression(createTestConditionalExpression("b", "a", "c")));
+    }
+
+    public void testBinaryExpressions() {
+        assertNull(step.operator(null));
+        PsiBinaryExpression e = createBinaryTestExpression("a", "+", "b");
+        assertEquals(PLUS, step.operator(e));
+        assertNull(step.leftOperand(null));
+        assertEqualsByText("a",step.leftOperand(e));
+        assertNull(step.rightOperand(null));
+        assertEqualsByText("b",step.rightOperand(e));
+        assertNull(step.thenExpression(null));
+        assertEqualsByText("t",step.thenExpression(createTestConditionalExpression("b","t","e")));
+        assertNull(step.elseExpression(null));
+        assertEqualsByText("e",step.elseExpression(createTestConditionalExpression("b","t","e")));
+    }
+
+
 }

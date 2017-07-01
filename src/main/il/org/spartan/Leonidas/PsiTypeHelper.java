@@ -262,6 +262,10 @@ public class PsiTypeHelper extends PsiTestCase {
                 .createExpressionFromText(expression, getTestFile());
     }
 
+    protected PsiBinaryExpression createBinaryTestExpression(String left, String operator, String right) {
+        return (PsiBinaryExpression)createTestExpression(left + " " + operator + " " + right);
+    }
+
     protected PsiTryStatement createTestTryStatement(String try$, String catch$, String do$) {
         return (PsiTryStatement) getTestFactory().createStatementFromText("try {" + try$ + "} catch(" + catch$ + "){" + do$ + "}", getTestFile());
     }
