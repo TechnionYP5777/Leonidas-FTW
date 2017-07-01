@@ -49,9 +49,8 @@ public class AnyNumberOfInterfaces extends AnyNumberOfBasedNames {
     }
 
     @Override
-    public QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        Encapsulator e2 = internalEncapsulator(e);
-        return new AnyNumberOfInterfaces(e, e2);
+    public QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
+        return new AnyNumberOfInterfaces(e, internalEncapsulator(e));
     }
 
     private Encapsulator internalEncapsulator(Encapsulator e) {

@@ -44,9 +44,9 @@ public enum Spartanizer {
             Toolbox.getInstance().executeAllTippers(e);
     }
 
-    static void spartanizeElement(PsiElement e, Tipper tipper) {
+    static void spartanizeElement(PsiElement e, Tipper t) {
         if (shouldSpartanize(e))
-            Toolbox.getInstance().executeTipper(e, tipper);
+            Toolbox.getInstance().executeTipper(e, t);
     }
 
     public static void spartanizeFileOnePass(PsiFile f) {
@@ -65,10 +65,8 @@ public enum Spartanizer {
     public static void spartanizeFileRecursively(PsiFile f) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
-        while (toolbox.replaced) {
-            toolbox.replaced = false;
-            spartanizeFileOnePass(f);
-        }
+        for (; toolbox.replaced; spartanizeFileOnePass(f))
+			toolbox.replaced = false;
         spartanizeFileOnePass(f);
     }
 
@@ -85,21 +83,16 @@ public enum Spartanizer {
         });
     }
 
-    // TODO this is a bad name. its not recursive.
     public static void spartanizeFileRecursivelyNoNanos(PsiFile f) {
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.replaced = true;
-        while (toolbox.replaced) {
-            toolbox.replaced = false;
-            spartanizeFileOnePassNoNanos(f);
-        }
+        for (; toolbox.replaced; spartanizeFileOnePassNoNanos(f))
+			toolbox.replaced = false;
     }
 
 
     public static void spartanizeElementWithTipper(PsiElement e, String tipperName) {
-        Toolbox toolbox = Toolbox.getInstance();
-        for (Tipper t : toolbox.getAllTippers()) {
-            System.out.println(t.name());
-        }
+        for (Tipper t : Toolbox.getInstance().getAllTippers())
+			System.out.println(t.name());
     }
 }

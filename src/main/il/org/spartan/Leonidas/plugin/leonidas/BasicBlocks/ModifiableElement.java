@@ -44,8 +44,8 @@ public abstract class ModifiableElement extends NamedElement {
         super(template);
     }
 
-    private boolean checkConstraint(Existence ex, PsiModifierListOwner mlo, Function<PsiModifierListOwner, Boolean> f){
-        switch (ex){
+    private boolean checkConstraint(Existence x, PsiModifierListOwner mlo, Function<PsiModifierListOwner, Boolean> f){
+        switch (x){
             case MUST_EXISTS: if (!f.apply(mlo)) return false; break;
             case DOES_NOT_EXISTS: if (f.apply(mlo)) return false; break;
         }

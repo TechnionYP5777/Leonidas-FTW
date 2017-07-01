@@ -26,5 +26,5 @@ public interface Tipper<T extends PsiElement> {
 
     Class<? extends T> getOperableType();
 
-    default Map<String,String> getExamples() {return new HashMap<String,String>();}
+    default Map<String,String> getExamples() {return new HashMap<>();}
 }

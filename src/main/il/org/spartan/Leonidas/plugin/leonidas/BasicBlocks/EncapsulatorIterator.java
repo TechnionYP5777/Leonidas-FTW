@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, Cloneable {
 
-    int cursor = 0;
+    int cursor;
     private int skipCounter;
     private int skipOverall;
     private boolean shouldSkip;
@@ -29,9 +29,9 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
         roots.forEach(root -> initializeElements(root, elements));
     }
 
-    private void initializeElements(Encapsulator e, List<Encapsulator> l) {
-        if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) l.add(e);
-        e.getActualChildren().forEach(c -> initializeElements(c, l));
+    private void initializeElements(Encapsulator e, List<Encapsulator> es) {
+        if (!iz.whiteSpace(e.getInner()) && !iz.comment(e.getInner())) es.add(e);
+        e.getActualChildren().forEach(c -> initializeElements(c, es));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class EncapsulatorIterator implements java.util.Iterator<Encapsulator>, C
     @Override
     public Encapsulator next() {
         if (shouldSkip && skipCounter < skipOverall) {
-            skipCounter++;
+            ++skipCounter;
             return elements.get(cursor);
         }
         shouldSkip = false;

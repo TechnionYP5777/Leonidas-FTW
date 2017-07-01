@@ -58,7 +58,7 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Statement(e);
     }
 
@@ -109,14 +109,13 @@ public class Statement extends GenericMethodCallBasedBlock {
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
                 @Override
-                public void visitIdentifier(PsiIdentifier identifier) {
-                    super.visitIdentifier(identifier);
-                    if (identifier.getText().equals(map.get(id).get(0).getText()) &&
-                            !iz.dot(Utils.getPrevActualSibling(Utils.getPrevActualSibling(identifier))) &&
-                            !iz.methodCallExpression(identifier.getParent().getParent())) {
-                        PsiRewrite prr = new PsiRewrite();
-                        prr.replace(identifier, JavaPsiFacade.getElementFactory(Utils.getProject()).createIdentifier(replacingIdentifier.get(id)));
-                    }
+                public void visitIdentifier(PsiIdentifier i) {
+                    super.visitIdentifier(i);
+                    if (i.getText().equals(map.get(id).get(0).getText())
+							&& !iz.dot(Utils.getPrevActualSibling(Utils.getPrevActualSibling(i)))
+							&& !iz.methodCallExpression(i.getParent().getParent()))
+						new PsiRewrite().replace(i, JavaPsiFacade.getElementFactory(Utils.getProject())
+								.createIdentifier(replacingIdentifier.get(id)));
                 }
             });
             return e;
@@ -132,13 +131,10 @@ public class Statement extends GenericMethodCallBasedBlock {
         addReplacingRule((e, map) -> {
             e.accept(new JavaRecursiveElementVisitor() {
                 @Override
-                public void visitIdentifier(PsiIdentifier identifier) {
-                    super.visitIdentifier(identifier);
-                    if (identifier.getText().equals(map.get(from).get(0).getText())) {
-                        PsiRewrite prr = new PsiRewrite();
-                        //Impl: assuming that map.get(to) is a Singleton List
-                        prr.replace(identifier, map.get(to).get(0));
-                    }
+                public void visitIdentifier(PsiIdentifier i) {
+                    super.visitIdentifier(i);
+                    if (i.getText().equals(map.get(from).get(0).getText()))
+						new PsiRewrite().replace(i, map.get(to).get(0));
                 }
             });
             return e;

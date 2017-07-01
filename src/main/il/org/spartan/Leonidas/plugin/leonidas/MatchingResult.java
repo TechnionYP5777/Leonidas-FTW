@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class MatchingResult {
     Map<Integer, List<PsiElement>> m = new HashMap<>();
-    boolean b = false;
+    boolean b;
 
     public MatchingResult(boolean defaultRes) {
         b = defaultRes;
@@ -47,12 +47,11 @@ public class MatchingResult {
         return this;
     }
 
-    public MatchingResult combineWith(MatchingResult mr) {
-        if (!mr.b) {
-            b = false;
-            return this;
-        }
-        mr.m.forEach((k, v) -> m.put(k, v));
+    public MatchingResult combineWith(MatchingResult r) {
+        if (!r.b)
+			b = false;
+		else
+			r.m.forEach((k, v) -> m.put(k, v));
         return this;
     }
 

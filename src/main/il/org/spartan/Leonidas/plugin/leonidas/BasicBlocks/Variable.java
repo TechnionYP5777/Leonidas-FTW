@@ -35,7 +35,7 @@ public class Variable extends NamedElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.referenceExpression(e) ? az.referenceExpression(e).getText() : null;
+        return !iz.referenceExpression(e) ? null : az.referenceExpression(e).getText();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Variable extends NamedElement {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Variable(e);
     }
 

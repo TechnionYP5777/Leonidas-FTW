@@ -47,7 +47,7 @@ public class Union extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Union(e);
     }
 
@@ -73,23 +73,22 @@ public class Union extends GenericMethodCallBasedBlock {
         arguments.forEach(arg -> {
             GenericEncapsulator encapsulator = null;
 
-            if (arg.getText().startsWith("method")) {
-                encapsulator = new Method();
-            } else if (arg.getText().startsWith("statement")) {
-                encapsulator = new Statement();
-            } else if (arg.getText().startsWith("anyBlock")) {
-                encapsulator = new Block();
-            } else if (arg.getText().startsWith("booleanExpression")) {
-                encapsulator = new BooleanExpression();
-            } else if (arg.getText().startsWith("booleanLiteral")) {
-                encapsulator = new BooleanLiteral();
-            } else if (arg.getText().startsWith("expression")) {
-                encapsulator = new Expression();
-            }
+            if (arg.getText().startsWith("method"))
+				encapsulator = new Method();
+			else if (arg.getText().startsWith("statement"))
+				encapsulator = new Statement();
+			else if (arg.getText().startsWith("anyBlock"))
+				encapsulator = new Block();
+			else if (arg.getText().startsWith("booleanExpression"))
+				encapsulator = new BooleanExpression();
+			else if (arg.getText().startsWith("booleanLiteral"))
+				encapsulator = new BooleanLiteral();
+			else if (arg.getText().startsWith("expression"))
+				encapsulator = new Expression();
 
             if (encapsulator != null) {
-                int id = az.integer(step.firstParameterExpression(az.methodCallExpression(arg)));
-                encapsulators.add(encapsulator);
+                az.integer(step.firstParameterExpression(az.methodCallExpression(arg)));
+				encapsulators.add(encapsulator);
             }
         });
     }

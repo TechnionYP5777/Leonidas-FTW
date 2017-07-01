@@ -50,45 +50,44 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     }
 
     @Override
-    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        QuantifierMethodCallBased o = create(e, map);
+        QuantifierMethodCallBased o = create(e, m);
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
-        if (o.isGeneric()) {
-            o.putId(o.extractId(e.getInner()));
-            o.extractAndAssignDescription(e.getInner());
-        }
-        return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+        if (!o.isGeneric())
+			return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
+		o.putId(o.extractId(e.getInner()));
+		o.extractAndAssignDescription(e.getInner());
+		return upperElement.getParent() == null ? o : upperElement.generalizeWith(o);
     }
 
-    public Encapsulator getConcreteParent(Encapsulator n,  Map<Integer, List<Matcher.Constraint>> map) {
-        QuantifierMethodCallBased q = create(n, map);
-        return q.getConcreteParent(n);
+    public Encapsulator getConcreteParent(Encapsulator e,  Map<Integer, List<Matcher.Constraint>> m) {
+        return create(e, m).getConcreteParent(e);
     }
 
     @PreservesIterator
     public abstract int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m);
 
-    public abstract QuantifierMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
+    public abstract QuantifierMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m);
 
     public Encapsulator getInternal(){
         return internal;
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (!iz.generic(internal)) return super.replaceByRange(elements, m ,r);
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.generic(internal)) return super.replaceByRange(es, m ,r);
         GenericEncapsulator ge = az.generic(internal);
-        if (elements == null) {
+        if (es == null) {
             r.deleteByRange(inner.getParent(), inner, inner);
             return null;
         }
-        elements = ge.applyReplacingRules(elements, m);
-        if (parent == null) return elements;
-        List<PsiElement> l = Lists.reverse(elements);
+        es = ge.applyReplacingRules(es, m);
+        if (parent == null) return es;
+        List<PsiElement> l = Lists.reverse(es);
         l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
         r.deleteByRange(inner.getParent(), inner, inner);
-        return elements;
+        return es;
     }
 }

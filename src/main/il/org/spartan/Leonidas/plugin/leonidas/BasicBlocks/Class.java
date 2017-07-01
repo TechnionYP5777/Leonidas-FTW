@@ -38,7 +38,7 @@ public class Class extends NamedElement{
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.classDeclaration(e) ? az.classDeclaration(e).getName() : null;
+        return !iz.classDeclaration(e) ? null : az.classDeclaration(e).getName();
     }
 
     @Override
@@ -78,28 +78,27 @@ public class Class extends NamedElement{
 
     /**
      * @param innerElements the element of the class of the user
-     * @param matchers      the matchers of the inner elements (methods, fields or inner classes) of the template.
+     * @param ms      the matchers of the inner elements (methods, fields or inner classes) of the template.
      * @return A matching result for matching the elements of the user with the templates, regardless of order.
      */
-    private MatchingResult matchInnerElements(PsiElement[] innerElements, List<Matcher> matchers){
-        if (matchers.size() == 0) return new MatchingResult(true);
-        List<List<MatchingResult>> l = matchers.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
-        MatchingResult[] ass = new MatchingResult[matchers.size()];
-        if (!matchInnerElementAux(l, matchers.size() - 1, new LinkedList<>(), ass)){
-            return new MatchingResult(false);
-        }
+    private MatchingResult matchInnerElements(PsiElement[] innerElements, List<Matcher> ms){
+        if (ms.isEmpty()) return new MatchingResult(true);
+        List<List<MatchingResult>> l = ms.stream().map(m -> Arrays.stream(innerElements).map(ie -> m.getMatchingResult(ie, new Wrapper<>(0))).filter(mr -> mr.matches()).collect(Collectors.toList())).collect(Collectors.toList());
+        MatchingResult[] ass = new MatchingResult[ms.size()];
+        if (!matchInnerElementAux(l, ms.size() - 1, new LinkedList<>(), ass))
+			return new MatchingResult(false);
         MatchingResult mr = new MatchingResult(true);
         Arrays.stream(ass).forEach(a -> mr.combineWith(a));
         return mr;
     }
 
-    private boolean matchInnerElementAux(List<List<MatchingResult>> l, int i, List<MatchingResult> used, MatchingResult[] ass){
+    private boolean matchInnerElementAux(List<List<MatchingResult>> rss, int i, List<MatchingResult> used, MatchingResult[] ass){
         if (i < 0) return true;
-        for (MatchingResult mr : l.get(i)){
+        for (MatchingResult mr : rss.get(i)){
             if (used.contains(mr)) continue;
             used.add(mr);
             ass[i] = mr;
-            if (matchInnerElementAux(l, i - 1, used, ass))
+            if (matchInnerElementAux(rss, i - 1, used, ass))
                 return true;
             used.remove(mr);
         }
@@ -107,24 +106,24 @@ public class Class extends NamedElement{
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> map, PsiRewrite r) {
-        PsiClass psiClass = az.classDeclaration(elements.get(0));
-        PsiClass innerAsClass = az.classDeclaration(inner);
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> map, PsiRewrite r) {
+        PsiClass psiClass = az.classDeclaration(es.get(0)), innerAsClass = az.classDeclaration(inner);
         innerAsClass.setName(psiClass.getName());
-        List<Encapsulator> methods = Arrays.stream(innerAsClass.getMethods()).map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList());
-        List<Encapsulator> fields = Arrays.stream(innerAsClass.getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), null)).collect(Collectors.toList());
-        List<Encapsulator> innerClasses = Arrays.stream(innerAsClass.getInnerClasses()).map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList());
-        List<Encapsulator> prunedChildren = new LinkedList<>();
-        prunedChildren.addAll(methods);
-        prunedChildren.addAll(fields);
+        List<Encapsulator> innerClasses = Arrays.stream(innerAsClass.getInnerClasses())
+				.map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList()),
+				prunedChildren = new LinkedList<>(Arrays.stream(innerAsClass.getMethods())
+						.map(m -> Pruning.prune(Encapsulator.buildTreeFromPsi(m), null)).collect(Collectors.toList()));
+        prunedChildren.addAll(Arrays.stream(innerAsClass.getFields()).map(f -> Pruning.prune(Encapsulator.buildTreeFromPsi(f), null))
+				.collect(Collectors.toList()));
         prunedChildren.addAll(innerClasses);
         prunedChildren.forEach(c -> c.accept(n -> {
             if (!n.isGeneric()) return;
             GenericEncapsulator ge = az.generic(n);
             ge.replaceByRange(map.get(ge.getId()), map, r);
         }));
-        List<PsiElement> l = Arrays.stream(psiClass.getChildren()).filter(child -> (map.values().stream().noneMatch(x -> x.contains(child)) && iz.innerElementOfClass(child))).collect(Collectors.toList());
-        r.addList(innerAsClass, l);
+        r.addList(innerAsClass, Arrays.stream(psiClass.getChildren()).filter(
+				child -> (map.values().stream().noneMatch(x -> x.contains(child)) && iz.innerElementOfClass(child)))
+				.collect(Collectors.toList()));
         return Utils.wrapWithList(inner);
     }
 

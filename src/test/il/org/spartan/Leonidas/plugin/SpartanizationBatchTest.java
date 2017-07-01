@@ -14,12 +14,10 @@ import java.util.List;
  */
 public class SpartanizationBatchTest extends PsiTypeHelper {
 
-    // TODO put in a resource file @RoeiRaz
     String file0 = "class A { void foo() { if (true) { System.out.println('hi'); } } }";
 
     public void testSpartanizationOfOneElementNotThrowingException() throws InterruptedException {
-        PsiFile psiFile = createTestFileFromString(file0);
-        List<PsiFile> files = Arrays.asList(psiFile);
-        ProgressManager.getInstance().run(new SpartanizationBatch(getProject(), new HashSet<>(files)));
+        ProgressManager.getInstance().run(
+				new SpartanizationBatch(getProject(), new HashSet<>(Arrays.asList(createTestFileFromString(file0)))));
     }
 }

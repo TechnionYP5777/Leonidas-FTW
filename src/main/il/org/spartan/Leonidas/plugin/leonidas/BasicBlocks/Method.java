@@ -39,7 +39,7 @@ public class Method extends ModifiableElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.method(e) ? az.method(e).getName() : null;
+        return !iz.method(e) ? null : az.method(e).getName();
     }
 
     @Override
@@ -65,9 +65,11 @@ public class Method extends ModifiableElement {
     @Override
     public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         Method m = new Method(e);
-        Encapsulator returnType = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getReturnTypeElement()), map);
-        Encapsulator parameters = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getParameterList()), map);
-        Encapsulator codeBlock = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getBody()), map);
+        Encapsulator returnType = Pruning
+				.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getReturnTypeElement()), map),
+				parameters = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getParameterList()),
+						map),
+				codeBlock = Pruning.prune(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getBody()), map);
         m.matcherReturnType = new Matcher(Utils.wrapWithList(returnType), map);
         m.matcherParameters = new Matcher(Utils.wrapWithList(parameters), map);
         m.matcherCodeBlock = new Matcher(Utils.wrapWithList(codeBlock), map);
@@ -78,9 +80,8 @@ public class Method extends ModifiableElement {
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        PsiMethod e = az.method(elements.get(0));
-        PsiMethod iam = az.method(inner);
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        PsiMethod e = az.method(es.get(0)), iam = az.method(inner);
         iam.setName(e.getName());
         iam.getReturnTypeElement().replace(replacerReturnType.replaceSingleRoot(e.getReturnTypeElement(), m, r));
         iam.getParameterList().replace(replacerParameters.replaceSingleRoot(e.getParameterList(), m, r));
@@ -91,11 +92,9 @@ public class Method extends ModifiableElement {
 
     @Override
     public Map<Integer, GenericEncapsulator> getGenericElements(){
-        PsiMethod m = (PsiMethod) this.inner;
         Map<Integer,GenericEncapsulator> map = new HashMap<>();
 
-        Set<Encapsulator> set = new HashSet<>();
-        set.addAll(matcherReturnType.getAllRoots());
+        Set<Encapsulator> set = new HashSet<>(matcherReturnType.getAllRoots());
         set.addAll(matcherCodeBlock.getAllRoots());
         set.addAll(matcherParameters.getAllRoots());
 
@@ -104,9 +103,8 @@ public class Method extends ModifiableElement {
         l.forEach(root -> root.accept(e -> {
             if (e.isGeneric()) {
                 map.put(az.generic(e).getId(), (GenericEncapsulator) e);
-                if (iz.quantifier(e)){
-                    map.put(az.quantifier(e).getId(), az.generic(az.quantifier(e).getInternal()));
-                }
+                if (iz.quantifier(e))
+					map.put(az.quantifier(e).getId(), az.generic(az.quantifier(e).getInternal()));
             }
         }));
 

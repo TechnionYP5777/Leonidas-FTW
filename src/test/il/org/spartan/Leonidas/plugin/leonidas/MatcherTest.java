@@ -47,48 +47,38 @@ public class MatcherTest extends PsiTypeHelper {
      */
     public void testMatch() throws Exception {
         Map<Integer, List<Matcher.Constraint>> constrains = new HashMap<>();
-        PsiIfStatement ifs = createTestIfStatement("booleanExpression(0)", "statement(1);\n statement(2);");
-        Encapsulator n = buildTemplate(ifs);
+        Encapsulator n = buildTemplate(createTestIfStatement("booleanExpression(0)", "statement(1);\n statement(2);"));
         constrains.putIfAbsent(1, new LinkedList<>());
         constrains.putIfAbsent(2, new LinkedList<>());
         constrains.putIfAbsent(3, new LinkedList<>());
-        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
-        Encapsulator secondConstraint = buildTemplate(createTestReturnStatement("null"));
-        Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
-        Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
-
+        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);")),
+				secondConstraint = buildTemplate(createTestReturnStatement("null")),
+				thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)")),
+				forthConstraint = buildTemplate(createTestReturnStatement("null"));
         constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(firstConstraint)));
         constrains.get(2).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.IS, Utils.wrapWithList(secondConstraint)));
         constrains.get(3).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(thirdConstraint)));
         constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(forthConstraint)));
 
         Matcher m = new Matcher(Utils.wrapWithList(n), constrains);
-        PsiIfStatement tm1 = createTestIfStatement("x > 2", "\nx++; \nreturn null;");
-        assertTrue(m.match(tm1));
-        PsiIfStatement tm2 = createTestIfStatement("x > 2", "\nif(!(x > 4)){x--;} \nreturn null;");
-        assertTrue(m.match(tm2));
-        PsiIfStatement tm3 = createTestIfStatement("x > 2", "\nx++; \nx--;");
-        assertFalse(m.match(tm3));
-        PsiIfStatement tm4 = createTestIfStatement("x > 2", "\nreturn null; \nreturn null;");
-        assertFalse(m.match(tm4));
-        PsiIfStatement tm5 = createTestIfStatement("x > 2", "\nif(x < 3){x--;} \nreturn null;");
-        assertFalse(m.match(tm5));
-        PsiIfStatement tm6 = createTestIfStatement("x > 2", "\nif(x > 4){x--;} \nreturn null;");
-        assertFalse(m.match(tm6));
+        assert m.match(createTestIfStatement("x > 2", "\nx++; \nreturn null;"));
+        assert m.match(createTestIfStatement("x > 2", "\nif(!(x > 4)){x--;} \nreturn null;"));
+        assert !m.match(createTestIfStatement("x > 2", "\nx++; \nx--;"));
+        assert !m.match(createTestIfStatement("x > 2", "\nreturn null; \nreturn null;"));
+        assert !m.match(createTestIfStatement("x > 2", "\nif(x < 3){x--;} \nreturn null;"));
+        assert !m.match(createTestIfStatement("x > 2", "\nif(x > 4){x--;} \nreturn null;"));
     }
 
     public void testExtractInfo() throws Exception {
         Map<Integer, List<Matcher.Constraint>> constrains = new HashMap<>();
-        PsiIfStatement ifs = createTestIfStatement("booleanExpression(0)", "statement(1);\n statement(2);");
-        Encapsulator n = buildTemplate(ifs);
+        Encapsulator n = buildTemplate(createTestIfStatement("booleanExpression(0)", "statement(1);\n statement(2);"));
         constrains.putIfAbsent(1, new LinkedList<>());
         constrains.putIfAbsent(2, new LinkedList<>());
         constrains.putIfAbsent(3, new LinkedList<>());
-        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
-        Encapsulator secondConstraint = buildTemplate(createTestReturnStatement("null"));
-        Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
-        Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
-
+        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);")),
+				secondConstraint = buildTemplate(createTestReturnStatement("null")),
+				thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)")),
+				forthConstraint = buildTemplate(createTestReturnStatement("null"));
         constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(firstConstraint)));
         constrains.get(2).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.IS, Utils.wrapWithList(secondConstraint)));
         constrains.get(3).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, Utils.wrapWithList(thirdConstraint)));
@@ -101,24 +91,19 @@ public class MatcherTest extends PsiTypeHelper {
         assertEquals(map.get(0).get(0).getText(), "x > 2");
         assertEquals(map.get(1).get(0).getText(), "x++;");
         assertEquals(map.get(2).get(0).getText(), "return null;");
-        PsiIfStatement tm2 = createTestIfStatement("x > 2", "\nif(!(x > 4)){x--;} \nreturn null;");
-        map = m.extractInfo(tm2, i);
+        map = m.extractInfo(createTestIfStatement("x > 2", "\nif(!(x > 4)){x--;} \nreturn null;"), i);
         assertEquals(map.get(1).get(0).getText(), "if(!(x > 4)){x--;}");
         assertEquals(map.get(2).get(0).getText(), "return null;");
-        PsiIfStatement tm3 = createTestIfStatement("x > 2", "\nx++; \nx--;");
-        map = m.extractInfo(tm3, i);
+        map = m.extractInfo(createTestIfStatement("x > 2", "\nx++; \nx--;"), i);
         assertEquals(map.get(1).get(0).getText(), "x++;");
         assertEquals(map.get(2).get(0).getText(), "x--;");
-        PsiIfStatement tm4 = createTestIfStatement("x > 2", "\nreturn null; \nreturn null;");
-        map = m.extractInfo(tm4, i);
+        map = m.extractInfo(createTestIfStatement("x > 2", "\nreturn null; \nreturn null;"), i);
         assertEquals(map.get(1).get(0).getText(), "return null;");
         assertEquals(map.get(2).get(0).getText(), "return null;");
-        PsiIfStatement tm5 = createTestIfStatement("x > 2", "\nif(x < 3){x--;} \nreturn null;");
-        map = m.extractInfo(tm5, i);
+        map = m.extractInfo(createTestIfStatement("x > 2", "\nif(x < 3){x--;} \nreturn null;"), i);
         assertEquals(map.get(1).get(0).getText(), "if(x < 3){x--;}");
         assertEquals(map.get(2).get(0).getText(), "return null;");
-        PsiIfStatement tm6 = createTestIfStatement("x > 2", "\nif(x > 4){x--;} \nreturn null;");
-        map = m.extractInfo(tm6, i);
+        map = m.extractInfo(createTestIfStatement("x > 2", "\nif(x > 4){x--;} \nreturn null;"), i);
         assertEquals(map.get(1).get(0).getText(), "if(x > 4){x--;}");
         assertEquals(map.get(2).get(0).getText(), "return null;");
     }
@@ -132,9 +117,9 @@ public class MatcherTest extends PsiTypeHelper {
     private void giveIdToStubMethodCalls(PsiElement tree) {
         tree.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(g -> g.conforms(element)).findFirst().ifPresent(g -> element.putUserData(KeyDescriptionParameters.ID, g.extractId(element)));
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(g -> g.conforms(e)).findFirst().ifPresent(g -> e.putUserData(KeyDescriptionParameters.ID, g.extractId(e)));
             }
         });
     }

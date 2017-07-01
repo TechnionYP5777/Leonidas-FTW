@@ -28,18 +28,19 @@ public class OptionalMethodCallBased extends QuantifierMethodCallBased {
     }
 
     @Override
-    public OptionalMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-        return new OptionalMethodCallBased(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p), map));
+    public OptionalMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
+        return new OptionalMethodCallBased(e.getInner(), Pruning.prune(
+				Encapsulator.buildTreeFromPsi(step.firstParameterExpression(az.methodCallExpression(e.getInner()))),
+				m));
     }
 
     @Override
-    public int getNumberOfOccurrences(EncapsulatorIterator it, Map<Integer, List<PsiElement>> m) {
-        return iz.conforms(it.value(), internal, m).matches() ? 1 : 0;
+    public int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m) {
+        return iz.conforms(i.value(), internal, m).matches() ? 1 : 0;
     }
 
     @Override
-    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> map) {
-        return new QuantifierIterator(0, getNumberOfOccurrences(bgCursor, map));
+    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> m) {
+        return new QuantifierIterator(0, getNumberOfOccurrences(bgCursor, m));
     }
 }

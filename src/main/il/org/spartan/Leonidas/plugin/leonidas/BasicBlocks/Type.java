@@ -23,7 +23,7 @@ public class Type extends NamedElement {
 
     private static final String TEMPLATE = "Class";
 
-    boolean setAsOuterClass = false;
+    boolean setAsOuterClass;
 
     public Type(Encapsulator e) {
         super(e, TEMPLATE);
@@ -38,7 +38,7 @@ public class Type extends NamedElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.type(e) ? az.type(e).getText() : null;
+        return !iz.type(e) ? null : az.type(e).getText();
     }
 
     @Override
@@ -52,35 +52,34 @@ public class Type extends NamedElement {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         return new Type(e);
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         if (setAsOuterClass) {
             List<PsiElement>[] a = new List[m.values().size()];
             m.values().toArray(a);
             PsiClass c = PsiTreeUtil.getParentOfType(a[0].get(0), PsiClass.class);
-            PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c);
-            return Utils.wrapWithList(pte);
+            return Utils.wrapWithList(
+					JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c));
 
         }
-        if (iz.classDeclaration(elements.get(0))) { // Notice the element that type will be replaced by is assign to PsiClass, so we need to extract its name.
-            PsiClass c = az.classDeclaration(elements.get(0));
-            PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c);
-            inner = pte;
-            return Utils.wrapWithList(pte);
-        }
-        return super.replaceByRange(elements, m, r);
+        if (!iz.classDeclaration(es.get(0)))
+			return super.replaceByRange(es, m, r);
+		PsiClass c = az.classDeclaration(es.get(0));
+		PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(),
+				c);
+		inner = pte;
+		return Utils.wrapWithList(pte);
     }
 
     @Override
     public void copyTo(GenericEncapsulator dst) {
         if (!(dst instanceof Type)) return;
         super.copyTo(dst);
-        Type castDst = (Type) dst;
-        castDst.setAsOuterClass = setAsOuterClass;
+        ((Type) dst).setAsOuterClass = setAsOuterClass;
     }
 
     public void setAsOuterClass() {

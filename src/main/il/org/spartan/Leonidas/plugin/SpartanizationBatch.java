@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class SpartanizationBatch extends Task.Modal {
 
-    private final static String title = "Spartanization in progress";
+    private static final String title = "Spartanization in progress";
     private final Project project;
     private final Set<PsiFile> files;
     private AtomicBoolean atomicBoolean = new AtomicBoolean(false);
@@ -73,7 +73,7 @@ public class SpartanizationBatch extends Task.Modal {
 
             // update progress bar
             i.set(i.get() + 1);
-            indicator.setFraction((double) i.get() / files.size());
+            indicator.setFraction(1. * i.get() / files.size());
         }
 
         // Send success notification

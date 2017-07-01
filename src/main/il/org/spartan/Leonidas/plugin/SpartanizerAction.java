@@ -38,35 +38,26 @@ public class SpartanizerAction extends AnAction {
 
             PsiDirectory srcDir = psiClass.getContainingFile().getContainingDirectory();
             try {
-                srcDir.checkCreateSubdirectory("spartanizer");
-                Object[] options = {"Accept",
-                        "Cancel"};
-
-                int n = JOptionPane.showOptionDialog(new JFrame(),
-                        "You might be about to apply nano patterns.\n" +
-                                "Please notice that nano pattern tippers are " +
-                                "code transformations that require adding a '.java' file " +
-                                "to your project directory.\n" +
-                                "To apply these tippers, please press the Accept button.",
-                        "SpartanizerUtils",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        Icons.Leonidas,
-                        options,
-                        options[1]);
-                if(n == 1){
-                    Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
-                    Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
-                    return;
-                }else{
-                    new WriteCommandAction.Simple(e.getProject()) {
-                        @Override
-                        protected void run() throws Throwable {
-                            new AddSpartanizerUtilsAction().createEnvironment(e);
-                        }
-                    }.execute();
-                }
-            } catch (Exception ex) {}
+				srcDir.checkCreateSubdirectory("spartanizer");
+				Object[] options = { "Accept", "Cancel" };
+				if (JOptionPane.showOptionDialog(new JFrame(),
+						"You might be about to apply nano patterns.\nPlease notice that nano pattern tippers are "
+								+ "code transformations that require adding a '.java' file "
+								+ "to your project directory.\n"
+								+ "To apply these tippers, please press the Accept button.",
+						"SpartanizerUtils", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, Icons.Leonidas,
+						options, options[1]) == 1) {
+					Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
+					Spartanizer.spartanizeFileRecursivelyNoNanos(psiClass.getContainingFile());
+					return;
+				}
+				new WriteCommandAction.Simple(e.getProject()) {
+					@Override
+					protected void run() throws Throwable {
+						new AddSpartanizerUtilsAction().createEnvironment(e);
+					}
+				}.execute();
+			} catch (Exception ex) {}
             LoadingIndicator li = new LoadingIndicator("Spartanizing current file");
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());
             Spartanizer.spartanizeFileRecursively(psiClass.getContainingFile());

@@ -21,23 +21,16 @@ public class TestAllTippers extends PsiTypeHelper {
         Toolbox t = Toolbox.getInstance();
         List<LeonidasTipperDefinition> leonidasTippers = t.getAllTipperInstances();
         List<Tipper> ot = t.getAllTippers();
-        for( LeonidasTipperDefinition lt : leonidasTippers){
-            Class<? extends LeonidasTipperDefinition> c = lt.getClass();
-            if(!c.isAnnotationPresent(LeonidasTipperDefinition.TipperUnderConstruction.class)){
-                try {
-                    TipperTest ts = new TipperTest(lt, this, true, false);
-                    ts.check();
-                } catch (Exception e) {
-                    System.out.println(lt.getClass().getName() + " throws exception");
-                    e.printStackTrace();
-                }
-            }
-
-        }
-        for( Tipper tipper : ot){
-            TipperTest ts = new TipperTest(tipper, this, false, false);
-            ts.check();
-        }
+        for( LeonidasTipperDefinition lt : leonidasTippers)
+			if (!lt.getClass().isAnnotationPresent(LeonidasTipperDefinition.TipperUnderConstruction.class))
+				try {
+					(new TipperTest(lt, this, true, false)).check();
+				} catch (Exception e) {
+					System.out.println(lt.getClass().getName() + " throws exception");
+					e.printStackTrace();
+				}
+        for( Tipper tipper : ot)
+			(new TipperTest(tipper, this, false, false)).check();
 
     }
 

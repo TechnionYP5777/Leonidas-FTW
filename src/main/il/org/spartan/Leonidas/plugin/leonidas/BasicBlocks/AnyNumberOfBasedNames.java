@@ -21,7 +21,7 @@ public abstract class AnyNumberOfBasedNames extends QuantifierBasedNames {
     }
 
     @Override
-    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> map) {
-        return new QuantifierIterator(0, getNumberOfOccurrences(bgCursor, map));
+    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> m) {
+        return new QuantifierIterator(0, getNumberOfOccurrences(bgCursor, m));
     }
 }

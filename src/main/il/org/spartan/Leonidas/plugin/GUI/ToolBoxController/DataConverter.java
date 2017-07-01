@@ -17,13 +17,7 @@ public class DataConverter<T> {
     public static final DataConverter<Float> FLOAT = new DataConverter<>(i -> Float.toString(i), Float::parseFloat);
     public static final DataConverter<Long> LONG = new DataConverter<>(i -> Long.toString(i), Long::parseLong);
     public static final DataConverter<List<String>> STRING_LIST = new DataConverter<>(list -> String.join(",", list),
-            s -> {
-                if (s.equals("")) {
-                    return new ArrayList<>();
-                } else {
-                    return new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*")));
-                }
-            });
+            s -> "".equals(s) ? new ArrayList<>() : new ArrayList<>(Arrays.asList(s.split("\\s*,\\s*"))));
     public static final DataConverter<Existence> EXISTENCE = new DataConverter<>(Enum::toString, Existence::valueOf);
 
     private Function<T, String> toString;
@@ -43,44 +37,27 @@ public class DataConverter<T> {
     }
 
     public static String convert(Object o) {
-        if (String.class.isAssignableFrom(o.getClass())) {
-            return STRING.toString((String) o);
-        } else if (Integer.class.isAssignableFrom(o.getClass())) {
-            return INTEGER.toString((Integer) o);
-        } else if (Integer.class.isAssignableFrom(o.getClass())) {
-            return DOUBLE.toString((Double) o);
-        } else if (Integer.class.isAssignableFrom(o.getClass())) {
-            return FLOAT.toString((Float) o);
-        } else if (Integer.class.isAssignableFrom(o.getClass())) {
-            return LONG.toString((Long) o);
-        } else if (List.class.isAssignableFrom(o.getClass())) {
-            return STRING_LIST.toString((List<String>) o);
-        } else if (Existence.class.isAssignableFrom(o.getClass())) {
-            return EXISTENCE.toString((Existence) o);
-        }
-
-        return "";
-    }
+		return String.class.isAssignableFrom(o.getClass()) ? STRING.toString((String) o)
+				: Integer.class.isAssignableFrom(o.getClass()) ? INTEGER.toString((Integer) o)
+						: Integer.class.isAssignableFrom(o.getClass()) ? DOUBLE.toString((Double) o)
+								: Integer.class.isAssignableFrom(o.getClass()) ? FLOAT.toString((Float) o)
+										: Integer.class.isAssignableFrom(o.getClass()) ? LONG.toString((Long) o)
+												: List.class.isAssignableFrom(o.getClass())
+														? STRING_LIST.toString((List<String>) o)
+														: Existence.class.isAssignableFrom(o.getClass())
+																? EXISTENCE.toString((Existence) o) : "";
+	}
 
     public static Object decode(String s, Class<?> c) {
-        if (String.class.isAssignableFrom(c)) {
-            return STRING.fromString(s);
-        } else if (Integer.class.isAssignableFrom(c)) {
-            return INTEGER.fromString(s);
-        } else if (Double.class.isAssignableFrom(c)) {
-            return DOUBLE.fromString(s);
-        } else if (Float.class.isAssignableFrom(c)) {
-            return FLOAT.fromString(s);
-        } else if (Long.class.isAssignableFrom(c)) {
-            return LONG.fromString(s);
-        } else if (List.class.isAssignableFrom(c)) {
-            return STRING_LIST.fromString(s);
-        } else if (Existence.class.isAssignableFrom(c)) {
-            return EXISTENCE.fromString(s);
-        }
-
-        return "";
-    }
+		return String.class.isAssignableFrom(c) ? STRING.fromString(s)
+				: Integer.class.isAssignableFrom(c) ? INTEGER.fromString(s)
+						: Double.class.isAssignableFrom(c) ? DOUBLE.fromString(s)
+								: Float.class.isAssignableFrom(c) ? FLOAT.fromString(s)
+										: Long.class.isAssignableFrom(c) ? LONG.fromString(s)
+												: List.class.isAssignableFrom(c) ? STRING_LIST.fromString(s)
+														: Existence.class.isAssignableFrom(c) ? EXISTENCE.fromString(s)
+																: "";
+	}
 
     public static boolean isSupported(Class<?> c) {
         return String.class.isAssignableFrom(c) ||

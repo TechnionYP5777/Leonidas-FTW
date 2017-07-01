@@ -79,24 +79,22 @@ public class stepTest extends PsiTypeHelper {
     }
 
     public void testFields() {
-        String classCode = "public class X { private String s; protected final X x; public void foo() { } }";
-        List<PsiField> fields = step.fields(createTestClassFromString(classCode));
+        List<PsiField> fields = step.fields(createTestClassFromString("public class X { private String s; protected final X x; public void foo() { } }"));
         assertEquals(2, fields.size());
         assertEqualsByText("private String s;", fields.get(0));
         assertEqualsByText("protected final X x;", fields.get(1));
     }
 
     public void testNextSibling() {
-        String blockCode = "{ int x = 4; \n\r\t\r\r\r\r\r\n     \n \n \r int y = 6;}";
-        PsiElement sibling = step.nextSibling(createTestCodeBlockFromString(blockCode).getFirstBodyElement());
+        PsiElement sibling = step.nextSibling(createTestCodeBlockFromString("{ int x = 4; \n\r\t\r\r\r\r\r\n     \n \n \r int y = 6;}").getFirstBodyElement());
         assertEquals(PsiDeclarationStatementImpl.class, sibling.getClass());
         assertEqualsByText("int x = 4;", sibling);
         assertEqualsByText("int y = 6;", step.nextSibling(sibling));
     }
 
     public void testHighestParent() {
-        String blockCode = "void f(int y) { int x = 4; }";
-        assertEqualsByText("int y", step.getHighestParent(step.firstParameter(createTestMethodFromString(blockCode))));
+        assertEqualsByText("int y",
+				step.getHighestParent(step.firstParameter(createTestMethodFromString("void f(int y) { int x = 4; }"))));
     }
 
     public void testParamterExpression() {
@@ -120,8 +118,7 @@ public class stepTest extends PsiTypeHelper {
 
     public void testStatements() {
         assertEquals(0, step.statements(null).size());
-        String methodCode = "{ print(oren); int eli = biham; }";
-        List<PsiStatement> statements = step.statements(createTestCodeBlockFromString(methodCode));
+        List<PsiStatement> statements = step.statements(createTestCodeBlockFromString("{ print(oren); int eli = biham; }"));
         assertEquals(2, statements.size());
         assertEqualsByText("print(oren);", statements.get(0));
         assertEqualsByText("int eli = biham;", statements.get(1));

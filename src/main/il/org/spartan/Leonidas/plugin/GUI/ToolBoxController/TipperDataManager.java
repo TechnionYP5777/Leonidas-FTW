@@ -30,7 +30,7 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
     // A mapping from tipper name to (a mapping from basic block id to (a mapping from field name to its value)))
     public Map<String, String> data = new HashMap<>();
 
-    private boolean recalculateData = false;
+    private boolean recalculateData;
 
     public TipperDataManager() {
         data = new HashMap<>();
@@ -43,65 +43,40 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
         return ServiceManager.getService(TipperDataManager.class);
     }
 
-    @Nullable
     @Override
-    public TipperDataManager getState() {
-        // We don't want to receive the data again before we have injected data from the saved configuration
-        if (!recalculateData) {
-            return this;
-        }
-
-        List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
-        data = new HashMap<>();
-
-        // Iterate over all leonidas tippers
-        tippers.stream()
-                .filter(tipper -> tipper instanceof LeonidasTipper)
-                .map(tipper -> (LeonidasTipper) tipper)
-                .forEach(tipper -> {
-                    // Iterate over all generic blocks in the matcher
-                    tipper.getMatcher()
-                            .getAllRoots()
-                            .stream()
-                            .map(LeonidasTipper::getGenericElements)
-                            .flatMap(Collection::stream)
-                            .forEach(encapsulator -> {
-                                // Iterate over all the fields in the generic block
-                                Stream.of(encapsulator.getClass().getFields())
-                                        .filter(field -> field.isAnnotationPresent(UserControlled.class))
-                                        .forEach(field -> {
-                                            String key = "matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName();
-                                            try {
-                                                data.put(key, DataConverter.convert(field.get(encapsulator)));
-                                            } catch (IllegalAccessException e) {
-                                                e.printStackTrace();
-                                            }
-                                        });
-                            });
-
-                    // Iterate over all generic blocks in the replacer
-                    tipper.getReplacer()
-                            .getAllRoots()
-                            .stream()
-                            .map(LeonidasTipper::getGenericElements)
-                            .flatMap(Collection::stream)
-                            .forEach(encapsulator -> {
-                                // Iterate over all the fields in the generic block
-                                Stream.of(encapsulator.getClass().getFields())
-                                        .filter(field -> field.isAnnotationPresent(UserControlled.class))
-                                        .forEach(field -> {
-                                            String key = "replacer_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName();
-                                            try {
-                                                data.put(key, DataConverter.convert(field.get(encapsulator)));
-                                            } catch (IllegalAccessException e) {
-                                                e.printStackTrace();
-                                            }
-                                        });
-                            });
-                });
-
-        return this;
-    }
+	@Nullable
+	public TipperDataManager getState() {
+		if (!recalculateData)
+			return this;
+		List<Tipper> tippers = Toolbox.getInstance().getAllTippers();
+		data = new HashMap<>();
+		tippers.stream().filter(tipper -> tipper instanceof LeonidasTipper).map(tipper -> (LeonidasTipper) tipper)
+				.forEach(tipper -> {
+					tipper.getMatcher().getAllRoots().stream().map(LeonidasTipper::getGenericElements)
+							.flatMap(Collection::stream).forEach(encapsulator -> Stream.of(encapsulator.getClass().getFields())
+									.filter(field -> field.isAnnotationPresent(UserControlled.class)).forEach(field -> {
+										String key = "matcher_" + tipper.name() + "_" + encapsulator.getId() + "_"
+												+ field.getName();
+										try {
+											data.put(key, DataConverter.convert(field.get(encapsulator)));
+										} catch (IllegalAccessException e) {
+											e.printStackTrace();
+										}
+									}));
+					tipper.getReplacer().getAllRoots().stream().map(LeonidasTipper::getGenericElements)
+							.flatMap(Collection::stream).forEach(encapsulator -> Stream.of(encapsulator.getClass().getFields())
+									.filter(field -> field.isAnnotationPresent(UserControlled.class)).forEach(field -> {
+										String key = "replacer_" + tipper.name() + "_" + encapsulator.getId() + "_"
+												+ field.getName();
+										try {
+											data.put(key, DataConverter.convert(field.get(encapsulator)));
+										} catch (IllegalAccessException e) {
+											e.printStackTrace();
+										}
+									}));
+				});
+		return this;
+	}
 
     @Override
     public void loadState(TipperDataManager state) {
@@ -125,22 +100,22 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
                             .stream()
                             .map(LeonidasTipper::getGenericElements)
                             .flatMap(Collection::stream)
-                            .forEach(encapsulator -> {
-                                // Iterate over all the fields in the generic block
-                                Stream.of(encapsulator.getClass().getFields())
-                                        .filter(field -> field.isAnnotationPresent(UserControlled.class))
-                                        .filter(field -> DataConverter.isSupported(field.getType()))
-                                        .filter(field -> data.containsKey("matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()))
-                                        .forEach(field -> {
-                                            try {
-                                                field.set(encapsulator,
-                                                        DataConverter.decode(data.get("matcher_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()),
-                                                                field.getType()));
-                                            } catch (IllegalAccessException e) {
-                                                e.printStackTrace();
-                                            }
-                                        });
-                            });
+                            .forEach(encapsulator -> Stream.of(encapsulator.getClass().getFields())
+									.filter(field -> field.isAnnotationPresent(UserControlled.class))
+									.filter(field -> DataConverter.isSupported(field.getType()))
+									.filter(field -> data.containsKey("matcher_" + tipper.name() + "_"
+											+ encapsulator.getId() + "_" + field.getName()))
+									.forEach(field -> {
+										try {
+											field.set(encapsulator,
+													DataConverter.decode(
+															data.get("matcher_" + tipper.name() + "_"
+																	+ encapsulator.getId() + "_" + field.getName()),
+															field.getType()));
+										} catch (IllegalAccessException e) {
+											e.printStackTrace();
+										}
+									}));
 
                     // Iterate over all generic blocks in the replacer
                     tipper.getReplacer()
@@ -148,22 +123,22 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
                             .stream()
                             .map(LeonidasTipper::getGenericElements)
                             .flatMap(Collection::stream)
-                            .forEach(encapsulator -> {
-                                // Iterate over all the fields in the generic block
-                                Stream.of(encapsulator.getClass().getFields())
-                                        .filter(field -> field.isAnnotationPresent(UserControlled.class))
-                                        .filter(field -> DataConverter.isSupported(field.getType()))
-                                        .filter(field -> data.containsKey("replacer_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()))
-                                        .forEach(field -> {
-                                            try {
-                                                field.set(encapsulator,
-                                                        DataConverter.decode(data.get("replacer_" + tipper.name() + "_" + encapsulator.getId() + "_" + field.getName()),
-                                                                field.getType()));
-                                            } catch (IllegalAccessException e) {
-                                                e.printStackTrace();
-                                            }
-                                        });
-                            });
+                            .forEach(encapsulator -> Stream.of(encapsulator.getClass().getFields())
+									.filter(field -> field.isAnnotationPresent(UserControlled.class))
+									.filter(field -> DataConverter.isSupported(field.getType()))
+									.filter(field -> data.containsKey("replacer_" + tipper.name() + "_"
+											+ encapsulator.getId() + "_" + field.getName()))
+									.forEach(field -> {
+										try {
+											field.set(encapsulator,
+													DataConverter.decode(
+															data.get("replacer_" + tipper.name() + "_"
+																	+ encapsulator.getId() + "_" + field.getName()),
+															field.getType()));
+										} catch (IllegalAccessException e) {
+											e.printStackTrace();
+										}
+									}));
                 });
 
         recalculateData = true;
@@ -187,16 +162,12 @@ public class TipperDataManager implements PersistentStateComponent<TipperDataMan
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TipperDataManager that = (TipperDataManager) o;
-
-        return data != null ? data.equals(that.data) : that.data == null;
-    }
+		return o == this || (o != null && getClass() == o.getClass()
+				&& (data == null ? ((TipperDataManager) o).data == null : data.equals(((TipperDataManager) o).data)));
+	}
 
     @Override
     public int hashCode() {
-        return data != null ? data.hashCode() : 0;
+        return data == null ? 0 : data.hashCode();
     }
 }

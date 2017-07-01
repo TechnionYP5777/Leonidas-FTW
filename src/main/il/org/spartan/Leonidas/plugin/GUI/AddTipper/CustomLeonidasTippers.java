@@ -36,11 +36,11 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
         return ServiceManager.getService(CustomLeonidasTippers.class);
     }
 
-    @Nullable
     @Override
-    public CustomLeonidasTippers getState() {
-        return this;
-    }
+	@Nullable
+	public CustomLeonidasTippers getState() {
+		return this;
+	}
 
     @Override
     public void loadState(CustomLeonidasTippers state) {
@@ -119,16 +119,12 @@ public class CustomLeonidasTippers implements PersistentStateComponent<CustomLeo
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CustomLeonidasTippers that = (CustomLeonidasTippers) o;
-
-        return tippers != null ? tippers.equals(that.tippers) : that.tippers == null;
-    }
+		return o == this || (o != null && getClass() == o.getClass() && (tippers == null ? ((CustomLeonidasTippers) o).tippers == null
+				: tippers.equals(((CustomLeonidasTippers) o).tippers)));
+	}
 
     @Override
     public int hashCode() {
-        return tippers != null ? tippers.hashCode() : 0;
+        return tippers == null ? 0 : tippers.hashCode();
     }
 }

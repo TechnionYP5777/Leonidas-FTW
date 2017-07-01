@@ -32,7 +32,7 @@ public enum step {
     }
 
     public static PsiParameter secondParameter(PsiParameterList l) {
-        return parameters(l).size() > 1 ? l.getParameters()[1] : null;
+        return parameters(l).size() <= 1 ? null : l.getParameters()[1];
     }
 
     public static PsiParameter firstParameter(PsiMethod m) {
@@ -52,11 +52,11 @@ public enum step {
      * following method call expression <code>test(1, "dsa", 3)</code> should return a list
      * containing 1, "dsa" and 3.
      *
-     * @param method method call expression from which the arguments should be extracted
+     * @param x method call expression from which the arguments should be extracted
      * @return list of method call's arguments
      */
-    public static List<PsiExpression> arguments(PsiMethodCallExpression method) {
-        return method == null ? null : new ArrayList<>(Arrays.asList(method.getArgumentList().getExpressions()));
+    public static List<PsiExpression> arguments(PsiMethodCallExpression x) {
+        return x == null ? null : new ArrayList<>(Arrays.asList(x.getArgumentList().getExpressions()));
     }
 
     public static PsiStatement firstStatement(PsiCodeBlock b) {
@@ -141,12 +141,12 @@ public enum step {
      * for example, <code>NULL_KEYWORD</code>, <code>TRUE_KEYWORD</code>,
      * <code>INTEGER_LITERAL</code>, etc...
      *
-     * @param e literal expression
+     * @param x literal expression
      * @return type of the literal expression
      * @see com.intellij.psi.JavaTokenType for a full list of possibly types
      */
-    public static IElementType literalType(PsiLiteralExpression e) {
-        return e == null ? null : ((PsiJavaToken) e.getFirstChild()).getTokenType();
+    public static IElementType literalType(PsiLiteralExpression x) {
+        return x == null ? null : ((PsiJavaToken) x.getFirstChild()).getTokenType();
     }
 
     /**
@@ -155,11 +155,11 @@ public enum step {
      * for example:
      * obj.foo(x,y,z) -> foo
      *
-     * @param e method call expression
+     * @param x method call expression
      * @return method name
      */
-    public static PsiReferenceExpression methodExpression(PsiMethodCallExpression e) {
-        return e == null ? null : e.getMethodExpression();
+    public static PsiReferenceExpression methodExpression(PsiMethodCallExpression x) {
+        return x == null ? null : x.getMethodExpression();
     }
 
     public static Optional<PsiClass> clazz(PsiFile f) {
@@ -171,13 +171,13 @@ public enum step {
             }
         });
 
-        return result.get() != null ? Optional.of(result.get()) : Optional.empty();
+        return result.get() == null ? Optional.empty() : Optional.of(result.get());
     }
 
     public static PsiElement classFirstInnerElement(PsiClass c) {
-        for (PsiElement i = c.getFirstChild(); i != null; i = i.getNextSibling()) {
-            if (iz.innerElementOfClass(i)) return i;
-        }
+        for (PsiElement i = c.getFirstChild(); i != null; i = i.getNextSibling())
+			if (iz.innerElementOfClass(i))
+				return i;
         return c.getFirstChild();
     }
 }

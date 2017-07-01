@@ -195,9 +195,8 @@ public enum iz {
     }
 
     private static MatchingResult genericConforms(Encapsulator e1, Encapsulator e2, Map<Integer, List<PsiElement>> m) {
-        if (!iz.generic(e2)) return new MatchingResult(false);
-        return az.generic(e2).generalizes(e1, m);
-    }
+		return !iz.generic(e2) ? new MatchingResult(false) : az.generic(e2).generalizes(e1, m);
+	}
 
     private static boolean elseConforms(PsiElement e1, PsiElement e2) {
         return !iz.literal(e1) && !iz.literal(e2) && !iz.javaToken(e1) && !iz.javaToken(e2) && iz.theSameType(e1, e2);
@@ -207,13 +206,11 @@ public enum iz {
      * e2 is the generic tree
      */
     public static MatchingResult conforms(Encapsulator e1, Encapsulator e2, Map<Integer, List<PsiElement>> m) {
-        if (literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner()))
-            return new MatchingResult(true);
-        if (iz.generic(e2)){
-            return genericConforms(e1, e2, m);
-        }
-        return new MatchingResult(elseConforms(e1.getInner(), e2.getInner()));
-    }
+		return literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner())
+				? new MatchingResult(true)
+				: iz.generic(e2) ? genericConforms(e1, e2, m)
+						: new MatchingResult(elseConforms(e1.getInner(), e2.getInner()));
+	}
 
     public static boolean whiteSpace(PsiElement e) {
         return typeCheck(PsiWhiteSpace.class, e);
@@ -400,6 +397,17 @@ public enum iz {
     }
 
     /**
+     * Determine whether a declaration is final or not
+     *
+     * @param ¢ JD
+     * @return <code><b>true</b></code> <em>iff</em>declaration is final
+     */
+    @SuppressWarnings("ConstantConditions")
+    static boolean final¢(final PsiField ¢) {
+        return ¢ != null && (¢.getModifierList().hasModifierProperty(PsiModifier.FINAL));
+    }
+
+    /**
      * Determine whether a variable declaration is final or not
      *
      * @param ¢ JD
@@ -473,20 +481,19 @@ public enum iz {
      *  3 + 4
      *  5 * 6
      *
-     * @param e element to check
+     * @param x element to check
      * @return <code>true</code> if the element is arithmetic, <code>false</code> otherwise
      */
-    public static boolean arithmetic(PsiExpression e) {
-        if (iz.literal(e)) {
-            IElementType type = az.javaToken(az.literal(e).getFirstChild()).getTokenType();
+    public static boolean arithmetic(PsiExpression x) {
+        if (iz.literal(x)) {
+            IElementType type = az.javaToken(az.literal(x).getFirstChild()).getTokenType();
             return type == INTEGER_LITERAL || type == DOUBLE_LITERAL || type == FLOAT_LITERAL;
         }
 
-        if (!iz.binaryExpression(e)) {
-            return false;
-        }
+        if (!iz.binaryExpression(x))
+			return false;
 
-        PsiBinaryExpression be = az.binaryExpression(e);
+        PsiBinaryExpression be = az.binaryExpression(x);
         return arithmetic(be.getLOperand()) && arithmetic(be.getROperand());
     }
 
@@ -505,7 +512,7 @@ public enum iz {
     }
 
     public static boolean dot(PsiElement e) {
-        return iz.javaToken(e) && az.javaToken(e).getText().equals(".");
+        return iz.javaToken(e) && ".".equals(az.javaToken(e).getText());
     }
 
     public static boolean referenceParameterList(PsiElement e) {

@@ -41,26 +41,17 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
             Object[] options = {"Accept",
                     "Cancel"};
 
-            int n = JOptionPane.showOptionDialog(new JFrame(),
-                    "You are about to apply a nano pattern.\n" +
-                            "Please notice that nano pattern tippers are " +
-                            "code transformations that require adding a '.java' file " +
-                            "to your project directory.\n" +
-                            "To apply the tip, press the Accept button.",
-                    "SpartanizerUtils",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    Icons.Leonidas,
-                    options,
-                    options[1]);
-            if(n == 1){
-                return new Tip(description(e), e, this.getClass()) {
-                    @Override
-                    public void go(PsiRewrite r) {
-
-                    }
-                };
-            }
+            if (JOptionPane.showOptionDialog(new JFrame(),
+					"You are about to apply a nano pattern.\nPlease notice that nano pattern tippers are "
+							+ "code transformations that require adding a '.java' file "
+							+ "to your project directory.\nTo apply the tip, press the Accept button.",
+					"SpartanizerUtils", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, Icons.Leonidas,
+					options, options[1]) == 1)
+				return new Tip(description(e), e, this.getClass()) {
+					@Override
+					public void go(PsiRewrite r) {
+					}
+				};
         } catch (Exception ex) {}
         return !canTip(e) ? null : new Tip(description(e), e, this.getClass()) {
             @Override
@@ -69,9 +60,8 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
                 new WriteCommandAction.Simple(e.getProject(), e.getContainingFile()) {
                     @Override
                     protected void run() throws Throwable {
-                        if ( (!Toolbox.getInstance().playground) && (!Toolbox.getInstance().testing) ) {
-                            createEnvironment(e);
-                        }
+                        if ( (!Toolbox.getInstance().playground) && (!Toolbox.getInstance().testing) )
+							createEnvironment(e);
                         e.replace(e_tag);
                     }
                 }.execute();
@@ -94,8 +84,8 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         File file = new File(is.getPath());
         FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
         file.setReadable(true, false);
-        String s = IOUtils.toString(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java"))));
-        PsiFile pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, s);
+        PsiFile pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, IOUtils.toString(new BufferedReader(
+				new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java")))));
         d.add(pf);
         Arrays.stream(d.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst().get().getVirtualFile().setWritable(false);
         Toolbox.getInstance().excludeFile(pf);

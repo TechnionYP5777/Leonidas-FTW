@@ -29,8 +29,8 @@ public class TipperTest {
 
 
     public Boolean quietCrash;
-    Tipper tipper = null;
-    LeonidasTipperDefinition leonidasTipper = null;
+    Tipper tipper;
+    LeonidasTipperDefinition leonidasTipper;
     Boolean leonidasMode; //whether we are testing a leonidas or non-leonidas tipper
     PsiTypeHelper junitTest; //The junit class instance that is being tested (the one that creates a TipperTest object)
     private Boolean setup = false;
@@ -55,53 +55,42 @@ public class TipperTest {
 
 
     private Map<String, String> getExamples() {
-        if (leonidasMode) {
-            return leonidasTipper.getExamples();
-        }
-        return tipper.getExamples();
-    }
+		return (!leonidasMode ? tipper.getExamples() : leonidasTipper.getExamples());
+	}
 
     private String getTipperName() {
-        if (leonidasMode) {
-            return leonidasTipper.getClass().getSimpleName();
-        }
-        return tipper.name();
-    }
+		return !leonidasMode ? tipper.name() : leonidasTipper.getClass().getSimpleName();
+	}
 
     private void setUp() {
-        if (setup) return;
-        setup = true;
+        if (!setup)
+			setup = true;
     }
 
     private void log(String s) {
-        if (!printsToScreen) {
-            return;
-        }
-        System.out.println(s);
+        if (printsToScreen)
+			System.out.println(s);
     }
 
     private void crashTest() {
         crashed = true;
-        if (!quietCrash) {
-            assert (false);
-        }
+        if (!quietCrash)
+			assert false;
     }
 
     public void check() {
-        if (!setup) {
-            try {
-                this.setUp();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        if (!setup)
+			try {
+				this.setUp();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         Map<String, String> examples = getExamples();
         Toolbox toolbox = Toolbox.getInstance();
         toolbox.testing = true;
         log("\n*************************Now testing " + getTipperName() + ":*************************\n");
-        if (examples.entrySet().size() == 0) {
-            log("No examples exist for tipper " + getTipperName());
-        }
+        if (examples.entrySet().isEmpty())
+			log("No examples exist for tipper " + getTipperName());
         for (Map.Entry<String, String> entry : examples.entrySet()) {
             crashed = false;
             String key = entry.getKey();
@@ -127,9 +116,8 @@ public class TipperTest {
                 continue;
             }
             filewkey = pfc.createFileFromString(filewkey.extractCanonicalSubtreeString());
-            if (value != null) {
-                filewvalue = pfc.createFileFromString(filewvalue.extractCanonicalSubtreeString());
-            }
+            if (value != null)
+				filewvalue = pfc.createFileFromString(filewvalue.extractCanonicalSubtreeString());
             int tipperAffected;
             try {
                 tipperAffected = toolbox.executeSingleTipper(filewkey.getFile(), getTipperName());
@@ -154,24 +142,25 @@ public class TipperTest {
                     continue;
                 }
             } else {
-                if (value == null) {
-                    log("\nError! Tipper " + getTipperName() + " should not have affected the example:\n" + key + "\nbut it did.\n");
-                    crashTest();
-                    continue;
-                } else {
-                    String keyAfterChange = filewkey.extractCanonicalSubtreeString().replaceAll("[\\s | \n]+", "");
-                    if (!keyAfterChange.equals(filewvalue.extractCanonicalSubtreeString().replaceAll("[\\s | \n]+", ""))) {
-                        log("\nError! Tipper " + getTipperName() + " didn't affect the example:\n" + key + "\nas expected. expected:\n" + filewvalue.extractCanonicalSubtreeString() + "\nbut got: \n" + keyAfterChange + "\n");
-                        crashTest();
-                        continue;
-                    }
-                }
-            }
+				if (value == null) {
+					log("\nError! Tipper " + getTipperName() + " should not have affected the example:\n" + key
+							+ "\nbut it did.\n");
+					crashTest();
+					continue;
+				}
+				String keyAfterChange = filewkey.extractCanonicalSubtreeString().replaceAll("[\\s | \n]+", "");
+				if (!keyAfterChange.equals(filewvalue.extractCanonicalSubtreeString().replaceAll("[\\s | \n]+", ""))) {
+					log("\nError! Tipper " + getTipperName() + " didn't affect the example:\n" + key
+							+ "\nas expected. expected:\n" + filewvalue.extractCanonicalSubtreeString()
+							+ "\nbut got: \n" + keyAfterChange + "\n");
+					crashTest();
+					continue;
+				}
+			}
 
             //log("after: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
-            if (!crashed) {
-                log(".............OK.............\n");
-            }
+            if (!crashed)
+				log(".............OK.............\n");
         }
 
         toolbox.testing = false;

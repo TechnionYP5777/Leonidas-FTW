@@ -26,7 +26,6 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
      */
     @SuppressWarnings("unused")
     protected GenericMethodCallBasedBlock(String template) {
-        super();
         this.template = template;
     }
 
@@ -46,12 +45,11 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
     @Override
     public GenericEncapsulator extractAndAssignDescription(PsiElement e) {
         assert (conforms(e));
-        PsiMethodCallExpression mce = az.methodCallExpression(e);
-        if (mce.getArgumentList().getExpressions().length > 1) {
-            description = az.string(step.secondParameterExpression(az.methodCallExpression(e)));
-            description = description.substring(1, description.length()-1);
-        }
-        return this;
+        if (az.methodCallExpression(e).getArgumentList().getExpressions().length <= 1)
+			return this;
+		description = az.string(step.secondParameterExpression(az.methodCallExpression(e)));
+		description = description.substring(1, description.length() - 1);
+		return this;
     }
 
     @Override

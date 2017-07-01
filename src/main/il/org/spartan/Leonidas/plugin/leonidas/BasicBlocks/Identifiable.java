@@ -40,7 +40,7 @@ public abstract class Identifiable extends NamedElement {
 
     @Override
     protected String getName(PsiElement e) {
-        return iz.identifier(e) ? az.identifier(e).getText() : null;
+        return !iz.identifier(e) ? null : az.identifier(e).getText();
     }
 
     @Override
@@ -59,7 +59,7 @@ public abstract class Identifiable extends NamedElement {
     }
 
     @Override
-    public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
+    public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m);
 
     @Override
     public void copyTo(GenericEncapsulator dst) {
@@ -68,7 +68,7 @@ public abstract class Identifiable extends NamedElement {
         Identifiable castDst = (Identifiable) dst;
         castDst.containsList = new LinkedList(containsList);
         castDst.notContainsList = new LinkedList(notContainsList);
-        castDst.nameToChange = new String(nameToChange);
+        castDst.nameToChange = String.valueOf(nameToChange);
     }
 
     /* Constraints Methods */

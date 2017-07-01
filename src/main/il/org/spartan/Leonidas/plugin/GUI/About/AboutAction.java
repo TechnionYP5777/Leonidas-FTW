@@ -14,7 +14,7 @@ public class AboutAction extends AnAction {
     }
 
     @Override
-    public void actionPerformed(AnActionEvent anActionEvent) {
+    public void actionPerformed(AnActionEvent e) {
         new AboutLeonidas();
     }
 }

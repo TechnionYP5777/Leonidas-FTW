@@ -40,9 +40,9 @@ public abstract class QuantifierBasedNames extends NamedElement implements Quant
     }
 
     @Override
-    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
         assert conforms(e.getInner());
-        QuantifierBasedNames o = create(e, map);
+        QuantifierBasedNames o = create(e, m);
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
         if (o.isGeneric())
@@ -53,21 +53,20 @@ public abstract class QuantifierBasedNames extends NamedElement implements Quant
     @PreservesIterator
     public abstract int getNumberOfOccurrences(EncapsulatorIterator i, Map<Integer, List<PsiElement>> m);
 
-    public abstract QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
+    public abstract QuantifierBasedNames create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m);
 
     public Encapsulator getInternal(){
         return internal;
     }
 
     @Override
-    public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        if (!iz.generic(internal)) return super.replaceByRange(elements, m ,r);
-        GenericEncapsulator ge = az.generic(internal);
-        elements = ge.applyReplacingRules(elements, m);
-        if (parent == null) return elements;
-        List<PsiElement> l = Lists.reverse(elements);
+    public List<PsiElement> replaceByRange(List<PsiElement> es, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (!iz.generic(internal)) return super.replaceByRange(es, m ,r);
+        es = az.generic(internal).applyReplacingRules(es, m);
+        if (parent == null) return es;
+        List<PsiElement> l = Lists.reverse(es);
         l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
         r.deleteByRange(inner.getParent(), inner, inner);
-        return elements;
+        return es;
     }
 }

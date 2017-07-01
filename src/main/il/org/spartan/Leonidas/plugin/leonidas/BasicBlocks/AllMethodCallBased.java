@@ -36,22 +36,18 @@ public class AllMethodCallBased extends QuantifierMethodCallBased {
     }
 
     @Override
-    public AllMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-        PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-        Encapsulator e2 = internalEncapsulator(e);
-        return new AllMethodCallBased(e.getInner(), e2);
+    public AllMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> m) {
+        step.firstParameterExpression(az.methodCallExpression(e.getInner()));
+		return new AllMethodCallBased(e.getInner(), internalEncapsulator(e));
     }
 
     private Encapsulator internalEncapsulator(Encapsulator e) {
-        if (!e.getText().contains("all")) {
-            return e;
-        }
-        return e.getActualChildren().get(1).getActualChildren().get(1);
-    }
+		return !e.getText().contains("all") ? e : e.getActualChildren().get(1).getActualChildren().get(1);
+	}
 
     @Override
-    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> map) {
-        int i = getNumberOfOccurrences(bgCursor, map);
+    public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> m) {
+        int i = getNumberOfOccurrences(bgCursor, m);
         return new QuantifierIterator(i, i);
     }
 }

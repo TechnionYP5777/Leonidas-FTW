@@ -15,7 +15,7 @@ public interface Quantifier {
 
     MatchingResult generalizes(Encapsulator e, Map<Integer, List<PsiElement>> m);
 
-    QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> map);
+    QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> m);
 
     Encapsulator getInternal();
 
@@ -36,7 +36,7 @@ public interface Quantifier {
 
         @Override
         public Integer next() {
-            start++;
+            ++start;
             return start - 1;
         }
 

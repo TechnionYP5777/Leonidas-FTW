@@ -54,9 +54,9 @@ public class Toolbox implements ApplicationComponent {
     //TODO: @Amir Sagiv this should be uncommented
 //    private final ToolboxStateService toolboxStateService = ToolboxStateService.getInstance();
 
-    public boolean playground = false;
-    public boolean testing = false;
-    public boolean replaced = false;
+    public boolean playground;
+    public boolean testing;
+    public boolean replaced;
     private Map<Class<? extends PsiElement>, List<Tipper>> allTipperMap = new ConcurrentHashMap<>();
     private List<GenericEncapsulator> blocks = new ArrayList<>();
     private List<LeonidasTipperDefinition> tipperInstances = new ArrayList<>();
@@ -147,18 +147,17 @@ public class Toolbox implements ApplicationComponent {
     }
 
     private Set<Class<? extends GenericEncapsulator>> getAllSubTypes() {
-        Set<Class<? extends GenericEncapsulator>> allClasses =
-                new Reflections(GenericEncapsulator.class.getPackage().getName()).getSubTypesOf(GenericEncapsulator.class);
-        //noinspection unchecked
-        return allClasses.stream().filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers())).map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
+        return new Reflections(GenericEncapsulator.class.getPackage().getName())
+				.getSubTypesOf(GenericEncapsulator.class).stream()
+				.filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers()))
+				.map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
     }
 
     @SuppressWarnings("unchecked")
     public void updateTipperList(List<String> list) {
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
-            if (!list.contains(tipper.name())) {
-                element.remove(tipper);
-            }
+            if (!list.contains(tipper.name()))
+				element.remove(tipper);
         }));
 
         this.allTipperMap.values().forEach(element -> element.forEach(tipper -> {
@@ -170,11 +169,8 @@ public class Toolbox implements ApplicationComponent {
         }));
 
         List<String> activeTippersNames = new ArrayList<>();
-        this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
-            activeTippersNames.add(tipper.name());
-        }));
-        String jsonTips = new Gson().toJson(activeTippersNames);
-        PropertiesComponent.getInstance().setValue("savedTippers", jsonTips, "");
+        this.tipperMap.values().forEach(element -> element.forEach(tipper -> activeTippersNames.add(tipper.name())));
+        PropertiesComponent.getInstance().setValue("savedTippers", new Gson().toJson(activeTippersNames), "");
 
 
         //TODO: @Amir Sagiv this should be uncommented
@@ -187,7 +183,7 @@ public class Toolbox implements ApplicationComponent {
                 .filter(c -> !c.isAnnotationPresent(TipperUnderConstruction.class))
                 .forEach(c -> {
                     String source = Utils.getSourceCode(c);
-                    if (!source.equals(""))
+                    if (!"".equals(source))
                         add(new LeonidasTipper(c.getSimpleName(), source));
                 });
     }
@@ -205,9 +201,8 @@ public class Toolbox implements ApplicationComponent {
         ArrayList<String> list = new ArrayList<>(Arrays.asList(new String[]{"SafeReference", "Unless",
                 "LambdaExpressionRemoveRedundantCurlyBraces", "LispLastElement", "DefaultsTo",}));
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
-            if (list.contains(tipper.name())) {
-                element.remove(tipper);
-            }
+            if (list.contains(tipper.name()))
+				element.remove(tipper);
         }));
     }
 
@@ -231,44 +226,31 @@ public class Toolbox implements ApplicationComponent {
      */
     @SuppressWarnings("unchecked")
     public void executeAllTippers(PsiElement e) {
-        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-            return;
-
-        tipperMap.get(e.getClass())
-                .stream()
-                .filter(tipper -> tipper.canTip(e))
-                .findFirst()
-                .ifPresent(t -> executeTipper(e, t));
+        if (!checkExcluded(e.getContainingFile()) && isElementOfOperableType(e))
+			tipperMap.get(e.getClass()).stream().filter(tipper -> tipper.canTip(e)).findFirst()
+					.ifPresent(t -> executeTipper(e, t));
     }
 
     /**
      * Apply the tipper on the given element if possible.
      *
      * @param e      element to spartanize
-     * @param tipper tipper to be used
+     * @param t tipper to be used
      */
-    public void executeTipper(PsiElement e, Tipper<PsiElement> tipper) {
-        if (e != null && tipper != null && tipper.canTip(e)) {
-            tipper.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
-        }
-        AnActionEvent ana = AnActionEvent.createFromDataContext("banana",null ,new DataContext() {
-            @Nullable
-            @Override
-            public Object getData(String dataId) {
-                if (dataId.equals("project")) {
-                    return Utils.getProject();
-                }
-                if (dataId.equals("editor")) {
-                    return FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor();
-                }
-                if (dataId.equals("virtualFile")) {
-                    return e.getContainingFile().getVirtualFile();
-                }
-                return null;
-            }
-        });
-        ReformatCodeAction rca = new ReformatCodeAction();
-        rca.actionPerformed(ana);
+    public void executeTipper(PsiElement e, Tipper<PsiElement> t) {
+        if (e != null && t != null && t.canTip(e))
+			t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
+        (new ReformatCodeAction())
+				.actionPerformed(AnActionEvent.createFromDataContext("banana", null, new DataContext() {
+					@Override
+					@Nullable
+					public Object getData(String dataId) {
+						return "project".equals(dataId) ? Utils.getProject()
+								: "editor".equals(dataId)
+										? FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor()
+										: "virtualFile".equals(dataId) ? e.getContainingFile().getVirtualFile() : null;
+					}
+				}));
     }
 
     /**
@@ -279,12 +261,10 @@ public class Toolbox implements ApplicationComponent {
      */
     public int executeSingleTipper(PsiElement e, String tipperName) {
         Tipper tipper = getTipperByName(tipperName);
-        if (tipper == null) {
-            return -1;
-        }
-        if (e == null) {
-            return 0;
-        }
+        if (tipper == null)
+			return -1;
+        if (e == null)
+			return 0;
 
         Wrapper<PsiElement> toReplace = new Wrapper<>(null);
         Wrapper<Boolean> modified = new Wrapper<>(false);
@@ -292,18 +272,14 @@ public class Toolbox implements ApplicationComponent {
             @Override
             public void visitElement(PsiElement el) {
                 super.visitElement(el);
-                if (modified.get()) {
-                    return;
-                }
-                if (tipper.canTip(el)) {
-                    toReplace.set(el);
-                    modified.set(true);
-                }
+                if (modified.get() || !tipper.canTip(el))
+					return;
+				toReplace.set(el);
+				modified.set(true);
             }
         });
-        if (!modified.get()) {
-            return 0;
-        }
+        if (!modified.get())
+			return 0;
         tipper.tip(toReplace.get()).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
         return 1;
     }
@@ -362,19 +338,14 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public Tipper getTipperByName(String name) {
-        Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
-        if (res.isPresent()) {
-            return res.get();
-        }
-        return null;
-    }
+		Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name().equals(name)).findFirst();
+		return !res.isPresent() ? null : res.get();
+	}
 
     public LeonidasTipperDefinition getTipperInstanceByName(String name) {
-        for (LeonidasTipperDefinition t : tipperInstances) {
-            if (t.getClass().getName().substring(t.getClass().getName().lastIndexOf(".") + 1).equals(name)) {
-                return t;
-            }
-        }
+        for (LeonidasTipperDefinition t : tipperInstances)
+			if (t.getClass().getName().substring(t.getClass().getName().lastIndexOf(".") + 1).equals(name))
+				return t;
         return null;
     }
 
@@ -408,11 +379,11 @@ public class Toolbox implements ApplicationComponent {
         logger.info("Disposed toolbox component");
     }
 
-    @NotNull
     @Override
-    public String getComponentName() {
-        return auxGetComponentName();
-    }
+	@NotNull
+	public String getComponentName() {
+		return auxGetComponentName();
+	}
 
     public List<GenericEncapsulator> getGenericsBasicBlocks() {
         return this.blocks;
@@ -423,23 +394,18 @@ public class Toolbox implements ApplicationComponent {
     }
 
     public void executeAllTippersNoNanos(PsiElement e) {
-        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-            return;
-
-        tipperMap.get(e.getClass())
-                .stream()
-                .filter(tipper -> tipper.canTip(e) && !(tipper instanceof NanoPatternTipper))
-                .findFirst()
-                .ifPresent(t -> executeTipper(e, t));
+        if (!checkExcluded(e.getContainingFile()) && isElementOfOperableType(e))
+			tipperMap.get(e.getClass()).stream()
+					.filter(tipper -> tipper.canTip(e) && !(tipper instanceof NanoPatternTipper)).findFirst()
+					.ifPresent(t -> executeTipper(e, t));
     }
 
     public Set<String> getAvailableTipsInfo(PsiElement e) {
-        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-            return new HashSet<>();
-
-        int line = FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor().offsetToLogicalPosition(e.getTextOffset()).line + 1;
-        return tipperMap.get(e.getClass())
-                .stream()
-                .filter(tipper -> tipper.canTip(e)).map(tipper -> tipper.name() + " - Line " + line).collect(Collectors.toSet());
-    }
+		return checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e) ? new HashSet<>()
+				: tipperMap.get(e.getClass()).stream().filter(tipper -> tipper.canTip(e))
+						.map(tipper -> tipper.name() + " - Line "
+								+ (FileEditorManager.getInstance(Utils.getProject()).getSelectedTextEditor()
+										.offsetToLogicalPosition(e.getTextOffset()).line + 1))
+						.collect(Collectors.toSet());
+	}
 }

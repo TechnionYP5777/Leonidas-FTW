@@ -8,20 +8,20 @@ import java.awt.*;
 
 /**
  * @author Amir Sagiv
- * @since 14/05/2017
+ * @since 14-05-2017
  */
 public class ComponentJTable extends JTable {
 
     public ComponentJTable() {
 
         DefaultTableModel model = new DefaultTableModel() {
-            private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1;
 
-            @SuppressWarnings({"unchecked", "rawtypes"})
             @Override
-            public Class getColumnClass(int column) {
-                return getValueAt(0, column).getClass();
-            }
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int column) {
+				return getValueAt(0, column).getClass();
+			}
 
             public boolean isCellEditable(int row, int column) {
                 return column != 0;
@@ -33,10 +33,9 @@ public class ComponentJTable extends JTable {
         this.getTableHeader().setResizingAllowed(false);
         this.getTableHeader().setReorderingAllowed(false);
         model.setColumnCount(2);
-        Object[] headers = {"ID", "Value"};
-        model.setColumnIdentifiers(headers);
+        model.setColumnIdentifiers(new Object[] { "ID", "Value" });
         this.setRowHeight(30);
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; ++i) {
             this.getColumnModel().getColumn(i).setCellRenderer(new CellRenderer());
             this.getColumnModel().getColumn(i).setMinWidth(150);
             this.getColumnModel().getColumn(i).setCellEditor(new CellEditor());
@@ -45,16 +44,15 @@ public class ComponentJTable extends JTable {
 
     private class CellRenderer extends DefaultTableCellRenderer {
 
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1;
 
         /*
          * @see TableCellRenderer#getTableCellRendererComponent(JTable, Object, boolean, boolean, int, int)
          */
-        public Component getTableCellRendererComponent(JTable table, Object value,
+        public Component getTableCellRendererComponent(JTable t, Object value,
                                                        boolean isSelected, boolean hasFocus,
                                                        int row, int column) {
             if (value instanceof JCheckBox) {
-
                 JCheckBox checkbox = (JCheckBox) value;
                 checkbox.setBackground(getBackground());
                 checkbox.setForeground(getForeground());
@@ -62,51 +60,42 @@ public class ComponentJTable extends JTable {
                 checkbox.setFont(getFont());
                 checkbox.setFocusPainted(false);
                 checkbox.setBorderPainted(true);
-                checkbox.setBorder(isSelected ?
-                        UIManager.getBorder(
-                                "List.focusCellHighlightBorder") : noFocusBorder);
+                checkbox.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
                 return checkbox;
             }
+            Component text = (JTextField) value;
             if (value instanceof JTextField) {
-                JTextField text = (JTextField) value;
-                text.setBackground(getBackground());
-                text.setForeground(getForeground());
-                text.setEnabled(isEnabled());
-                text.setFont(getFont());
-                return text;
-            }
-
-            if (value instanceof JList) {
-                JList list = (JList) value;
-                list.setBackground(getBackground());
-                list.setForeground(getForeground());
-                list.setEnabled(isEnabled());
-                list.setFont(getFont());
-                return list;
-            }
-
-            if (value instanceof JComboBox) {
-                JComboBox box = (JComboBox) value;
-                box.setBackground(getBackground());
-                box.setForeground(getForeground());
-                box.setEnabled(isEnabled());
-                box.setFont(getFont());
-                box.setBorder(isSelected ?
-                        UIManager.getBorder(
-                                "List.focusCellHighlightBorder") : noFocusBorder);
-                return box;
-            }
-
-
-            if (value instanceof JLabel) {
-                JLabel text = (JLabel) value;
-                text.setBackground(getBackground());
-                text.setForeground(getForeground());
-                text.setEnabled(isEnabled());
-                text.setFont(getFont());
-                return text;
-            }
-            return this;
+				text.setBackground(getBackground());
+				text.setForeground(getForeground());
+				text.setEnabled(isEnabled());
+				text.setFont(getFont());
+			} else {
+				if (value instanceof JList) {
+					JList list = (JList) value;
+					list.setBackground(getBackground());
+					list.setForeground(getForeground());
+					list.setEnabled(isEnabled());
+					list.setFont(getFont());
+					return list;
+				}
+				if (value instanceof JComboBox) {
+					JComboBox box = (JComboBox) value;
+					box.setBackground(getBackground());
+					box.setForeground(getForeground());
+					box.setEnabled(isEnabled());
+					box.setFont(getFont());
+					box.setBorder(!isSelected ? noFocusBorder : UIManager.getBorder("List.focusCellHighlightBorder"));
+					return box;
+				}
+				if (!(value instanceof JLabel))
+					return this;
+				text = (JLabel) value;
+				text.setBackground(getBackground());
+				text.setForeground(getForeground());
+				text.setEnabled(isEnabled());
+				text.setFont(getFont());
+			}
+            return text;
         }
     }
 
@@ -115,7 +104,7 @@ public class ComponentJTable extends JTable {
 
         Component c;
 
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+        public Component getTableCellEditorComponent(JTable t, Object value, boolean isSelected,
                                                      int rowIndex, int vColIndex) {
 
             if (value instanceof JCheckBox) {
@@ -139,14 +128,11 @@ public class ComponentJTable extends JTable {
                 return l;
             }
 
-            if (value instanceof JComboBox) {
-
-                JComboBox b = (JComboBox) value;
-                c = b;
-                return b;
-            }
-
-            return null;
+            if (!(value instanceof JComboBox))
+				return null;
+			JComboBox b = (JComboBox) value;
+			c = b;
+			return b;
         }
 
         public Object getCellEditorValue() {

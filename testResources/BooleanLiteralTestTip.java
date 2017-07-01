@@ -10,6 +10,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author michalcohen
  * @since 30-04-2017
  */
+@DisableSpartanization
 @SuppressWarnings("ConstantConditions")
 public class BooleanLiteralTestTip implements LeonidasTipperDefinition {
 
