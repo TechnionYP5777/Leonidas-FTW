@@ -215,4 +215,38 @@ public class azTest extends PsiTypeHelper {
         assertNull(az.expression(null));
     }
 
+    public void testAzModifierListOwner() throws Exception {
+        PsiElement b = createTestMethodFromString("public static goo(){}");
+        assert az.modifierListOwner(b) != null;
+        assertNull(az.modifierListOwner(createTestStatementFromString("int x = 5;")));
+        assertNull(az.modifierListOwner(null));
+    }
+
+    public void testAzType() throws Exception {
+        PsiElement b = createTestTypeElementFromString("int");
+        assert az.type(b) != null;
+        assertNull(az.type(createTestStatementFromString("int x = 5;")));
+        assertNull(az.type(null));
+    }
+
+    public void testAzComment() throws Exception {
+        PsiElement b = createTestCommentFromString("//comment");
+        assert az.comment(b) != null;
+        assertNull(az.comment(createTestStatementFromString("int x = 5;")));
+        assertNull(az.comment(null));
+    }
+
+    public void testAzFile() throws Exception {
+        PsiElement b = createTestFileFromString("public class A{}");
+        assert az.psiFile(b) != null;
+        assertNull(az.psiFile(null));
+    }
+
+    public void testAzNewExpression() throws Exception {
+        PsiElement b = createTestExpressionFromString("new A()");
+        assert az.newExpression(b) != null;
+        assertNull(az.newExpression(createTestStatementFromString("int x = 5;")));
+        assertNull(az.newExpression(null));
+    }
+
 }
