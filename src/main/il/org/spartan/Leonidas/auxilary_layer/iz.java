@@ -511,4 +511,8 @@ public enum iz {
     public static boolean referenceParameterList(PsiElement e) {
         return typeCheck(PsiReferenceParameterList.class, e);
     }
+
+    public static boolean innerElementOfClass(PsiElement e) {
+        return typeCheck(PsiMethod.class, e) || typeCheck(PsiField.class, e) || (typeCheck(PsiClass.class, e) && iz.classDeclaration(e.getParent()));
+    }
 }

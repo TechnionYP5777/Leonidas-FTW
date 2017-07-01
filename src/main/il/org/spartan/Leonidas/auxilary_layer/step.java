@@ -173,4 +173,11 @@ public enum step {
 
         return result.get() != null ? Optional.of(result.get()) : Optional.empty();
     }
+
+    public static PsiElement classFirstInnerElement(PsiClass c) {
+        for (PsiElement i = c.getFirstChild(); i != null; i = i.getNextSibling()) {
+            if (iz.innerElementOfClass(i)) return i;
+        }
+        return c.getFirstChild();
+    }
 }

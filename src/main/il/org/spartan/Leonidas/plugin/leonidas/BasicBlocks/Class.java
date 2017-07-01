@@ -123,6 +123,8 @@ public class Class extends NamedElement{
             GenericEncapsulator ge = az.generic(n);
             ge.replaceByRange(map.get(ge.getId()), map, r);
         }));
+        List<PsiElement> l = Arrays.stream(psiClass.getChildren()).filter(child -> (map.values().stream().noneMatch(x -> x.contains(child)) && iz.innerElementOfClass(child))).collect(Collectors.toList());
+        r.addList(innerAsClass, l);
         return Utils.wrapWithList(inner);
     }
 

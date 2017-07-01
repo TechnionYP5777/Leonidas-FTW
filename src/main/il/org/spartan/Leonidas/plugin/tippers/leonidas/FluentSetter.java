@@ -27,27 +27,30 @@ public class FluentSetter implements LeonidasTipperDefinition {
     @Override
     public void matcher() {
         new Template(() -> {
-            /* start */
             class Class0 {
+                /* start */
+
                 void method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                 }
+                /* end */
             }
-            /* end */
         });
     }
 
     @Override
     public void replacer() {
         new Template(() -> {
-            /* start */
+
             class Class0 {
+                /* start */
+
                 Class0 method1(Class2 identifier3) {
                     anyNumberOf(statement(4));
                     return this;
                 }
+                /* end */
             }
-            /* end */
         });
     }
 
@@ -64,6 +67,11 @@ public class FluentSetter implements LeonidasTipperDefinition {
                 .put("public class A{\n\tvoid setX(){\n\t\t;\n\t}\n}", null)
                 .map();
 
+    }
+
+    @Override
+    public void replacingRules() {
+        element(0).asType.setAsOuterClass();
     }
 
     class Class2 {

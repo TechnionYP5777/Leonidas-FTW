@@ -22,6 +22,7 @@ public abstract class The {
     public Statement asStatement;
     public StringLiteral asStringLiteral;
     public Throwable asThrowable;
+    public Type asType;
 
     public static The element(int id) {
         return the;

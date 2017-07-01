@@ -6,6 +6,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 
+import java.util.List;
+
 /**
  * This class helps performing replacement actions on Psi elements without having to create
  * each time WriteCommandAction.
@@ -93,6 +95,26 @@ public class PsiRewrite {
             @Override
             protected void run() throws Throwable {
                 e.delete();
+            }
+
+        }.execute();
+    }
+
+    public void addRange(PsiElement src, PsiElement start, PsiElement end) {
+        new WriteCommandAction.Simple(project, psiFile) {
+            @Override
+            protected void run() throws Throwable {
+                src.addRange(start, end);
+            }
+
+        }.execute();
+    }
+
+    public void addList(PsiElement src, List<PsiElement> l) {
+        new WriteCommandAction.Simple(project, psiFile) {
+            @Override
+            protected void run() throws Throwable {
+                l.forEach(e -> src.add(e));
             }
 
         }.execute();

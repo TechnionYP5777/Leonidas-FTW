@@ -4,6 +4,7 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiTypeElement;
+import com.intellij.psi.util.PsiTreeUtil;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class Type extends NamedElement {
 
     private static final String TEMPLATE = "Class";
+
+    boolean setAsOuterClass = false;
 
     public Type(Encapsulator e) {
         super(e, TEMPLATE);
@@ -55,6 +58,14 @@ public class Type extends NamedElement {
 
     @Override
     public List<PsiElement> replaceByRange(List<PsiElement> elements, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        if (setAsOuterClass) {
+            List<PsiElement>[] a = new List[m.values().size()];
+            m.values().toArray(a);
+            PsiClass c = PsiTreeUtil.getParentOfType(a[0].get(0), PsiClass.class);
+            PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c);
+            return Utils.wrapWithList(pte);
+
+        }
         if (iz.classDeclaration(elements.get(0))) { // Notice the element that type will be replaced by is assign to PsiClass, so we need to extract its name.
             PsiClass c = az.classDeclaration(elements.get(0));
             PsiTypeElement pte = JavaPsiFacade.getElementFactory(Utils.getProject()).createTypeElementFromText(c.getName(), c);
@@ -62,6 +73,18 @@ public class Type extends NamedElement {
             return Utils.wrapWithList(pte);
         }
         return super.replaceByRange(elements, m, r);
+    }
+
+    @Override
+    public void copyTo(GenericEncapsulator dst) {
+        if (!(dst instanceof Type)) return;
+        super.copyTo(dst);
+        Type castDst = (Type) dst;
+        castDst.setAsOuterClass = setAsOuterClass;
+    }
+
+    public void setAsOuterClass() {
+        setAsOuterClass = true;
     }
 }
 
