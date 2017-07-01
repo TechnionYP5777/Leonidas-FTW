@@ -43,8 +43,8 @@ public class MethodInvocationToStringToEmptyStringAddition implements LeonidasTi
                 .put("donald.toString()", "\"\" + donald")
                 .put("donald.toString();", "\"\" + donald;")
                 .put("donald.string()", null)
-//                .put("donald.string().equals()", null)
-//                .put("String str2 = i.toString() + \"whwh\";", "String str2 = \"\" + i + \"whwh\";")
+                .put("donald.string().equals()", null)
+                .put("String str2 = i.toString() + \"whwh\";", "String str2 = \"\" + i + \"whwh\";")
                 .map();
     }
 }

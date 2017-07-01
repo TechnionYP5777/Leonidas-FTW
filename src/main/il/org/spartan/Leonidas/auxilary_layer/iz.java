@@ -453,7 +453,7 @@ public enum iz {
     }
 
     public static boolean quantifier(Encapsulator e) {
-        return e instanceof QuantifierMethodCallBased;
+        return e instanceof Quantifier;
     }
 
     public static boolean optional(Encapsulator e) {

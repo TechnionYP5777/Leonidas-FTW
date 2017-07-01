@@ -19,7 +19,7 @@ import java.util.Map;
  * @author Oren Afek
  * @since 14-05-2017.
  */
-public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBlock {
+public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBlock implements Quantifier {
 
     protected Encapsulator internal;
 
@@ -33,7 +33,7 @@ public abstract class QuantifierMethodCallBased extends GenericMethodCallBasedBl
     }
 
     @Override
-    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+    public boolean goUpwards(Encapsulator prev, Encapsulator next) {
         return iz.generic(internal) && az.generic(internal).goUpwards(prev, next);
     }
 

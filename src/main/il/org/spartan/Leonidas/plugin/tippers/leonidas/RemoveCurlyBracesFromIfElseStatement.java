@@ -56,7 +56,7 @@ public class RemoveCurlyBracesFromIfElseStatement implements LeonidasTipperDefin
                 .put("if(true){\n\tSystem.out.println();\n} else\n\tSystem.out.println();", null)
                 .put("if(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();", null)
                 .put("if(true){\nif(true){\n\tSystem.out.println();\n} else{\n\tSystem.out.println();\n}\n}", "if(true){\nif(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();\n}")
-//                .put("if(true)\nif(true){\n\tSystem.out.println();\n} else{\n\tSystem.out.println();\n}", "if(true)\nif(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();")
+                .put("if(true)\nif(true){\n\tSystem.out.println();\n} else{\n\tSystem.out.println();\n}", "if(true)\nif(true)\n\tSystem.out.println();\n else\n\tSystem.out.println();")
                 .map();
     }
 }

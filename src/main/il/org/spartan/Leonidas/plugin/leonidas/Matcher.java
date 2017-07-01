@@ -8,6 +8,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Quantifier;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -61,12 +62,12 @@ public class Matcher {
         if (bgNeedle.hasNext() != bgCursor.hasNext()) return  m.setNotMatches();
         EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (iz.quantifier(bgNeedle.value())) {
-            int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor, m.getMap());
-            for (int i = 0; i <= n; i++) {
+            Quantifier q = az.quantifier(bgNeedle.value());
+            for (Quantifier.QuantifierIterator it = q.quantifierIterator(bgCursor, m.getMap()); it.hasNext(); it.next()) {
                 m.setMatches();
                 varNeedle = bgNeedle.clone();
                 varCursor = bgCursor.clone();
-                varNeedle.setNumberOfOccurrences(i);
+                varNeedle.setNumberOfOccurrences(it.value());
                 MatchingResult mq = matchQuantifier(varNeedle, varCursor, m);
                 if (mq.notMatches()) continue;
                 MatchingResult sr = matchingRecursion(varNeedle, varCursor, m);
@@ -118,6 +119,7 @@ public class Matcher {
             needle.next();
             return m.setMatches();
         }
+        Quantifier q = az.quantifier(needle.value());
         for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
             MatchingResult ic = iz.conforms(cursor.value(), needle.value(), m.getMap());
             if (ic.notMatches() || (needle.hasNext() ^ cursor.hasNext())) {
@@ -129,6 +131,8 @@ public class Matcher {
                 cursor.matchedWithGeneric();
             }
         }
+        while (needle.value() == q && needle.hasNext())
+            needle.next();
         return m;
     }
 

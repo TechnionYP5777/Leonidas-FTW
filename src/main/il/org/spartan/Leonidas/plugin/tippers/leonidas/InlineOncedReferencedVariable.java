@@ -13,13 +13,13 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * @author Oren Afek, Michal Cohen
  * @since 20/06/17
  */
-//@LeonidasTipperDefinition.TipperUnderConstruction(UNTESTED)
 public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
 
     @Override
     public void constraints() {
         element(4).asStatement.refersOnce(1);
         element(3).asStatement.mustNotRefer(1);
+        element(5).asStatement.mustNotRefer(1);
     }
 
     @Override
@@ -29,6 +29,8 @@ public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
             Class0 identifier1 = expression(2);
             anyNumberOf(statement(3));
             statement(4);
+            all(statement(5));
+
             /* end */
         });
     }
@@ -39,6 +41,7 @@ public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
             /* start */
             anyNumberOf(statement(3));
             statement(4);
+            all(statement(5));
             /* end */
         });
     }
@@ -52,10 +55,10 @@ public class InlineOncedReferencedVariable implements LeonidasTipperDefinition {
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
 //                .put("int x = 3;\nf(9,x);", "f(9,3);")
-//                .put("int x = 3;\nx++;\nf(9,x);", null)
-                .put("int y = 2;\nfor (int i = a; ; ) ;\na = y * 2;", "for (int i = a; ; ) ;\na = 2 * 2;")
+                .put("int x = 3;\nx++;\nf(9,x);", null)
+//                .put("int y = 2;\nfor (int i = a; ; ) ;\na = y * 2;", "for (int i = a; ; ) ;\na = 2 * 2;")
                 .put("int y = 2;\nfor (int i = a; ; ) ;\ny = y * 2;", null)
-//                .put("int y = 2;\nfor (int i = a; ; ) ;\ny = a * 2;", null)   // will work when constraints or the template will be fixed
+//                .put("int y = 2;\nfor (int i = a; ; ) ;\ny = a * 2;", null)
                 .map();
     }
 

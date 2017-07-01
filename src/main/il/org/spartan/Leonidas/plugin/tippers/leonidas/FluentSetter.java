@@ -12,7 +12,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
  * FluentSetter
  *
  * @author michalcohen, amirsagiv83
- * @since 29/5/17
+ * @since 29-05-17
  */
 public class FluentSetter implements LeonidasTipperDefinition {
 

@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Oren Afek, michalcohen
  * @since 20-06-2017.
  */
-public abstract class QuantifierBasedNames extends NamedElement{
+public abstract class QuantifierBasedNames extends NamedElement implements Quantifier {
     protected Encapsulator internal;
 
     public QuantifierBasedNames(Encapsulator e, String template, Encapsulator i) {
@@ -30,7 +30,7 @@ public abstract class QuantifierBasedNames extends NamedElement{
     }
 
     @Override
-    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+    public boolean goUpwards(Encapsulator prev, Encapsulator next) {
         return iz.generic(internal) && az.generic(internal).goUpwards(prev, next);
     }
 

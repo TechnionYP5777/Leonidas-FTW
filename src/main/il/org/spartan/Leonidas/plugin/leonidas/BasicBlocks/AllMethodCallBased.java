@@ -10,20 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A base class for all quantifiers of type "AnyNumberOf" that are implemented using
- * method call expression. For example "anyNumberOf(Statement(3))".
- * @author Oren Afek
- * @since 14-05-2017
+ * Created by melanyc on 7/1/2017.
  */
-public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
+public class AllMethodCallBased extends QuantifierMethodCallBased {
 
-    private static final String TEMPLATE = "anyNumberOf";
+    private static final String TEMPLATE = "all";
 
-    public AnyNumberOfMethodCallBased(PsiElement e, Encapsulator i) {
+    public AllMethodCallBased(PsiElement e, Encapsulator i) {
         super(e, TEMPLATE, i);
     }
 
-    public AnyNumberOfMethodCallBased() {
+    public AllMethodCallBased() {
         super(TEMPLATE);
     }
 
@@ -39,14 +36,14 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
     }
 
     @Override
-    public AnyNumberOfMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
-       PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-       Encapsulator e2 = internalEncapsulator(e);
-       return new AnyNumberOfMethodCallBased(e.getInner(), e2);
+    public AllMethodCallBased create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+        PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
+        Encapsulator e2 = internalEncapsulator(e);
+        return new AllMethodCallBased(e.getInner(), e2);
     }
 
     private Encapsulator internalEncapsulator(Encapsulator e) {
-        if (!e.getText().contains("anyNumberOf")) {
+        if (!e.getText().contains("all")) {
             return e;
         }
         return e.getActualChildren().get(1).getActualChildren().get(1);
@@ -54,6 +51,7 @@ public class AnyNumberOfMethodCallBased extends QuantifierMethodCallBased {
 
     @Override
     public QuantifierIterator quantifierIterator(EncapsulatorIterator bgCursor, Map<Integer, List<PsiElement>> map) {
-        return new QuantifierIterator(0, getNumberOfOccurrences(bgCursor, map));
+        int i = getNumberOfOccurrences(bgCursor, map);
+        return new QuantifierIterator(i, i);
     }
 }

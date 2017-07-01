@@ -15,7 +15,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  */
 public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
 
-
     @Override
     public void constraints() {
     }
@@ -39,7 +38,6 @@ public class IfReturnNoElseReturn implements LeonidasTipperDefinition {
             /* end */
         });
     }
-
 
     @Override
     public Map<String, String> getExamples() {

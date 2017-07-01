@@ -29,8 +29,8 @@ public class InfixMultiplicationByOne implements LeonidasTipperDefinition {
                 .put("X*1", "X")
                 .put("X*2", null)
                 .put("X*Y", null)
-//                .put("Y = X*1;", "Y = X")
-//                .put("for(int i=X*1; ; );", "for(int i=X; ; );")
+                .put("Y = X*1;", "Y = X;")
+                .put("for(int i=X*1; ; );", "for(int i=X; ; );")
                 .map();
     }
 }

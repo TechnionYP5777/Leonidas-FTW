@@ -120,8 +120,8 @@ public enum az {
         return e != null ? (AnyNumberOfMethodCallBased) e : null;
     }
 
-    public static QuantifierMethodCallBased quantifier(Encapsulator e) {
-        return e != null ? (QuantifierMethodCallBased) e : null;
+    public static Quantifier quantifier(Encapsulator e) {
+        return e != null ? (Quantifier) e : null;
     }
 
     public static PsiDocComment javadoc(PsiElement e){

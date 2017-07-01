@@ -4,8 +4,6 @@ import il.org.spartan.Leonidas.auxilary_layer.ExampleMapFactory;
 
 import java.util.Map;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.*;
-
 
 /**
  * remove empty finally
@@ -13,7 +11,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author Roey Maor
  * @since 29/06/2017
  */
-public class CastToLong2Multiply1L implements LeonidasTipperDefinition{
+public class CastToLong2Multiply1L implements LeonidasTipperDefinition {
 
     int identifier0;
 
@@ -21,7 +19,7 @@ public class CastToLong2Multiply1L implements LeonidasTipperDefinition{
     public void matcher() {
         new Template(() ->
             /*start*/
-                (long)identifier0
+                (long) identifier0
             /*end*/
 
         );
@@ -31,7 +29,7 @@ public class CastToLong2Multiply1L implements LeonidasTipperDefinition{
     public void replacer() {
         new Template(() ->
              /*start*/
-            1L*identifier0
+                1L * identifier0
             /*end*/
         );
     }
@@ -39,9 +37,7 @@ public class CastToLong2Multiply1L implements LeonidasTipperDefinition{
     @Override
     public Map<String, String> getExamples() {
         return new ExampleMapFactory()
-                .put("(long)X","1L*X")
+                .put("(long)X", "1L*X")
                 .map();
     }
-
-
 }

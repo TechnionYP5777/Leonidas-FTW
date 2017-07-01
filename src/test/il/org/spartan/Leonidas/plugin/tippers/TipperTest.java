@@ -126,8 +126,6 @@ public class TipperTest {
                 crashTest();
                 continue;
             }
-            //log("before: \n"+filewkey.extractCanonicalSubtreeString()+"\n");
-            //reassigning with fixed strings:
             filewkey = pfc.createFileFromString(filewkey.extractCanonicalSubtreeString());
             if (value != null) {
                 filewvalue = pfc.createFileFromString(filewvalue.extractCanonicalSubtreeString());
