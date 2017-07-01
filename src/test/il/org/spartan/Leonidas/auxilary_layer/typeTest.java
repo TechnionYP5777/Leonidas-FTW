@@ -4,7 +4,7 @@ import com.intellij.psi.*;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**
- * @author michalcohen
+ * @author michalcohen, Sharon KL
  * @since 12-01-2017
  */
 public class typeTest extends PsiTypeHelper {
@@ -48,5 +48,25 @@ public class typeTest extends PsiTypeHelper {
 
     public void testWhileStatement() {
         assertEquals(type.of(createTestWhileStatementFromString("while(x > 0) { x--; }")), PsiWhileStatement.class);
+    }
+
+    public void testDeclarationStatement() {
+        assertEquals(type.of(createTestStatementFromString("int x;")), PsiDeclarationStatement.class);
+    }
+
+    public void testForStatement() {
+        assertEquals(type.of(createTestForStatementFromString("for (;;){}")), PsiForStatement.class);
+    }
+
+    public void testPrefixExpression() {
+        assertEquals(type.of(createTestExpression("++i")), PsiPrefixExpression.class);
+    }
+
+    public void testPostfixExpression() {
+        assertEquals(type.of(createTestExpression("i++")), PsiPostfixExpression.class);
+    }
+
+    public void testClass() {
+        assertEquals(type.of(createTestClassFromString("class A{}")), PsiClass.class);
     }
 }

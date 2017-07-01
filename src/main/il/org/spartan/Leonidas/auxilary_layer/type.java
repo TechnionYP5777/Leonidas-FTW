@@ -4,7 +4,7 @@ import com.intellij.psi.*;
 
 /**
  * Helps to get the dynamic type of a Psi element.
- * @author michalcohen
+ * @author michalcohen, Sharon KL
  * @since 31-12-16
  */
 public class type {
@@ -87,6 +87,12 @@ public class type {
             public void visitPrefixExpression(PsiPrefixExpression expression) {
                 super.visitPrefixExpression(expression);
                 myClass.set(PsiPrefixExpression.class);
+            }
+
+            @Override
+            public void visitPostfixExpression(PsiPostfixExpression expression) {
+                super.visitPostfixExpression(expression);
+                myClass.set(PsiPostfixExpression.class);
             }
 
             @Override
