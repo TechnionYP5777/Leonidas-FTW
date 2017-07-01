@@ -9,9 +9,13 @@ import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Tests are extending this class to use a convenient API for handling Psi types and elements.
+ *
  * @author Oren Afek, Roey Maor, michalcohen
  * @since 26-12-2016
  */
@@ -86,8 +90,8 @@ public class PsiTypeHelper extends PsiTestCase {
     }
 
     /**
-     * @param interfaceName JD
-     * @param interfaceBody JD
+     * @param interfaceName      JD
+     * @param interfaceBody      JD
      * @param interfaceModifiers JD
      * @return PsiInterface element representing the given content
      */
@@ -213,7 +217,7 @@ public class PsiTypeHelper extends PsiTestCase {
 
     protected PsiDeclarationStatement createTestDeclarationStatement(String name, String type, String initializer) {
         return getTestFactory().createVariableDeclarationStatement(name, createTestType(type),
-				createTestExpressionFromString(initializer));
+                createTestExpressionFromString(initializer));
     }
 
     protected PsiIfStatement createTestIfStatement(String cond, String then) {
@@ -227,10 +231,10 @@ public class PsiTypeHelper extends PsiTestCase {
      * @return if then has only one statement returns PsiIfStatement, otherwise null
      */
     public PsiIfStatement createTestIfStatementNoBraces(String cond, String then) {
-		return StringUtils.countMatches(then, ";") != 1 ? null
-				: (PsiIfStatement) getTestFactory().createStatementFromText("if (" + cond + ") " + then + " ",
-						getTestFile());
-	}
+        return StringUtils.countMatches(then, ";") != 1 ? null
+                : (PsiIfStatement) getTestFactory().createStatementFromText("if (" + cond + ") " + then + " ",
+                getTestFile());
+    }
 
     protected PsiConditionalExpression createTestConditionalExpression(String cond, String then, String else$) {
         return (PsiConditionalExpression) getTestFactory()
@@ -240,7 +244,14 @@ public class PsiTypeHelper extends PsiTestCase {
     protected PsiMethodCallExpression createTestMethodCallExpression(String methodName, String... args) {
         StringBuilder sb = new StringBuilder();
         sb.append(methodName).append("(");
-        Arrays.stream(args).forEach(sb::append);
+        Arrays.stream(args)
+                .map(arg -> arg + ", ")
+                .forEach(sb::append);
+        if (sb.toString().endsWith(", ")) {
+            sb = sb.deleteCharAt(sb.length() - 2);
+            sb = sb.deleteCharAt(sb.length() - 1);
+        }
+
         sb.append(")");
         return (PsiMethodCallExpression) getTestFactory()
                 .createExpressionFromText(sb.toString(), getTestFile());
@@ -249,6 +260,10 @@ public class PsiTypeHelper extends PsiTestCase {
     protected PsiExpression createTestExpression(String expression) {
         return getTestFactory()
                 .createExpressionFromText(expression, getTestFile());
+    }
+
+    protected PsiBinaryExpression createBinaryTestExpression(String left, String operator, String right) {
+        return (PsiBinaryExpression)createTestExpression(left + " " + operator + " " + right);
     }
 
     protected PsiTryStatement createTestTryStatement(String try$, String catch$, String do$) {
@@ -261,11 +276,20 @@ public class PsiTypeHelper extends PsiTestCase {
 
     protected void assertEqualsByText(PsiElement e1, PsiElement e2) {
         if (e1 == null && e2 == null)
-			return;
+            return;
 
         assert e1 != null;
         assert e2 != null;
         assertEquals(removeWhiteSpaces(e1.getText()), removeWhiteSpaces(e2.getText()));
+    }
+
+    protected void assertEqualsByText(String text, PsiElement e) {
+        if (e == null && (text == null) || (Objects.equals(text, "")))
+            return;
+
+        assert e != null;
+        assert text != null;
+        assertEquals(removeWhiteSpaces(text), removeWhiteSpaces(e.getText()));
     }
 
     private String removeWhiteSpaces(String s) {
@@ -288,7 +312,7 @@ public class PsiTypeHelper extends PsiTestCase {
 
     protected PsiMethodReferenceExpression createTestMethodReferenceExpression(String typeName, String methodName) {
         return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(typeName + "::" + methodName,
-				getTestFile());
+                getTestFile());
     }
 
     public PsiRequiresStatement createTestRequiresStatement(String module) {
@@ -301,6 +325,15 @@ public class PsiTypeHelper extends PsiTestCase {
 
     protected PsiArrayAccessExpression createTestArrayAccess(String arrayName, String accessContent) {
         return (PsiArrayAccessExpression) getTestFactory().createExpressionFromText(arrayName + "[" + accessContent + "]", getTestFile());
+    }
+
+    protected <T extends PsiElement> void assertCollections(Collection<T> c1, Collection<T> c2) {
+        Iterator<T> i1 = c1.iterator();
+        Iterator<T> i2 = c2.iterator();
+
+        while (i1.hasNext() && i2.hasNext())
+            assertEqualsByText(i1.next(), i2.next());
+
     }
 
     @Override

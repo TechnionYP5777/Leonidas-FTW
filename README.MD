@@ -1,5 +1,5 @@
 
-# IntelliJ Lenidas Spartanizer
+# IntelliJ Leonidas Spartanizer
 This is the Intellij version of the Spartanizer project of Eclipse.
 See https://github.com/SpartanRefactoring/Spartanizer
 

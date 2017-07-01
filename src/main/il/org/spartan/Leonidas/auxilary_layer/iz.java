@@ -396,7 +396,7 @@ public enum iz {
      */
     @SuppressWarnings("ConstantConditions")
     static boolean final¢(final PsiMember ¢) {
-        return (¢.getModifierList().hasModifierProperty(PsiModifier.FINAL));
+        return ¢ != null && (¢.getModifierList().hasModifierProperty(PsiModifier.FINAL));
     }
 
     /**

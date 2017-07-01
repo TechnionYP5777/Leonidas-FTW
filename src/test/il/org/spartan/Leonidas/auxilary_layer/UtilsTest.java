@@ -6,6 +6,8 @@ import com.intellij.psi.PsiIfStatement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
+import java.util.Optional;
+
 
 /**
  * @author michalcohen
@@ -66,5 +68,13 @@ public class UtilsTest extends PsiTypeHelper {
     public void testGetFirstElementInsideBody() throws Exception {
         PsiCodeBlock cb = createTestCodeBlockFromString("{x++;}");
         assertEquals(Utils.getFirstElementInsideBody(cb).getText(), "x++;");
+    }
+
+    public void testGetPublicMethod() throws Exception {
+        assertEquals(Optional.empty(), Utils.getPublicMethod(Object.class, "myFakeMethod", Object.class));
+        assertEquals(String.class.getMethod("substring", int.class, int.class),
+                Utils.getPublicMethod(String.class, "substring",
+                        int.class, int.class).orElse(null));
+
     }
 }

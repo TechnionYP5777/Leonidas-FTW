@@ -18,12 +18,14 @@ public class azTest extends PsiTypeHelper {
         PsiElement e2 = createTestStatementFromString("return true;");
         assert az.statement(e2) != null;
         assertNull(az.statement(createTestExpressionFromString("x== null ? null : x")));
+        assertNull(az.statement(null));
     }
 
     public void testAzCodeBlock() throws Exception{
         PsiElement e1 = createTestCodeBlockFromString("{ int x = 5; }");
         assert az.block(e1) != null;
         assertNull(az.block(createTestStatementFromString("int x = 5;")));
+        assertNull(az.block(null));
     }
 
     public void testAzDeclarationStatement() throws Exception{
@@ -32,6 +34,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement objDec = createTestDeclarationStatement("x", "Object" , "null");
         assert az.declarationStatement(objDec) != null;
         assertNull(az.declarationStatement(createTestMethodFromString("foo(int x,double y)")));
+        assertNull(az.declarationStatement(null));
     }
 
     public void testAzEnumConstant() throws Exception{
@@ -40,6 +43,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement ec2 = createTestEnumFromString("ENUM_VALUE_TWO(9)");
         assert az.enumConstant(ec2) != null;
         assertNull(az.enumConstant(createTestMethodFromString("foo(int x,double y)")));
+        assertNull(az.enumConstant(null));
     }
 
     public void testAzFieldDeclaration() throws Exception{
@@ -50,6 +54,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement f3 = createTestFieldDeclarationFromString("public static int x;");
         assert az.fieldDeclaration(f3) != null;
         assertNull(az.fieldDeclaration(createTestMethodFromString("foo(int x,double y)")));
+        assertNull(az.fieldDeclaration(null));
     }
 
     public void testAzExpressionStatement() throws Exception {
@@ -58,6 +63,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement s2 = createTestStatementFromString("true");
         assert az.expressionStatement(s2) != null;
         assertNull(az.expressionStatement(createTestStatementFromString("int x = 2+3")));
+        assertNull(az.expressionStatement(null));
     }
 
     public void testAzMethodCallExpression() throws Exception{
@@ -70,6 +76,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement ifExp= createTestExpression("x+y");
         assertNull(az.methodCallExpression(ifExp));
         assertNull(az.methodCallExpression(createTestMethodFromString("foo(int x,double y)")));
+        assertNull(az.methodCallExpression(null));
     }
 
     public void testAzIdentifier() throws Exception {
@@ -80,6 +87,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement id3 = createTestIdentifierFromString("$");
         assert az.identifier(id3) != null;
         assertNull(az.identifier(createTestStatementFromString("int x;")));
+        assertNull(az.identifier(null));
     }
 
     public void testAzConditionalExpression() throws Exception {
@@ -88,6 +96,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement c2= createTestConditionalExpression("x != null" , "x = true" ,null);
         assert az.conditionalExpression(c2) != null;
         assertNull(az.conditionalExpression(createTestStatementFromString("int x;")));
+        assertNull(az.conditionalExpression(null));
     }
 
     public void testAzBinaryExpression() throws Exception {
@@ -100,6 +109,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement bMod = createTestExpression("x % y");
         assert az.binaryExpression(bMod) != null;
         assertNull(az.binaryExpression(createTestExpression("!x")));
+        assertNull(az.binaryExpression(null));
     }
 
     public void testAzReferenceExpression() throws Exception {
@@ -110,6 +120,7 @@ public class azTest extends PsiTypeHelper {
         PsiExpression rf3 = createTestExpression("x");
         assert az.referenceExpression(rf3) != null;
         assertNull(az.referenceExpression(createTestExpression("x == false")));
+        assertNull(az.referenceExpression(null));
     }
 
     public void testAzLiteral() throws Exception {
@@ -118,6 +129,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement l2 = createTestExpression("false");
         assert az.literal(l2) != null;
         assertNull(az.literal(createTestExpression("b == false")));
+        assertNull(az.literal(null));
     }
 
     public void testAzClassDeclaration() throws Exception {
@@ -128,6 +140,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement i1 = createTestInterfaceFromString("", "A", "", "public");
         assert az.classDeclaration(i1) != null;
         assert az.classDeclaration(createTestClassFromString("", "A", "", "public", "abstract")) != null;
+        assertNull(az.classDeclaration(null));
     }
 
     public void testAzForEachStatement() throws Exception {
@@ -136,6 +149,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement e2= createTestForeachStatementFromString("for(Object o : new ArrayList<Object>()){}");
         assert az.forEachStatement(e2) != null;
         assertNull(az.forEachStatement(createTestForStatementFromString("for(int i = 0 ; i<11 ; i++){}")));
+        assertNull(az.forEachStatement(null));
     }
 
     public void testIfStatement() throws Exception {
@@ -144,6 +158,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement if2 = createTestIfStatement("x == 2", "continue;");
         assert az.ifStatement(if2) != null;
         assertNull(az.ifStatement(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        assertNull(az.ifStatement(null));
 
     }
 
@@ -157,6 +172,7 @@ public class azTest extends PsiTypeHelper {
         PsiStatement s = createTestStatementFromString("int x;");
         assertNull(az.returnStatement(s));
         assertNull(az.returnStatement(s));
+        assertNull(az.returnStatement(null));
     }
 
     public void testAzImportList() throws Exception {
@@ -164,6 +180,7 @@ public class azTest extends PsiTypeHelper {
                 "import sparta.boom;");
         assert az.importList(importList) != null;
         assertNull(az.ifStatement(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        assertNull(az.importList(null));
     }
 
     public void testAzJavaToken() throws Exception {
@@ -172,6 +189,7 @@ public class azTest extends PsiTypeHelper {
         PsiElement t2 = ((PsiBinaryExpression)createTestExpression("x != y")).getOperationSign();
         assert az.javaToken(t2) != null;
         assertNull(az.javaToken(createTestForStatementFromString("for(int i = 0 ; i < 5 ; i++){}")));
+        assertNull(az.javaToken(null));
     }
 
     public void testAzMethod() throws Exception{
@@ -180,12 +198,55 @@ public class azTest extends PsiTypeHelper {
         PsiElement e2 = createTestMethodFromString("static abstract public void method(int x);");
         assert az.method(e2) != null;
         assertNull(az.method(createTestClassFromString("", "method()", "", "public")));
+        assertNull(az.method(null));
     }
 
     public void testAzBlockStatement() throws Exception {
         PsiElement b = createTestBlockStatementFromString("{ int x = 5; }");
         assert az.blockStatement(b) != null;
         assertNull(az.blockStatement(createTestStatementFromString("int x = 5;")));
+        assertNull(az.blockStatement(null));
+    }
+
+    public void testAzExpression() throws Exception {
+        PsiElement b = createTestExpressionFromString("true == false");
+        assert az.expression(b) != null;
+        assertNull(az.expression(createTestStatementFromString("int x = 5;")));
+        assertNull(az.expression(null));
+    }
+
+    public void testAzModifierListOwner() throws Exception {
+        PsiElement b = createTestMethodFromString("public static goo(){}");
+        assert az.modifierListOwner(b) != null;
+        assertNull(az.modifierListOwner(createTestStatementFromString("int x = 5;")));
+        assertNull(az.modifierListOwner(null));
+    }
+
+    public void testAzType() throws Exception {
+        PsiElement b = createTestTypeElementFromString("int");
+        assert az.type(b) != null;
+        assertNull(az.type(createTestStatementFromString("int x = 5;")));
+        assertNull(az.type(null));
+    }
+
+    public void testAzComment() throws Exception {
+        PsiElement b = createTestCommentFromString("//comment");
+        assert az.comment(b) != null;
+        assertNull(az.comment(createTestStatementFromString("int x = 5;")));
+        assertNull(az.comment(null));
+    }
+
+    public void testAzFile() throws Exception {
+        PsiElement b = createTestFileFromString("public class A{}");
+        assert az.psiFile(b) != null;
+        assertNull(az.psiFile(null));
+    }
+
+    public void testAzNewExpression() throws Exception {
+        PsiElement b = createTestExpressionFromString("new A()");
+        assert az.newExpression(b) != null;
+        assertNull(az.newExpression(createTestStatementFromString("int x = 5;")));
+        assertNull(az.newExpression(null));
     }
 
 }

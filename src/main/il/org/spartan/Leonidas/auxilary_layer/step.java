@@ -32,7 +32,7 @@ public enum step {
     }
 
     public static PsiParameter secondParameter(PsiParameterList l) {
-        return parameters(l).size() > 1 ? null : l.getParameters()[1];
+        return parameters(l).size() > 1 ? l.getParameters()[1] : null;
     }
 
     public static PsiParameter firstParameter(PsiMethod m) {

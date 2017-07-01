@@ -1,0 +1,4 @@
+ignore:
+  - "src/main/il/org/spartan/Leonidas/plugin/tippers/leonidas/*"
+  - "src/main/il/org/spartan/Leonidas/plugin/GUI/*"
+  - "src/main/il/org/spartan/Leonidas/plugin/*Action.java"
