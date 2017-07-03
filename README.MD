@@ -1,4 +1,4 @@
-
+# THIS REPO IS OBSOLETE, GO TO (SpartanRefactoring/Main)[https://github.com/SpartanRefactoring/Main/].
 # IntelliJ Leonidas Spartanizer
 This is the Intellij version of the Spartanizer project of Eclipse.
 See https://github.com/SpartanRefactoring/Spartanizer
